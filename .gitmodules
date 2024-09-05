@@ -1,0 +1,3 @@
+[submodule "3rdParty/SSP_Schema"]
+	path = 3rdParty/SSP_Schema
+	url = https://github.com/modelica/ssp-standard
