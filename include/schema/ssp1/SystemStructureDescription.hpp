@@ -1,11 +1,8 @@
-
-
 #pragma once
 
 #include <string>
 #include <vector>
 #include <optional>
-#include <iostream>
 
 #include "SystemStructureCommon.hpp"
 
@@ -25,33 +22,39 @@ namespace ssp4cpp::ssp1::ssd
     };
 
     // Geometry related structs
-    struct SystemGeometry
+    typedef struct
     {
-    };
-    struct ConnectorGeometry
-    {
-    };
-    struct ElementGeometry
-    {
-    };
-    struct ConnectionGeometry
-    {
-    };
+    } SystemGeometry;
 
-    struct TSignalDictionaries
+    typedef struct
     {
-    };
-    struct TParameterBindings
-    {
-    };
-    struct GraphicalElements
-    {
-    };
-    struct TDefaultExperiment
-    {
-    };
+    } ConnectorGeometry;
 
-    struct Connection
+    typedef struct
+    {
+    } ElementGeometry;
+
+    typedef struct
+    {
+    } ConnectionGeometry;
+
+    typedef struct
+    {
+    } TSignalDictionaries;
+
+    typedef struct
+    {
+    } TParameterBindings;
+
+    typedef struct
+    {
+    } GraphicalElements;
+
+    typedef struct
+    {
+    } TDefaultExperiment;
+
+    typedef struct
     {
         optional<string> startElement;
         string startConnector;
@@ -64,14 +67,14 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
         optional<ssd::ConnectionGeometry> ConnectionGeometry;
         optional<ssc::TAnnotations> Annotations;
-    };
+    } Connection;
 
-    struct Connections
+    typedef struct
     {
         vector<Connection> list;
-    };
+    } Connections;
 
-    struct Connector
+    typedef struct
     {
         // ABaseElement
         optional<string> id;
@@ -90,14 +93,14 @@ namespace ssp4cpp::ssp1::ssd
 
         optional<ssd::ConnectorGeometry> ConnectorGeometry;
         optional<ssc::TAnnotations> Annotations;
-    };
+    } Connector;
 
-    struct TConnectors
+    typedef struct
     {
         vector<Connector> list;
-    };
+    } TConnectors;
 
-    struct TComponent
+    typedef struct
     {
         // TElement
         // - ABaseElement
@@ -114,26 +117,25 @@ namespace ssp4cpp::ssp1::ssd
         string source;
         optional<string> implementation;
         optional<ssc::TAnnotations> Annotations;
-    };
+    } TComponent;
 
-    // Other related structs
-    struct TSignalDictionaryReference
+    typedef struct
     {
         string dictionary;
         vector<ssd::TConnectors> Connectors;
         vector<ssd::ElementGeometry> ElementGeometry;
         vector<ssd::TParameterBindings> TParameterBindings;
         optional<ssc::TAnnotations> Annotations;
-    };
+    } TSignalDictionaryReference;
 
-    struct Elements
+    typedef struct
     {
         vector<ssd::TComponent> Components;
         vector<ssd::TSignalDictionaryReference> SignalDictionaryReferences;
         vector<ssd::TSystem> Systems;
-    };
+    } Elements;
 
-    struct TSystem
+    typedef struct TSystem
     {
         // TElement
         // - ABaseElement
@@ -153,9 +155,8 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssd::SystemGeometry> SystemGeometry;
         optional<ssd::GraphicalElements> GraphicalElements;
         optional<ssc::TAnnotations> Annotations;
-    };
+    } TSystem;
 
-    // Struct declarations
     typedef struct
     {
         string version;
@@ -173,16 +174,11 @@ namespace ssp4cpp::ssp1::ssd
         optional<string> generationTool;
         optional<string> generationDateAndTime;
 
-        TSystem *System;
+        ssd::TSystem System;
         optional<ssc::TEnumerations> Enumerations;
         optional<ssc::TUnits> Units;
         optional<ssd::TDefaultExperiment> DefaultExperiment;
         optional<ssc::TAnnotations> Annotations;
-
-        // friend std::ostream &operator<<(std::ostream &os, const ssd::SystemStructureDescription &ssd);
-
     } SystemStructureDescription;
-
-
 
 }
