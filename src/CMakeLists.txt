@@ -2,8 +2,9 @@
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema)
+include_directories(${PROJECT_SOURCE_DIR}/include/schema/ssp1)
 
-add_library(ssp4cpp ssp4cpp.cpp)
+add_library(ssp4cpp ssp4cpp.cpp schema_parser.cpp)
 
 find_package(libzip CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE libzip::zip)
