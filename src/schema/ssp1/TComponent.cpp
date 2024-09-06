@@ -42,6 +42,8 @@ namespace ssp4cpp::ssp1::ssd
 
         comp.source = get_attribute<string>(node, "source");
         comp.implementation = get_optional_attribute<string>(node, "implementation");
+
+        BOOST_LOG_TRIVIAL(debug) << "Completed TComponent" << std::endl;
     }
 
 

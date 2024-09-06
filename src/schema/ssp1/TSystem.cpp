@@ -25,10 +25,10 @@ namespace ssp4cpp::ssp1::ssd
         // {
         //     from_xml(a, *sys.ParameterBindings);
         // }
-        if (auto a = node.child("ssd:Elements"))
-        {
-            from_xml(a, *sys.Elements);
-        }
+        // if (auto a = node.child("ssd:Elements"))
+        // {
+        //     from_xml(a, *sys.Elements);
+        // }
         if (auto a = node.child("ssd:Connections"))
         {
             from_xml(a, *sys.Connections);

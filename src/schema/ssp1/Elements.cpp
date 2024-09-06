@@ -47,5 +47,6 @@ namespace ssp4cpp::ssp1::ssd
             from_xml(e_node, x);
             elements.Systems.push_back(x);
         }
+        BOOST_LOG_TRIVIAL(debug) << "Completed Elements" << std::endl;
     }
 }

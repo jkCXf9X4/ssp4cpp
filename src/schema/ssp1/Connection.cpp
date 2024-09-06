@@ -32,6 +32,8 @@ namespace ssp4cpp::ssp1::ssd
         connection.startConnector = get_attribute<string>(node, "startConnector");
         connection.endElement = get_optional_attribute<string>(node, "endElement");
         connection.endConnector = get_attribute<string>(node, "endConnector");
+
+        BOOST_LOG_TRIVIAL(debug) << connection << std::endl;
     }
 
 }
