@@ -109,9 +109,9 @@ namespace ssp4cpp::ssp1::ssd
 
         // TElement cont
         optional<string> name;
-        vector<ssd::TConnectors> Connectors;
-        vector<ssd::ElementGeometry> ElementGeometry;
-        vector<ssd::TParameterBindings> TParameterBindings;
+        optional<ssd::TConnectors> Connectors;
+        optional<ssd::ElementGeometry> ElementGeometry;
+        optional<ssd::TParameterBindings> TParameterBindings;
 
         optional<ssd::ComponentKind> component_type;
         string source;
@@ -122,9 +122,9 @@ namespace ssp4cpp::ssp1::ssd
     typedef struct
     {
         string dictionary;
-        vector<ssd::TConnectors> Connectors;
-        vector<ssd::ElementGeometry> ElementGeometry;
-        vector<ssd::TParameterBindings> TParameterBindings;
+        optional<ssd::TConnectors> Connectors;
+        optional<ssd::ElementGeometry> ElementGeometry;
+        optional<ssd::TParameterBindings> TParameterBindings;
         optional<ssc::TAnnotations> Annotations;
     } TSignalDictionaryReference;
 
@@ -144,9 +144,9 @@ namespace ssp4cpp::ssp1::ssd
 
         // TElement cont
         optional<string> name;
-        vector<ssd::TConnectors> Connectors;
-        vector<ssd::ElementGeometry> ElementGeometry;
-        vector<ssd::TParameterBindings> TParameterBindings;
+        optional<ssd::TConnectors> Connectors;
+        optional<ssd::ElementGeometry> ElementGeometry;
+        optional<ssd::TParameterBindings> ParameterBindings;
 
         // TSystem cont
         optional<ssd::Elements> Elements;

@@ -13,7 +13,7 @@ namespace ssp4cpp::ssp1::ssd
 {
     using namespace std;
 
-    unique_ptr<ssd::SystemStructureDescription> parse_system_structure(const string &fileName)
+    ssd::SystemStructureDescription parse_system_structure(const string &fileName)
     {
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(fileName.c_str());
@@ -29,6 +29,6 @@ namespace ssp4cpp::ssp1::ssd
 
         cout << ssd;
 
-        return make_unique<ssd::SystemStructureDescription>(ssd);
+        return ssd;
     }
 }

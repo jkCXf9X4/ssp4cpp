@@ -10,6 +10,9 @@ file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 
 add_library(ssp4cpp  ${ALL_SRC})
 
+find_package(boost_log CONFIG REQUIRED)
+target_link_libraries(ssp4cpp PRIVATE Boost::log)
+
 find_package(libzip CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE libzip::zip)
 

@@ -7,7 +7,7 @@
 
 namespace ssp4cpp::ssp1::ssd
 {
-    std::unique_ptr<SystemStructureDescription> parse_system_structure(const std::string &fileName);
+    ssd::SystemStructureDescription parse_system_structure(const string &fileName);
 }
 
 

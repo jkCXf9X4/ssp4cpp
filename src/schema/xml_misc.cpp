@@ -9,6 +9,26 @@ namespace ssp4cpp::xml
 {
     using namespace std;
 
+    // set_attribute
+
+    // template <typename T>
+    // void set_attribute(pugi::xml_node &node, const char *name, const T &value)
+    // {
+    //     node.append_attribute(name).set_value(value->c_str());
+    // }
+
+
+    // template <typename T>
+    // void set_optional_attribute(pugi::xml_node &node, const char *name, const optional<T> &value)
+    // {
+    //     if (value)
+    //     {
+    //         set_attribute<T>(node, name, value);
+    //     }
+    // }
+
+    // get attribute
+
     template <typename T>
     T get_attribute(const pugi::xml_node &node, const string &name)
     {
@@ -48,17 +68,33 @@ namespace ssp4cpp::xml
         return get_attribute<T>(node, name);
     }
 
+    // set_child
+
+    // template <typename T>
+    // void set_child_value(pugi::xml_node &node, const char *name, const T &value)
+    // {
+    //     node.append_child(name).text().set(value->c_str());
+    // }
+
+    // template <typename T>
+    // void set_optional_child_value(pugi::xml_node &node, const char *name, const optional<T> &value)
+    // {
+    //     if (value)
+    //     {
+    //         set_child_value<T>(node, name, value);
+    //     }
+    // }
+
+    // get_child
+
     template <typename T>
-    void set_optional_child(pugi::xml_node &node, const char *name, const optional<T> &value)
+    optional<T> get_child_value(const pugi::xml_node &node, const char *name)
     {
-        if (value)
-        {
-            node.append_child(name).text().set(value->c_str());
-        }
+        return node.child(name).text().as_string();
     }
 
     template <typename T>
-    optional<T> get_optional_child(const pugi::xml_node &node, const char *name)
+    optional<T> get_optional_child_value(const pugi::xml_node &node, const char *name)
     {
         auto child = node.child(name);
         if (child)
