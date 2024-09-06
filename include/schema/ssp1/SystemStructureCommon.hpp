@@ -9,59 +9,59 @@ namespace ssp4cpp::ssp1::ssc
     using namespace std;
 
     // Annotation struct
-    struct Annotation
+    typedef struct
     {
         optional<string> annotation_type;
         optional<string> any;
-    };
+    } Annotation;
 
     // Annotations struct
-    struct TAnnotations
+    typedef struct
     {
         vector<Annotation> list;
-    };
+    } TAnnotations;
 
-    struct BooleanMapEntry
+    typedef struct
     {
         bool source;
         bool target;
-    };
+    } BooleanMapEntry;
 
-    struct BooleanMappingTransformation
+    typedef struct
     {
         vector<BooleanMapEntry> list;
-    };
+    } BooleanMappingTransformation;
 
-    struct IntegerMapEntry
+    typedef struct
     {
         int source;
         int target;
-    };
+    } IntegerMapEntry;
 
-    struct IntegerMappingTransformation
+    typedef struct
     {
         vector<IntegerMapEntry> list;
-    };
+    } IntegerMappingTransformation;
 
-    struct EnumerationMapEntry
+    typedef struct
     {
         string source;
         string target;
-    };
+    } EnumerationMapEntry;
 
-    struct EnumerationMappingTransformation
+    typedef struct
     {
         vector<EnumerationMapEntry> list;
-    };
+    } EnumerationMappingTransformation;
 
     // Struct definitions
 
-    struct TEnumerations
+    typedef struct
     {
-    };
+    } TEnumerations;
 
     // Base unit struct
-    struct BaseUnit
+    typedef struct
     {
         optional<int> kg;
         optional<int> m;
@@ -73,54 +73,54 @@ namespace ssp4cpp::ssp1::ssc
         optional<int> rad;
         optional<double> factor;
         optional<double> offset;
-    };
+    } BaseUnit;
 
     // Units struct
-    struct TUnits
+    typedef struct
     {
         optional<string> id;
         optional<string> description;
         string name;
         BaseUnit baseUnit;
         optional<TAnnotations> annotations;
-    };
+    } TUnits;
 
     // GType structs
-    struct GTypeReal
+    typedef struct
     {
         optional<string> unit;
-    };
+    } GTypeReal;
 
-    struct GTypeInteger
+    typedef struct
     {
         // No elements
-    };
+    } GTypeInteger;
 
-    struct GTypeBoolean
+    typedef struct
     {
         // No elements
-    };
+    } GTypeBoolean;
 
-    struct GTypeString
+    typedef struct
     {
         // No elements
-    };
+    } GTypeString;
 
-    struct GTypeEnumeration
+    typedef struct
     {
         optional<string> name; // Should not be optional but some tools don't include the enum correctly
-    };
+    } GTypeEnumeration;
 
-    struct GTypeBinary
+    typedef struct
     {
         optional<string> mime_type;
-    };
+    } GTypeBinary;
 
     // Transformation structs
-    struct LinearTransformation
+    typedef struct
     {
         optional<double> factor;
         optional<double> offset;
-    };
+    } LinearTransformation;
 
 }

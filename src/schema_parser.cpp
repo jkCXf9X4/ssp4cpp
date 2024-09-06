@@ -9,6 +9,15 @@
 
 namespace ssp4cpp::ssp1
 {
+    using namespace std;
+
+
+    ostream& operator<<(ostream& os, const ssd::SystemStructureDescription& ssd)
+    {
+        return os << "SSD:\nversion: " << ssd.version << endl
+                  << "name: " << ssd.name << endl;
+    }
+
 
     std::unique_ptr<ssd::SystemStructureDescription> parse_system_structure(const std::string &fileName)
     {
@@ -19,7 +28,7 @@ namespace ssp4cpp::ssp1
         {
             throw std::runtime_error("Unable to parse SystemStructure.ssd");
         }
-        auto root = doc.child("SystemStructureDescription");
+        auto root = doc.child("ssd:SystemStructureDescription");
 
         ssd::SystemStructureDescription ssd;
 
@@ -27,6 +36,8 @@ namespace ssp4cpp::ssp1
         ssd.version = root.attribute("version").as_string();
         ssd.id = root.attribute("id").as_string();
         ssd.description = root.attribute("description").as_string();
+
+        cout << ssd.name << endl;
 
         std::cout << ssd;
 

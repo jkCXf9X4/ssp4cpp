@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <optional>
+#include <iostream>
 
 #include "SystemStructureCommon.hpp"
 
@@ -155,7 +156,7 @@ namespace ssp4cpp::ssp1::ssd
     };
 
     // Struct declarations
-    typedef struct 
+    typedef struct
     {
         string version;
         string name;
@@ -177,12 +178,11 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::TUnits> Units;
         optional<ssd::TDefaultExperiment> DefaultExperiment;
         optional<ssc::TAnnotations> Annotations;
+
+        // friend std::ostream &operator<<(std::ostream &os, const ssd::SystemStructureDescription &ssd);
+
     } SystemStructureDescription;
 
-    ostream& operator<<(ostream& os, const ssd::SystemStructureDescription& book) {
-    return os << "SSD:\nversion: " << book.version << endl
-              << "name: " << book.name << endl
-              << "id: " << book.id << endl
-              << "description:" << book.description << endl;
-}
+
+
 }
