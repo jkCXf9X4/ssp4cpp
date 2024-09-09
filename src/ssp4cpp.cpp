@@ -8,7 +8,7 @@
 
 #include "ssd_xml.hpp"
 
-#include "unzip_utils.hpp"
+#include "unzip.hpp"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -51,7 +51,7 @@ namespace ssp4cpp::ssp1
 
         fs::create_directory(temp_dir);
 
-        unzip(ssp_file, temp_dir);
+        ssp4cpp::zip_ns::unzip(ssp_file, temp_dir);
 
 
         // fs::remove_all(temp_dir);

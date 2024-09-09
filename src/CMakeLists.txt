@@ -3,8 +3,7 @@
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema/ssp1)
-
-include_directories(${PROJECT_SOURCE_DIR}/src/schema)
+include_directories(${PROJECT_SOURCE_DIR}/include_private)
 
 file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 

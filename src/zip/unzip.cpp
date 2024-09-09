@@ -1,4 +1,5 @@
-#pragma once
+
+#include "unzip.hpp"
 
 #include <zip.h>
 
@@ -6,10 +7,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <filesystem>
 #include <vector>
 
-namespace
+namespace ssp4cpp::zip_ns
 {
 
     namespace fs=std::filesystem;
