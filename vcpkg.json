@@ -1,7 +1,7 @@
 {
   "dependencies": [
-    "pugixml",
+    "boost-log",
     "libzip",
-    "boost-log"
+    "pugixml"
   ]
 }

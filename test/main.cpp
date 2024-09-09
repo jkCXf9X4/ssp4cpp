@@ -9,6 +9,13 @@ using namespace std;
 
 int main()
 {
+    // Opening zip
+    cout << "Opening ssp\n";
+
+    ssp4cpp::ssp1::open_ssp("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/resources/embrace.ssp");
+
+
+    return 0;
     // using namespace ssp4cpp::ssp1::ssd;
     cout << "Starting parsing\n";
 
