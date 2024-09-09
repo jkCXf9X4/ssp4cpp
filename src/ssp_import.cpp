@@ -1,7 +1,7 @@
 
 
 #include "schema/ssp1/SystemStructureDescription.hpp"
-#include "ssp4cpp.hpp"
+#include "ssp_import.hpp"
 
 #include <pugixml.hpp>
 #include <iostream>
@@ -13,10 +13,34 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-
 namespace ssp4cpp::ssp1
 {
-    ssd::SystemStructureDescription parse_system_structure(const string &fileName)
+    SspImport::SspImport(const path &file) : original_file(file)
+    {
+        temp_dir = import_ssp(file.string()).value();
+        ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
+
+        auto elements = ssd.System.Elements;
+        if (elements)
+        {
+
+            for (auto comp : elements.value().components)
+            {
+                SspResource res;
+                res.type = comp.component_type;
+                res.name = comp.name;
+                res.file = temp_dir / comp.source;
+                resources.push_back(res);
+            }
+        }
+    }
+
+    SspImport::~SspImport()
+    {
+        fs::remove_all(temp_dir);
+    }
+
+    ssd::SystemStructureDescription SspImport::parse_system_structure(const string &fileName)
     {
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(fileName.c_str());
@@ -33,8 +57,7 @@ namespace ssp4cpp::ssp1
         return ssd;
     }
 
-
-    optional<fs::path> open_ssp(const string &fileName)
+    optional<fs::path> SspImport::import_ssp(const string &fileName)
     {
         auto ssp_file = fs::path(fileName);
         if (!fs::exists(ssp_file))
@@ -53,8 +76,6 @@ namespace ssp4cpp::ssp1
 
         ssp4cpp::zip_ns::unzip(ssp_file, temp_dir);
 
-
-        // fs::remove_all(temp_dir);
         return temp_dir;
     }
 }
