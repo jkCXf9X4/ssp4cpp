@@ -26,8 +26,6 @@ namespace ssp4cpp::ssp1::ssd
 
         from_xml(root, ssd);
 
-        // cout << ssd;
-
         return ssd;
     }
 }

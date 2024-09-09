@@ -7,7 +7,6 @@
 #include <optional>
 #include <iostream>
 
-
 #include "SystemStructureCommon.hpp"
 
 namespace ssp4cpp::ssp1::ssd
@@ -24,31 +23,6 @@ namespace ssp4cpp::ssp1::ssd
     std::ostream &operator<<(std::ostream &os, const TSystem &sys);
 
     // Declarations
-
-    // Enum for ComponentKind
-    enum class ComponentKind
-    {
-        XFmuSharedlibrary,
-        XSspDefinition,
-        XSspPackage
-    };
-
-    // std::ostream &operator<<(std::ostream &os, const ComponentKind &kind)
-    // {
-    //     switch (kind)
-    //     {
-    //     case ComponentKind::XFmuSharedlibrary:
-    //         os << "XFmuSharedlibrary";
-    //         break;
-    //     case ComponentKind::XSspDefinition:
-    //         os << "XSspDefinition";
-    //         break;
-    //     case ComponentKind::XSspPackage:
-    //         os << "XSspPackage";
-    //         break;
-    //     }
-    //     return os;
-    // }
 
     // Geometry related classes
     class SystemGeometry
@@ -245,7 +219,7 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssd::ElementGeometry> ElementGeometry;
         optional<ssd::TParameterBindings> TParameterBindings;
 
-        optional<ssd::ComponentKind> component_type;
+        optional<string> component_type;
         string source;
         optional<string> implementation;
         optional<ssc::TAnnotations> Annotations;
@@ -259,7 +233,7 @@ namespace ssp4cpp::ssp1::ssd
                << "Connectors: " << print_optional(comp.Connectors)
                << "ElementGeometry: " << print_optional(comp.ElementGeometry)
                << "TParameterBindings: " << print_optional(comp.TParameterBindings)
-            //    << "component_type: " << print_optional(comp.component_type)
+               << "component_type: " << print_optional(comp.component_type)
                << "source: " << comp.source << endl
                << "implementation: " << print_optional(comp.implementation)
                << "Annotations: " << print_optional(comp.Annotations)
@@ -304,7 +278,7 @@ namespace ssp4cpp::ssp1::ssd
             {
                 os << comp << endl;
             }
-            os << "} \nignal_dictionary_references {\n";
+            os << "} \nsignal_dictionary_references {\n";
             for (const auto &ref : elems.signal_dictionary_references)
             {
                 os << ref << endl;

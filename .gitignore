@@ -2,3 +2,5 @@
 
 build
 vcpkg_installed
+
+build.log

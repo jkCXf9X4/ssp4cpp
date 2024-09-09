@@ -1,0 +1,259 @@
+SystemStructureDescription {
+version: 1.0
+name: embrace
+id: null
+description: null
+author: null
+fileversion: null
+copyright: null
+license: null
+generationTool: null
+generationDateAndTime: null
+System: 
+TSystem {
+id: null
+description: null
+name: root
+Connectors: null
+ElementGeometry: null
+ParameterBindings: TParameterBindings()
+
+Elements: Elements {
+components {
+TComponent {
+id: null
+description: null
+name: ECS_SW
+Connectors: TConnectors {
+Connector {
+id: null
+description: null
+name: Input.TLiquid
+kind: input
+Real: GTypeReal(unit: null)
+Integer: null
+Boolean: null
+String: null
+Enumeration: null
+Binary: null
+ConnectorGeometry: ConnectorGeometry()
+
+Annotations: null
+ }
+
+ }
+
+ElementGeometry: null
+TParameterBindings: null
+component_type: application/x-fmu-sharedlibrary
+source: resources/0002_ECS_SW.fmu
+implementation: null
+Annotations: null
+ }
+
+TComponent {
+id: null
+description: null
+name: ECS_HW
+Connectors: TConnectors {
+Connector {
+id: null
+description: null
+name: Alt
+kind: input
+Real: GTypeReal(unit: null)
+Integer: null
+Boolean: null
+String: null
+Enumeration: null
+Binary: null
+ConnectorGeometry: ConnectorGeometry()
+
+Annotations: null
+ }
+
+ }
+
+ElementGeometry: null
+TParameterBindings: null
+component_type: application/x-fmu-sharedlibrary
+source: resources/0001_ECS_HW.fmu
+implementation: null
+Annotations: null
+ }
+
+TComponent {
+id: null
+description: null
+name: Consumer
+Connectors: TConnectors {
+Connector {
+id: null
+description: null
+name: consumerRet.m
+kind: input
+Real: GTypeReal(unit: null)
+Integer: null
+Boolean: null
+String: null
+Enumeration: null
+Binary: null
+ConnectorGeometry: ConnectorGeometry()
+
+Annotations: null
+ }
+
+ }
+
+ElementGeometry: null
+TParameterBindings: null
+component_type: application/x-fmu-sharedlibrary
+source: resources/0003_Consumer.fmu
+implementation: null
+Annotations: null
+ }
+
+TComponent {
+id: null
+description: null
+name: Atmos
+Connectors: TConnectors {
+Connector {
+id: null
+description: null
+name: Alt
+kind: input
+Real: GTypeReal(unit: null)
+Integer: null
+Boolean: null
+String: null
+Enumeration: null
+Binary: null
+ConnectorGeometry: ConnectorGeometry()
+
+Annotations: null
+ }
+
+Connector {
+id: null
+description: null
+name: Ma
+kind: input
+Real: GTypeReal(unit: null)
+Integer: null
+Boolean: null
+String: null
+Enumeration: null
+Binary: null
+ConnectorGeometry: ConnectorGeometry()
+
+Annotations: null
+ }
+
+ }
+
+ElementGeometry: null
+TParameterBindings: null
+component_type: application/x-fmu-sharedlibrary
+source: resources/0004_Atmos.fmu
+implementation: null
+Annotations: null
+ }
+
+TComponent {
+id: null
+description: null
+name: AdaptionUnit
+Connectors: TConnectors {
+Connector {
+id: null
+description: null
+name: Aircraft_State
+kind: input
+Real: GTypeReal(unit: null)
+Integer: null
+Boolean: null
+String: null
+Enumeration: null
+Binary: null
+ConnectorGeometry: ConnectorGeometry()
+
+Annotations: null
+ }
+
+Connector {
+id: null
+description: null
+name: LHexTout
+kind: input
+Real: GTypeReal(unit: null)
+Integer: null
+Boolean: null
+String: null
+Enumeration: null
+Binary: null
+ConnectorGeometry: ConnectorGeometry()
+
+Annotations: null
+ }
+
+ }
+
+ElementGeometry: null
+TParameterBindings: null
+component_type: application/x-fmu-sharedlibrary
+source: resources/0005_AdaptionUnit.fmu
+implementation: null
+Annotations: null
+ }
+
+} 
+signal_dictionary_references {
+} 
+systems {
+}
+}
+
+Connections: Connections { 
+Connection {
+startElement: Consumer
+startConnector: consumerFeed.p
+endElement: ECS_HW
+endConnector: consumerFeed.p
+suppressUnitConversion: null
+LinearTransformation: null
+BooleanMappingTransformation: null
+IntegerMappingTransformation: null
+EnumerationMappingTransformation: null
+ConnectionGeometry: null
+Annotations: null
+ }
+
+Connection {
+startElement: Consumer
+startConnector: consumerFeed.h
+endElement: ECS_HW
+endConnector: consumerFeed.h
+suppressUnitConversion: null
+LinearTransformation: null
+BooleanMappingTransformation: null
+IntegerMappingTransformation: null
+EnumerationMappingTransformation: null
+ConnectionGeometry: null
+Annotations: null
+ }
+
+ }
+
+SignalDictionaries: null
+SystemGeometry: null
+GraphicalElements: null
+Annotations: null
+ }
+
+Enumerations: null
+Units: null
+DefaultExperiment: TDefaultExperiment()
+
+Annotations: null
+ }
