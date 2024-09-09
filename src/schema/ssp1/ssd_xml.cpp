@@ -99,7 +99,6 @@ namespace ssp4cpp::ssp1::ssd
         get_optional_class(node, "ssd:ParameterBindings", comp.TParameterBindings);
 
         comp.component_type = get_optional_attribute<string>(node, "type");
-
         comp.source = get_attribute<string>(node, "source");
         comp.implementation = get_optional_attribute<string>(node, "implementation");
         get_optional_class(node, "ssc:Annotations", comp.Annotations);
