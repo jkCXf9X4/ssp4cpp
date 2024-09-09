@@ -6,7 +6,7 @@
 #include <vector>
 #include <optional>
 #include <iostream>
-#include <sstream>
+
 
 #include "SystemStructureCommon.hpp"
 
@@ -22,70 +22,6 @@ namespace ssp4cpp::ssp1::ssd
     // Forward declarations
     struct TSystem;
     std::ostream &operator<<(std::ostream &os, const TSystem &sys);
-
-    class SystemGeometry;
-    std::ostream &operator<<(std::ostream &os, const SystemGeometry &obj);
-
-    class ConnectorGeometry;
-    std::ostream &operator<<(std::ostream &os, const ConnectorGeometry &obj);
-
-    class ElementGeometry;
-    std::ostream &operator<<(std::ostream &os, const ElementGeometry &obj);
-
-    class ConnectionGeometry;
-    std::ostream &operator<<(std::ostream &os, const ConnectionGeometry &obj);
-
-    class TSignalDictionaries;
-    std::ostream &operator<<(std::ostream &os, const TSignalDictionaries &obj);
-
-    class TParameterBindings;
-    std::ostream &operator<<(std::ostream &os, const TParameterBindings &obj);
-
-    class GraphicalElements;
-    std::ostream &operator<<(std::ostream &os, const GraphicalElements &obj);
-
-    class TDefaultExperiment;
-    std::ostream &operator<<(std::ostream &os, const TDefaultExperiment &obj);
-
-    class Connection;
-    std::ostream &operator<<(std::ostream &os, const Connection &conn);
-
-    class Connections;
-    std::ostream &operator<<(std::ostream &os, const Connections &conns);
-
-    class Connector;
-    std::ostream &operator<<(std::ostream &os, const Connector &conn);
-
-    class TConnectors;
-    std::ostream &operator<<(std::ostream &os, const TConnectors &conns);
-
-    class TComponent;
-    std::ostream &operator<<(std::ostream &os, const TComponent &comp);
-
-    class TSignalDictionaryReference;
-    std::ostream &operator<<(std::ostream &os, const TSignalDictionaryReference &ref);
-
-    class Elements;
-    std::ostream &operator<<(std::ostream &os, const Elements &elems);
-
-    class SystemStructureDescription;
-    std::ostream &operator<<(std::ostream &os, const SystemStructureDescription &ssd);
-
-    // Templates
-    template <typename T>
-    stringstream print_optional(const optional<T> &opt)
-    {
-        stringstream ss;
-        if (opt)
-        {
-            ss << *opt << endl;
-        }
-        else
-        {
-            ss << "null" << endl;
-        }
-        return ss;
-    }
 
     // Declarations
 
@@ -205,17 +141,17 @@ namespace ssp4cpp::ssp1::ssd
         friend std::ostream &operator<<(std::ostream &os, const Connection &conn)
         {
             os << "Connection {\n"
-               << "startElement: " << print_optional(conn.startElement).str()
+               << "startElement: " << print_optional(conn.startElement)
                << "startConnector: " << conn.startConnector << endl
-               << "endElement: " << print_optional(conn.endElement).str()
+               << "endElement: " << print_optional(conn.endElement)
                << "endConnector: " << conn.endConnector << endl
-               << "suppressUnitConversion: " << print_optional(conn.suppressUnitConversion).str()
-               << "LinearTransformation: " << print_optional(conn.LinearTransformation).str()
-               << "BooleanMappingTransformation: " << print_optional(conn.BooleanMappingTransformation).str()
-               << "IntegerMappingTransformation: " << print_optional(conn.IntegerMappingTransformation).str()
-               << "EnumerationMappingTransformation: " << print_optional(conn.EnumerationMappingTransformation).str()
-               << "ConnectionGeometry: " << print_optional(conn.ConnectionGeometry).str()
-               << "Annotations: " << print_optional(conn.Annotations).str()
+               << "suppressUnitConversion: " << print_optional(conn.suppressUnitConversion)
+               << "LinearTransformation: " << print_optional(conn.LinearTransformation)
+               << "BooleanMappingTransformation: " << print_optional(conn.BooleanMappingTransformation)
+               << "IntegerMappingTransformation: " << print_optional(conn.IntegerMappingTransformation)
+               << "EnumerationMappingTransformation: " << print_optional(conn.EnumerationMappingTransformation)
+               << "ConnectionGeometry: " << print_optional(conn.ConnectionGeometry)
+               << "Annotations: " << print_optional(conn.Annotations)
                << " }" << endl;
             return os;
         }
@@ -261,18 +197,18 @@ namespace ssp4cpp::ssp1::ssd
         friend std::ostream &operator<<(std::ostream &os, const Connector &conn)
         {
             os << "Connector {\n"
-               << "id: " << print_optional(conn.id).str()
-               << "description: " << print_optional(conn.description).str()
+               << "id: " << print_optional(conn.id)
+               << "description: " << print_optional(conn.description)
                << "name: " << conn.name << endl
                << "kind: " << conn.kind << endl
-               << "Real: " << print_optional(conn.Real).str()
-               << "Integer: " << print_optional(conn.Integer).str()
-               << "Boolean: " << print_optional(conn.Boolean).str()
-               << "String: " << print_optional(conn.String).str()
-               << "Enumeration: " << print_optional(conn.Enumeration).str()
-               << "Binary: " << print_optional(conn.Binary).str()
-               << "ConnectorGeometry: " << print_optional(conn.ConnectorGeometry).str()
-               << "Annotations: " << print_optional(conn.Annotations).str()
+               << "Real: " << print_optional(conn.Real)
+               << "Integer: " << print_optional(conn.Integer)
+               << "Boolean: " << print_optional(conn.Boolean)
+               << "String: " << print_optional(conn.String)
+               << "Enumeration: " << print_optional(conn.Enumeration)
+               << "Binary: " << print_optional(conn.Binary)
+               << "ConnectorGeometry: " << print_optional(conn.ConnectorGeometry)
+               << "Annotations: " << print_optional(conn.Annotations)
                << " }" << endl;
             return os;
         }
@@ -317,16 +253,16 @@ namespace ssp4cpp::ssp1::ssd
         friend std::ostream &operator<<(std::ostream &os, const TComponent &comp)
         {
             os << "TComponent {\n"
-               << "id: " << print_optional(comp.id).str()
-               << "description: " << print_optional(comp.description).str()
-               << "name: " << print_optional(comp.name).str()
-               << "Connectors: " << print_optional(comp.Connectors).str()
-               << "ElementGeometry: " << print_optional(comp.ElementGeometry).str()
-               << "TParameterBindings: " << print_optional(comp.TParameterBindings).str()
+               << "id: " << print_optional(comp.id)
+               << "description: " << print_optional(comp.description)
+               << "name: " << print_optional(comp.name)
+               << "Connectors: " << print_optional(comp.Connectors)
+               << "ElementGeometry: " << print_optional(comp.ElementGeometry)
+               << "TParameterBindings: " << print_optional(comp.TParameterBindings)
             //    << "component_type: " << print_optional(comp.component_type)
                << "source: " << comp.source << endl
-               << "implementation: " << print_optional(comp.implementation).str()
-               << "Annotations: " << print_optional(comp.Annotations).str()
+               << "implementation: " << print_optional(comp.implementation)
+               << "Annotations: " << print_optional(comp.Annotations)
                << " }" << endl;
             return os;
         }
@@ -345,10 +281,10 @@ namespace ssp4cpp::ssp1::ssd
         {
             os << "TSignalDictionaryReference {\n"
                << "dictionary: " << ref.dictionary << endl
-               << "Connectors: " << print_optional(ref.Connectors).str()
-               << "ElementGeometry: " << print_optional(ref.ElementGeometry).str()
-               << "TParameterBindings: " << print_optional(ref.TParameterBindings).str()
-               << "Annotations: " << print_optional(ref.Annotations).str()
+               << "Connectors: " << print_optional(ref.Connectors)
+               << "ElementGeometry: " << print_optional(ref.ElementGeometry)
+               << "TParameterBindings: " << print_optional(ref.TParameterBindings)
+               << "Annotations: " << print_optional(ref.Annotations)
                << " }" << endl;
             return os;
         }
@@ -406,18 +342,18 @@ namespace ssp4cpp::ssp1::ssd
         friend std::ostream &operator<<(std::ostream &os, const TSystem &sys)
         {
             os << "TSystem {\n"
-               << "id: " << print_optional(sys.id).str()
-               << "description: " << print_optional(sys.description).str()
-               << "name: " << print_optional(sys.name).str()
-               << "Connectors: " << print_optional(sys.Connectors).str()
-               << "ElementGeometry: " << print_optional(sys.ElementGeometry).str()
-               << "ParameterBindings: " << print_optional(sys.ParameterBindings).str()
-               << "Elements: " << print_optional(sys.Elements).str()
-               << "Connections: " << print_optional(sys.Connections).str()
-               << "SignalDictionaries: " << print_optional(sys.SignalDictionaries).str()
-               << "SystemGeometry: " << print_optional(sys.SystemGeometry).str()
-               << "GraphicalElements: " << print_optional(sys.GraphicalElements).str()
-               << "Annotations: " << print_optional(sys.Annotations).str()
+               << "id: " << print_optional(sys.id)
+               << "description: " << print_optional(sys.description)
+               << "name: " << print_optional(sys.name)
+               << "Connectors: " << print_optional(sys.Connectors)
+               << "ElementGeometry: " << print_optional(sys.ElementGeometry)
+               << "ParameterBindings: " << print_optional(sys.ParameterBindings)
+               << "Elements: " << print_optional(sys.Elements)
+               << "Connections: " << print_optional(sys.Connections)
+               << "SignalDictionaries: " << print_optional(sys.SignalDictionaries)
+               << "SystemGeometry: " << print_optional(sys.SystemGeometry)
+               << "GraphicalElements: " << print_optional(sys.GraphicalElements)
+               << "Annotations: " << print_optional(sys.Annotations)
                << " }\n";
             return os;
         }
@@ -452,20 +388,20 @@ namespace ssp4cpp::ssp1::ssd
             os << "SystemStructureDescription {\n"
                << "version: " << ssd.version << endl
                << "name: " << ssd.name << endl
-               << "id: " << print_optional(ssd.id).str()
-               << "description: " << print_optional(ssd.description).str()
-               << "author: " << print_optional(ssd.author).str()
-               << "fileversion: " << print_optional(ssd.fileversion).str()
-               << "copyright: " << print_optional(ssd.copyright).str()
-               << "license: " << print_optional(ssd.license).str()
-               << "generationTool: " << print_optional(ssd.generationTool).str()
-               << "generationDateAndTime: " << print_optional(ssd.generationDateAndTime).str()
+               << "id: " << print_optional(ssd.id)
+               << "description: " << print_optional(ssd.description)
+               << "author: " << print_optional(ssd.author)
+               << "fileversion: " << print_optional(ssd.fileversion)
+               << "copyright: " << print_optional(ssd.copyright)
+               << "license: " << print_optional(ssd.license)
+               << "generationTool: " << print_optional(ssd.generationTool)
+               << "generationDateAndTime: " << print_optional(ssd.generationDateAndTime)
                << "System: " << endl
                << ssd.System << endl
-               << "Enumerations: " << print_optional(ssd.Enumerations).str()
-               << "Units: " << print_optional(ssd.Units).str()
-               << "DefaultExperiment: " << print_optional(ssd.DefaultExperiment).str()
-               << "Annotations: " << print_optional(ssd.Annotations).str()
+               << "Enumerations: " << print_optional(ssd.Enumerations)
+               << "Units: " << print_optional(ssd.Units)
+               << "DefaultExperiment: " << print_optional(ssd.DefaultExperiment)
+               << "Annotations: " << print_optional(ssd.Annotations)
                << " }\n";
             return os;
         }
