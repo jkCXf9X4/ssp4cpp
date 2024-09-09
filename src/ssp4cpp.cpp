@@ -1,13 +1,12 @@
 
-#include "schema/schema_parser.hpp"
+
 #include "schema/ssp1/SystemStructureDescription.hpp"
-#include "schema/ssp1/xml_functions.hpp"
-#include "schema/ssp1/operators.hpp"
+#include "ssp4cpp.hpp"
 
 #include <pugixml.hpp>
-#include <sstream>
-#include <stdexcept>
 #include <iostream>
+
+#include "ssd_xml.hpp"
 
 namespace ssp4cpp::ssp1::ssd
 {
@@ -27,7 +26,7 @@ namespace ssp4cpp::ssp1::ssd
 
         from_xml(root, ssd);
 
-        cout << ssd;
+        // cout << ssd;
 
         return ssd;
     }

@@ -1,9 +1,11 @@
+#pragma once
 
-// #include "xml_misc.hpp"
 #include <pugixml.hpp>
+
 #include <optional>
 #include <stdexcept>
 #include <string>
+#include <iostream>
 
 namespace ssp4cpp::xml
 {
@@ -104,4 +106,24 @@ namespace ssp4cpp::xml
         return {};
     }
 
+    template <typename T>
+    void get_optional_class(const pugi::xml_node &node, const char *name, optional<T> &obj)
+    {
+        if (auto child = node.child(name))
+        {
+            obj = T(); // check!
+            from_xml(child, *obj);
+        }
+    }
+
+    template <typename T>
+    void get_vector(const pugi::xml_node &node, const char *name, vector<T> &list)
+    {
+        for (auto child : node.children(name))
+        {
+            T t;
+            from_xml(child, t);
+            list.push_back(t);
+        }
+    }
 }
