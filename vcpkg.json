@@ -1,6 +1,8 @@
 {
   "dependencies": [
     "boost-log",
+    "boost-graph",
+    "fmi4cpp",
     "libzip",
     "pugixml"
   ]

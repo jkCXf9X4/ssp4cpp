@@ -9,5 +9,5 @@ set(CMAKE_CXX_STANDARD 17)
 project(ssp4cpp)
 
 add_subdirectory(src)
-add_subdirectory(test)
+add_subdirectory(graph_analysis)
 
