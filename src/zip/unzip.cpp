@@ -9,10 +9,12 @@
 #include <string>
 #include <vector>
 
+// from https://github.com/NTNU-IHB/FMI4cpp/blob/master/src/fmi4cpp/tools/unzipper.hpp
+
 namespace ssp4cpp::zip_ns
 {
 
-    namespace fs=std::filesystem;
+    namespace fs = std::filesystem;
 
     bool unzip(fs::path &file, const fs::path &tmp_path)
     {
@@ -24,9 +26,7 @@ namespace ssp4cpp::zip_ns
         }
 
         struct zip_file *zf;
-        // clang-format off
-    struct zip_stat sb{};
-        // clang-format on
+        struct zip_stat sb{};
 
         const int bufferSize = 1000;
         std::vector<char> contents(bufferSize);

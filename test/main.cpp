@@ -22,7 +22,5 @@ int main()
     myfile.close();
 
 
-    // cout << endl << ssd << endl;
-
     cout << "Parsing complete\n";
 }
