@@ -1,4 +1,4 @@
-
+#include <boost/log/trivial.hpp>
 
 #include "schema/ssp1/SystemStructureDescription.hpp"
 #include "ssp_import.hpp"
@@ -17,7 +17,9 @@ namespace ssp4cpp::ssp1
 {
     SspImport::SspImport(const path &file) : original_file(file)
     {
+        BOOST_LOG_TRIVIAL(trace) << "Importing ssp: " << file << std::endl;
         temp_dir = import_ssp(file.string()).value();
+        
         ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
 
         auto elements = ssd.System.Elements;
@@ -62,15 +64,16 @@ namespace ssp4cpp::ssp1
         auto ssp_file = fs::path(fileName);
         if (!fs::exists(ssp_file))
         {
-            cout << "File does not exist";
+            BOOST_LOG_TRIVIAL(warning) << "File does not exist: " << fileName << "  " << std::endl;
             return nullopt;
         }
 
         std::string tmp_folder = std::tmpnam(nullptr);
+        BOOST_LOG_TRIVIAL(debug) << "Temp folder: " << tmp_folder << endl;
         cout << "Temp folder: " << tmp_folder << endl;
 
         auto temp_dir = fs::path(tmp_folder.append("-ssp"));
-        cout << "Temp dir: " << temp_dir << endl;
+        BOOST_LOG_TRIVIAL(debug) << "Temp dir: " << temp_dir << endl;
 
         fs::create_directory(temp_dir);
 

@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(ssp4cpp)
 
+add_subdirectory(3rdParty)
+
 add_subdirectory(src)
-add_subdirectory(graph_analysis)
+add_subdirectory(test/graph_analysis)
 

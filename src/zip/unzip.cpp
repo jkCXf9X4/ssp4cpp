@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include <boost/log/trivial.hpp>
+
 // from https://github.com/NTNU-IHB/FMI4cpp/blob/master/src/fmi4cpp/tools/unzipper.hpp
 
 namespace ssp4cpp::zip_ns
@@ -18,6 +20,8 @@ namespace ssp4cpp::zip_ns
 
     bool unzip(fs::path &file, const fs::path &tmp_path)
     {
+        BOOST_LOG_TRIVIAL(trace) << "Unzipping " << file << std::endl;
+
         int *err = nullptr;
         zip *za = zip_open(absolute(file).string().c_str(), 0, err);
         if (za == nullptr)
@@ -71,6 +75,8 @@ namespace ssp4cpp::zip_ns
             }
         }
         zip_close(za);
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed Unzipping " << file << std::endl;
 
         return true;
     }

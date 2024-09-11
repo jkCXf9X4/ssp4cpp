@@ -6,11 +6,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include/schema/ssp1)
 add_executable(ssp4cpp_graph main.cpp)
 target_link_libraries(ssp4cpp_graph PRIVATE ssp4cpp)
 
-find_package(libzip CONFIG REQUIRED)
-target_link_libraries(ssp4cpp_graph PRIVATE libzip::zip)
-
-find_package(fmi4cpp CONFIG REQUIRED)
-target_link_libraries(ssp4cpp_graph PRIVATE fmi4cpp::fmi4cpp)
+target_link_libraries(ssp4cpp_graph PRIVATE ssp4cpp::3rd::fmi4c)
 
 find_package(boost_log REQUIRED CONFIG)
 target_link_libraries(ssp4cpp_graph PRIVATE Boost::log)
