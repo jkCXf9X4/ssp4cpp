@@ -26,9 +26,9 @@ namespace ssp4cpp::ssp1::ssc
 {
     using namespace std;
 
-    class Annotation
+    struct Annotation
     {
-    public:
+    
         optional<string> annotation_type;
         optional<string> any;
 
@@ -40,9 +40,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class TAnnotations
+    struct TAnnotations
     {
-    public:
+    
         vector<Annotation> list;
 
         friend ostream &operator<<(ostream &os, const TAnnotations &obj)
@@ -57,9 +57,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class BooleanMapEntry
+    struct BooleanMapEntry
     {
-    public:
+    
         bool source;
         bool target;
 
@@ -70,9 +70,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class BooleanMappingTransformation
+    struct BooleanMappingTransformation
     {
-    public:
+    
         vector<BooleanMapEntry> list;
 
         friend ostream &operator<<(ostream &os, const BooleanMappingTransformation &obj)
@@ -88,9 +88,9 @@ namespace ssp4cpp::ssp1::ssc
         
     };
 
-    class IntegerMapEntry
+    struct IntegerMapEntry
     {
-    public:
+    
         int source;
         int target;
 
@@ -101,9 +101,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class IntegerMappingTransformation
+    struct IntegerMappingTransformation
     {
-    public:
+    
         vector<IntegerMapEntry> list;
 
         friend ostream &operator<<(ostream &os, const IntegerMappingTransformation &obj)
@@ -118,9 +118,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class EnumerationMapEntry
+    struct EnumerationMapEntry
     {
-    public:
+    
         string source;
         string target;
 
@@ -131,9 +131,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class EnumerationMappingTransformation
+    struct EnumerationMappingTransformation
     {
-    public:
+    
         vector<EnumerationMapEntry> list;
 
         friend ostream &operator<<(ostream &os, const EnumerationMappingTransformation &obj)
@@ -148,9 +148,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class TEnumerations
+    struct TEnumerations
     {
-    public:
+    
         friend ostream &operator<<(ostream &os, const TEnumerations &obj)
         {
             os << "TEnumerations()";
@@ -158,9 +158,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class BaseUnit
+    struct BaseUnit
     {
-    public:
+    
         optional<int> kg;
         optional<int> m;
         optional<int> s;
@@ -183,9 +183,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class TUnits
+    struct TUnits
     {
-    public:
+    
         optional<string> id;
         optional<string> description;
         string name;
@@ -201,9 +201,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class GTypeReal
+    struct GTypeReal
     {
-    public:
+    
         optional<string> unit;
 
         friend ostream &operator<<(ostream &os, const GTypeReal &obj)
@@ -213,9 +213,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class GTypeInteger
+    struct GTypeInteger
     {
-    public:
+    
         friend ostream &operator<<(ostream &os, const GTypeInteger &obj)
         {
             os << "GTypeInteger()";
@@ -223,9 +223,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class GTypeBoolean
+    struct GTypeBoolean
     {
-    public:
+    
         friend ostream &operator<<(ostream &os, const GTypeBoolean &obj)
         {
             os << "GTypeBoolean()";
@@ -233,9 +233,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class GTypeString
+    struct GTypeString
     {
-    public:
+    
         friend ostream &operator<<(ostream &os, const GTypeString &obj)
         {
             os << "GTypeString()";
@@ -243,9 +243,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class GTypeEnumeration
+    struct GTypeEnumeration
     {
-    public:
+    
         optional<string> name;
 
         friend ostream &operator<<(ostream &os, const GTypeEnumeration &obj)
@@ -255,9 +255,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class GTypeBinary
+    struct GTypeBinary
     {
-    public:
+    
         optional<string> mime_type;
 
         friend ostream &operator<<(ostream &os, const GTypeBinary &obj)
@@ -267,9 +267,9 @@ namespace ssp4cpp::ssp1::ssc
         }
     };
 
-    class LinearTransformation
+    struct LinearTransformation
     {
-    public:
+    
         optional<double> factor;
         optional<double> offset;
 

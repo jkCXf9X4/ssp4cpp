@@ -24,8 +24,8 @@ namespace ssp4cpp::ssp1::ssd
 
     // Declarations
 
-    // Geometry related classes
-    class SystemGeometry
+    // Geometry related structes
+    struct SystemGeometry
     {
         friend ostream &operator<<(ostream &os, const SystemGeometry &obj)
         {
@@ -34,7 +34,7 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class ConnectorGeometry
+    struct ConnectorGeometry
     {
         friend ostream &operator<<(ostream &os, const ConnectorGeometry &obj)
         {
@@ -43,7 +43,7 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class ElementGeometry
+    struct ElementGeometry
     {
         friend ostream &operator<<(ostream &os, const ElementGeometry &obj)
         {
@@ -52,7 +52,7 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class ConnectionGeometry
+    struct ConnectionGeometry
     {
         friend ostream &operator<<(ostream &os, const ConnectionGeometry &obj)
         {
@@ -61,7 +61,7 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class TSignalDictionaries
+    struct TSignalDictionaries
     {
         friend ostream &operator<<(ostream &os, const TSignalDictionaries &obj)
         {
@@ -70,7 +70,7 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class TParameterBindings
+    struct TParameterBindings
     {
         friend ostream &operator<<(ostream &os, const TParameterBindings &obj)
         {
@@ -79,7 +79,7 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class GraphicalElements
+    struct GraphicalElements
     {
         friend ostream &operator<<(ostream &os, const GraphicalElements &obj)
         {
@@ -88,7 +88,7 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class TDefaultExperiment
+    struct TDefaultExperiment
     {
         friend ostream &operator<<(ostream &os, const TDefaultExperiment &obj)
         {
@@ -97,9 +97,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class Connection
+    struct Connection
     {
-    public:
+    
         optional<string> startElement;
         string startConnector;
         optional<string> endElement;
@@ -131,9 +131,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class Connections
+    struct Connections
     {
-    public:
+    
         vector<Connection> list;
 
         friend std::ostream &operator<<(std::ostream &os, const Connections &conns)
@@ -148,9 +148,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class Connector
+    struct Connector
     {
-    public:
+    
         optional<string> id;
         optional<string> description;
 
@@ -188,9 +188,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class TConnectors
+    struct TConnectors
     {
-    public:
+    
         vector<Connector> list;
 
         friend std::ostream &operator<<(std::ostream &os, const TConnectors &conns)
@@ -205,9 +205,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class TComponent
+    struct TComponent
     {
-    public:
+    
         // TElement
         // - ABaseElement
         optional<string> id;
@@ -242,9 +242,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class TSignalDictionaryReference
+    struct TSignalDictionaryReference
     {
-    public:
+    
         string dictionary;
         optional<ssd::TConnectors> Connectors;
         optional<ssd::ElementGeometry> ElementGeometry;
@@ -264,9 +264,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class Elements
+    struct Elements
     {
-    public:
+    
         vector<ssd::TComponent> components;
         vector<ssd::TSignalDictionaryReference> signal_dictionary_references;
         vector<ssd::TSystem> systems;
@@ -293,9 +293,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class TSystem
+    struct TSystem
     {
-    public:
+    
         optional<string> id;
         optional<string> description;
 
@@ -333,9 +333,9 @@ namespace ssp4cpp::ssp1::ssd
         }
     };
 
-    class SystemStructureDescription
+    struct SystemStructureDescription
     {
-    public:
+    
         string version;
         string name;
 

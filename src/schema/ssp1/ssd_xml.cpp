@@ -25,6 +25,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const pugi::xml_node &node, GraphicalElements &elements) {}
 
     void from_xml(const pugi::xml_node &node, ConnectorGeometry &geometry) {}
+    
     void from_xml(const pugi::xml_node &node, ConnectionGeometry &geometry) {}
 
     void from_xml(const pugi::xml_node &node, Connections &connections)
