@@ -13,6 +13,7 @@
 // #include <boost/graph/strong_components.hpp>
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graphviz.hpp>
 
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
@@ -78,11 +79,17 @@ int main()
         }
     }
 
-    typedef adjacency_list<vecS, vecS, boost::directedS> Graph;
+    typedef adjacency_list<vecS, vecS, boost::directedS, property< vertex_name_t, std::string >> Graph;
     // typedef std::pair<int, int> Edge;
 
     cout << "Connectors: " << connector_map.size() << endl;
     Graph g(connector_map.size());
+
+
+    for (auto [name, index] : connector_map)
+    {
+        boost::put(boost::vertex_name_t(), g, index, name);
+    }
 
     for (auto connection : ssp.ssd.System.Connections.value().list)
     {
@@ -92,6 +99,8 @@ int main()
         add_edge(connector_map[start], connector_map[end], g);
         cout << connector_map[start] << " -> " << connector_map[end] << endl;
     }
+
+    boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
 
 
     //     startElement: AdaptionUnit

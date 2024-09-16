@@ -14,17 +14,13 @@ namespace ssp4cpp::ssp1::ssd
     using namespace std;
     using namespace ssp4cpp::ssp1;
 
-    // // Forward declarations
-    // struct TSystem;
-    // std::ostream &operator<<(std::ostream &os, const TSystem &sys);
-
     // Forward declarations
     struct TSystem;
     std::ostream &operator<<(std::ostream &os, const TSystem &sys);
 
     // Declarations
 
-    // Geometry related structes
+    // Geometry related structures
     struct SystemGeometry
     {
         friend ostream &operator<<(ostream &os, const SystemGeometry &obj)

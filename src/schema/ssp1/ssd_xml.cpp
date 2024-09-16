@@ -5,30 +5,32 @@
 #include "ssc_xml.hpp"
 #include "ssd_xml.hpp"
 
-#include "xml_helpers.hpp"
+#include "xml_deserialize.hpp"
 
-using namespace std;
-using namespace ssp4cpp::xml;
 
 namespace ssp4cpp::ssp1::ssd
 {
-    void from_xml(const pugi::xml_node &node, ElementGeometry &geometry) {}
+    using namespace std;
+    using namespace pugi;
+    using namespace ssp4cpp::xml;
 
-    void from_xml(const pugi::xml_node &node, TDefaultExperiment &experiment) {}
+    void from_xml(const xml_node &node, ElementGeometry &geometry) {}
 
-    void from_xml(const pugi::xml_node &node, TParameterBindings &bindings) {}
+    void from_xml(const xml_node &node, TDefaultExperiment &experiment) {}
 
-    void from_xml(const pugi::xml_node &node, TSignalDictionaries &dictionaries) {}
+    void from_xml(const xml_node &node, TParameterBindings &bindings) {}
 
-    void from_xml(const pugi::xml_node &node, SystemGeometry &geometry) {}
+    void from_xml(const xml_node &node, TSignalDictionaries &dictionaries) {}
 
-    void from_xml(const pugi::xml_node &node, GraphicalElements &elements) {}
+    void from_xml(const xml_node &node, SystemGeometry &geometry) {}
 
-    void from_xml(const pugi::xml_node &node, ConnectorGeometry &geometry) {}
-    
-    void from_xml(const pugi::xml_node &node, ConnectionGeometry &geometry) {}
+    void from_xml(const xml_node &node, GraphicalElements &elements) {}
 
-    void from_xml(const pugi::xml_node &node, Connections &connections)
+    void from_xml(const xml_node &node, ConnectorGeometry &geometry) {}
+
+    void from_xml(const xml_node &node, ConnectionGeometry &geometry) {}
+
+    void from_xml(const xml_node &node, Connections &connections)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connections" << std::endl;
 
@@ -37,7 +39,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed Connections" << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, Connection &connection)
+    void from_xml(const xml_node &node, Connection &connection)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connection" << std::endl;
 
@@ -56,7 +58,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed Connection" << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, TConnectors &connectors)
+    void from_xml(const xml_node &node, TConnectors &connectors)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TConnectors" << std::endl;
 
@@ -65,7 +67,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed TConnectors" << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, Connector &conn)
+    void from_xml(const xml_node &node, Connector &conn)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connector" << std::endl;
 
@@ -87,7 +89,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed Connector" << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, TComponent &comp)
+    void from_xml(const xml_node &node, TComponent &comp)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TComponent" << std::endl;
 
@@ -107,7 +109,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed TComponent: " << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, TSignalDictionaryReference &ref)
+    void from_xml(const xml_node &node, TSignalDictionaryReference &ref)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TSignalDictionaryReference" << std::endl;
 
@@ -120,7 +122,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed TSignalDictionaryReference" << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, Elements &elements)
+    void from_xml(const xml_node &node, Elements &elements)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Elements" << std::endl;
 
@@ -131,7 +133,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed Elements" << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, TSystem &sys)
+    void from_xml(const xml_node &node, TSystem &sys)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TSystem" << std::endl;
 
@@ -153,7 +155,7 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed TSystem" << std::endl;
     }
 
-    void from_xml(const pugi::xml_node &node, SystemStructureDescription &desc)
+    void from_xml(const xml_node &node, SystemStructureDescription &desc)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SystemStructureDescription" << std::endl;
 
