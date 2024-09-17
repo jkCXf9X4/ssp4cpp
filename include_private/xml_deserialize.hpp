@@ -62,23 +62,6 @@ namespace ssp4cpp::xml
     }
 
     template <typename T>
-    optional<T> get_child_value(const xml_node &node, const char *name)
-    {
-        return node.child(name).text().as_string();
-    }
-
-    template <typename T>
-    optional<T> get_optional_child_value(const xml_node &node, const char *name)
-    {
-        auto child = node.child(name);
-        if (child)
-        {
-            return child.text().as_string();
-        }
-        return {};
-    }
-
-    template <typename T>
     void get_optional_class(const xml_node &node, const char *name, optional<T> &obj)
     {
         if (auto child = node.child(name))

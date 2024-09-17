@@ -11,7 +11,7 @@ std::string to_string_optional(const std::optional<T> &opt)
 {
     if (opt)
     {
-        return to_string(*opt) + "\n";
+        return to_string(opt.value()) + "\n";
     }
     else
     {
