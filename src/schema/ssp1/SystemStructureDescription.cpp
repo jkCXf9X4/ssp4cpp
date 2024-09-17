@@ -118,7 +118,7 @@ namespace ssp4cpp::ssp1::ssd
                "Connectors: " + to_string_optional(comp.Connectors) +
                "ElementGeometry: " + to_string_optional(comp.ElementGeometry) +
                "TParameterBindings: " + to_string_optional(comp.TParameterBindings) +
-               "component_type: " + comp.component_type.value_or("null") + "\n" +
+               "component_type: " + comp.component_type_str.value_or("null") + "\n" +
                "source: " + comp.source + "\n" +
                "implementation: " + comp.implementation.value_or("null") + "\n" +
                "Annotations: " + to_string_optional(comp.Annotations) +

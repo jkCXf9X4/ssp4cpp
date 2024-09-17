@@ -5,6 +5,8 @@
 #include <optional>
 #include <iostream>
 
+#include "common_enums.hpp"
+
 namespace ssp4cpp::ssp1::ssc
 {
     using namespace std;

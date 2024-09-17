@@ -22,6 +22,7 @@ namespace ssp4cpp::ssp1
 
         friend ostream &operator<<(ostream &os, const SspResource &obj)
         {
+            // string type = obj.type.has_value() ? to_string(obj.type.value()) : "null";
             os << "SspResource { \n"
                << "type: " << obj.type.value_or("null") << endl
                << "name: " << obj.name.value_or("null") << endl

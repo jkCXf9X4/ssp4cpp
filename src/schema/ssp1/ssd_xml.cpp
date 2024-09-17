@@ -7,7 +7,6 @@
 
 #include "xml_deserialize.hpp"
 
-
 namespace ssp4cpp::ssp1::ssd
 {
     using namespace std;
@@ -101,7 +100,9 @@ namespace ssp4cpp::ssp1::ssd
         get_optional_class(node, "ssd:ElementGeometry", comp.ElementGeometry);
         get_optional_class(node, "ssd:ParameterBindings", comp.TParameterBindings);
 
-        comp.component_type = get_optional_attribute<string>(node, "type");
+        comp.component_type_str = get_optional_attribute<string>(node, "type");
+        comp.component_type = get_optional_attribute<ComponentType>(node, "type");
+
         comp.source = get_attribute<string>(node, "source");
         comp.implementation = get_optional_attribute<string>(node, "implementation");
         get_optional_class(node, "ssc:Annotations", comp.Annotations);

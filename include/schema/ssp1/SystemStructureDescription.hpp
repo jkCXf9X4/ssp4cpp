@@ -5,6 +5,7 @@
 #include <optional>
 #include <iostream>
 
+#include "common_enums.hpp"
 #include "SystemStructureCommon.hpp"
 
 namespace ssp4cpp::ssp1::ssd
@@ -111,7 +112,8 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssd::TConnectors> Connectors;
         optional<ssd::ElementGeometry> ElementGeometry;
         optional<ssd::TParameterBindings> TParameterBindings;
-        optional<string> component_type;
+        optional<string> component_type_str;
+        optional<ComponentType> component_type;
         string source;
         optional<string> implementation;
         optional<ssc::TAnnotations> Annotations;

@@ -8,6 +8,8 @@
 #include <iostream>
 #include <vector>
 
+#include "common_enums.hpp"
+
 // deserialize xml to object
 
 namespace ssp4cpp::xml
@@ -37,6 +39,11 @@ namespace ssp4cpp::xml
         else if constexpr (is_same_v<T, string>)
         {
             return node.attribute(name.c_str()).as_string();
+        }
+        else if constexpr (is_same_v<T, ssp4cpp::ssp1::ssd::ComponentType>)
+        {
+            auto s = node.attribute(name.c_str()).as_string();
+            return ssp4cpp::ssp1::ssd::from_string(s);
         }
         else
         {

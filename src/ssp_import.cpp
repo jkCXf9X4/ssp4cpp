@@ -29,7 +29,7 @@ namespace ssp4cpp::ssp1
             for (auto comp : elements.value().components)
             {
                 SspResource res;
-                res.type = comp.component_type;
+                res.type = comp.component_type_str;
                 res.name = comp.name;
                 res.file = temp_dir / comp.source;
                 resources.push_back(res);
