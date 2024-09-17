@@ -3,6 +3,7 @@
     "boost-log",
     "boost-graph",
     "libzip",
-    "pugixml"
+    "pugixml",
+    "fmi4cpp"
   ]
 }

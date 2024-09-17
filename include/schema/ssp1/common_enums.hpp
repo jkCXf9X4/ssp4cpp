@@ -15,6 +15,7 @@ namespace ssp4cpp::ssp1::ssd
         ssp, // application/x-ssp-package
     };
     string to_string(const ComponentType &obj);
+    
     ComponentType from_string(const string &str);
 
 }

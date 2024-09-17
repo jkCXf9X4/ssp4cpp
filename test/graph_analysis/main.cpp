@@ -19,12 +19,13 @@
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
 
-#include "fmi4c.h"
+#include <fmi4cpp/fmi4cpp.hpp>
 
 #include <list>
 
 using namespace std;
 using namespace boost;
+using namespace fmi4cpp;
 
 int main()
 {
@@ -47,33 +48,56 @@ int main()
     myfile.close();
 
     // Parsing FMI
-    auto fmus = vector<fmiHandle*>();
+    auto fmus = vector<fmi2::fmu>();
+
+    auto fmu_name_to_ssp_name = map<string, string>();
 
     for (int i = 0; i < ssp.resources.size(); i++)
-    {   
-        auto r = ssp.resources[i];
-        auto fmu = fmi4c_loadFmu(r.file.c_str(), r.name.value().c_str());
+    {
+        auto resource = ssp.resources[i];
+        auto fmu = fmi2::fmu(resource.file.c_str());
 
-        if (!fmu)
-        {
-            printf("Failed to load FMU\n");
-            exit(1);
-        }
-        cout << "Creating FMU " << i << " : " << r.name.value_or("null") << endl;
-        cout << "Version " << fmi4c_getFmiVersion(fmu) << endl;
+        // auto cs_fmu = fmu.as_cs_fmu();
+
+        cout << "Creating FMU " << i << " : " << resource.name.value_or("null") << endl;
+        cout << "Creating FMU " << i << " : " << fmu.model_name() << endl;
+
+        fmu_name_to_ssp_name[fmu.model_name()] = resource.name.value_or("null");
+        // auto cs_md = cs_fmu->get_model_description(); //smart pointer to a cs_model_description instance
+        // std::cout << "model_identifier=" << cs_md->model_identifier << std::endl;
 
         fmus.push_back(fmu);
     }
 
     for (auto fmu : fmus)
     {
-        cout << fmi2_getModelName(fmu) << endl;
+        cout << fmu.model_name() << endl;
+        auto md = fmu.get_model_description();
+        for (auto output : md->model_structure->outputs)
+        {
+            cout << "Index: " << output.index << endl;
+            if (output.dependencies.has_value())
+            {
+                for (int i = 0; i < output.dependencies.value().size(); i++)
+                {
+                    // cout << i << " : " << output.dependencies.value()[i] << endl;
+                    cout << output.dependencies.value()[i] << " : " << output.dependencies_kind.value()[i] << endl;
+                    if (output.dependencies_kind.value()[i] == "dependent")
+                    {
+                        cout << "Dependent" << endl;
+                    }
+                    else
+                    {
+                        cout << "Independent" << endl;
+                    }
+                }   
+            }
+        }
         // cout << fmi2_getNumberOfModelStructureOutputs(fmu) << endl;
         // fmi4c_freeFmu(fmu);
     }
-    return 0;
+    // return 0;
 
-    
     map<string, int> connector_map;
     {
         int connector_index = 0;
@@ -93,7 +117,7 @@ int main()
         }
     }
 
-    typedef adjacency_list<vecS, vecS, boost::directedS, property< vertex_name_t, std::string >> Graph;
+    typedef adjacency_list<vecS, vecS, boost::directedS, property<vertex_name_t, std::string>> Graph;
     // typedef std::pair<int, int> Edge;
 
     cout << "Connectors: " << connector_map.size() << endl;
@@ -113,10 +137,7 @@ int main()
         // cout << connector_map[start] << " -> " << connector_map[end] << endl;
     }
 
-    boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
-
-
-
+    // boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
 
     //     startElement: AdaptionUnit
     // startConnector: sWsignals.TLiquid
