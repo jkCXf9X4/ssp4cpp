@@ -15,7 +15,7 @@ id: null
 description: null
 name: root
 Connectors: nullElementGeometry: nullParameterBindings: TParameterBindings()Elements: Elements {
-components {
+components: {
 TComponent {
 id: null
 description: null
@@ -1518,13 +1518,12 @@ component_type: application/x-fmu-sharedlibrary
 source: resources/0005_AdaptionUnit.fmu
 implementation: null
 Annotations: null }
-} 
-signal_dictionary_references {
-} 
-systems {
 }
+signal_dictionary_references: {
 }
-Connections: Connections { 
+systems: {
+}
+ }Connections: Connections { 
 Connection {
 startElement: Consumer
 startConnector: consumerFeed.p

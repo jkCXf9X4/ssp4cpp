@@ -137,25 +137,15 @@ namespace ssp4cpp::ssp1::ssd
                " }";
     }
 
+
+
     string to_string(const Elements &elems)
     {
-        string result = "Elements {\ncomponents {\n";
-        for (const auto &comp : elems.components)
-        {
-            result += to_string(comp) + "\n";
-        }
-        result += "} \nsignal_dictionary_references {\n";
-        for (const auto &ref : elems.signal_dictionary_references)
-        {
-            result += to_string(ref) + "\n";
-        }
-        result += "} \nsystems {\n";
-        for (const auto &sys : elems.systems)
-        {
-            result += to_string(sys) + "\n";
-        }
-        result += "}\n}\n";
-        return result;
+        return "Elements {\n"
+               "components: " + to_string_vector(elems.components) +
+               "signal_dictionary_references: " + to_string_vector(elems.signal_dictionary_references) +
+               "systems: " + to_string_vector(elems.systems) +
+               " }";
     }
 
     string to_string(const TSystem &sys)

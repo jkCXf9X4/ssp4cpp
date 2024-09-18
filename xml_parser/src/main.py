@@ -19,30 +19,24 @@ class ClassExporter:
         self.variable_nodes : List[VariableNode] = class_node.children
         self.indent = indent
 
-    @classmethod
-    def variable_to_string(cls, variable : VariableNode):
+    def variable_to_string(self, variable : VariableNode):
 
         def get_right_side():
             if variable.optional:
                 if variable.is_primitive:
-                    return f"obj.{variable.name}.value_or({default_values[variable.type]})"
-                else:
-                    return f"obj.{variable.name}.value_or(\"null\")"
-            else:
-                return f"obj.{variable.name})"
+                    return f"to_string(          obj.{variable.name}.value_or({default_values[variable.type]}) )"
+                else: # complex type
+                    return f"to_string_optional( obj.{variable.name} )"
+            else: 
+                return f"to_string(          obj.{variable.name}) )"
+
+        longest_name = max([len(v.name) for v in self.variable_nodes])
 
         if variable.list: 
-            return f"""\
-string s = "{variable.name} {{\\n";
-for (const auto &item : obj.{variable.name})
-{{
-    s += to_string(item) + "\\n";
-}}
-s += "}};
-"""
+            return f""" {variable.name.ljust(longest_name +3)}: " + to_string_vector(obj.{variable.name.ljust(longest_name + 4) }) + "\\n" +"""
 
         else:
-            return f""""{variable.name.ljust(30)}: " + to_string( {get_right_side().ljust(45)} ) + "\\n" +"""
+            return f""""{variable.name.ljust(longest_name +3)}: " + {get_right_side().ljust(longest_name + 40 )} + "\\n" +"""
 
     def generate_class_to_string(self):
         variables = [self.variable_to_string(v) for v in self.variable_nodes]
