@@ -4,6 +4,7 @@
 #include <cassert>
 
 #include "ssp_import.hpp"
+#include "fmi_import.hpp"
 
 #include <boost/config.hpp>
 #include <vector>
@@ -54,6 +55,13 @@ int main()
 
     for (int i = 0; i < ssp.resources.size(); i++)
     {
+
+        auto fmi = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
+        cout << fmi.md.to_string() << endl;
+
+        return 0;
+
+
         auto resource = ssp.resources[i];
         auto fmu = fmi2::fmu(resource.file.c_str());
 

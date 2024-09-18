@@ -2,6 +2,7 @@
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema/ssp1)
+include_directories(${PROJECT_SOURCE_DIR}/include/schema/fmi2)
 
 add_executable(ssp4cpp_graph main.cpp)
 target_link_libraries(ssp4cpp_graph PRIVATE ssp4cpp)

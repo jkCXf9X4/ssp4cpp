@@ -33,3 +33,9 @@ cmake --build build &> build.log && ./build/test/ssp4cpp_test
 # Credits
 
 Heavily inspired by FMI4cpp https://github.com/NTNU-IHB/FMI4cpp, credit where credit is due
+
+
+create venv
+
+python3 -m venv .venv
+source ./.venv/bin/activate
