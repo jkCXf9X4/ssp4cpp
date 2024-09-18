@@ -19,6 +19,7 @@ namespace ssp4cpp::fmi2
         optional<double> tolerance;
         optional<double> stepSize;
     };
+    string to_string(const DefaultExperiment &obj);
 
     class fmi2ModelDescription
     {
@@ -49,6 +50,7 @@ namespace ssp4cpp::fmi2
         // ModelVariables ModelVariables;
         // ModelStructure ModelStructure;
 
-        string to_string();
     };
+    
+    string to_string(const fmi2ModelDescription &obj);
 }

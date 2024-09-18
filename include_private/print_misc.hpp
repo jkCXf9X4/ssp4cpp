@@ -11,10 +11,10 @@ std::string to_string_optional(const std::optional<T> &opt)
 {
     if (opt)
     {
-        return to_string(opt.value()) + "\n";
+        return to_string(opt.value());
     }
     else
     {
-        return "null\n";
+        return "null";
     }
 }

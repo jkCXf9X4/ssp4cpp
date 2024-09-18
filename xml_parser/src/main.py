@@ -7,42 +7,56 @@ def indent_strings(indent, string):
     return "\n".join([f"{indent}{line}" for line in string.split("\n")])
 
 
-class Class:
+default_values = {"string": "null", "int": "0", "float": "0.0", "bool": "false"}
 
-    def __init__(self, class_node : ClassNode):
+
+
+
+class ClassExporter:
+
+    def __init__(self, class_node : ClassNode, indent="    "):
         self.class_node = class_node
         self.variable_nodes : List[VariableNode] = class_node.children
+        self.indent = indent
 
     @classmethod
     def variable_to_string(cls, variable : VariableNode):
-        if variable.list:
-            return f"\"{variable.name}: \" + to_string({variable.name})"
-        elif variable.optional:
-            return f"\"{variable.name}: \" + {variable.name}.value_or(\"null\")"
+
+        def get_right_side():
+            if variable.optional:
+                if variable.is_primitive:
+                    return f"obj.{variable.name}.value_or({default_values[variable.type]})"
+                else:
+                    return f"obj.{variable.name}.value_or(\"null\")"
+            else:
+                return f"obj.{variable.name})"
+
+        if variable.list: 
+            return f"""\
+string s = "{variable.name} {{\\n";
+for (const auto &item : obj.{variable.name})
+{{
+    s += to_string(item) + "\\n";
+}}
+s += "}};
+"""
+
         else:
-            return f"\"{variable.name}: \" + {variable.name}"
+            return f""""{variable.name.ljust(30)}: " + to_string( {get_right_side().ljust(45)} ) + "\\n" +"""
 
     def generate_class_to_string(self):
-        out = ""
+        variables = [self.variable_to_string(v) for v in self.variable_nodes]
+        variables = "\n".join(variables)
+        variables = indent_strings("           ", variables)
 
-        """
-    string to_string(const Connection &obj)
-    {
-        return "Connection {\n" 
-               "startElement: " + conn.startElement.value_or("null") + "\n" +
-               "startConnector: " + conn.startConnector + "\n" +
-               "endElement: " + conn.endElement.value_or("null") + "\n" +
-               "endConnector: " + conn.endConnector + "\n" +
-               "suppressUnitConversion: " + std::to_string(conn.suppressUnitConversion.value_or(false)) +
-               "LinearTransformation: " + to_string_optional(conn.LinearTransformation) +
-               "BooleanMappingTransformation: " + to_string_optional(conn.BooleanMappingTransformation) +
-               "IntegerMappingTransformation: " + to_string_optional(conn.IntegerMappingTransformation) +
-               "EnumerationMappingTransformation: " + to_string_optional(conn.EnumerationMappingTransformation) +
-               "ConnectionGeometry: " + to_string_optional(conn.ConnectionGeometry) +
-               "Annotations: " + to_string_optional(conn.Annotations) +
-               " }";
-    }
-        """
+        template = f"""string to_string(const {self.class_node.name} &obj)
+{{
+    return "{self.class_node.name} {{ \\n"
+{variables}
+           "}}";
+}}
+"""
+        return template
 
 
     @classmethod
@@ -57,7 +71,7 @@ class Class:
     def generate_class(self):
         variables = [self.generate_variable_declaration(v) for v in self.variable_nodes]
         variables = "\n".join(variables)
-        variables = indent_strings("    ", variables)
+        variables = indent_strings(self.indent, variables)
             
 
         class_template = f"""class {self.class_node.name}
@@ -69,7 +83,7 @@ string to_string()
 }};
 string to_string(const {self.class_node.name} &obj);
 """
-        print(class_template)
+        return class_template
 
 
 def main():
@@ -88,8 +102,13 @@ def main():
         types.append(t)
 
 
-    for t in types:
-        Class.generate_class(t)
+    classes = [ClassExporter (t) for t in types]
+
+    for c in classes:
+        print(c.generate_class())
+
+    for c in classes:
+        print(c.generate_class_to_string())
 
 
 main()

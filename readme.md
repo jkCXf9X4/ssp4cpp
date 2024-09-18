@@ -26,7 +26,8 @@ cmake --preset=vcpkg
 
 cmake --build build
 
-cmake --build build &> build.log && ./build/test/ssp4cpp_test
+cmake --build build && ./build/test/graph_analysis/ssp4cpp_graph
+cmake --build build &> build.log && ./build/test/graph_analysis/ssp4cpp_graph
 '''
 
 
