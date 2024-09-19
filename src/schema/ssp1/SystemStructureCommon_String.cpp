@@ -5,7 +5,7 @@
 
 #include "SystemStructureCommon.hpp"
 
-#include "print_misc.hpp"
+#include "to_string.tpp"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ namespace ssp4cpp::ssp1::ssc
     string to_string(const TAnnotations &obj)
     {
         return "TAnnotations { \n"
-               "list   : " + to_string_vector(obj.list    ) + "\n" +
+               "list   : " + to_string(obj.list    ) + "\n" +
                "}";
     }
     string to_string(const optional<TAnnotations> &obj) { return to_string_optional(obj); }
@@ -36,8 +36,8 @@ namespace ssp4cpp::ssp1::ssc
     string to_string(const BooleanMapEntry &obj)
     {
         return "BooleanMapEntry { \n"
-               "source   : " + std::to_string(obj.source )                         + "\n" +
-               "target   : " + std::to_string(obj.target )                         + "\n" +
+               "source   : " + std::to_string( obj.source )                   + "\n" +
+               "target   : " + std::to_string( obj.target )                   + "\n" +
                "}";
     }
     string to_string(const optional<BooleanMapEntry> &obj) { return to_string_optional(obj); }
@@ -47,7 +47,7 @@ namespace ssp4cpp::ssp1::ssc
     string to_string(const BooleanMappingTransformation &obj)
     {
         return "BooleanMappingTransformation { \n"
-               "list   : " + to_string_vector(obj.list    ) + "\n" +
+               "list   : " + to_string(obj.list    ) + "\n" +
                "}";
     }
     string to_string(const optional<BooleanMappingTransformation> &obj) { return to_string_optional(obj); }
@@ -57,8 +57,8 @@ namespace ssp4cpp::ssp1::ssc
     string to_string(const IntegerMapEntry &obj)
     {
         return "IntegerMapEntry { \n"
-               "source   : " + std::to_string(obj.source )                         + "\n" +
-               "target   : " + std::to_string(obj.target )                         + "\n" +
+               "source   : " + std::to_string( obj.source )                   + "\n" +
+               "target   : " + std::to_string( obj.target )                   + "\n" +
                "}";
     }
     string to_string(const optional<IntegerMapEntry> &obj) { return to_string_optional(obj); }
@@ -68,7 +68,7 @@ namespace ssp4cpp::ssp1::ssc
     string to_string(const IntegerMappingTransformation &obj)
     {
         return "IntegerMappingTransformation { \n"
-               "list   : " + to_string_vector(obj.list    ) + "\n" +
+               "list   : " + to_string(obj.list    ) + "\n" +
                "}";
     }
     string to_string(const optional<IntegerMappingTransformation> &obj) { return to_string_optional(obj); }
@@ -89,7 +89,7 @@ namespace ssp4cpp::ssp1::ssc
     string to_string(const EnumerationMappingTransformation &obj)
     {
         return "EnumerationMappingTransformation { \n"
-               "list   : " + to_string_vector(obj.list    ) + "\n" +
+               "list   : " + to_string(obj.list    ) + "\n" +
                "}";
     }
     string to_string(const optional<EnumerationMappingTransformation> &obj) { return to_string_optional(obj); }

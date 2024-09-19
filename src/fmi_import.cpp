@@ -4,9 +4,9 @@
 #include <pugixml.hpp>
 #include <iostream>
 
-#include "schema/fmi2/fmi2modelDescription.hpp"
+#include "schema/fmi2/modelDescription.hpp"
 #include "fmi_import.hpp"
-#include "fmi2_xml.hpp"
+#include "modelDescription_XML.hpp"
 
 #include "zip.hpp"
 

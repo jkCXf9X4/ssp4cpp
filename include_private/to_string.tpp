@@ -22,8 +22,3 @@ std::string to_string_vector(const std::vector<T> &vec)
     result += "}\n";
     return result;
 }
-
-// std::string to_string(const std::string &str) {return str;}
-// std::string to_string(const int &i) {return std::to_string(i);}
-// std::string to_string(const double &d) {return std::to_string(d);}
-// std::string to_string(const bool &b) {return b ? "true" : "false";}

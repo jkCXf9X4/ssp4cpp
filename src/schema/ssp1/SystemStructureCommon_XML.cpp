@@ -3,7 +3,7 @@
 #include "SystemStructureCommon.hpp"
 #include "xml_deserialize.hpp"
 
-#include "ssc_xml.hpp"
+#include "SystemStructureCommon_XML.hpp"
 
 
 namespace ssp4cpp::ssp1::ssc

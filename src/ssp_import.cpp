@@ -6,7 +6,7 @@
 #include <pugixml.hpp>
 #include <iostream>
 
-#include "ssd_xml.hpp"
+#include "SystemStructureDescription_XML.hpp"
 
 #include "zip.hpp"
 

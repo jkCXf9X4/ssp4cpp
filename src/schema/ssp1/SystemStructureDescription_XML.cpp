@@ -2,8 +2,8 @@
 
 #include "SystemStructureDescription.hpp"
 
-#include "ssc_xml.hpp"
-#include "ssd_xml.hpp"
+#include "SystemStructureCommon_XML.hpp"
+#include "SystemStructureDescription_XML.hpp"
 
 #include "xml_deserialize.hpp"
 

@@ -4,25 +4,13 @@
 #include <optional>
 #include <vector>
 
-#include "fmi2modelDescription.hpp"
-#include "print_misc.hpp"
+#include "modelDescription.hpp"
+#include "to_string.tpp"
+
+using namespace std;
 
 namespace ssp4cpp::fmi2
 {
-    // Templates
-    template <typename T>
-    std::string to_string_optional(const std::optional<T> &opt)
-    {
-        if (opt)
-        {
-            return to_string(opt.value()) + "\n";
-        }
-        else
-        {
-            return "null\n";
-        }
-    }
-
     string to_string(const DefaultExperiment &obj)
     {
         return "DefaultExperiment { \n"

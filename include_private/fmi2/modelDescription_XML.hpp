@@ -2,7 +2,7 @@
 
 #include <pugixml.hpp>
 
-#include "fmi2modelDescription.hpp"
+#include "modelDescription.hpp"
 
 namespace ssp4cpp::fmi2
 {

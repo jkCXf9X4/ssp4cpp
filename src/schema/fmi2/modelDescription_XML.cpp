@@ -1,8 +1,8 @@
 #include <boost/log/trivial.hpp>
 
-#include "fmi2modelDescription.hpp"
+#include "modelDescription.hpp"
 
-#include "fmi2_xml.hpp"
+#include "modelDescription_XML.hpp"
 
 #include "xml_deserialize.hpp"
 

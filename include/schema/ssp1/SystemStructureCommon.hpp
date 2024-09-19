@@ -5,7 +5,7 @@
 #include <optional>
 #include <iostream>
 
-#include "common_enums.hpp"
+#include "SSP_Enums.hpp"
 
 namespace ssp4cpp::ssp1::ssc
 {

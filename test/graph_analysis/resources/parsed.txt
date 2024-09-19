@@ -1,2118 +1,4314 @@
-SystemStructureDescription {
-version: 1.0
-name: embrace
-id: null
-description: null
-author: null
-fileversion: null
-copyright: null
-license: null
-generationTool: null
-generationDateAndTime: null
-System: 
-TSystem {
-id: null
-description: null
-name: root
-Connectors: nullElementGeometry: nullParameterBindings: TParameterBindings()Elements: Elements {
-components: {
-TComponent {
-id: null
-description: null
-name: ECS_SW
-Connectors: TConnectors {
-Connector {
-id: null
-description: null
-name: Input.TLiquid
-kind: input
-Real: GTypeReal { 
+SystemStructureDescription { 
+version                 : 1.0
+name                    : embrace
+id                      : null
+description             : null
+author                  : null
+fileversion             : null
+copyright               : null
+license                 : null
+generationTool          : null
+generationDateAndTime   : null
+System                  : TSystem { 
+id                   : null
+description          : null
+name                 : root
+Connectors           : null
+ElementGeometry      : null
+ParameterBindings    : TParameterBindings { 
+}
+Elements             : Elements { 
+components                     : {
+TComponent { 
+id                   : null
+description          : null
+name                 : ECS_SW
+Connectors           : TConnectors { 
+list   : {
+Connector { 
+id                  : null
+description         : null
+name                : Input.TLiquid
+kind                : input
+Real                : GTypeReal { 
 unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Input.Aircraft_State
-kind: input
-Real: nullInteger: nullBoolean: nullString: nullEnumeration: GTypeEnumeration { 
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Input.Aircraft_State
+kind                : input
+Real                : null
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : GTypeEnumeration { 
 name   : null
-}Binary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: TCoolingPack
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
- }ElementGeometry: nullTParameterBindings: nullcomponent_type_str: application/x-fmu-sharedlibrary
-component_type: application/x-fmu-sharedlibrary
-source: resources/0002_ECS_SW.fmu
-implementation: null
-Annotations: null }
-TComponent {
-id: null
-description: null
-name: ECS_HW
-Connectors: TConnectors {
-Connector {
-id: null
-description: null
-name: Alt
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Mach
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Tamb
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Pamb
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.p
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.h
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.X[1]
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.X[2]
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.X[3]
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.p
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.h
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.X[1]
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.X[2]
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.X[3]
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: reqCoolingTemperature
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.m
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.hn
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.m
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.hn
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: LHexTout
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.looptypRed
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.looptypBlue
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.Kst
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.Kexp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.fgst
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.h
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.b
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.l
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.hotrat
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.Dhh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.Dhc
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.typ
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.M
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: AirToL_HEX.V
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medhot
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medcold
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medintrm1
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medintrm2
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.gin[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.gin[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.gin[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.Timp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.Tbnd
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.damp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.P0
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.DPlin
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.mmin
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.mnode
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.Tfill
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Tamb_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Pamb_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ma_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Alt_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nx_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ny_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nz_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Tbay
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nx_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ny_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Pamb_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nz_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Tamb_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ma_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Alt_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.gain.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.Dh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.L
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.rgh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.z
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.Text_at_Tfric_0
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.Text_at_Tfric_100
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.tao_Tfrict
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.Text_local
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.hext
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.MCp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeA.delayMax
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.Dh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.L
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.rgh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.z
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.Text_at_Tfric_0
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.Text_at_Tfric_100
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.tao_Tfrict
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.Text_local
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.hext
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.MCp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeB.delayMax
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: const1.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: const3.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: const4.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pumpSK01955_1.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pumpSK01955_1.M
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pumpSK01955_1.qpump
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pumpSK01955_1.hA
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pumpSK01955_1.MF
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePumpToHEX.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePumpToHEX.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePumpToHEX.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePumpToHEX.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeHEXToPipeA.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeHEXToPipeA.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeHEXToPipeA.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeHEXToPipeA.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: phSrc.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: phSrc.Pin
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: phSrc.Tin
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: phSrc.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: phSrc.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: phSrc.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: coolinPackAir.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: coolinPackAir.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: coolinPackAir.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: coolinPackAir.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.RelCool.verboseRead
-kind: parameter
-Real: nullInteger: nullBoolean: GTypeBoolean { 
-}String: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.MaxCoolPower.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.firstOrder.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.firstOrder.T
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.firstOrder.y_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.MaxMassFlow.verboseRead
-kind: parameter
-Real: nullInteger: nullBoolean: GTypeBoolean { 
-}String: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.firstOrder1.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.firstOrder1.T
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.firstOrder1.y_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.CP_Air.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.MinFlow.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.gain.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: eCS.m2km.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeAirOutlet.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeAirOutlet.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeAirOutlet.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeAirOutlet.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.Dh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.L
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.rgh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.z
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.Text_at_Tfric_0
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.Text_at_Tfric_100
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.tao_Tfrict
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.Text_local
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.hext
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.MCp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: pipeC.delayMax
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: coolingTemp.currentMinCoolingTemp.k1
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: coolingTemp.currentMinCoolingTemp.k2
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.Vacc
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.Vacc0
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.pempty
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: acc2_1.pfull
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
- }ElementGeometry: nullTParameterBindings: nullcomponent_type_str: application/x-fmu-sharedlibrary
-component_type: application/x-fmu-sharedlibrary
-source: resources/0001_ECS_HW.fmu
-implementation: null
-Annotations: null }
-TComponent {
-id: null
-description: null
-name: Consumer
-Connectors: TConnectors {
-Connector {
-id: null
-description: null
-name: consumerRet.m
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.hn
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.m
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.hn
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Alt
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Mach
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Tamb
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Pamb
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: heatLoad
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.p
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.h
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.X[1]
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.X[2]
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerRet.X[3]
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.p
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.h
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.X[1]
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.X[2]
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: consumerFeed.X[3]
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: inletTemp
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: outletTemp
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: fd.Tamb_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Pamb_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ma_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Alt_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nx_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ny_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nz_start
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Tbay
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nx_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ny_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Pamb_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Nz_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Tamb_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Ma_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.Alt_filt.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: fd.gain.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medhot
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medcold
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medintrm1
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.medintrm2
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.gin[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.gin[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.gin[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.Timp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.Tbnd
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.damp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.P0
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.DPlin
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.mmin
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.mnode
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: cd.Tfill
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.Dh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.Afact
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.L
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.rgh
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.z
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.Text_at_Tfric_0
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.Text_at_Tfric_100
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.tao_Tfrict
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.Text_local
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.hext
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.MCp
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: ConsumerA.Vin
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePipeAToConsumer.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePipeAToConsumer.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePipeAToConsumer.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodePipeAToConsumer.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeConsumerToPipeB.looptype
-kind: parameter
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeConsumerToPipeB.X[1]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeConsumerToPipeB.X[2]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: nodeConsumerToPipeB.X[3]
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: const1.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: const3.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
-Connector {
-id: null
-description: null
-name: const4.k
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
- }ElementGeometry: nullTParameterBindings: nullcomponent_type_str: application/x-fmu-sharedlibrary
-component_type: application/x-fmu-sharedlibrary
-source: resources/0003_Consumer.fmu
-implementation: null
-Annotations: null }
-TComponent {
-id: null
-description: null
-name: Atmos
-Connectors: TConnectors {
-Connector {
-id: null
-description: null
-name: Alt
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Ma
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Tamb
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: Pamb
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: DTisa
-kind: parameter
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: nullAnnotations: null }
- }ElementGeometry: nullTParameterBindings: nullcomponent_type_str: application/x-fmu-sharedlibrary
-component_type: application/x-fmu-sharedlibrary
-source: resources/0004_Atmos.fmu
-implementation: null
-Annotations: null }
-TComponent {
-id: null
-description: null
-name: AdaptionUnit
-Connectors: TConnectors {
-Connector {
-id: null
-description: null
-name: Aircraft_State
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: LHexTout
-kind: input
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: sWsignals.TLiquid
-kind: output
-Real: GTypeReal { 
-unit   : null
-}Integer: nullBoolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
-Connector {
-id: null
-description: null
-name: sWsignals.Aircraft_State
-kind: output
-Real: nullInteger: GTypeInteger { 
-}Boolean: nullString: nullEnumeration: nullBinary: nullConnectorGeometry: ConnectorGeometry()Annotations: null }
- }ElementGeometry: nullTParameterBindings: nullcomponent_type_str: application/x-fmu-sharedlibrary
-component_type: application/x-fmu-sharedlibrary
-source: resources/0005_AdaptionUnit.fmu
-implementation: null
-Annotations: null }
 }
-signal_dictionary_references: {
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
 }
-systems: {
+Annotations         : null
 }
- }Connections: Connections { 
-Connection {
-startElement: Consumer
-startConnector: consumerFeed.p
-endElement: ECS_HW
-endConnector: consumerFeed.p
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerFeed.h
-endElement: ECS_HW
-endConnector: consumerFeed.h
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerFeed.X[1]
-endElement: ECS_HW
-endConnector: consumerFeed.X[1]
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerFeed.X[2]
-endElement: ECS_HW
-endConnector: consumerFeed.X[2]
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerFeed.X[3]
-endElement: ECS_HW
-endConnector: consumerFeed.X[3]
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerRet.p
-endElement: ECS_HW
-endConnector: consumerRet.p
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerRet.h
-endElement: ECS_HW
-endConnector: consumerRet.h
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerRet.X[1]
-endElement: ECS_HW
-endConnector: consumerRet.X[1]
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerRet.X[2]
-endElement: ECS_HW
-endConnector: consumerRet.X[2]
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Consumer
-startConnector: consumerRet.X[3]
-endElement: ECS_HW
-endConnector: consumerRet.X[3]
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: ECS_HW
-startConnector: consumerFeed.m
-endElement: Consumer
-endConnector: consumerFeed.m
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: ECS_HW
-startConnector: consumerFeed.hn
-endElement: Consumer
-endConnector: consumerFeed.hn
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: ECS_HW
-startConnector: consumerRet.m
-endElement: Consumer
-endConnector: consumerRet.m
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: ECS_HW
-startConnector: consumerRet.hn
-endElement: Consumer
-endConnector: consumerRet.hn
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: ECS_HW
-startConnector: LHexTout
-endElement: AdaptionUnit
-endConnector: LHexTout
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: AdaptionUnit
-startConnector: sWsignals.Aircraft_State
-endElement: ECS_SW
-endConnector: Input.Aircraft_State
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: AdaptionUnit
-startConnector: sWsignals.TLiquid
-endElement: ECS_SW
-endConnector: Input.TLiquid
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: ECS_SW
-startConnector: TCoolingPack
-endElement: ECS_HW
-endConnector: reqCoolingTemperature
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Atmos
-startConnector: Tamb
-endElement: Consumer
-endConnector: Tamb
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Atmos
-startConnector: Pamb
-endElement: Consumer
-endConnector: Pamb
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Atmos
-startConnector: Tamb
-endElement: ECS_HW
-endConnector: Tamb
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
-Connection {
-startElement: Atmos
-startConnector: Pamb
-endElement: ECS_HW
-endConnector: Pamb
-suppressUnitConversion: 0LinearTransformation: nullBooleanMappingTransformation: nullIntegerMappingTransformation: nullEnumerationMappingTransformation: nullConnectionGeometry: nullAnnotations: null }
- }SignalDictionaries: nullSystemGeometry: nullGraphicalElements: nullAnnotations: null }
+Connector { 
+id                  : null
+description         : null
+name                : TCoolingPack
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+}
 
-Enumerations: nullUnits: nullDefaultExperiment: TDefaultExperiment()Annotations: null }
+}
+ElementGeometry      : null
+TParameterBindings   : null
+component_type_str   : application/x-fmu-sharedlibrary
+component_type       : application/x-fmu-sharedlibrary
+source               : resources/0002_ECS_SW.fmu
+implementation       : null
+Annotations          : null
+}
+TComponent { 
+id                   : null
+description          : null
+name                 : ECS_HW
+Connectors           : TConnectors { 
+list   : {
+Connector { 
+id                  : null
+description         : null
+name                : Alt
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Mach
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Tamb
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Pamb
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.p
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.h
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.X[1]
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.X[2]
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.X[3]
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.p
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.h
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.X[1]
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.X[2]
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.X[3]
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : reqCoolingTemperature
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.m
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.hn
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.m
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.hn
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : LHexTout
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.looptypRed
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.looptypBlue
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.Kst
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.Kexp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.fgst
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.h
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.b
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.l
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.hotrat
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.Dhh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.Dhc
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.typ
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.M
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : AirToL_HEX.V
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medhot
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medcold
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medintrm1
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medintrm2
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.gin[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.gin[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.gin[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.Timp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.Tbnd
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.damp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.P0
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.DPlin
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.mmin
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.mnode
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.Tfill
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Tamb_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Pamb_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ma_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Alt_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nx_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ny_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nz_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Tbay
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nx_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ny_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Pamb_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nz_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Tamb_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ma_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Alt_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.gain.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.Dh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.L
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.rgh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.z
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.Text_at_Tfric_0
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.Text_at_Tfric_100
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.tao_Tfrict
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.Text_local
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.hext
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.MCp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeA.delayMax
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.Dh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.L
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.rgh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.z
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.Text_at_Tfric_0
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.Text_at_Tfric_100
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.tao_Tfrict
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.Text_local
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.hext
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.MCp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeB.delayMax
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : const1.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : const3.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : const4.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pumpSK01955_1.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pumpSK01955_1.M
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pumpSK01955_1.qpump
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pumpSK01955_1.hA
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pumpSK01955_1.MF
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePumpToHEX.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePumpToHEX.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePumpToHEX.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePumpToHEX.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeHEXToPipeA.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeHEXToPipeA.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeHEXToPipeA.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeHEXToPipeA.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : phSrc.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : phSrc.Pin
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : phSrc.Tin
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : phSrc.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : phSrc.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : phSrc.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : coolinPackAir.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : coolinPackAir.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : coolinPackAir.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : coolinPackAir.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.RelCool.verboseRead
+kind                : parameter
+Real                : null
+Integer             : null
+Boolean             : GTypeBoolean { 
+}
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.MaxCoolPower.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.firstOrder.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.firstOrder.T
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.firstOrder.y_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.MaxMassFlow.verboseRead
+kind                : parameter
+Real                : null
+Integer             : null
+Boolean             : GTypeBoolean { 
+}
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.firstOrder1.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.firstOrder1.T
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.firstOrder1.y_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.CP_Air.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.MinFlow.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.gain.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : eCS.m2km.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeAirOutlet.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeAirOutlet.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeAirOutlet.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeAirOutlet.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.Dh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.L
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.rgh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.z
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.Text_at_Tfric_0
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.Text_at_Tfric_100
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.tao_Tfrict
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.Text_local
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.hext
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.MCp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : pipeC.delayMax
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : coolingTemp.currentMinCoolingTemp.k1
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : coolingTemp.currentMinCoolingTemp.k2
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.Vacc
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.Vacc0
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.pempty
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : acc2_1.pfull
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+}
+
+}
+ElementGeometry      : null
+TParameterBindings   : null
+component_type_str   : application/x-fmu-sharedlibrary
+component_type       : application/x-fmu-sharedlibrary
+source               : resources/0001_ECS_HW.fmu
+implementation       : null
+Annotations          : null
+}
+TComponent { 
+id                   : null
+description          : null
+name                 : Consumer
+Connectors           : TConnectors { 
+list   : {
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.m
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.hn
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.m
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.hn
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Alt
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Mach
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Tamb
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Pamb
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : heatLoad
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.p
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.h
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.X[1]
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.X[2]
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerRet.X[3]
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.p
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.h
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.X[1]
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.X[2]
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : consumerFeed.X[3]
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : inletTemp
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : outletTemp
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Tamb_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Pamb_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ma_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Alt_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nx_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ny_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nz_start
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Tbay
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nx_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ny_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Pamb_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Nz_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Tamb_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Ma_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.Alt_filt.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : fd.gain.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medhot
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medcold
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medintrm1
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.medintrm2
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.gin[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.gin[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.gin[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.Timp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.Tbnd
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.damp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.P0
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.DPlin
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.mmin
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.mnode
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : cd.Tfill
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.Dh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.Afact
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.L
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.rgh
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.z
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.Text_at_Tfric_0
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.Text_at_Tfric_100
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.tao_Tfrict
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.Text_local
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.hext
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.MCp
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : ConsumerA.Vin
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePipeAToConsumer.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePipeAToConsumer.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePipeAToConsumer.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodePipeAToConsumer.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeConsumerToPipeB.looptype
+kind                : parameter
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeConsumerToPipeB.X[1]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeConsumerToPipeB.X[2]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : nodeConsumerToPipeB.X[3]
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : const1.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : const3.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : const4.k
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+}
+
+}
+ElementGeometry      : null
+TParameterBindings   : null
+component_type_str   : application/x-fmu-sharedlibrary
+component_type       : application/x-fmu-sharedlibrary
+source               : resources/0003_Consumer.fmu
+implementation       : null
+Annotations          : null
+}
+TComponent { 
+id                   : null
+description          : null
+name                 : Atmos
+Connectors           : TConnectors { 
+list   : {
+Connector { 
+id                  : null
+description         : null
+name                : Alt
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Ma
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Tamb
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : Pamb
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : DTisa
+kind                : parameter
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : null
+Annotations         : null
+}
+}
+
+}
+ElementGeometry      : null
+TParameterBindings   : null
+component_type_str   : application/x-fmu-sharedlibrary
+component_type       : application/x-fmu-sharedlibrary
+source               : resources/0004_Atmos.fmu
+implementation       : null
+Annotations          : null
+}
+TComponent { 
+id                   : null
+description          : null
+name                 : AdaptionUnit
+Connectors           : TConnectors { 
+list   : {
+Connector { 
+id                  : null
+description         : null
+name                : Aircraft_State
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : LHexTout
+kind                : input
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : sWsignals.TLiquid
+kind                : output
+Real                : GTypeReal { 
+unit   : null
+}
+Integer             : null
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+Connector { 
+id                  : null
+description         : null
+name                : sWsignals.Aircraft_State
+kind                : output
+Real                : null
+Integer             : GTypeInteger { 
+}
+Boolean             : null
+String              : null
+Enumeration         : null
+Binary              : null
+ConnectorGeometry   : ConnectorGeometry { 
+}
+Annotations         : null
+}
+}
+
+}
+ElementGeometry      : null
+TParameterBindings   : null
+component_type_str   : application/x-fmu-sharedlibrary
+component_type       : application/x-fmu-sharedlibrary
+source               : resources/0005_AdaptionUnit.fmu
+implementation       : null
+Annotations          : null
+}
+}
+
+signal_dictionary_references   : {
+}
+
+systems                        : {
+}
+
+}
+Connections          : Connections { 
+list   : {
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerFeed.p
+endElement                         : ECS_HW
+endConnector                       : consumerFeed.p
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerFeed.h
+endElement                         : ECS_HW
+endConnector                       : consumerFeed.h
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerFeed.X[1]
+endElement                         : ECS_HW
+endConnector                       : consumerFeed.X[1]
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerFeed.X[2]
+endElement                         : ECS_HW
+endConnector                       : consumerFeed.X[2]
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerFeed.X[3]
+endElement                         : ECS_HW
+endConnector                       : consumerFeed.X[3]
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerRet.p
+endElement                         : ECS_HW
+endConnector                       : consumerRet.p
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerRet.h
+endElement                         : ECS_HW
+endConnector                       : consumerRet.h
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerRet.X[1]
+endElement                         : ECS_HW
+endConnector                       : consumerRet.X[1]
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerRet.X[2]
+endElement                         : ECS_HW
+endConnector                       : consumerRet.X[2]
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Consumer
+startConnector                     : consumerRet.X[3]
+endElement                         : ECS_HW
+endConnector                       : consumerRet.X[3]
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : ECS_HW
+startConnector                     : consumerFeed.m
+endElement                         : Consumer
+endConnector                       : consumerFeed.m
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : ECS_HW
+startConnector                     : consumerFeed.hn
+endElement                         : Consumer
+endConnector                       : consumerFeed.hn
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : ECS_HW
+startConnector                     : consumerRet.m
+endElement                         : Consumer
+endConnector                       : consumerRet.m
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : ECS_HW
+startConnector                     : consumerRet.hn
+endElement                         : Consumer
+endConnector                       : consumerRet.hn
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : ECS_HW
+startConnector                     : LHexTout
+endElement                         : AdaptionUnit
+endConnector                       : LHexTout
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : AdaptionUnit
+startConnector                     : sWsignals.Aircraft_State
+endElement                         : ECS_SW
+endConnector                       : Input.Aircraft_State
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : AdaptionUnit
+startConnector                     : sWsignals.TLiquid
+endElement                         : ECS_SW
+endConnector                       : Input.TLiquid
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : ECS_SW
+startConnector                     : TCoolingPack
+endElement                         : ECS_HW
+endConnector                       : reqCoolingTemperature
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Atmos
+startConnector                     : Tamb
+endElement                         : Consumer
+endConnector                       : Tamb
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Atmos
+startConnector                     : Pamb
+endElement                         : Consumer
+endConnector                       : Pamb
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Atmos
+startConnector                     : Tamb
+endElement                         : ECS_HW
+endConnector                       : Tamb
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+Connection { 
+startElement                       : Atmos
+startConnector                     : Pamb
+endElement                         : ECS_HW
+endConnector                       : Pamb
+suppressUnitConversion             : 0
+LinearTransformation               : null
+BooleanMappingTransformation       : null
+IntegerMappingTransformation       : null
+EnumerationMappingTransformation   : null
+ConnectionGeometry                 : null
+Annotations                        : null
+}
+}
+
+}
+SignalDictionaries   : null
+SystemGeometry       : null
+GraphicalElements    : null
+Annotations          : null
+}
+Enumerations            : null
+Units                   : null
+DefaultExperiment       : TDefaultExperiment { 
+}
+Annotations             : null
+}

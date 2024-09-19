@@ -5,185 +5,243 @@
 #include <iostream>
 
 #include "SystemStructureDescription.hpp"
-#include "print_misc.hpp"
+#include "to_string.tpp"
+
+using namespace std;
+using namespace ssp4cpp::ssp1;
 
 namespace ssp4cpp::ssp1::ssd
 {
-    using namespace std;
-    using namespace ssp4cpp::ssp1;
-
+    // SystemGeometry
     string to_string(const SystemGeometry &obj)
     {
-        return "SystemGeometry()";
-    }
+        return "SystemGeometry { \n"
 
+               "}";
+    }
+    string to_string(const optional<SystemGeometry> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<SystemGeometry> &obj) { return to_string_vector(obj); }
+
+     // ConnectorGeometry
     string to_string(const ConnectorGeometry &obj)
     {
-        return "ConnectorGeometry()";
-    }
+        return "ConnectorGeometry { \n"
 
+               "}";
+    }
+    string to_string(const optional<ConnectorGeometry> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<ConnectorGeometry> &obj) { return to_string_vector(obj); }
+
+     // ElementGeometry
     string to_string(const ElementGeometry &obj)
     {
-        return "ElementGeometry()";
-    }
+        return "ElementGeometry { \n"
 
+               "}";
+    }
+    string to_string(const optional<ElementGeometry> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<ElementGeometry> &obj) { return to_string_vector(obj); }
+
+     // ConnectionGeometry
     string to_string(const ConnectionGeometry &obj)
     {
-        return "ConnectionGeometry()";
-    }
+        return "ConnectionGeometry { \n"
 
+               "}";
+    }
+    string to_string(const optional<ConnectionGeometry> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<ConnectionGeometry> &obj) { return to_string_vector(obj); }
+
+     // TSignalDictionaries
     string to_string(const TSignalDictionaries &obj)
     {
-        return "TSignalDictionaries()";
-    }
+        return "TSignalDictionaries { \n"
 
+               "}";
+    }
+    string to_string(const optional<TSignalDictionaries> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<TSignalDictionaries> &obj) { return to_string_vector(obj); }
+
+     // TParameterBindings
     string to_string(const TParameterBindings &obj)
     {
-        return "TParameterBindings()";
-    }
+        return "TParameterBindings { \n"
 
+               "}";
+    }
+    string to_string(const optional<TParameterBindings> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<TParameterBindings> &obj) { return to_string_vector(obj); }
+
+     // GraphicalElements
     string to_string(const GraphicalElements &obj)
     {
-        return "GraphicalElements()";
-    }
+        return "GraphicalElements { \n"
 
+               "}";
+    }
+    string to_string(const optional<GraphicalElements> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<GraphicalElements> &obj) { return to_string_vector(obj); }
+
+     // TDefaultExperiment
     string to_string(const TDefaultExperiment &obj)
     {
-        return "TDefaultExperiment()";
-    }
+        return "TDefaultExperiment { \n"
 
-    string to_string(const Connection &conn)
+               "}";
+    }
+    string to_string(const optional<TDefaultExperiment> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<TDefaultExperiment> &obj) { return to_string_vector(obj); }
+
+     // Connection
+    string to_string(const Connection &obj)
     {
-        return "Connection {\n" 
-               "startElement: " + conn.startElement.value_or("null") + "\n" +
-               "startConnector: " + conn.startConnector + "\n" +
-               "endElement: " + conn.endElement.value_or("null") + "\n" +
-               "endConnector: " + conn.endConnector + "\n" +
-               "suppressUnitConversion: " + std::to_string(conn.suppressUnitConversion.value_or(false)) +
-               "LinearTransformation: " + to_string_optional(conn.LinearTransformation) +
-               "BooleanMappingTransformation: " + to_string_optional(conn.BooleanMappingTransformation) +
-               "IntegerMappingTransformation: " + to_string_optional(conn.IntegerMappingTransformation) +
-               "EnumerationMappingTransformation: " + to_string_optional(conn.EnumerationMappingTransformation) +
-               "ConnectionGeometry: " + to_string_optional(conn.ConnectionGeometry) +
-               "Annotations: " + to_string_optional(conn.Annotations) +
-               " }";
+        return "Connection { \n"
+               "startElement                       : " + obj.startElement.value_or("null")                                        + "\n" +
+               "startConnector                     : " + obj.startConnector                                                       + "\n" +
+               "endElement                         : " + obj.endElement.value_or("null")                                          + "\n" +
+               "endConnector                       : " + obj.endConnector                                                         + "\n" +
+               "suppressUnitConversion             : " + std::to_string( obj.suppressUnitConversion.value_or(false) )             + "\n" +
+               "LinearTransformation               : " + to_string( obj.LinearTransformation )                                    + "\n" +
+               "BooleanMappingTransformation       : " + to_string( obj.BooleanMappingTransformation )                            + "\n" +
+               "IntegerMappingTransformation       : " + to_string( obj.IntegerMappingTransformation )                            + "\n" +
+               "EnumerationMappingTransformation   : " + to_string( obj.EnumerationMappingTransformation )                        + "\n" +
+               "ConnectionGeometry                 : " + to_string( obj.ConnectionGeometry )                                      + "\n" +
+               "Annotations                        : " + to_string( obj.Annotations )                                             + "\n" +
+               "}";
     }
+    string to_string(const optional<Connection> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<Connection> &obj) { return to_string_vector(obj); }
 
-    string to_string(const Connections &conns)
+     // Connections
+    string to_string(const Connections &obj)
     {
-        string result = "Connections { \n";
-        for (const auto &conn : conns.list)
-        {
-            result += to_string(conn) + "\n";
-        }
-        result += " }";
-        return result;
+        return "Connections { \n"
+               "list   : " + to_string(obj.list    ) + "\n" +
+               "}";
     }
+    string to_string(const optional<Connections> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<Connections> &obj) { return to_string_vector(obj); }
 
-    string to_string(const Connector &conn)
+     // Connector
+    string to_string(const Connector &obj)
     {
-        return "Connector {\n" 
-               "id: " + conn.id.value_or("null") + "\n" +
-               "description: " + conn.description.value_or("null") + "\n" +
-               "name: " + conn.name + "\n" +
-               "kind: " + conn.kind + "\n" +
-               "Real: " + to_string_optional(conn.Real) +
-               "Integer: " + to_string_optional(conn.Integer) +
-               "Boolean: " + to_string_optional(conn.Boolean) +
-               "String: " + to_string_optional(conn.String) +
-               "Enumeration: " + to_string_optional(conn.Enumeration) +
-               "Binary: " + to_string_optional(conn.Binary) +
-               "ConnectorGeometry: " + to_string_optional(conn.ConnectorGeometry) +
-               "Annotations: " + to_string_optional(conn.Annotations) +
-               " }";
+        return "Connector { \n"
+               "id                  : " + obj.id.value_or("null")                                   + "\n" +
+               "description         : " + obj.description.value_or("null")                          + "\n" +
+               "name                : " + obj.name                                                  + "\n" +
+               "kind                : " + obj.kind                                                  + "\n" +
+               "Real                : " + to_string( obj.Real )                                     + "\n" +
+               "Integer             : " + to_string( obj.Integer )                                  + "\n" +
+               "Boolean             : " + to_string( obj.Boolean )                                  + "\n" +
+               "String              : " + to_string( obj.String )                                   + "\n" +
+               "Enumeration         : " + to_string( obj.Enumeration )                              + "\n" +
+               "Binary              : " + to_string( obj.Binary )                                   + "\n" +
+               "ConnectorGeometry   : " + to_string( obj.ConnectorGeometry )                        + "\n" +
+               "Annotations         : " + to_string( obj.Annotations )                              + "\n" +
+               "}";
     }
+    string to_string(const optional<Connector> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<Connector> &obj) { return to_string_vector(obj); }
 
-    string to_string(const TConnectors &conns)
+     // TConnectors
+    string to_string(const TConnectors &obj)
     {
-        string result = "TConnectors {\n";
-        for (const auto &conn : conns.list)
-        {
-            result += to_string(conn) + "\n";
-        }
-        result += " }";
-        return result;
+        return "TConnectors { \n"
+               "list   : " + to_string(obj.list    ) + "\n" +
+               "}";
     }
+    string to_string(const optional<TConnectors> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<TConnectors> &obj) { return to_string_vector(obj); }
 
-    string to_string(const TComponent &comp)
+     // TComponent
+    string to_string(const TComponent &obj)
     {
-        return "TComponent {\n" 
-               "id: " + comp.id.value_or("null") + "\n" +
-               "description: " + comp.description.value_or("null") + "\n" +
-               "name: " + comp.name.value_or("null") + "\n" +
-               "Connectors: " + to_string_optional(comp.Connectors) +
-               "ElementGeometry: " + to_string_optional(comp.ElementGeometry) +
-               "TParameterBindings: " + to_string_optional(comp.TParameterBindings) +
-               "component_type_str: " + comp.component_type_str.value_or("null") + "\n" +
-               "component_type: " + to_string_optional(comp.component_type) + "\n" +
-               "source: " + comp.source + "\n" +
-               "implementation: " + comp.implementation.value_or("null") + "\n" +
-               "Annotations: " + to_string_optional(comp.Annotations) +
-               " }";
+        return "TComponent { \n"
+               "id                   : " + obj.id.value_or("null")                                    + "\n" +
+               "description          : " + obj.description.value_or("null")                           + "\n" +
+               "name                 : " + obj.name.value_or("null")                                  + "\n" +
+               "Connectors           : " + to_string( obj.Connectors )                                + "\n" +
+               "ElementGeometry      : " + to_string( obj.ElementGeometry )                           + "\n" +
+               "TParameterBindings   : " + to_string( obj.TParameterBindings )                        + "\n" +
+               "component_type_str   : " + obj.component_type_str.value_or("null")                    + "\n" +
+               "component_type       : " + to_string( obj.component_type )                            + "\n" +
+               "source               : " + obj.source                                                 + "\n" +
+               "implementation       : " + obj.implementation.value_or("null")                        + "\n" +
+               "Annotations          : " + to_string( obj.Annotations )                               + "\n" +
+               "}";
     }
+    string to_string(const optional<TComponent> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<TComponent> &obj) { return to_string_vector(obj); }
 
-    string to_string(const TSignalDictionaryReference &ref)
+     // TSignalDictionaryReference
+    string to_string(const TSignalDictionaryReference &obj)
     {
-        return "TSignalDictionaryReference {\n"
-               "dictionary: " + ref.dictionary + "\n" +
-               "Connectors: " + to_string_optional(ref.Connectors) +
-               "ElementGeometry: " + to_string_optional(ref.ElementGeometry) +
-               "TParameterBindings: " + to_string_optional(ref.TParameterBindings) +
-               "Annotations: " + to_string_optional(ref.Annotations) +
-               " }";
+        return "TSignalDictionaryReference { \n"
+               "dictionary           : " + obj.dictionary                                             + "\n" +
+               "Connectors           : " + to_string( obj.Connectors )                                + "\n" +
+               "ElementGeometry      : " + to_string( obj.ElementGeometry )                           + "\n" +
+               "TParameterBindings   : " + to_string( obj.TParameterBindings )                        + "\n" +
+               "Annotations          : " + to_string( obj.Annotations )                               + "\n" +
+               "}";
     }
+    string to_string(const optional<TSignalDictionaryReference> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<TSignalDictionaryReference> &obj) { return to_string_vector(obj); }
 
-
-
-    string to_string(const Elements &elems)
+     // Elements
+    string to_string(const Elements &obj)
     {
-        return "Elements {\n"
-               "components: " + to_string_vector(elems.components) +
-               "signal_dictionary_references: " + to_string_vector(elems.signal_dictionary_references) +
-               "systems: " + to_string_vector(elems.systems) +
-               " }";
+        return "Elements { \n"
+               "components                     : " + to_string(obj.components                      ) + "\n" +
+               "signal_dictionary_references   : " + to_string(obj.signal_dictionary_references    ) + "\n" +
+               "systems                        : " + to_string(obj.systems                         ) + "\n" +
+               "}";
     }
+    string to_string(const optional<Elements> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<Elements> &obj) { return to_string_vector(obj); }
 
-    string to_string(const TSystem &sys)
+     // TSystem
+    string to_string(const TSystem &obj)
     {
-        return "TSystem {\n"
-               "id: " + sys.id.value_or("null") + "\n" +
-               "description: " + sys.description.value_or("null") + "\n" +
-               "name: " + sys.name.value_or("null") + "\n" +
-               "Connectors: " + to_string_optional(sys.Connectors) +
-               "ElementGeometry: " + to_string_optional(sys.ElementGeometry) +
-               "ParameterBindings: " + to_string_optional(sys.ParameterBindings) +
-               "Elements: " + to_string_optional(sys.Elements) +
-               "Connections: " + to_string_optional(sys.Connections) +
-               "SignalDictionaries: " + to_string_optional(sys.SignalDictionaries) +
-               "SystemGeometry: " + to_string_optional(sys.SystemGeometry) +
-               "GraphicalElements: " + to_string_optional(sys.GraphicalElements) +
-               "Annotations: " + to_string_optional(sys.Annotations) +
-               " }\n";
+        return "TSystem { \n"
+               "id                   : " + obj.id.value_or("null")                                    + "\n" +
+               "description          : " + obj.description.value_or("null")                           + "\n" +
+               "name                 : " + obj.name.value_or("null")                                  + "\n" +
+               "Connectors           : " + to_string( obj.Connectors )                                + "\n" +
+               "ElementGeometry      : " + to_string( obj.ElementGeometry )                           + "\n" +
+               "ParameterBindings    : " + to_string( obj.ParameterBindings )                         + "\n" +
+               "Elements             : " + to_string( obj.Elements )                                  + "\n" +
+               "Connections          : " + to_string( obj.Connections )                               + "\n" +
+               "SignalDictionaries   : " + to_string( obj.SignalDictionaries )                        + "\n" +
+               "SystemGeometry       : " + to_string( obj.SystemGeometry )                            + "\n" +
+               "GraphicalElements    : " + to_string( obj.GraphicalElements )                         + "\n" +
+               "Annotations          : " + to_string( obj.Annotations )                               + "\n" +
+               "}";
     }
+    string to_string(const optional<TSystem> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<TSystem> &obj) { return to_string_vector(obj); }
 
-    string to_string(const SystemStructureDescription &ssd)
+     // SystemStructureDescription
+    string to_string(const SystemStructureDescription &obj)
     {
-        return "SystemStructureDescription {\n"
-               "version: " + ssd.version + "\n" +
-               "name: " + ssd.name + "\n" +
-               "id: " + ssd.id.value_or("null") + "\n" +
-               "description: " + ssd.description.value_or("null") + "\n" +
-               "author: " + ssd.author.value_or("null") + "\n" +
-               "fileversion: " + ssd.fileversion.value_or("null") + "\n" +
-               "copyright: " + ssd.copyright.value_or("null") + "\n" +
-               "license: " + ssd.license.value_or("null") + "\n" +
-               "generationTool: " + ssd.generationTool.value_or("null") + "\n" +
-               "generationDateAndTime: " + ssd.generationDateAndTime.value_or("null") + "\n" +
-               "System: \n" + to_string(ssd.System) + "\n" +
-               "Enumerations: " + to_string_optional(ssd.Enumerations) +
-               "Units: " + to_string_optional(ssd.Units) +
-               "DefaultExperiment: " + to_string_optional(ssd.DefaultExperiment) +
-               "Annotations: " + to_string_optional(ssd.Annotations) +
-               " }\n";
+        return "SystemStructureDescription { \n"
+               "version                 : " + obj.version                                                   + "\n" +
+               "name                    : " + obj.name                                                      + "\n" +
+               "id                      : " + obj.id.value_or("null")                                       + "\n" +
+               "description             : " + obj.description.value_or("null")                              + "\n" +
+               "author                  : " + obj.author.value_or("null")                                   + "\n" +
+               "fileversion             : " + obj.fileversion.value_or("null")                              + "\n" +
+               "copyright               : " + obj.copyright.value_or("null")                                + "\n" +
+               "license                 : " + obj.license.value_or("null")                                  + "\n" +
+               "generationTool          : " + obj.generationTool.value_or("null")                           + "\n" +
+               "generationDateAndTime   : " + obj.generationDateAndTime.value_or("null")                    + "\n" +
+               "System                  : " + to_string( obj.System )                                        + "\n" +
+               "Enumerations            : " + to_string( obj.Enumerations )                                 + "\n" +
+               "Units                   : " + to_string( obj.Units )                                        + "\n" +
+               "DefaultExperiment       : " + to_string( obj.DefaultExperiment )                            + "\n" +
+               "Annotations             : " + to_string( obj.Annotations )                                  + "\n" +
+               "}";
     }
+    string to_string(const optional<SystemStructureDescription> &obj) { return to_string_optional(obj); }
+    string to_string(const vector<SystemStructureDescription> &obj) { return to_string_vector(obj); }
+
 }

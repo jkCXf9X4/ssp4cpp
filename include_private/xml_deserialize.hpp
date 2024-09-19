@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-#include "common_enums.hpp"
+#include "SSP_Enums.hpp"
 
 // deserialize xml to object
 

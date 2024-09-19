@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <optional>
 
-#include "fmi2modelDescription.hpp"
+#include "modelDescription.hpp"
 
 using namespace std;
 using namespace std::filesystem;
