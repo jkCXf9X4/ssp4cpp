@@ -26,10 +26,10 @@ namespace ssp4cpp::ssp1
         if (elements)
         {
 
-            for (auto comp : elements.value().components)
+            for (auto comp : elements.value().Component)
             {
                 SspResource res;
-                res.type = comp.component_type;
+                res.type = comp.type;
                 res.name = comp.name;
                 res.file = temp_dir / comp.source;
                 resources.push_back(res);

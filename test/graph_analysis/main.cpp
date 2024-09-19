@@ -48,6 +48,8 @@ int main()
     myfile << ssp.ssd.to_string();
     myfile.close();
 
+    return 0;
+
     // Parsing FMI
     auto fmus = vector<fmi2::fmu>();
 
@@ -110,10 +112,10 @@ int main()
     {
         int connector_index = 0;
         // index all connectors
-        for (auto component : ssp.ssd.System.Elements.value().components)
+        for (auto component : ssp.ssd.System.Elements.value().Component)
         {
             // cout << component  << endl;
-            for (auto connector : component.Connectors.value().list)
+            for (auto connector : component.Connectors.value().Connector)
             {
                 if (connector.kind == "input" || connector.kind == "output")
                 {
@@ -136,7 +138,7 @@ int main()
         boost::put(boost::vertex_name_t(), g, index, name);
     }
 
-    for (auto connection : ssp.ssd.System.Connections.value().list)
+    for (auto connection : ssp.ssd.System.Connections.value().Connection)
     {
         auto start = connection.startElement.value() + "." + connection.startConnector;
         auto end = connection.endElement.value() + "." + connection.endConnector;

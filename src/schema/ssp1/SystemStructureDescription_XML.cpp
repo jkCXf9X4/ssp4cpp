@@ -7,178 +7,224 @@
 
 #include "xml_deserialize.hpp"
 
-namespace ssp4cpp::ssp1::ssd
-{
     using namespace std;
     using namespace pugi;
     using namespace ssp4cpp::xml;
+namespace ssp4cpp::ssp1::ssd
+{
 
-    void from_xml(const xml_node &node, ElementGeometry &geometry) {}
-
-    void from_xml(const xml_node &node, TDefaultExperiment &experiment) {}
-
-    void from_xml(const xml_node &node, TParameterBindings &bindings) {}
-
-    void from_xml(const xml_node &node, TSignalDictionaries &dictionaries) {}
-
-    void from_xml(const xml_node &node, SystemGeometry &geometry) {}
-
-    void from_xml(const xml_node &node, GraphicalElements &elements) {}
-
-    void from_xml(const xml_node &node, ConnectorGeometry &geometry) {}
-
-    void from_xml(const xml_node &node, ConnectionGeometry &geometry) {}
-
-    void from_xml(const xml_node &node, Connections &connections)
+    void from_xml(const xml_node &node, SystemGeometry &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing Connections" << std::endl;
+        BOOST_LOG_TRIVIAL(trace) << "Parsing SystemGeometry" << std::endl;
 
-        get_vector(node, "ssd:Connection", connections.list);
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed Connections" << std::endl;
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed SystemGeometry" << std::endl;
     }
 
-    void from_xml(const xml_node &node, Connection &connection)
+    void from_xml(const xml_node &node, ConnectorGeometry &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing ConnectorGeometry" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed ConnectorGeometry" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, ElementGeometry &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing ElementGeometry" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed ElementGeometry" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, ConnectionGeometry &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing ConnectionGeometry" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed ConnectionGeometry" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, TSignalDictionaries &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing TSignalDictionaries" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed TSignalDictionaries" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, TParameterBindings &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing TParameterBindings" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed TParameterBindings" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, GraphicalElements &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing GraphicalElements" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed GraphicalElements" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, TDefaultExperiment &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing TDefaultExperiment" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed TDefaultExperiment" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, Connection &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connection" << std::endl;
 
-        connection.startElement = get_optional_attribute<string>(node, "startElement");
-        connection.startConnector = get_attribute<string>(node, "startConnector");
-        connection.endElement = get_optional_attribute<string>(node, "endElement");
-        connection.endConnector = get_attribute<string>(node, "endConnector");
-        connection.suppressUnitConversion = get_optional_attribute<bool>(node, "suppressUnitConversion");
-        get_optional_class(node, "ssc:LinearTransformation", connection.LinearTransformation);
-        get_optional_class(node, "ssc:BooleanMappingTransformation", connection.BooleanMappingTransformation);
-        get_optional_class(node, "ssc:IntegerMappingTransformation", connection.IntegerMappingTransformation);
-        get_optional_class(node, "ssc:EnumerationMappingTransformation", connection.EnumerationMappingTransformation);
-        get_optional_class(node, "ssd:ConnectionGeometry", connection.ConnectionGeometry);
-        get_optional_class(node, "ssc:Annotations", connection.Annotations);
+        obj.startElement = get_optional_attribute<string>(node, "startElement");
+        obj.startConnector = get_attribute<string>(node, "startConnector");
+        obj.endElement = get_optional_attribute<string>(node, "endElement");
+        obj.endConnector = get_attribute<string>(node, "endConnector");
+        obj.suppressUnitConversion = get_optional_attribute<bool>(node, "suppressUnitConversion");
+        get_optional_class(node, "ssc:LinearTransformation", obj.LinearTransformation);
+        get_optional_class(node, "ssc:BooleanMappingTransformation", obj.BooleanMappingTransformation);
+        get_optional_class(node, "ssc:IntegerMappingTransformation", obj.IntegerMappingTransformation);
+        get_optional_class(node, "ssc:EnumerationMappingTransformation", obj.EnumerationMappingTransformation);
+        get_optional_class(node, "ssd:ConnectionGeometry", obj.ConnectionGeometry);
+        get_optional_class(node, "ssc:Annotations", obj.Annotations);
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Connection" << std::endl;
     }
 
-    void from_xml(const xml_node &node, TConnectors &connectors)
+    void from_xml(const xml_node &node, Connections &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing TConnectors" << std::endl;
+        BOOST_LOG_TRIVIAL(trace) << "Parsing Connections" << std::endl;
 
-        get_vector(node, "ssd:Connector", connectors.list);
+        get_vector(node, "ssd:Connection", obj.Connection);
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed TConnectors" << std::endl;
+        BOOST_LOG_TRIVIAL(trace) << "Completed Connections" << std::endl;
     }
 
-    void from_xml(const xml_node &node, Connector &conn)
+    void from_xml(const xml_node &node, Connector &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connector" << std::endl;
 
-        conn.description = get_optional_attribute<string>(node, "description");
-        conn.id = get_optional_attribute<string>(node, "id");
-
-        conn.name = get_attribute<string>(node, "name");
-        conn.kind = get_attribute<string>(node, "kind");
-        get_optional_class(node, "ssc:Real", conn.Real);
-        get_optional_class(node, "ssc:Integer", conn.Integer);
-        get_optional_class(node, "ssc:Boolean", conn.Boolean);
-        get_optional_class(node, "ssc:String", conn.String);
-        get_optional_class(node, "ssc:Enumeration", conn.Enumeration);
-        get_optional_class(node, "ssc:Binary", conn.Binary);
-
-        get_optional_class(node, "ssd:ConnectorGeometry", conn.ConnectorGeometry);
-        get_optional_class(node, "ssc:Annotations", conn.Annotations);
+        obj.id = get_optional_attribute<string>(node, "id");
+        obj.description = get_optional_attribute<string>(node, "description");
+        obj.name = get_attribute<string>(node, "name");
+        obj.kind = get_attribute<string>(node, "kind");
+        get_optional_class(node, "ssc:Real", obj.Real);
+        get_optional_class(node, "ssc:Integer", obj.Integer);
+        get_optional_class(node, "ssc:Boolean", obj.Boolean);
+        get_optional_class(node, "ssc:String", obj.String);
+        get_optional_class(node, "ssc:Enumeration", obj.Enumeration);
+        get_optional_class(node, "ssc:Binary", obj.Binary);
+        get_optional_class(node, "ssd:ConnectorGeometry", obj.ConnectorGeometry);
+        get_optional_class(node, "ssc:Annotations", obj.Annotations);
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Connector" << std::endl;
     }
 
-    void from_xml(const xml_node &node, TComponent &comp)
+    void from_xml(const xml_node &node, TConnectors &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing TConnectors" << std::endl;
+
+        get_vector(node, "ssd:Connector", obj.Connector);
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed TConnectors" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, TComponent &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TComponent" << std::endl;
 
-        comp.description = get_optional_attribute<string>(node, "description");
-        comp.id = get_optional_attribute<string>(node, "id");
+        obj.id = get_optional_attribute<string>(node, "id");
+        obj.description = get_optional_attribute<string>(node, "description");
+        obj.name = get_optional_attribute<string>(node, "name");
+        get_optional_class(node, "ssd:Connectors", obj.Connectors);
+        get_optional_class(node, "ssd:ElementGeometry", obj.ElementGeometry);
+        get_optional_class(node, "ssd:ParameterBindings", obj.ParameterBindings);
+        obj.type = get_optional_attribute<string>(node, "type");
+        obj.source = get_attribute<string>(node, "source");
+        obj.implementation = get_optional_attribute<string>(node, "implementation");
+        get_optional_class(node, "ssc:Annotations", obj.Annotations);
 
-        comp.name = get_optional_attribute<string>(node, "name");
-        get_optional_class(node, "ssd:Connectors", comp.Connectors);
-        get_optional_class(node, "ssd:ElementGeometry", comp.ElementGeometry);
-        get_optional_class(node, "ssd:ParameterBindings", comp.TParameterBindings);
-
-        comp.component_type_str = get_optional_attribute<string>(node, "type");
-        comp.component_type = get_optional_attribute<ComponentType>(node, "type");
-
-        comp.source = get_attribute<string>(node, "source");
-        comp.implementation = get_optional_attribute<string>(node, "implementation");
-        get_optional_class(node, "ssc:Annotations", comp.Annotations);
-
-        BOOST_LOG_TRIVIAL(trace) << "Completed TComponent: " << std::endl;
+        BOOST_LOG_TRIVIAL(trace) << "Completed TComponent" << std::endl;
     }
 
-    void from_xml(const xml_node &node, TSignalDictionaryReference &ref)
+    void from_xml(const xml_node &node, TSignalDictionaryReference &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TSignalDictionaryReference" << std::endl;
 
-        ref.dictionary = get_attribute<string>(node, "dictionary");
-        get_optional_class(node, "ssd:Connectors", ref.Connectors);
-        get_optional_class(node, "ssd:ElementGeometry", ref.ElementGeometry);
-        get_optional_class(node, "ssd:ParameterBindings", ref.TParameterBindings);
-        get_optional_class(node, "ssc:Annotations", ref.Annotations);
+        obj.dictionary = get_attribute<string>(node, "dictionary");
+        get_optional_class(node, "ssd:Connectors", obj.Connectors);
+        get_optional_class(node, "ssd:ElementGeometry", obj.ElementGeometry);
+        get_optional_class(node, "ssd:ParameterBindings", obj.ParameterBindings);
+        get_optional_class(node, "ssc:Annotations", obj.Annotations);
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TSignalDictionaryReference" << std::endl;
     }
 
-    void from_xml(const xml_node &node, Elements &elements)
+    void from_xml(const xml_node &node, Elements &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Elements" << std::endl;
 
-        get_vector(node, "ssd:Component", elements.Component);
-        get_vector(node, "ssd:SignalDictionaryReference", elements.SignalDictionaryReference);
-        get_vector(node, "ssd:System", elements.System);
+        get_vector(node, "ssd:Component", obj.Component);
+        get_vector(node, "ssd:SignalDictionaryReference", obj.SignalDictionaryReference);
+        get_vector(node, "ssd:System", obj.System);
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Elements" << std::endl;
     }
 
-    void from_xml(const xml_node &node, TSystem &sys)
+    void from_xml(const xml_node &node, TSystem &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TSystem" << std::endl;
 
-        sys.id = get_optional_attribute<string>(node, "id");
-        sys.description = get_optional_attribute<string>(node, "description");
-
-        sys.name = get_optional_attribute<string>(node, "name");
-        get_optional_class(node, "ssd:Connectors", sys.Connectors);
-        get_optional_class(node, "ssd:ElementGeometry", sys.ElementGeometry);
-        get_optional_class(node, "ssd:ParameterBindings", sys.ParameterBindings);
-
-        get_optional_class(node, "ssd:Elements", sys.Elements);
-        get_optional_class(node, "ssd:Connections", sys.Connections);
-        get_optional_class(node, "ssd:SignalDictionaries", sys.SignalDictionaries);
-        get_optional_class(node, "ssd:SystemGeometry", sys.SystemGeometry);
-        get_optional_class(node, "ssd:GraphicalElements", sys.GraphicalElements);
-        get_optional_class(node, "ssc:Annotations", sys.Annotations);
+        obj.id = get_optional_attribute<string>(node, "id");
+        obj.description = get_optional_attribute<string>(node, "description");
+        obj.name = get_optional_attribute<string>(node, "name");
+        get_optional_class(node, "ssd:Connectors", obj.Connectors);
+        get_optional_class(node, "ssd:ElementGeometry", obj.ElementGeometry);
+        get_optional_class(node, "ssd:ParameterBindings", obj.ParameterBindings);
+        get_optional_class(node, "ssd:Elements", obj.Elements);
+        get_optional_class(node, "ssd:Connections", obj.Connections);
+        get_optional_class(node, "ssd:SignalDictionaries", obj.SignalDictionaries);
+        get_optional_class(node, "ssd:SystemGeometry", obj.SystemGeometry);
+        get_optional_class(node, "ssd:GraphicalElements", obj.GraphicalElements);
+        get_optional_class(node, "ssc:Annotations", obj.Annotations);
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TSystem" << std::endl;
     }
 
-    void from_xml(const xml_node &node, SystemStructureDescription &desc)
+    void from_xml(const xml_node &node, SystemStructureDescription &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SystemStructureDescription" << std::endl;
 
-        desc.version = get_attribute<string>(node, "version");
-        desc.name = get_attribute<string>(node, "name");
-
-        desc.id = get_optional_attribute<string>(node, "id");
-        desc.description = get_optional_attribute<string>(node, "description");
-        desc.author = get_optional_attribute<string>(node, "author");
-        desc.fileversion = get_optional_attribute<string>(node, "fileversion");
-        desc.copyright = get_optional_attribute<string>(node, "copyright");
-        desc.license = get_optional_attribute<string>(node, "license");
-        desc.generationTool = get_optional_attribute<string>(node, "generationTool");
-        desc.generationDateAndTime = get_optional_attribute<string>(node, "generationDateAndTime");
-
-        from_xml(node.child("ssd:System"), desc.System);
-
-        get_optional_class(node, "ssc:Enumerations", desc.Enumerations);
-        get_optional_class(node, "ssc:Units", desc.Units);
-        get_optional_class(node, "ssd:DefaultExperiment", desc.DefaultExperiment);
-        get_optional_class(node, "ssc:Annotations", desc.Annotations);
+        obj.version = get_attribute<string>(node, "version");
+        obj.name = get_attribute<string>(node, "name");
+        obj.id = get_optional_attribute<string>(node, "id");
+        obj.description = get_optional_attribute<string>(node, "description");
+        obj.author = get_optional_attribute<string>(node, "author");
+        obj.fileversion = get_optional_attribute<string>(node, "fileversion");
+        obj.copyright = get_optional_attribute<string>(node, "copyright");
+        obj.license = get_optional_attribute<string>(node, "license");
+        obj.generationTool = get_optional_attribute<string>(node, "generationTool");
+        obj.generationDateAndTime = get_optional_attribute<string>(node, "generationDateAndTime");
+        from_xml(node.child("ssd:System"), obj.System);
+        get_optional_class(node, "ssc:Enumerations", obj.Enumerations);
+        get_optional_class(node, "ssc:Units", obj.Units);
+        get_optional_class(node, "ssd:DefaultExperiment", obj.DefaultExperiment);
+        get_optional_class(node, "ssc:Annotations", obj.Annotations);
 
         BOOST_LOG_TRIVIAL(trace) << "Completed SystemStructureDescription" << std::endl;
     }
+
 }

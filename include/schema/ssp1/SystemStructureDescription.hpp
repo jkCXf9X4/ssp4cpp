@@ -98,7 +98,7 @@ namespace ssp4cpp::ssp1::ssd
     class Connections : public IXmlNode
     {
     public:
-        vector<Connection> list;
+        vector<ssd::Connection> Connection;
 
         string to_string(void) const;
     };
@@ -125,7 +125,7 @@ namespace ssp4cpp::ssp1::ssd
     class TConnectors : public IXmlNode
     {
     public:
-        vector<Connector> list;
+        vector<ssd::Connector> Connector;
 
         string to_string(void) const;
     };
@@ -138,9 +138,8 @@ namespace ssp4cpp::ssp1::ssd
         optional<string> name;
         optional<ssd::TConnectors> Connectors;
         optional<ssd::ElementGeometry> ElementGeometry;
-        optional<ssd::TParameterBindings> TParameterBindings;
-        optional<string> component_type_str;
-        optional<ComponentType> component_type;
+        optional<ssd::TParameterBindings> ParameterBindings;
+        optional<string> type;
         string source;
         optional<string> implementation;
         optional<ssc::TAnnotations> Annotations;
@@ -154,7 +153,7 @@ namespace ssp4cpp::ssp1::ssd
         string dictionary;
         optional<ssd::TConnectors> Connectors;
         optional<ssd::ElementGeometry> ElementGeometry;
-        optional<ssd::TParameterBindings> TParameterBindings;
+        optional<ssd::TParameterBindings> ParameterBindings;
         optional<ssc::TAnnotations> Annotations;
 
         string to_string(void) const;

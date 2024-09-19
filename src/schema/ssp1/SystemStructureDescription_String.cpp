@@ -98,7 +98,7 @@ namespace ssp4cpp::ssp1::ssd
     string Connections::to_string(void) const
     {
         return "Connections { \n"
-               "list  : " + to_str( list  ) + "\n" +
+               "Connection  : " + to_str( Connection  ) + "\n" +
                "}";
     }
 
@@ -125,7 +125,7 @@ namespace ssp4cpp::ssp1::ssd
     string TConnectors::to_string(void) const
     {
         return "TConnectors { \n"
-               "list  : " + to_str( list  ) + "\n" +
+               "Connector  : " + to_str( Connector  ) + "\n" +
                "}";
     }
 
@@ -133,17 +133,16 @@ namespace ssp4cpp::ssp1::ssd
     string TComponent::to_string(void) const
     {
         return "TComponent { \n"
-               "id                  : " + to_str( id                  ) + "\n" +
-               "description         : " + to_str( description         ) + "\n" +
-               "name                : " + to_str( name                ) + "\n" +
-               "Connectors          : " + to_str( Connectors          ) + "\n" +
-               "ElementGeometry     : " + to_str( ElementGeometry     ) + "\n" +
-               "TParameterBindings  : " + to_str( TParameterBindings  ) + "\n" +
-               "component_type_str  : " + to_str( component_type_str  ) + "\n" +
-               "component_type      : " + to_str( component_type      ) + "\n" +
-               "source              : " + to_str( source              ) + "\n" +
-               "implementation      : " + to_str( implementation      ) + "\n" +
-               "Annotations         : " + to_str( Annotations         ) + "\n" +
+               "id                 : " + to_str( id                 ) + "\n" +
+               "description        : " + to_str( description        ) + "\n" +
+               "name               : " + to_str( name               ) + "\n" +
+               "Connectors         : " + to_str( Connectors         ) + "\n" +
+               "ElementGeometry    : " + to_str( ElementGeometry    ) + "\n" +
+               "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
+               "type               : " + to_str( type               ) + "\n" +
+               "source             : " + to_str( source             ) + "\n" +
+               "implementation     : " + to_str( implementation     ) + "\n" +
+               "Annotations        : " + to_str( Annotations        ) + "\n" +
                "}";
     }
 
@@ -151,11 +150,11 @@ namespace ssp4cpp::ssp1::ssd
     string TSignalDictionaryReference::to_string(void) const
     {
         return "TSignalDictionaryReference { \n"
-               "dictionary          : " + to_str( dictionary          ) + "\n" +
-               "Connectors          : " + to_str( Connectors          ) + "\n" +
-               "ElementGeometry     : " + to_str( ElementGeometry     ) + "\n" +
-               "TParameterBindings  : " + to_str( TParameterBindings  ) + "\n" +
-               "Annotations         : " + to_str( Annotations         ) + "\n" +
+               "dictionary         : " + to_str( dictionary         ) + "\n" +
+               "Connectors         : " + to_str( Connectors         ) + "\n" +
+               "ElementGeometry    : " + to_str( ElementGeometry    ) + "\n" +
+               "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
+               "Annotations        : " + to_str( Annotations        ) + "\n" +
                "}";
     }
 
@@ -163,9 +162,9 @@ namespace ssp4cpp::ssp1::ssd
     string Elements::to_string(void) const
     {
         return "Elements { \n"
-               "components                    : " + to_str( Component                    ) + "\n" +
-               "signal_dictionary_references  : " + to_str( SignalDictionaryReference  ) + "\n" +
-               "systems                       : " + to_str( System                       ) + "\n" +
+               "Component                  : " + to_str( Component                  ) + "\n" +
+               "SignalDictionaryReference  : " + to_str( SignalDictionaryReference  ) + "\n" +
+               "System                     : " + to_str( System                     ) + "\n" +
                "}";
     }
 
