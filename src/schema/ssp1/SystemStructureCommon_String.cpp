@@ -5,7 +5,7 @@
 
 #include "SystemStructureCommon.hpp"
 
-#include "to_string.tpp"
+#include "to_string.hpp"
 
 using namespace std;
 

@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "SystemStructureDescription.hpp"
-#include "to_string.tpp"
+#include "to_string.hpp"
 
 using namespace std;
 using namespace ssp4cpp::ssp1;

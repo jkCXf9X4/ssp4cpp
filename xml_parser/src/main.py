@@ -7,13 +7,6 @@ from misc import indent_strings
 
 
 def main():
-    with open("xml_parser/resource/ssd.toml", "rb") as f:
-        ssd_toml = tomli.load(f)
-        # print(ssd_toml)
-
-    with open("xml_parser/resource/ssc.toml", "rb") as f:
-        ssc_toml = tomli.load(f)
-        # print(ssd_toml)
 
     def get_classes(toml):
         classes = []
@@ -27,9 +20,6 @@ def main():
             classes.append(t)
         return classes
 
-    ssd_classes = [ClassExporter (t) for t in get_classes(ssd_toml)]
-    ssc_classes = [ClassExporter (t) for t in get_classes(ssc_toml)]
-
     def write_to_file(file ,classes, function, mode = "w"):
         with open(file, mode) as f:
             f.write("{\n")
@@ -38,13 +28,31 @@ def main():
                 f.write(s)
             f.write("\n}\n")
 
+    def parse_toml(file):
+        with open(file, "rb") as f:
+            toml = tomli.load(f)
+            classes = [ClassExporter (t) for t in get_classes(toml)]
+        return classes
+    
+
+    ssd_classes = parse_toml("xml_parser/resource/ssd.toml")
+    ssc_classes = parse_toml("xml_parser/resource/ssc.toml")
+    fmi2_md_classes = parse_toml("xml_parser/resource/fmi2_modelDescription.toml")
+
+
     write_to_file("xml_parser/generated/ssd.hpp", ssd_classes, lambda c: c.generate_class())
-    write_to_file("xml_parser/generated/ssc.hpp", ssc_classes, lambda c: c.generate_class())
-
     write_to_file("xml_parser/generated/ssd_string.cpp", ssd_classes, lambda c: c.generate_class_to_string())
-    write_to_file("xml_parser/generated/ssc_string.cpp", ssc_classes, lambda c: c.generate_class_to_string())
-
     write_to_file("xml_parser/generated/ssd_xml.cpp", ssd_classes, lambda c: c.generate_from_xml_declarations())
+
+    write_to_file("xml_parser/generated/ssc.hpp", ssc_classes, lambda c: c.generate_class())
+    write_to_file("xml_parser/generated/ssc_string.cpp", ssc_classes, lambda c: c.generate_class_to_string())
     write_to_file("xml_parser/generated/ssc_xml.cpp", ssc_classes, lambda c: c.generate_from_xml_declarations())
+
+    write_to_file("xml_parser/generated/fmi2_md.hpp", fmi2_md_classes, lambda c: c.generate_class())
+    write_to_file("xml_parser/generated/fmi2_md_string.cpp", fmi2_md_classes, lambda c: c.generate_class_to_string())
+    write_to_file("xml_parser/generated/fmi2_md_xml.cpp", fmi2_md_classes, lambda c: c.generate_from_xml_declarations())
+
+
+
 
 main()

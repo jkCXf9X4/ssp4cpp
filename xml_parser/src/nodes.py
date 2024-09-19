@@ -27,7 +27,7 @@ class VariableNode(Node):
         self.type = type
         self.optional = optional
         self.list = list
-        self.is_primitive = type in ["string", "int", "float", "double", "bool"]
+        self.is_primitive = type in ["string", "int", "unsigned int", "float", "double", "bool"]
 
     def __str__(self):
         return f"{self.name} ({self.type}, optional={self.optional}, list={self.list})"

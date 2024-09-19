@@ -1,0 +1,206 @@
+# BaseUnit structure
+[BaseUnit]
+kg = { type = "int", optional = true }
+m = { type = "int", optional = true }
+s = { type = "int", optional = true }
+a = { type = "int", optional = true }
+k = { type = "int", optional = true }
+mol = { type = "int", optional = true }
+cd = { type = "int", optional = true }
+rad = { type = "int", optional = true }
+factor = { type = "double", optional = true }
+offset = { type = "double", optional = true }
+
+# DisplayUnit structure
+[DisplayUnit]
+name = { type = "string" }
+factor = { type = "double", optional = true }
+offset = { type = "double", optional = true }
+
+# fmi2Unit structure
+[fmi2Unit]
+name = { type = "string" }
+BaseUnit = { type = "fmi2::BaseUnit", optional = true }
+DisplayUnit = { type = "fmi2::DisplayUnit", list = true }
+
+# UnitDefinitions structure
+[UnitDefinitions]
+Units = { type = "fmi2Unit", list = true }
+
+# Boolean structure
+[Boolean]
+declaredType = { type = "string", optional = true }
+start = { type = "string", optional = true }
+
+# Integer structure
+[Integer]
+declaredType = { type = "string", optional = true }
+start = { type = "string", optional = true }
+quantity = { type = "string", optional = true }
+min = { type = "int", optional = true }
+max = { type = "int", optional = true }
+
+# String structure
+[String]
+declaredType = { type = "string", optional = true }
+start = { type = "string", optional = true }
+
+# Real structure
+[Real]
+declaredType = { type = "string", optional = true }
+quantity = { type = "string", optional = true }
+unit = { type = "string", optional = true }
+displayUnit = { type = "string", optional = true }
+relativeQuantity = { type = "bool", optional = true }
+min = { type = "double", optional = true }
+max = { type = "double", optional = true }
+nominal = { type = "double", optional = true }
+unbounded = { type = "bool", optional = true }
+start = { type = "double", optional = true }
+derivative = { type = "unsigned int", optional = true }
+reinit = { type = "bool", optional = true }
+
+# Enumeration structure
+[Enumeration]
+declaredType = { type = "string" }
+quantity = { type = "string", optional = true }
+min = { type = "int", optional = true }
+max = { type = "int", optional = true }
+start = { type = "int", optional = true }
+
+# SimpleTypeEnumerationItem structure
+[SimpleTypeEnumerationItem]
+name = { type = "string" }
+value = { type = "int" }
+description = { type = "string", optional = true }
+
+# SimpleTypeEnumeration structure
+[SimpleTypeEnumeration]
+quantity = { type = "string", optional = true }
+item = { type = "SimpleTypeEnumerationItem", list = true }
+
+# fmi2SimpleType structure
+[fmi2SimpleType]
+name = { type = "string" }
+description = { type = "string", optional = true }
+Real = { type = "fmi2::Real", optional = true }
+Integer = { type = "fmi2::Integer", optional = true }
+Boolean = { type = "fmi2::Boolean", optional = true }
+String = { type = "fmi2::String", optional = true }
+Enumeration = { type = "SimpleTypeEnumeration", optional = true }
+
+# TypeDefinitions structure
+[TypeDefinitions]
+SimpleTypes = { type = "fmi2SimpleType", list = true }
+
+# Category structure
+[Category]
+name = { type = "string" }
+description = { type = "string", optional = true }
+
+# LogCategories structure
+[LogCategories]
+categories = { type = "Category", list = true }
+
+# fmi2Annotation structure
+[fmi2Annotation]
+annotation = { type = "string" }
+
+# VendorAnnotations structure
+[VendorAnnotations]
+Annotations = { type = "fmi2Annotation", list = true }
+
+# DefaultExperiment structure
+[DefaultExperiment]
+startTime = { type = "double", optional = true }
+stopTime = { type = "double", optional = true }
+tolerance = { type = "double", optional = true }
+stepSize = { type = "double", optional = true }
+
+# fmi2ScalarVariable structure
+[fmi2ScalarVariable]
+name = { type = "string" }
+valueReference = { type = "unsigned int", optional = true }
+description = { type = "string", optional = true }
+causality = { type = "string", optional = true }
+variability = { type = "string", optional = true }
+initial = { type = "string", optional = true }
+canHandleMultipleSetPerTimeInstant = { type = "bool", optional = true }
+Real = { type = "fmi2::Real", optional = true }
+Integer = { type = "fmi2::Integer", optional = true }
+Boolean = { type = "fmi2::Boolean", optional = true }
+String = { type = "fmi2::String", optional = true }
+Enumeration = { type = "fmi2::Enumeration", optional = true }
+Annotations = { type = "fmi2Annotation", list = true }
+
+# unknown structure
+[unknown]
+index = { type = "int" }
+dependencies = { type = "unsigned int", list = true }
+dependencies_kind_str = { type = "string", list = true }
+dependencies_kind = { type = "DependenciesKind", list = true }
+
+# ModelStructure structure
+[ModelStructure]
+outputs = { type = "unknown", list = true }
+derivatives = { type = "unknown", list = true }
+initialUnknowns = { type = "unknown", list = true }
+
+# ModelVariables structure
+[ModelVariables]
+list = { type = "fmi2ScalarVariable", list = true }
+
+# File structure
+[File]
+name = { type = "string" }
+
+# ModelExchange structure
+[ModelExchange]
+modelIdentifier = { type = "string" }
+needsExecutionTool = { type = "bool", optional = true }
+completedIntegratorStepNotNeeded = { type = "bool", optional = true }
+canBeInstantiatedOnlyOncePerProcess = { type = "bool", optional = true }
+canNotUseMemoryManagementFunctions = { type = "bool", optional = true }
+canGetAndSetFMUstate = { type = "bool", optional = true }
+canSerializeFMUstate = { type = "bool", optional = true }
+providesDirectionalDerivatives = { type = "bool", optional = true }
+SourceFiles = { type = "File", list = true }
+
+# CoSimulation structure
+[CoSimulation]
+modelIdentifier = { type = "string" }
+needsExecutionTool = { type = "bool", optional = true }
+canHandleVariableCommunicationStepSize = { type = "bool", optional = true }
+canInterpolateInputs = { type = "bool", optional = true }
+maxOutputDerivativeOrder = { type = "bool", optional = true }
+canRunAsynchronuously = { type = "bool", optional = true }
+canBeInstantiatedOnlyOncePerProcess = { type = "bool", optional = true }
+canNotUseMemoryManagementFunctions = { type = "bool", optional = true }
+canGetAndSetFMUstate = { type = "bool", optional = true }
+canSerializeFMUstate = { type = "bool", optional = true }
+providesDirectionalDerivatives = { type = "bool", optional = true }
+SourceFiles = { type = "File", list = true }
+
+# fmi2ModelDescription structure
+[fmi2ModelDescription]
+fmiVersion = { type = "string" }
+modelName = { type = "string" }
+guid = { type = "string" }
+description = { type = "string", optional = true }
+author = { type = "string", optional = true }
+version = { type = "string", optional = true }
+copyright = { type = "string", optional = true }
+license = { type = "string", optional = true }
+generationTool = { type = "string", optional = true }
+generationDateAndTime = { type = "string", optional = true }
+variableNamingConvention = { type = "string", optional = true }
+numberOfEventIndicators = { type = "string", optional = true }
+ModelExchange = { type = "fmi2::ModelExchange", optional = true }
+CoSimulation = { type = "fmi2::CoSimulation", optional = true }
+UnitDefinitions = { type = "fmi2::UnitDefinitions", optional = true }
+TypeDefinitions = { type = "fmi2::TypeDefinitions", optional = true }
+LogCategories = { type = "fmi2::LogCategories", optional = true }
+DefaultExperiment = { type = "fmi2::DefaultExperiment", optional = true }
+VendorAnnotations = { type = "fmi2::VendorAnnotations", optional = true }
+ModelVariables = { type = "fmi2::ModelVariables" }
+ModelStructure = { type = "fmi2::ModelStructure" }

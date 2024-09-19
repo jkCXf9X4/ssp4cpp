@@ -2,13 +2,13 @@
 #include <stdexcept>
 
 #include "SSP_Enums.hpp"
-#include "to_string.tpp"
+#include "to_string.hpp"
 
 using namespace std;
 
 namespace ssp4cpp::ssp1::ssd
 {
-    ComponentType from_string(const string &str)
+    ComponentType componentType_from_string(const string &str)
     {
         if (str == "application/x-fmu-sharedlibrary")
         {

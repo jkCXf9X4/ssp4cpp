@@ -9,12 +9,13 @@
 
 #include "FMI_Enums.hpp"
 
+using namespace std;
 namespace ssp4cpp::fmi2
 {
-    using namespace std;
 
-    struct BaseUnit
+    class BaseUnit
     {
+    public:
         optional<int> kg;
         optional<int> m;
         optional<int> s;
@@ -26,51 +27,78 @@ namespace ssp4cpp::fmi2
         optional<double> factor;
         optional<double> offset;
     };
+    string to_string(const BaseUnit &obj);
+    string to_string(const optional<BaseUnit> &obj);
+    string to_string(const vector<BaseUnit> &obj);
 
-    struct DisplayUnit
+    class DisplayUnit
     {
+    public:
         string name;
         optional<double> factor;
         optional<double> offset;
     };
+    string to_string(const DisplayUnit &obj);
+    string to_string(const optional<DisplayUnit> &obj);
+    string to_string(const vector<DisplayUnit> &obj);
 
-    struct fmi2Unit
+    class fmi2Unit
     {
+    public:
         string name;
         optional<fmi2::BaseUnit> BaseUnit;
         vector<fmi2::DisplayUnit> DisplayUnit;
     };
+    string to_string(const fmi2Unit &obj);
+    string to_string(const optional<fmi2Unit> &obj);
+    string to_string(const vector<fmi2Unit> &obj);
 
-    struct UnitDefinitions
+    class UnitDefinitions
     {
+    public:
         vector<fmi2Unit> Units;
     };
+    string to_string(const UnitDefinitions &obj);
+    string to_string(const optional<UnitDefinitions> &obj);
+    string to_string(const vector<UnitDefinitions> &obj);
 
-    struct Boolean
+    class Boolean
     {
+    public:
         optional<string> declaredType;
         optional<string> start;
     };
+    string to_string(const Boolean &obj);
+    string to_string(const optional<Boolean> &obj);
+    string to_string(const vector<Boolean> &obj);
 
-    struct Integer
+    class Integer
     {
+    public:
         optional<string> declaredType;
         optional<string> start;
         optional<string> quantity;
         optional<int> min;
         optional<int> max;
     };
+    string to_string(const Integer &obj);
+    string to_string(const optional<Integer> &obj);
+    string to_string(const vector<Integer> &obj);
 
-    struct String
+    class String
     {
+    public:
         optional<string> declaredType;
         optional<string> start;
     };
+    string to_string(const String &obj);
+    string to_string(const optional<String> &obj);
+    string to_string(const vector<String> &obj);
 
-    struct Real
+    class Real
     {
+    public:
         optional<string> declaredType;
-
         optional<string> quantity;
         optional<string> unit;
         optional<string> displayUnit;
@@ -79,82 +107,124 @@ namespace ssp4cpp::fmi2
         optional<double> max;
         optional<double> nominal;
         optional<bool> unbounded;
-
         optional<double> start;
         optional<unsigned int> derivative;
         optional<bool> reinit;
     };
+    string to_string(const Real &obj);
+    string to_string(const optional<Real> &obj);
+    string to_string(const vector<Real> &obj);
 
-    struct Enumeration
+    class Enumeration
     {
+    public:
         string declaredType;
         optional<string> quantity;
         optional<int> min;
         optional<int> max;
         optional<int> start;
     };
+    string to_string(const Enumeration &obj);
+    string to_string(const optional<Enumeration> &obj);
+    string to_string(const vector<Enumeration> &obj);
 
-    struct SimpleTypeEnumerationItem
+    class SimpleTypeEnumerationItem
     {
+    public:
         string name;
         int value;
         optional<string> description;
     };
+    string to_string(const SimpleTypeEnumerationItem &obj);
+    string to_string(const optional<SimpleTypeEnumerationItem> &obj);
+    string to_string(const vector<SimpleTypeEnumerationItem> &obj);
 
-    struct SimpleTypeEnumeration
+    class SimpleTypeEnumeration
     {
+    public:
         optional<string> quantity;
         vector<SimpleTypeEnumerationItem> item;
     };
+    string to_string(const SimpleTypeEnumeration &obj);
+    string to_string(const optional<SimpleTypeEnumeration> &obj);
+    string to_string(const vector<SimpleTypeEnumeration> &obj);
 
-    struct fmi2SimpleType
+    class fmi2SimpleType
     {
+    public:
         string name;
         optional<string> description;
-
         optional<fmi2::Real> Real;
         optional<fmi2::Integer> Integer;
-        optional<fmi2::Boolean> Boolean; // not sure
-        optional<fmi2::String> String;   // not sure
+        optional<fmi2::Boolean> Boolean;
+        optional<fmi2::String> String;
         optional<SimpleTypeEnumeration> Enumeration;
     };
+    string to_string(const fmi2SimpleType &obj);
+    string to_string(const optional<fmi2SimpleType> &obj);
+    string to_string(const vector<fmi2SimpleType> &obj);
 
-    struct TypeDefinitions
+    class TypeDefinitions
     {
+    public:
         vector<fmi2SimpleType> SimpleTypes;
     };
+    string to_string(const TypeDefinitions &obj);
+    string to_string(const optional<TypeDefinitions> &obj);
+    string to_string(const vector<TypeDefinitions> &obj);
 
-    struct Category
+    class Category
     {
+    public:
         string name;
         optional<string> description;
     };
+    string to_string(const Category &obj);
+    string to_string(const optional<Category> &obj);
+    string to_string(const vector<Category> &obj);
 
-    struct LogCategories
+    class LogCategories
     {
+    public:
         vector<Category> categories;
     };
+    string to_string(const LogCategories &obj);
+    string to_string(const optional<LogCategories> &obj);
+    string to_string(const vector<LogCategories> &obj);
 
-    struct fmi2Annotation
+    class fmi2Annotation
     {
-        string annotation; // parse everything as string
+    public:
+        string annotation;
     };
+    string to_string(const fmi2Annotation &obj);
+    string to_string(const optional<fmi2Annotation> &obj);
+    string to_string(const vector<fmi2Annotation> &obj);
 
-    struct VendorAnnotations
+    class VendorAnnotations
     {
+    public:
         vector<fmi2Annotation> Annotations;
     };
+    string to_string(const VendorAnnotations &obj);
+    string to_string(const optional<VendorAnnotations> &obj);
+    string to_string(const vector<VendorAnnotations> &obj);
 
-    struct DefaultExperiment
+    class DefaultExperiment
     {
+    public:
         optional<double> startTime;
         optional<double> stopTime;
         optional<double> tolerance;
         optional<double> stepSize;
     };
+    string to_string(const DefaultExperiment &obj);
+    string to_string(const optional<DefaultExperiment> &obj);
+    string to_string(const vector<DefaultExperiment> &obj);
 
-    struct fmi2ScalarVariable
+    class fmi2ScalarVariable
     {
+    public:
         string name;
         optional<unsigned int> valueReference;
         optional<string> description;
@@ -162,7 +232,6 @@ namespace ssp4cpp::fmi2
         optional<string> variability;
         optional<string> initial;
         optional<bool> canHandleMultipleSetPerTimeInstant;
-
         optional<fmi2::Real> Real;
         optional<fmi2::Integer> Integer;
         optional<fmi2::Boolean> Boolean;
@@ -170,34 +239,54 @@ namespace ssp4cpp::fmi2
         optional<fmi2::Enumeration> Enumeration;
         vector<fmi2Annotation> Annotations;
     };
+    string to_string(const fmi2ScalarVariable &obj);
+    string to_string(const optional<fmi2ScalarVariable> &obj);
+    string to_string(const vector<fmi2ScalarVariable> &obj);
 
-    struct unknown
+    class unknown
     {
+    public:
         int index;
-        std::vector<unsigned int> dependencies;
-        std::vector<std::string> dependencies_kind_str;
-        std::vector<DependenciesKind> dependencies_kind;
+        vector<unsigned int> dependencies;
+        vector<string> dependencies_kind_str;
+        vector<DependenciesKind> dependencies_kind;
     };
+    string to_string(const unknown &obj);
+    string to_string(const optional<unknown> &obj);
+    string to_string(const vector<unknown> &obj);
 
-    struct ModelStructure
+    class ModelStructure
     {
+    public:
         vector<unknown> outputs;
         vector<unknown> derivatives;
         vector<unknown> initialUnknowns;
     };
+    string to_string(const ModelStructure &obj);
+    string to_string(const optional<ModelStructure> &obj);
+    string to_string(const vector<ModelStructure> &obj);
 
-    struct ModelVariables
+    class ModelVariables
     {
+    public:
         vector<fmi2ScalarVariable> list;
     };
+    string to_string(const ModelVariables &obj);
+    string to_string(const optional<ModelVariables> &obj);
+    string to_string(const vector<ModelVariables> &obj);
 
-    struct File
+    class File
     {
+    public:
         string name;
     };
+    string to_string(const File &obj);
+    string to_string(const optional<File> &obj);
+    string to_string(const vector<File> &obj);
 
-    struct ModelExchange
+    class ModelExchange
     {
+    public:
         string modelIdentifier;
         optional<bool> needsExecutionTool;
         optional<bool> completedIntegratorStepNotNeeded;
@@ -208,9 +297,13 @@ namespace ssp4cpp::fmi2
         optional<bool> providesDirectionalDerivatives;
         vector<File> SourceFiles;
     };
+    string to_string(const ModelExchange &obj);
+    string to_string(const optional<ModelExchange> &obj);
+    string to_string(const vector<ModelExchange> &obj);
 
-    struct CoSimulation
+    class CoSimulation
     {
+    public:
         string modelIdentifier;
         optional<bool> needsExecutionTool;
         optional<bool> canHandleVariableCommunicationStepSize;
@@ -224,9 +317,13 @@ namespace ssp4cpp::fmi2
         optional<bool> providesDirectionalDerivatives;
         vector<File> SourceFiles;
     };
+    string to_string(const CoSimulation &obj);
+    string to_string(const optional<CoSimulation> &obj);
+    string to_string(const vector<CoSimulation> &obj);
 
-    struct fmi2ModelDescription
+    class fmi2ModelDescription
     {
+    public:
         string fmiVersion;
         string modelName;
         string guid;
@@ -239,7 +336,6 @@ namespace ssp4cpp::fmi2
         optional<string> generationDateAndTime;
         optional<string> variableNamingConvention;
         optional<string> numberOfEventIndicators;
-
         optional<fmi2::ModelExchange> ModelExchange;
         optional<fmi2::CoSimulation> CoSimulation;
         optional<fmi2::UnitDefinitions> UnitDefinitions;
@@ -250,5 +346,8 @@ namespace ssp4cpp::fmi2
         fmi2::ModelVariables ModelVariables;
         fmi2::ModelStructure ModelStructure;
     };
+    string to_string(const fmi2ModelDescription &obj);
+    string to_string(const optional<fmi2ModelDescription> &obj);
+    string to_string(const vector<fmi2ModelDescription> &obj);
 
 }
