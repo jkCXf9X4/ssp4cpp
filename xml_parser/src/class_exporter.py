@@ -19,24 +19,24 @@ class ClassExporter:
             if variable.optional:
                 if variable.is_primitive:
                     if variable.type == "string":
-                        return f"obj.{variable.name}.value_or({default_values[variable.type]})"
+                        return f"to_str( {variable.name} )"
                     else:
-                        return f"std::to_string( obj.{variable.name}.value_or({default_values[variable.type]}) )"
+                        return f"to_str( {variable.name} )"
                 else: # complex type
-                    return f"to_string( obj.{variable.name} )"
+                    return f"to_str( {variable.name} )"
             else: 
                 if variable.is_primitive:
                     if variable.type == "string":
-                        return f"obj.{variable.name}"
+                        return f"to_str( {variable.name} )"
                     else:
-                        return f"std::to_string( obj.{variable.name} )"
+                        return f"to_str( {variable.name} )"
                 else:
-                    return f"to_string( obj.{variable.name} )"
+                    return f"to_string( {variable.name} )"
 
         longest_name = max([len(v.name) for v in self.variable_nodes])
 
         if variable.list: 
-            return f""""{variable.name.ljust(longest_name +3)}: " + to_string(obj.{variable.name.ljust(longest_name + 4) }) + "\\n" +"""
+            return f""""{variable.name.ljust(longest_name +3)}: " + to_str( {variable.name.ljust(longest_name + 4) } ) + "\\n" +"""
         else:
             return f""""{variable.name.ljust(longest_name +3)}: " + {get_right_side().ljust(longest_name + 40 )} + "\\n" +"""
 
@@ -46,14 +46,12 @@ class ClassExporter:
         variables = indent_strings("           ", variables)
 
         template = f""" // {self.class_node.name}
-string to_string(const {self.class_node.name} &obj)
+string {self.class_node.name}::to_string(void) const
 {{
     return "{self.class_node.name} {{ \\n"
 {variables}
            "}}";
 }}
-string to_string(const optional<{self.class_node.name}> &obj) {{ return to_string_optional(obj); }}
-string to_string(const vector<{self.class_node.name}> &obj) {{ return to_string_vector(obj); }}
 
 """
         return template
@@ -61,8 +59,6 @@ string to_string(const vector<{self.class_node.name}> &obj) {{ return to_string_
 
     def generate_to_string_declarations(self):
         return f"""string to_string(const {self.class_node.name} &obj);
-string to_string(const optional<{self.class_node.name}> &obj);
-string to_string(const vector<{self.class_node.name}> &obj);
 """
 
     def generate_from_xml_declarations(self):
@@ -84,10 +80,12 @@ string to_string(const vector<{self.class_node.name}> &obj);
             
 
         class_template = f"""
-class {self.class_node.name}
+class {self.class_node.name} : public IXmlNode
 {{
 public:
 {variables}
+
+    virtual string to_string(void) const;
 }};
-{self.generate_to_string_declarations()}"""
+"""
         return class_template

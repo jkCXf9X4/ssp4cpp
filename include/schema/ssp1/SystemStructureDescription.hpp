@@ -15,15 +15,12 @@ namespace ssp4cpp::ssp1::ssd
     // Forward declarations
     struct TSystem;
 
-
     class SystemGeometry
     {
     public:
 
     };
     string to_string(const SystemGeometry &obj);
-    string to_string(const optional<SystemGeometry> &obj);
-    string to_string(const vector<SystemGeometry> &obj);
 
     class ConnectorGeometry
     {
@@ -31,8 +28,6 @@ namespace ssp4cpp::ssp1::ssd
 
     };
     string to_string(const ConnectorGeometry &obj);
-    string to_string(const optional<ConnectorGeometry> &obj);
-    string to_string(const vector<ConnectorGeometry> &obj);
 
     class ElementGeometry
     {
@@ -40,8 +35,6 @@ namespace ssp4cpp::ssp1::ssd
 
     };
     string to_string(const ElementGeometry &obj);
-    string to_string(const optional<ElementGeometry> &obj);
-    string to_string(const vector<ElementGeometry> &obj);
 
     class ConnectionGeometry
     {
@@ -49,8 +42,6 @@ namespace ssp4cpp::ssp1::ssd
 
     };
     string to_string(const ConnectionGeometry &obj);
-    string to_string(const optional<ConnectionGeometry> &obj);
-    string to_string(const vector<ConnectionGeometry> &obj);
 
     class TSignalDictionaries
     {
@@ -58,8 +49,6 @@ namespace ssp4cpp::ssp1::ssd
 
     };
     string to_string(const TSignalDictionaries &obj);
-    string to_string(const optional<TSignalDictionaries> &obj);
-    string to_string(const vector<TSignalDictionaries> &obj);
 
     class TParameterBindings
     {
@@ -67,8 +56,6 @@ namespace ssp4cpp::ssp1::ssd
 
     };
     string to_string(const TParameterBindings &obj);
-    string to_string(const optional<TParameterBindings> &obj);
-    string to_string(const vector<TParameterBindings> &obj);
 
     class GraphicalElements
     {
@@ -76,8 +63,6 @@ namespace ssp4cpp::ssp1::ssd
 
     };
     string to_string(const GraphicalElements &obj);
-    string to_string(const optional<GraphicalElements> &obj);
-    string to_string(const vector<GraphicalElements> &obj);
 
     class TDefaultExperiment
     {
@@ -85,8 +70,6 @@ namespace ssp4cpp::ssp1::ssd
 
     };
     string to_string(const TDefaultExperiment &obj);
-    string to_string(const optional<TDefaultExperiment> &obj);
-    string to_string(const vector<TDefaultExperiment> &obj);
 
     class Connection
     {
@@ -104,8 +87,6 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::TAnnotations> Annotations;
     };
     string to_string(const Connection &obj);
-    string to_string(const optional<Connection> &obj);
-    string to_string(const vector<Connection> &obj);
 
     class Connections
     {
@@ -113,8 +94,6 @@ namespace ssp4cpp::ssp1::ssd
         vector<Connection> list;
     };
     string to_string(const Connections &obj);
-    string to_string(const optional<Connections> &obj);
-    string to_string(const vector<Connections> &obj);
 
     class Connector
     {
@@ -133,8 +112,6 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::TAnnotations> Annotations;
     };
     string to_string(const Connector &obj);
-    string to_string(const optional<Connector> &obj);
-    string to_string(const vector<Connector> &obj);
 
     class TConnectors
     {
@@ -142,8 +119,6 @@ namespace ssp4cpp::ssp1::ssd
         vector<Connector> list;
     };
     string to_string(const TConnectors &obj);
-    string to_string(const optional<TConnectors> &obj);
-    string to_string(const vector<TConnectors> &obj);
 
     class TComponent
     {
@@ -161,8 +136,6 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::TAnnotations> Annotations;
     };
     string to_string(const TComponent &obj);
-    string to_string(const optional<TComponent> &obj);
-    string to_string(const vector<TComponent> &obj);
 
     class TSignalDictionaryReference
     {
@@ -174,8 +147,6 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::TAnnotations> Annotations;
     };
     string to_string(const TSignalDictionaryReference &obj);
-    string to_string(const optional<TSignalDictionaryReference> &obj);
-    string to_string(const vector<TSignalDictionaryReference> &obj);
 
     class Elements
     {
@@ -185,8 +156,6 @@ namespace ssp4cpp::ssp1::ssd
         vector<ssd::TSystem> systems;
     };
     string to_string(const Elements &obj);
-    string to_string(const optional<Elements> &obj);
-    string to_string(const vector<Elements> &obj);
 
     class TSystem
     {
@@ -203,10 +172,9 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssd::SystemGeometry> SystemGeometry;
         optional<ssd::GraphicalElements> GraphicalElements;
         optional<ssc::TAnnotations> Annotations;
+
+        string to_str();
     };
-    string to_string(const TSystem &obj);
-    string to_string(const optional<TSystem> &obj);
-    string to_string(const vector<TSystem> &obj);
 
     class SystemStructureDescription
     {
@@ -228,6 +196,5 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::TAnnotations> Annotations;
     };
     string to_string(const SystemStructureDescription &obj);
-    string to_string(const optional<SystemStructureDescription> &obj);
-    string to_string(const vector<SystemStructureDescription> &obj);
+
 }

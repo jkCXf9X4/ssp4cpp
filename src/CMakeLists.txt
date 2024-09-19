@@ -1,6 +1,7 @@
 
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/interface)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema/ssp1)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema/fmi2)

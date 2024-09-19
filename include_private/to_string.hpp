@@ -4,62 +4,70 @@
 #include <vector>
 #include <optional>
 
-// Templates
+#include "IXmlNode.hpp"
+
+
 template <typename T>
-std::string to_string_optional(const std::optional<T> &opt)
-{
-    return opt ? to_string(opt.value()) : "null";
+std::string to_str(const T &obj)
+{   
+    if constexpr (is_same_v<T, int>)
+    {
+        return std::to_string(obj);
+    }
+    else if constexpr (is_same_v<T, unsigned int>)
+    {
+        return std::to_string(obj);
+    }
+    else if constexpr (is_same_v<T, double>)
+    {
+        return std::to_string(obj);
+    }
+    else if constexpr (is_same_v<T, bool>)
+    {
+        return obj ? "true" : "false";
+    }
+    else if constexpr (is_same_v<T, string>)
+    {
+        return obj;
+    }
+    else if constexpr (is_base_of_v<IXmlNode, T>)
+    {
+        return obj.to_string();
+    }
+    else 
+    {
+        //Error
+        return to_string(obj);
+    }
 }
 
 template <typename T>
-std::string to_string_vector(const std::vector<T> &vec)
-{
+std::string to_str(const std::optional<T> &obj)
+{   
+    return obj ? to_str(obj.value()) : "null";
+}
+
+template <typename T>
+std::string to_str(const std::vector<T> &obj)
+{   
     std::string result = "{\n";
-    for (const auto &item : vec)
+    for (const auto &item : obj)
     {
-        result += to_string(item) + "\n";
+        result += to_str(item) + "\n";
     }
     result += "}\n";
     return result;
 }
 
-namespace ssp4cpp::str
+// Templates
+template <typename T>
+std::string to_string_optional(const std::optional<T> &opt)
 {
-    using namespace std;
+    return to_str(opt);
+}
 
-    inline std::string to_string(const std::string &obj)
-    {
-        return obj;
-    }
-
-    inline std::string to_string(const vector<std::string> &obj)
-    {
-        std::string result = "{\n";
-        for (const auto &item : obj)
-        {
-            result += item + "\n";
-        }
-        result += "}\n";
-        return result;
-    }
-
-    inline std::string to_string(const bool &obj)
-    {
-        return obj ? "true" : "false";
-    }
-
-    inline std::string to_string(const int &obj)
-    {
-        return std::to_string(obj);
-    }
-
-    inline std::string to_string(const unsigned int &obj)
-    {
-        return std::to_string(obj);
-    }
-
-    inline std::string to_string(const double &obj)
-    {
-        return std::to_string(obj);
-    }
+template <typename T>
+std::string to_string_vector(const std::vector<T> &vec)
+{
+    return to_str(vec);
 }

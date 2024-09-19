@@ -4017,7 +4017,7 @@ startElement                       : Consumer
 startConnector                     : consumerFeed.p
 endElement                         : ECS_HW
 endConnector                       : consumerFeed.p
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4030,7 +4030,7 @@ startElement                       : Consumer
 startConnector                     : consumerFeed.h
 endElement                         : ECS_HW
 endConnector                       : consumerFeed.h
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4043,7 +4043,7 @@ startElement                       : Consumer
 startConnector                     : consumerFeed.X[1]
 endElement                         : ECS_HW
 endConnector                       : consumerFeed.X[1]
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4056,7 +4056,7 @@ startElement                       : Consumer
 startConnector                     : consumerFeed.X[2]
 endElement                         : ECS_HW
 endConnector                       : consumerFeed.X[2]
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4069,7 +4069,7 @@ startElement                       : Consumer
 startConnector                     : consumerFeed.X[3]
 endElement                         : ECS_HW
 endConnector                       : consumerFeed.X[3]
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4082,7 +4082,7 @@ startElement                       : Consumer
 startConnector                     : consumerRet.p
 endElement                         : ECS_HW
 endConnector                       : consumerRet.p
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4095,7 +4095,7 @@ startElement                       : Consumer
 startConnector                     : consumerRet.h
 endElement                         : ECS_HW
 endConnector                       : consumerRet.h
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4108,7 +4108,7 @@ startElement                       : Consumer
 startConnector                     : consumerRet.X[1]
 endElement                         : ECS_HW
 endConnector                       : consumerRet.X[1]
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4121,7 +4121,7 @@ startElement                       : Consumer
 startConnector                     : consumerRet.X[2]
 endElement                         : ECS_HW
 endConnector                       : consumerRet.X[2]
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4134,7 +4134,7 @@ startElement                       : Consumer
 startConnector                     : consumerRet.X[3]
 endElement                         : ECS_HW
 endConnector                       : consumerRet.X[3]
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4147,7 +4147,7 @@ startElement                       : ECS_HW
 startConnector                     : consumerFeed.m
 endElement                         : Consumer
 endConnector                       : consumerFeed.m
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4160,7 +4160,7 @@ startElement                       : ECS_HW
 startConnector                     : consumerFeed.hn
 endElement                         : Consumer
 endConnector                       : consumerFeed.hn
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4173,7 +4173,7 @@ startElement                       : ECS_HW
 startConnector                     : consumerRet.m
 endElement                         : Consumer
 endConnector                       : consumerRet.m
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4186,7 +4186,7 @@ startElement                       : ECS_HW
 startConnector                     : consumerRet.hn
 endElement                         : Consumer
 endConnector                       : consumerRet.hn
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4199,7 +4199,7 @@ startElement                       : ECS_HW
 startConnector                     : LHexTout
 endElement                         : AdaptionUnit
 endConnector                       : LHexTout
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4212,7 +4212,7 @@ startElement                       : AdaptionUnit
 startConnector                     : sWsignals.Aircraft_State
 endElement                         : ECS_SW
 endConnector                       : Input.Aircraft_State
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4225,7 +4225,7 @@ startElement                       : AdaptionUnit
 startConnector                     : sWsignals.TLiquid
 endElement                         : ECS_SW
 endConnector                       : Input.TLiquid
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4238,7 +4238,7 @@ startElement                       : ECS_SW
 startConnector                     : TCoolingPack
 endElement                         : ECS_HW
 endConnector                       : reqCoolingTemperature
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4251,7 +4251,7 @@ startElement                       : Atmos
 startConnector                     : Tamb
 endElement                         : Consumer
 endConnector                       : Tamb
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4264,7 +4264,7 @@ startElement                       : Atmos
 startConnector                     : Pamb
 endElement                         : Consumer
 endConnector                       : Pamb
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4277,7 +4277,7 @@ startElement                       : Atmos
 startConnector                     : Tamb
 endElement                         : ECS_HW
 endConnector                       : Tamb
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
@@ -4290,7 +4290,7 @@ startElement                       : Atmos
 startConnector                     : Pamb
 endElement                         : ECS_HW
 endConnector                       : Pamb
-suppressUnitConversion             : 0
+suppressUnitConversion             : null
 LinearTransformation               : null
 BooleanMappingTransformation       : null
 IntegerMappingTransformation       : null
