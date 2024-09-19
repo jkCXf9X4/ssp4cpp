@@ -15,8 +15,8 @@ namespace ssp4cpp::ssp1::ssc
     string Annotation::to_string(void) const
     {
         return "Annotation { \n"
-               "annotation_type   : " + to_str( annotation_type )                               + "\n" +
-               "any               : " + to_str( any )                                           + "\n" +
+               "annotation_type  : " + to_str( annotation_type  ) + "\n" +
+               "any              : " + to_str( any              ) + "\n" +
                "}";
     }
 
@@ -24,7 +24,7 @@ namespace ssp4cpp::ssp1::ssc
     string TAnnotations::to_string(void) const
     {
         return "TAnnotations { \n"
-               "list   : " + to_str( list     ) + "\n" +
+               "list  : " + to_str( list  ) + "\n" +
                "}";
     }
 
@@ -32,8 +32,8 @@ namespace ssp4cpp::ssp1::ssc
     string BooleanMapEntry::to_string(void) const
     {
         return "BooleanMapEntry { \n"
-               "source   : " + to_str( source )                               + "\n" +
-               "target   : " + to_str( target )                               + "\n" +
+               "source  : " + to_str( source  ) + "\n" +
+               "target  : " + to_str( target  ) + "\n" +
                "}";
     }
 
@@ -41,7 +41,7 @@ namespace ssp4cpp::ssp1::ssc
     string BooleanMappingTransformation::to_string(void) const
     {
         return "BooleanMappingTransformation { \n"
-               "list   : " + to_str( list     ) + "\n" +
+               "list  : " + to_str( list  ) + "\n" +
                "}";
     }
 
@@ -49,8 +49,8 @@ namespace ssp4cpp::ssp1::ssc
     string IntegerMapEntry::to_string(void) const
     {
         return "IntegerMapEntry { \n"
-               "source   : " + to_str( source )                               + "\n" +
-               "target   : " + to_str( target )                               + "\n" +
+               "source  : " + to_str( source  ) + "\n" +
+               "target  : " + to_str( target  ) + "\n" +
                "}";
     }
 
@@ -58,7 +58,7 @@ namespace ssp4cpp::ssp1::ssc
     string IntegerMappingTransformation::to_string(void) const
     {
         return "IntegerMappingTransformation { \n"
-               "list   : " + to_str( list     ) + "\n" +
+               "list  : " + to_str( list  ) + "\n" +
                "}";
     }
 
@@ -66,8 +66,8 @@ namespace ssp4cpp::ssp1::ssc
     string EnumerationMapEntry::to_string(void) const
     {
         return "EnumerationMapEntry { \n"
-               "source   : " + to_str( source )                               + "\n" +
-               "target   : " + to_str( target )                               + "\n" +
+               "source  : " + to_str( source  ) + "\n" +
+               "target  : " + to_str( target  ) + "\n" +
                "}";
     }
 
@@ -75,7 +75,7 @@ namespace ssp4cpp::ssp1::ssc
     string EnumerationMappingTransformation::to_string(void) const
     {
         return "EnumerationMappingTransformation { \n"
-               "list   : " + to_str( list     ) + "\n" +
+               "list  : " + to_str( list  ) + "\n" +
                "}";
     }
 
@@ -91,16 +91,16 @@ namespace ssp4cpp::ssp1::ssc
     string BaseUnit::to_string(void) const
     {
         return "BaseUnit { \n"
-               "kg       : " + to_str( kg )                                   + "\n" +
-               "m        : " + to_str( m )                                    + "\n" +
-               "s        : " + to_str( s )                                    + "\n" +
-               "a        : " + to_str( a )                                    + "\n" +
-               "k        : " + to_str( k )                                    + "\n" +
-               "mol      : " + to_str( mol )                                  + "\n" +
-               "cd       : " + to_str( cd )                                   + "\n" +
-               "rad      : " + to_str( rad )                                  + "\n" +
-               "factor   : " + to_str( factor )                               + "\n" +
-               "offset   : " + to_str( offset )                               + "\n" +
+               "kg      : " + to_str( kg      ) + "\n" +
+               "m       : " + to_str( m       ) + "\n" +
+               "s       : " + to_str( s       ) + "\n" +
+               "a       : " + to_str( a       ) + "\n" +
+               "k       : " + to_str( k       ) + "\n" +
+               "mol     : " + to_str( mol     ) + "\n" +
+               "cd      : " + to_str( cd      ) + "\n" +
+               "rad     : " + to_str( rad     ) + "\n" +
+               "factor  : " + to_str( factor  ) + "\n" +
+               "offset  : " + to_str( offset  ) + "\n" +
                "}";
     }
 
@@ -108,11 +108,11 @@ namespace ssp4cpp::ssp1::ssc
     string TUnits::to_string(void) const
     {
         return "TUnits { \n"
-               "id            : " + to_str( id )                                        + "\n" +
-               "description   : " + to_str( description )                               + "\n" +
-               "name          : " + to_str( name )                                      + "\n" +
-               "baseUnit      : " + to_str( baseUnit )                                  + "\n" +
-               "annotations   : " + to_str( annotations )                               + "\n" +
+               "id           : " + to_str( id           ) + "\n" +
+               "description  : " + to_str( description  ) + "\n" +
+               "name         : " + to_str( name         ) + "\n" +
+               "baseUnit     : " + to_str( baseUnit     ) + "\n" +
+               "annotations  : " + to_str( annotations  ) + "\n" +
                "}";
     }
 
@@ -120,7 +120,7 @@ namespace ssp4cpp::ssp1::ssc
     string GTypeReal::to_string(void) const
     {
         return "GTypeReal { \n"
-               "unit   : " + to_str( unit )                               + "\n" +
+               "unit  : " + to_str( unit  ) + "\n" +
                "}";
     }
 
@@ -152,7 +152,7 @@ namespace ssp4cpp::ssp1::ssc
     string GTypeEnumeration::to_string(void) const
     {
         return "GTypeEnumeration { \n"
-               "name   : " + to_str( name )                               + "\n" +
+               "name  : " + to_str( name  ) + "\n" +
                "}";
     }
 
@@ -160,7 +160,7 @@ namespace ssp4cpp::ssp1::ssc
     string GTypeBinary::to_string(void) const
     {
         return "GTypeBinary { \n"
-               "mime_type   : " + to_str( mime_type )                               + "\n" +
+               "mime_type  : " + to_str( mime_type  ) + "\n" +
                "}";
     }
 
@@ -168,8 +168,8 @@ namespace ssp4cpp::ssp1::ssc
     string LinearTransformation::to_string(void) const
     {
         return "LinearTransformation { \n"
-               "factor   : " + to_str( factor )                               + "\n" +
-               "offset   : " + to_str( offset )                               + "\n" +
+               "factor  : " + to_str( factor  ) + "\n" +
+               "offset  : " + to_str( offset  ) + "\n" +
                "}";
     }
 

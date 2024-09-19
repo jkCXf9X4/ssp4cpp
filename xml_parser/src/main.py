@@ -41,15 +41,15 @@ def main():
 
 
     write_to_file("xml_parser/generated/ssd.hpp", ssd_classes, lambda c: c.generate_class())
-    write_to_file("xml_parser/generated/ssd_string.cpp", ssd_classes, lambda c: c.generate_class_to_string())
+    write_to_file("xml_parser/generated/ssd_string.cpp", ssd_classes, lambda c: c.generate_to_string_definitions())
     write_to_file("xml_parser/generated/ssd_xml.cpp", ssd_classes, lambda c: c.generate_from_xml_declarations())
 
     write_to_file("xml_parser/generated/ssc.hpp", ssc_classes, lambda c: c.generate_class())
-    write_to_file("xml_parser/generated/ssc_string.cpp", ssc_classes, lambda c: c.generate_class_to_string())
+    write_to_file("xml_parser/generated/ssc_string.cpp", ssc_classes, lambda c: c.generate_to_string_definitions())
     write_to_file("xml_parser/generated/ssc_xml.cpp", ssc_classes, lambda c: c.generate_from_xml_declarations())
 
     write_to_file("xml_parser/generated/fmi2_md.hpp", fmi2_md_classes, lambda c: c.generate_class())
-    write_to_file("xml_parser/generated/fmi2_md_string.cpp", fmi2_md_classes, lambda c: c.generate_class_to_string())
+    write_to_file("xml_parser/generated/fmi2_md_string.cpp", fmi2_md_classes, lambda c: c.generate_to_string_definitions())
     write_to_file("xml_parser/generated/fmi2_md_xml.cpp", fmi2_md_classes, lambda c: c.generate_from_xml_declarations())
 
 
