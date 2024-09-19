@@ -58,16 +58,3 @@ std::string to_str(const std::vector<T> &obj)
     result += "}\n";
     return result;
 }
-
-// Templates
-template <typename T>
-std::string to_string_optional(const std::optional<T> &opt)
-{
-    return to_str(opt);
-}
-
-template <typename T>
-std::string to_string_vector(const std::vector<T> &vec)
-{
-    return to_str(vec);
-}

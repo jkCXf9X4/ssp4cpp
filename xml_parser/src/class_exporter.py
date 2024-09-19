@@ -31,7 +31,7 @@ class ClassExporter:
                     else:
                         return f"to_str( {variable.name} )"
                 else:
-                    return f"to_string( {variable.name} )"
+                    return f"to_str( {variable.name} )"
 
         longest_name = max([len(v.name) for v in self.variable_nodes])
 
@@ -85,7 +85,7 @@ class {self.class_node.name} : public IXmlNode
 public:
 {variables}
 
-    virtual string to_string(void) const;
+    string to_string(void) const;
 }};
 """
         return class_template

@@ -317,8 +317,8 @@ namespace ssp4cpp::fmi2
                "LogCategories              : " + to_str( LogCategories )                                          + "\n" +
                "DefaultExperiment          : " + to_str( DefaultExperiment )                                      + "\n" +
                "VendorAnnotations          : " + to_str( VendorAnnotations )                                      + "\n" +
-               "ModelVariables             : " + to_str( ModelVariables )                                      + "\n" +
-               "ModelStructure             : " + to_str( ModelStructure )                                      + "\n" +
+               "ModelVariables             : " + to_str( ModelVariables )                                         + "\n" +
+               "ModelStructure             : " + to_str( ModelStructure )                                         + "\n" +
                "}";
     }
 

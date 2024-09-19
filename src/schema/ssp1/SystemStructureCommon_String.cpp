@@ -12,75 +12,75 @@ using namespace std;
 namespace ssp4cpp::ssp1::ssc
 {
      // Annotation
-    string to_string(const Annotation &obj)
+    string Annotation::to_string(void) const
     {
         return "Annotation { \n"
-               "annotation_type   : " + to_str( obj.annotation_type )                           + "\n" +
-               "any               : " + to_str( obj.any )                                       + "\n" +
+               "annotation_type   : " + to_str( annotation_type )                               + "\n" +
+               "any               : " + to_str( any )                                           + "\n" +
                "}";
     }
 
      // TAnnotations
-    string to_string(const TAnnotations &obj)
+    string TAnnotations::to_string(void) const
     {
         return "TAnnotations { \n"
-               "list   : " + to_str(obj.list    ) + "\n" +
+               "list   : " + to_str( list     ) + "\n" +
                "}";
     }
 
      // BooleanMapEntry
-    string to_string(const BooleanMapEntry &obj)
+    string BooleanMapEntry::to_string(void) const
     {
         return "BooleanMapEntry { \n"
-               "source   : " + to_str( obj.source )                           + "\n" +
-               "target   : " + to_str( obj.target )                           + "\n" +
+               "source   : " + to_str( source )                               + "\n" +
+               "target   : " + to_str( target )                               + "\n" +
                "}";
     }
 
      // BooleanMappingTransformation
-    string to_string(const BooleanMappingTransformation &obj)
+    string BooleanMappingTransformation::to_string(void) const
     {
         return "BooleanMappingTransformation { \n"
-               "list   : " + to_str(obj.list    ) + "\n" +
+               "list   : " + to_str( list     ) + "\n" +
                "}";
     }
 
      // IntegerMapEntry
-    string to_string(const IntegerMapEntry &obj)
+    string IntegerMapEntry::to_string(void) const
     {
         return "IntegerMapEntry { \n"
-               "source   : " + to_str( obj.source )                           + "\n" +
-               "target   : " + to_str( obj.target )                           + "\n" +
+               "source   : " + to_str( source )                               + "\n" +
+               "target   : " + to_str( target )                               + "\n" +
                "}";
     }
 
      // IntegerMappingTransformation
-    string to_string(const IntegerMappingTransformation &obj)
+    string IntegerMappingTransformation::to_string(void) const
     {
         return "IntegerMappingTransformation { \n"
-               "list   : " + to_str(obj.list    ) + "\n" +
+               "list   : " + to_str( list     ) + "\n" +
                "}";
     }
 
      // EnumerationMapEntry
-    string to_string(const EnumerationMapEntry &obj)
+    string EnumerationMapEntry::to_string(void) const
     {
         return "EnumerationMapEntry { \n"
-               "source   : " + to_str( obj.source )                           + "\n" +
-               "target   : " + to_str( obj.target )                           + "\n" +
+               "source   : " + to_str( source )                               + "\n" +
+               "target   : " + to_str( target )                               + "\n" +
                "}";
     }
 
      // EnumerationMappingTransformation
-    string to_string(const EnumerationMappingTransformation &obj)
+    string EnumerationMappingTransformation::to_string(void) const
     {
         return "EnumerationMappingTransformation { \n"
-               "list   : " + to_str(obj.list    ) + "\n" +
+               "list   : " + to_str( list     ) + "\n" +
                "}";
     }
 
      // TEnumerations
-    string to_string(const TEnumerations &obj)
+    string TEnumerations::to_string(void) const
     {
         return "TEnumerations { \n"
 
@@ -88,44 +88,44 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // BaseUnit
-    string to_string(const BaseUnit &obj)
+    string BaseUnit::to_string(void) const
     {
         return "BaseUnit { \n"
-               "kg       : " + to_str( obj.kg )                               + "\n" +
-               "m        : " + to_str( obj.m )                                + "\n" +
-               "s        : " + to_str( obj.s )                                + "\n" +
-               "a        : " + to_str( obj.a )                                + "\n" +
-               "k        : " + to_str( obj.k )                                + "\n" +
-               "mol      : " + to_str( obj.mol )                              + "\n" +
-               "cd       : " + to_str( obj.cd )                               + "\n" +
-               "rad      : " + to_str( obj.rad )                              + "\n" +
-               "factor   : " + to_str( obj.factor )                           + "\n" +
-               "offset   : " + to_str( obj.offset )                           + "\n" +
+               "kg       : " + to_str( kg )                                   + "\n" +
+               "m        : " + to_str( m )                                    + "\n" +
+               "s        : " + to_str( s )                                    + "\n" +
+               "a        : " + to_str( a )                                    + "\n" +
+               "k        : " + to_str( k )                                    + "\n" +
+               "mol      : " + to_str( mol )                                  + "\n" +
+               "cd       : " + to_str( cd )                                   + "\n" +
+               "rad      : " + to_str( rad )                                  + "\n" +
+               "factor   : " + to_str( factor )                               + "\n" +
+               "offset   : " + to_str( offset )                               + "\n" +
                "}";
     }
 
      // TUnits
-    string to_string(const TUnits &obj)
+    string TUnits::to_string(void) const
     {
         return "TUnits { \n"
-               "id            : " + to_str( obj.id )                                    + "\n" +
-               "description   : " + to_str( obj.description )                           + "\n" +
-               "name          : " + to_str( obj.name )                                  + "\n" +
-               "baseUnit      : " + to_string( obj.baseUnit )                           + "\n" +
-               "annotations   : " + to_str( obj.annotations )                           + "\n" +
+               "id            : " + to_str( id )                                        + "\n" +
+               "description   : " + to_str( description )                               + "\n" +
+               "name          : " + to_str( name )                                      + "\n" +
+               "baseUnit      : " + to_str( baseUnit )                                  + "\n" +
+               "annotations   : " + to_str( annotations )                               + "\n" +
                "}";
     }
 
      // GTypeReal
-    string to_string(const GTypeReal &obj)
+    string GTypeReal::to_string(void) const
     {
         return "GTypeReal { \n"
-               "unit   : " + to_str( obj.unit )                           + "\n" +
+               "unit   : " + to_str( unit )                               + "\n" +
                "}";
     }
 
      // GTypeInteger
-    string to_string(const GTypeInteger &obj)
+    string GTypeInteger::to_string(void) const
     {
         return "GTypeInteger { \n"
 
@@ -133,7 +133,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeBoolean
-    string to_string(const GTypeBoolean &obj)
+    string GTypeBoolean::to_string(void) const
     {
         return "GTypeBoolean { \n"
 
@@ -141,7 +141,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeString
-    string to_string(const GTypeString &obj)
+    string GTypeString::to_string(void) const
     {
         return "GTypeString { \n"
 
@@ -149,27 +149,27 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeEnumeration
-    string to_string(const GTypeEnumeration &obj)
+    string GTypeEnumeration::to_string(void) const
     {
         return "GTypeEnumeration { \n"
-               "name   : " + to_str( obj.name )                           + "\n" +
+               "name   : " + to_str( name )                               + "\n" +
                "}";
     }
 
      // GTypeBinary
-    string to_string(const GTypeBinary &obj)
+    string GTypeBinary::to_string(void) const
     {
         return "GTypeBinary { \n"
-               "mime_type   : " + to_str( obj.mime_type )                           + "\n" +
+               "mime_type   : " + to_str( mime_type )                               + "\n" +
                "}";
     }
 
      // LinearTransformation
-    string to_string(const LinearTransformation &obj)
+    string LinearTransformation::to_string(void) const
     {
         return "LinearTransformation { \n"
-               "factor   : " + to_str( obj.factor )                           + "\n" +
-               "offset   : " + to_str( obj.offset )                           + "\n" +
+               "factor   : " + to_str( factor )                               + "\n" +
+               "offset   : " + to_str( offset )                               + "\n" +
                "}";
     }
 

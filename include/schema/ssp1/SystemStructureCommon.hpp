@@ -5,79 +5,90 @@
 #include <optional>
 #include <iostream>
 
+#include "IXmlNode.hpp"
+
 #include "SSP_Enums.hpp"
 
 namespace ssp4cpp::ssp1::ssc
 {
 
-    class Annotation
+    class Annotation : public IXmlNode
     {
     public:
         optional<string> annotation_type;
         optional<string> any;
-    };
-    string to_string(const Annotation &obj);
 
-    class TAnnotations
+        string to_string(void) const;
+    };
+
+    class TAnnotations : public IXmlNode
     {
     public:
         vector<Annotation> list;
-    };
-    string to_string(const TAnnotations &obj);
 
-    class BooleanMapEntry
+        string to_string(void) const;
+    };
+
+    class BooleanMapEntry : public IXmlNode
     {
     public:
         bool source;
         bool target;
-    };
-    string to_string(const BooleanMapEntry &obj);
 
-    class BooleanMappingTransformation
+        string to_string(void) const;
+    };
+
+    class BooleanMappingTransformation : public IXmlNode
     {
     public:
         vector<BooleanMapEntry> list;
-    };
-    string to_string(const BooleanMappingTransformation &obj);
 
-    class IntegerMapEntry
+        string to_string(void) const;
+    };
+
+    class IntegerMapEntry : public IXmlNode
     {
     public:
         int source;
         int target;
-    };
-    string to_string(const IntegerMapEntry &obj);
 
-    class IntegerMappingTransformation
+        string to_string(void) const;
+    };
+
+    class IntegerMappingTransformation : public IXmlNode
     {
     public:
         vector<IntegerMapEntry> list;
-    };
-    string to_string(const IntegerMappingTransformation &obj);
 
-    class EnumerationMapEntry
+        string to_string(void) const;
+    };
+
+    class EnumerationMapEntry : public IXmlNode
     {
     public:
         string source;
         string target;
-    };
-    string to_string(const EnumerationMapEntry &obj);
 
-    class EnumerationMappingTransformation
+        string to_string(void) const;
+    };
+
+    class EnumerationMappingTransformation : public IXmlNode
     {
     public:
         vector<EnumerationMapEntry> list;
-    };
-    string to_string(const EnumerationMappingTransformation &obj);
 
-    class TEnumerations
+        string to_string(void) const;
+    };
+
+    class TEnumerations : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const TEnumerations &obj);
 
-    class BaseUnit
+        string to_string(void) const;
+    };
+
+    class BaseUnit : public IXmlNode
     {
     public:
         optional<int> kg;
@@ -90,10 +101,11 @@ namespace ssp4cpp::ssp1::ssc
         optional<int> rad;
         optional<double> factor;
         optional<double> offset;
-    };
-    string to_string(const BaseUnit &obj);
 
-    class TUnits
+        string to_string(void) const;
+    };
+
+    class TUnits : public IXmlNode
     {
     public:
         optional<string> id;
@@ -101,57 +113,65 @@ namespace ssp4cpp::ssp1::ssc
         string name;
         BaseUnit baseUnit;
         optional<TAnnotations> annotations;
-    };
-    string to_string(const TUnits &obj);
 
-    class GTypeReal
+        string to_string(void) const;
+    };
+
+    class GTypeReal : public IXmlNode
     {
     public:
         optional<string> unit;
-    };
-    string to_string(const GTypeReal &obj);
 
-    class GTypeInteger
+        string to_string(void) const;
+    };
+
+    class GTypeInteger : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const GTypeInteger &obj);
 
-    class GTypeBoolean
+        string to_string(void) const;
+    };
+
+    class GTypeBoolean : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const GTypeBoolean &obj);
 
-    class GTypeString
+        string to_string(void) const;
+    };
+
+    class GTypeString : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const GTypeString &obj);
 
-    class GTypeEnumeration
+        string to_string(void) const;
+    };
+
+    class GTypeEnumeration : public IXmlNode
     {
     public:
         optional<string> name;
-    };
-    string to_string(const GTypeEnumeration &obj);
 
-    class GTypeBinary
+        string to_string(void) const;
+    };
+
+    class GTypeBinary : public IXmlNode
     {
     public:
         optional<string> mime_type;
-    };
-    string to_string(const GTypeBinary &obj);
 
-    class LinearTransformation
+        string to_string(void) const;
+    };
+
+    class LinearTransformation : public IXmlNode
     {
     public:
         optional<double> factor;
         optional<double> offset;
+
+        string to_string(void) const;
     };
-    string to_string(const LinearTransformation &obj);
 
 }

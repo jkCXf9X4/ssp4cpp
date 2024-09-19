@@ -5,73 +5,79 @@
 #include <optional>
 #include <iostream>
 
+#include "IXmlNode.hpp"
+
 #include "SystemStructureCommon.hpp"
 
 namespace ssp4cpp::ssp1::ssd
 {
-    using namespace std;
-    using namespace ssp4cpp::ssp1;
+    class TSystem;
 
-    // Forward declarations
-    struct TSystem;
-
-    class SystemGeometry
+    class SystemGeometry : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const SystemGeometry &obj);
 
-    class ConnectorGeometry
+        string to_string(void) const;
+    };
+
+    class ConnectorGeometry : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const ConnectorGeometry &obj);
 
-    class ElementGeometry
+        string to_string(void) const;
+    };
+
+    class ElementGeometry : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const ElementGeometry &obj);
 
-    class ConnectionGeometry
+        string to_string(void) const;
+    };
+
+    class ConnectionGeometry : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const ConnectionGeometry &obj);
 
-    class TSignalDictionaries
+        string to_string(void) const;
+    };
+
+    class TSignalDictionaries : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const TSignalDictionaries &obj);
 
-    class TParameterBindings
+        string to_string(void) const;
+    };
+
+    class TParameterBindings : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const TParameterBindings &obj);
 
-    class GraphicalElements
+        string to_string(void) const;
+    };
+
+    class GraphicalElements : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const GraphicalElements &obj);
 
-    class TDefaultExperiment
+        string to_string(void) const;
+    };
+
+    class TDefaultExperiment : public IXmlNode
     {
     public:
 
-    };
-    string to_string(const TDefaultExperiment &obj);
 
-    class Connection
+        string to_string(void) const;
+    };
+
+    class Connection : public IXmlNode
     {
     public:
         optional<string> startElement;
@@ -85,17 +91,19 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
         optional<ssd::ConnectionGeometry> ConnectionGeometry;
         optional<ssc::TAnnotations> Annotations;
-    };
-    string to_string(const Connection &obj);
 
-    class Connections
+        string to_string(void) const;
+    };
+
+    class Connections : public IXmlNode
     {
     public:
         vector<Connection> list;
-    };
-    string to_string(const Connections &obj);
 
-    class Connector
+        string to_string(void) const;
+    };
+
+    class Connector : public IXmlNode
     {
     public:
         optional<string> id;
@@ -110,17 +118,19 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::GTypeBinary> Binary;
         optional<ssd::ConnectorGeometry> ConnectorGeometry;
         optional<ssc::TAnnotations> Annotations;
-    };
-    string to_string(const Connector &obj);
 
-    class TConnectors
+        string to_string(void) const;
+    };
+
+    class TConnectors : public IXmlNode
     {
     public:
         vector<Connector> list;
-    };
-    string to_string(const TConnectors &obj);
 
-    class TComponent
+        string to_string(void) const;
+    };
+
+    class TComponent : public IXmlNode
     {
     public:
         optional<string> id;
@@ -134,10 +144,11 @@ namespace ssp4cpp::ssp1::ssd
         string source;
         optional<string> implementation;
         optional<ssc::TAnnotations> Annotations;
-    };
-    string to_string(const TComponent &obj);
 
-    class TSignalDictionaryReference
+        string to_string(void) const;
+    };
+
+    class TSignalDictionaryReference : public IXmlNode
     {
     public:
         string dictionary;
@@ -145,19 +156,21 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssd::ElementGeometry> ElementGeometry;
         optional<ssd::TParameterBindings> TParameterBindings;
         optional<ssc::TAnnotations> Annotations;
-    };
-    string to_string(const TSignalDictionaryReference &obj);
 
-    class Elements
+        string to_string(void) const;
+    };
+
+    class Elements : public IXmlNode
     {
     public:
         vector<ssd::TComponent> components;
         vector<ssd::TSignalDictionaryReference> signal_dictionary_references;
         vector<ssd::TSystem> systems;
-    };
-    string to_string(const Elements &obj);
 
-    class TSystem
+        string to_string(void) const;
+    };
+
+    class TSystem : public IXmlNode
     {
     public:
         optional<string> id;
@@ -173,10 +186,10 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssd::GraphicalElements> GraphicalElements;
         optional<ssc::TAnnotations> Annotations;
 
-        string to_str();
+        string to_string(void) const;
     };
 
-    class SystemStructureDescription
+    class SystemStructureDescription : public IXmlNode
     {
     public:
         string version;
@@ -194,7 +207,8 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssc::TUnits> Units;
         optional<ssd::TDefaultExperiment> DefaultExperiment;
         optional<ssc::TAnnotations> Annotations;
+
+        string to_string(void) const;
     };
-    string to_string(const SystemStructureDescription &obj);
 
 }

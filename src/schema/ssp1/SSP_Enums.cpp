@@ -39,7 +39,5 @@ namespace ssp4cpp::ssp1::ssd
             return "unknown";
         }
     }
-    string to_string(const optional<ComponentType> &obj) { return to_string_optional(obj); }
-    string to_string(const vector<ComponentType> &obj) { return to_string_vector(obj); }
 
 }

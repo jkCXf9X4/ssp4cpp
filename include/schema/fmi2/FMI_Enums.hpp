@@ -19,8 +19,6 @@ namespace ssp4cpp::fmi2
         Unknown
     };
     string to_string(const Causality &obj);
-    string to_string(const optional<Causality> &obj);
-    string to_string(const vector<Causality> &obj);
 
     Causality causality_from_string(const string &str);
 
@@ -34,8 +32,6 @@ namespace ssp4cpp::fmi2
         unknown
     };
     string to_string(const Variability &obj);
-    string to_string(const optional<Variability> &obj);
-    string to_string(const vector<Variability> &obj);
 
     Variability variability_from_string(const string &str);
 
@@ -47,8 +43,6 @@ namespace ssp4cpp::fmi2
         unknown
     };
     string to_string(const Initial &obj);
-    string to_string(const optional<Initial> &obj);
-    string to_string(const vector<Initial> &obj);
 
     Initial initial_from_string(const string &str);
 
@@ -62,8 +56,6 @@ namespace ssp4cpp::fmi2
     };
 
     string to_string(const DependenciesKind &obj);
-    string to_string(const optional<DependenciesKind> &obj);
-    string to_string(const vector<DependenciesKind> &obj);
 
     Initial dependenciesKind_from_string(const string &str);
 }

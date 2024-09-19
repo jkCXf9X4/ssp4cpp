@@ -45,7 +45,7 @@ int main()
 
     ofstream myfile;
     myfile.open("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/parsed.txt");
-    myfile << ssp4cpp::ssp1::ssd::to_string(ssp.ssd);
+    myfile << ssp.ssd.to_string();
     myfile.close();
 
     // Parsing FMI
