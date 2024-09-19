@@ -9,7 +9,7 @@ def indent_strings(indent, string):
     
     return "\n".join([indent_f(line) for line in string.split("\n")])
 
-default_values = {"string": "\"null\"", "int": "0", "float": "0.0", "bool": "false"}
+default_values = {"string": "\"null\"", "int": "0", "double": "0.0", "bool": "false"}
 
 class ClassExporter:
 
@@ -55,10 +55,8 @@ string to_string(const {self.class_node.name} &obj)
 {variables}
            "}}";
 }}
-string to_string(const optional<{self.class_node.name}> &obj)
-{{
-    return obj ? to_string(*obj) : "null";
-}}
+string to_string(const optional<{self.class_node.name}> &obj) {{ return to_string_optional(obj); }}
+string to_string(const vector<{self.class_node.name}> &obj) {{ return to_string_vector(obj); }}
 
 """
         return template
@@ -130,31 +128,13 @@ def main():
                 f.write(s)
             f.write("}")
 
-    write_to_file("xml_parser/resource/ssd.hpp", ssd_classes, lambda c: c.generate_class())
-    write_to_file("xml_parser/resource/ssc.hpp", ssc_classes, lambda c: c.generate_class())
-
-    # with open("xml_parser/resource/ssd.hpp", "w") as f:
-    #     f.write("{")
-    #     for c in ssd_classes:
-    #         s = indent_strings("    ", c.generate_class())
-    #         f.write(s)
-    #     f.write("}")
+    write_to_file("xml_parser/generated/ssd.hpp", ssd_classes, lambda c: c.generate_class())
+    write_to_file("xml_parser/generated/ssc.hpp", ssc_classes, lambda c: c.generate_class())
 
 
+    write_to_file("xml_parser/generated/ssd_string.cpp", ssd_classes, lambda c: c.generate_class_to_string())
+    write_to_file("xml_parser/generated/ssc_string.cpp", ssc_classes, lambda c: c.generate_class_to_string())
 
-    # with open("xml_parser/resource/ssp_string.hpp", "w") as f:
-    #     f.write("{")
-    #     for c in classes:
-    #         s = indent_strings("    ", c.generate_to_string_declarations())
-    #         f.write(s)
-    #     f.write("}")
-
-    # with open("xml_parser/resource/ssp_string.cpp", "w") as f:
-    #     f.write("{")
-    #     for c in ssd_classes:
-    #         s = indent_strings("    ", c.generate_class_to_string())
-    #         f.write(s)
-    #     f.write("}")
 
 
 main()

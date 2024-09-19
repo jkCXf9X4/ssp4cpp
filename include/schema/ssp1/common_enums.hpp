@@ -3,6 +3,8 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <optional>
 
 using namespace std;
 
@@ -15,6 +17,8 @@ namespace ssp4cpp::ssp1::ssd
         ssp, // application/x-ssp-package
     };
     string to_string(const ComponentType &obj);
+    string to_string(const optional<ComponentType> &obj);
+    string to_string(const vector<ComponentType> &obj);
     
     ComponentType from_string(const string &str);
 

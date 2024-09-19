@@ -5,7 +5,6 @@
 #include <optional>
 #include <iostream>
 
-#include "common_enums.hpp"
 #include "SystemStructureCommon.hpp"
 
 namespace ssp4cpp::ssp1::ssd
@@ -16,7 +15,7 @@ namespace ssp4cpp::ssp1::ssd
     // Forward declarations
     struct TSystem;
 
-    
+
     class SystemGeometry
     {
     public:

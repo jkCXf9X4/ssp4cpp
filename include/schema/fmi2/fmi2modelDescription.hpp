@@ -5,7 +5,6 @@
 
 #include <optional>
 #include <vector>
-// #include "node_base.hpp"
 
 namespace ssp4cpp::fmi2
 {

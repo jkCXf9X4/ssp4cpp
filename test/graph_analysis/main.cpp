@@ -37,7 +37,7 @@ int main()
 
     auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/embrace.ssp");
 
-    cout << "Imported ssp\n";
+    cout << "Imported ssp! \n";
 
     cout << ssp << endl;
 

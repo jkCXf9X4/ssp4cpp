@@ -79,6 +79,7 @@
         "regex": "cpp",
         "rope": "cpp",
         "shared_mutex": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "charconv": "cpp"
     },
 }

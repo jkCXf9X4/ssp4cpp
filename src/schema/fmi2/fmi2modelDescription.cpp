@@ -3,7 +3,6 @@
 
 #include <optional>
 #include <vector>
-#include "node_base.hpp"
 
 #include "fmi2modelDescription.hpp"
 #include "print_misc.hpp"
