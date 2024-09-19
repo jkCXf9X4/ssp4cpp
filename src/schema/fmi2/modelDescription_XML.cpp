@@ -12,30 +12,30 @@ namespace ssp4cpp::fmi2
     using namespace pugi;
     using namespace ssp4cpp::xml;
 
-    void from_xml(const xml_node &node, DefaultExperiment &desc)
-    {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing DefaultExperiment" << std::endl;
+    // void from_xml(const xml_node &node, DefaultExperiment &desc)
+    // {
+    //     BOOST_LOG_TRIVIAL(trace) << "Parsing DefaultExperiment" << std::endl;
 
-        desc.startTime = get_optional_attribute<double>(node, "startTime");
-        desc.stopTime = get_optional_attribute<double>(node, "stopTime");
-        desc.tolerance = get_optional_attribute<double>(node, "tolerance");
-        desc.stepSize = get_optional_attribute<double>(node, "startTime");
+    //     desc.startTime = get_optional_attribute<double>(node, "startTime");
+    //     desc.stopTime = get_optional_attribute<double>(node, "stopTime");
+    //     desc.tolerance = get_optional_attribute<double>(node, "tolerance");
+    //     desc.stepSize = get_optional_attribute<double>(node, "startTime");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed DefaultExperiment" << std::endl;
-    }
+    //     BOOST_LOG_TRIVIAL(trace) << "Completed DefaultExperiment" << std::endl;
+    // }
 
-    void from_xml(const xml_node &node, fmi2ModelDescription &desc)
-    {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing fmi2ModelDescription" << std::endl;
+    // void from_xml(const xml_node &node, fmi2ModelDescription &desc)
+    // {
+    //     BOOST_LOG_TRIVIAL(trace) << "Parsing fmi2ModelDescription" << std::endl;
 
-        desc.fmiVersion = get_attribute<string>(node, "fmiVersion");
-        desc.modelName = get_attribute<string>(node, "modelName");
+    //     desc.fmiVersion = get_attribute<string>(node, "fmiVersion");
+    //     desc.modelName = get_attribute<string>(node, "modelName");
 
 
-        // from_xml(node.child("ssd:System"), desc.System);
+    //     // from_xml(node.child("ssd:System"), desc.System);
 
-        get_optional_class(node, "DefaultExperiment", desc.defaultExperiment);
+    //     get_optional_class(node, "DefaultExperiment", desc.DefaultExperiment);
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed fmi2ModelDescription" << std::endl;
-    }
+    //     BOOST_LOG_TRIVIAL(trace) << "Completed fmi2ModelDescription" << std::endl;
+    // }
 }

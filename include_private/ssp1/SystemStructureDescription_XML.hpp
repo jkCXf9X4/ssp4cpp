@@ -4,28 +4,26 @@
 
 #include "ssp1/SystemStructureDescription.hpp"
 
+using namespace pugi;
 namespace ssp4cpp::ssp1::ssd
 {
-    using namespace pugi;
-    
-    void from_xml(const xml_node &node, Connector &connector);
-    void from_xml(const xml_node &node, TConnectors &connectors);
-    void from_xml(const xml_node &node, Connection &connection);
-    void from_xml(const xml_node &node, Connections &connections);
-
-    void from_xml(const xml_node &node, ElementGeometry &geometry);
-    void from_xml(const xml_node &node, ConnectorGeometry &geometry);
-    void from_xml(const xml_node &node, ConnectionGeometry &geometry);
-    void from_xml(const xml_node &node, TParameterBindings &bindings);
-    void from_xml(const xml_node &node, Elements &elements);
-    void from_xml(const xml_node &node, TSignalDictionaries &dictionaries);
-    void from_xml(const xml_node &node, SystemGeometry &geometry);
-    void from_xml(const xml_node &node, GraphicalElements &elements);
-    void from_xml(const xml_node &node, TDefaultExperiment &experiment);
-    void from_xml(const xml_node &node, SystemStructureDescription &ssd);
-    void from_xml(const xml_node &node, TSystem &system);
-    void from_xml(const xml_node &node, TComponent &component);
-    void from_xml(const xml_node &node, TSignalDictionaryReference &ref);
+    void from_xml(const xml_node &node, SystemGeometry &obj);
+    void from_xml(const xml_node &node, ConnectorGeometry &obj);
+    void from_xml(const xml_node &node, ElementGeometry &obj);
+    void from_xml(const xml_node &node, ConnectionGeometry &obj);
+    void from_xml(const xml_node &node, TSignalDictionaries &obj);
+    void from_xml(const xml_node &node, TParameterBindings &obj);
+    void from_xml(const xml_node &node, GraphicalElements &obj);
+    void from_xml(const xml_node &node, TDefaultExperiment &obj);
+    void from_xml(const xml_node &node, Connection &obj);
+    void from_xml(const xml_node &node, Connections &obj);
+    void from_xml(const xml_node &node, Connector &obj);
+    void from_xml(const xml_node &node, TConnectors &obj);
+    void from_xml(const xml_node &node, TComponent &obj);
+    void from_xml(const xml_node &node, TSignalDictionaryReference &obj);
+    void from_xml(const xml_node &node, Elements &obj);
+    void from_xml(const xml_node &node, TSystem &obj);
+    void from_xml(const xml_node &node, SystemStructureDescription &obj);
 }
 
 

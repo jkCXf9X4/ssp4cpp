@@ -43,7 +43,7 @@ namespace ssp4cpp::xml
         else if constexpr (is_same_v<T, ssp4cpp::ssp1::ssd::ComponentType>)
         {
             auto s = node.attribute(name.c_str()).as_string();
-            return ssp4cpp::ssp1::ssd::from_string(s);
+            return ssp4cpp::ssp1::ssd::componentType_from_string(s);
         }
         else
         {

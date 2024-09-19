@@ -20,6 +20,6 @@ namespace ssp4cpp::ssp1::ssd
     string to_string(const optional<ComponentType> &obj);
     string to_string(const vector<ComponentType> &obj);
     
-    ComponentType from_string(const string &str);
+    ComponentType componentType_from_string(const string &str);
 
 }

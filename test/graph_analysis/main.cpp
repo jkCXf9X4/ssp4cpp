@@ -56,8 +56,8 @@ int main()
     for (int i = 0; i < ssp.resources.size(); i++)
     {
 
-        auto fmi = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
-        cout << to_string(fmi.md) << endl;
+        // auto fmi = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
+        // cout << to_string(fmi.md) << endl;
 
         return 0;
 
