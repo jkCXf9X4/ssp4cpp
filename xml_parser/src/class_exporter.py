@@ -33,10 +33,6 @@ string {self.class_node.name}::to_string(void) const
 """
         return template
 
-
-    def generate_from_xml_declarations(self):
-        return f"""void from_xml(const xml_node &node, {self.class_node.name } &obj);\n"""
-
     @classmethod
     def generate_variable_declaration(cls, variable : VariableNode):
         if variable.list:

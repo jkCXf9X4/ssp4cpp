@@ -36,7 +36,8 @@ std::string to_str(const T &obj)
     }
     else 
     {
-        //Error
+        // some enumns have static to_string functions
+        // hope for the best!
         return to_string(obj);
     }
 }

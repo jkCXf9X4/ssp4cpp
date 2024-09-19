@@ -19,7 +19,6 @@ namespace ssp4cpp::fmi2
         path original_file;
         path temp_dir;
         fmi2ModelDescription md;
-        // vector<SspResource> resources;
 
         FmiImport(const path &file);
 

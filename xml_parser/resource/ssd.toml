@@ -30,12 +30,12 @@ startConnector = {type = "string"}
 endElement = {type = "string", optional=true}
 endConnector = {type = "string"}
 suppressUnitConversion = {type = "bool", optional=true}
-LinearTransformation = {type = "ssc::LinearTransformation", optional=true}
-BooleanMappingTransformation = {type = "ssc::BooleanMappingTransformation", optional=true}
-IntegerMappingTransformation = {type = "ssc::IntegerMappingTransformation", optional=true}
-EnumerationMappingTransformation = {type = "ssc::EnumerationMappingTransformation", optional=true}
-ConnectionGeometry = {type = "ssd::ConnectionGeometry", optional=true}
-Annotations = {type = "ssc::TAnnotations", optional=true}
+LinearTransformation = {type = "ssc::LinearTransformation", optional=true, namespace="ssc"}
+BooleanMappingTransformation = {type = "ssc::BooleanMappingTransformation", optional=true, namespace="ssc"}
+IntegerMappingTransformation = {type = "ssc::IntegerMappingTransformation", optional=true, namespace="ssc"}
+EnumerationMappingTransformation = {type = "ssc::EnumerationMappingTransformation", optional=true, namespace="ssc"}
+ConnectionGeometry = {type = "ssd::ConnectionGeometry", optional=true, namespace="ssd"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [Connections]
 list = {type = "Connection", list = true}
@@ -45,14 +45,14 @@ id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string"}
 kind = {type = "string"}
-Real = {type = "ssc::GTypeReal", optional=true}
-Integer = {type = "ssc::GTypeInteger", optional=true}
-Boolean = {type = "ssc::GTypeBoolean", optional=true}
-String = {type = "ssc::GTypeString", optional=true}
-Enumeration = {type = "ssc::GTypeEnumeration", optional=true}
-Binary = {type = "ssc::GTypeBinary", optional=true}
-ConnectorGeometry = {type = "ssd::ConnectorGeometry", optional=true}
-Annotations = {type = "ssc::TAnnotations", optional=true}
+Real = {type = "ssc::GTypeReal", optional=true, namespace="ssc"}
+Integer = {type = "ssc::GTypeInteger", optional=true, namespace="ssc"}
+Boolean = {type = "ssc::GTypeBoolean", optional=true, namespace="ssc"}
+String = {type = "ssc::GTypeString", optional=true, namespace="ssc"}
+Enumeration = {type = "ssc::GTypeEnumeration", optional=true, namespace="ssc"}
+Binary = {type = "ssc::GTypeBinary", optional=true, namespace="ssc"}
+ConnectorGeometry = {type = "ssd::ConnectorGeometry", optional=true, namespace="ssd"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [TConnectors]
 list = {type = "Connector", list = true}
@@ -61,40 +61,40 @@ list = {type = "Connector", list = true}
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string", optional=true}
-Connectors = {type = "ssd::TConnectors", optional=true}
-ElementGeometry = {type = "ssd::ElementGeometry", optional=true}
-TParameterBindings = {type = "ssd::TParameterBindings", optional=true}
+Connectors = {type = "ssd::TConnectors", optional=true, namespace="ssd"}
+ElementGeometry = {type = "ssd::ElementGeometry", optional=true, namespace="ssd"}
+ParameterBindings = {type = "ssd::TParameterBindings", optional=true, namespace="ssd"}
 component_type_str = {type = "string", optional=true}
-component_type = {type = "ComponentType", optional=true}
+#component_type = {type = "ComponentType", optional=true}
 source = {type = "string"}
 implementation = {type = "string", optional=true}
-Annotations = {type = "ssc::TAnnotations", optional=true}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [TSignalDictionaryReference]
 dictionary = {type = "string"}
-Connectors = {type = "ssd::TConnectors", optional=true}
-ElementGeometry = {type = "ssd::ElementGeometry", optional=true}
-TParameterBindings = {type = "ssd::TParameterBindings", optional=true}
-Annotations = {type = "ssc::TAnnotations", optional=true}
+Connectors = {type = "ssd::TConnectors", optional=true, namespace="ssd"}
+ElementGeometry = {type = "ssd::ElementGeometry", optional=true, namespace="ssd"}
+ParameterBindings = {type = "ssd::TParameterBindings", optional=true, namespace="ssd"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [Elements]
-components = {type = "ssd::TComponent", list = true}
-signal_dictionary_references = {type = "ssd::TSignalDictionaryReference", list = true}
-systems = {type = "ssd::TSystem", list = true}
+Component = {type = "ssd::TComponent", list = true, namespace="ssd"}
+SignalDictionaryReference = {type = "ssd::TSignalDictionaryReference", list = true, namespace="ssd"}
+System = {type = "ssd::TSystem", list = true, namespace="ssd"}
 
 [TSystem]
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string", optional=true}
-Connectors = {type = "ssd::TConnectors", optional=true}
-ElementGeometry = {type = "ssd::ElementGeometry", optional=true}
-ParameterBindings = {type = "ssd::TParameterBindings", optional=true}
-Elements = {type = "ssd::Elements", optional=true}
-Connections = {type = "ssd::Connections", optional=true}
-SignalDictionaries = {type = "ssd::TSignalDictionaries", optional=true}
-SystemGeometry = {type = "ssd::SystemGeometry", optional=true}
-GraphicalElements = {type = "ssd::GraphicalElements", optional=true}
-Annotations = {type = "ssc::TAnnotations", optional=true}
+Connectors = {type = "ssd::TConnectors", optional=true, namespace="ssd"}
+ElementGeometry = {type = "ssd::ElementGeometry", optional=true, namespace="ssd"}
+ParameterBindings = {type = "ssd::TParameterBindings", optional=true, namespace="ssd"}
+Elements = {type = "ssd::Elements", optional=true, namespace="ssd"}
+Connections = {type = "ssd::Connections", optional=true, namespace="ssd"}
+SignalDictionaries = {type = "ssd::TSignalDictionaries", optional=true, namespace="ssd"}
+SystemGeometry = {type = "ssd::SystemGeometry", optional=true, namespace="ssd"}
+GraphicalElements = {type = "ssd::GraphicalElements", optional=true, namespace="ssd"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 
 [SystemStructureDescription]
@@ -108,8 +108,8 @@ copyright = {type = "string", optional = true}
 license = {type = "string", optional = true}
 generationTool = {type = "string", optional = true}
 generationDateAndTime = {type = "string", optional = true}
-System = {type = "ssd::TSystem"}
-Enumerations = {type = "ssc::TEnumerations", optional = true}
-Units = {type = "ssc::TUnits", optional = true}
-DefaultExperiment = {type = "ssd::TDefaultExperiment", optional = true}
-Annotations = {type = "ssc::TAnnotations", optional = true}
+System = {type = "ssd::TSystem", namespace="ssd"}
+Enumerations = {type = "ssc::TEnumerations", optional = true, namespace="ssc"}
+Units = {type = "ssc::TUnits", optional = true, namespace="ssc"}
+DefaultExperiment = {type = "ssd::TDefaultExperiment", optional = true, namespace="ssd"}
+Annotations = {type = "ssc::TAnnotations", optional = true, namespace="ssc"}

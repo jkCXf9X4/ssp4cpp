@@ -163,9 +163,9 @@ namespace ssp4cpp::ssp1::ssd
     class Elements : public IXmlNode
     {
     public:
-        vector<ssd::TComponent> components;
-        vector<ssd::TSignalDictionaryReference> signal_dictionary_references;
-        vector<ssd::TSystem> systems;
+        vector<ssd::TComponent> Component;
+        vector<ssd::TSignalDictionaryReference> SignalDictionaryReference;
+        vector<ssd::TSystem> System;
 
         string to_string(void) const;
     };

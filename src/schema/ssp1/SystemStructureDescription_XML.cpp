@@ -127,9 +127,9 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Elements" << std::endl;
 
-        get_vector(node, "ssd:Component", elements.components);
-        get_vector(node, "ssd:SignalDictionaryReference", elements.signal_dictionary_references);
-        get_vector(node, "ssd:System", elements.systems);
+        get_vector(node, "ssd:Component", elements.Component);
+        get_vector(node, "ssd:SignalDictionaryReference", elements.SignalDictionaryReference);
+        get_vector(node, "ssd:System", elements.System);
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Elements" << std::endl;
     }
@@ -175,7 +175,7 @@ namespace ssp4cpp::ssp1::ssd
         from_xml(node.child("ssd:System"), desc.System);
 
         get_optional_class(node, "ssc:Enumerations", desc.Enumerations);
-        get_optional_class(node, "ssc:TUnits", desc.Units);
+        get_optional_class(node, "ssc:Units", desc.Units);
         get_optional_class(node, "ssd:DefaultExperiment", desc.DefaultExperiment);
         get_optional_class(node, "ssc:Annotations", desc.Annotations);
 

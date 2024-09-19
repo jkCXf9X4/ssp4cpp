@@ -163,9 +163,9 @@ namespace ssp4cpp::ssp1::ssd
     string Elements::to_string(void) const
     {
         return "Elements { \n"
-               "components                    : " + to_str( components                    ) + "\n" +
-               "signal_dictionary_references  : " + to_str( signal_dictionary_references  ) + "\n" +
-               "systems                       : " + to_str( systems                       ) + "\n" +
+               "components                    : " + to_str( Component                    ) + "\n" +
+               "signal_dictionary_references  : " + to_str( SignalDictionaryReference  ) + "\n" +
+               "systems                       : " + to_str( System                       ) + "\n" +
                "}";
     }
 

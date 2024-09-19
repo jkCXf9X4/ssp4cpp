@@ -22,11 +22,12 @@ class ClassNode(Node):
         super().__init__(name)
 
 class VariableNode(Node):
-    def __init__(self, name, type = "string", optional=False, list=False):
+    def __init__(self, name, type = "string", optional=False, list=False, namespace=None):
         super().__init__(name)
         self.type = type
         self.optional = optional
         self.list = list
+        self.namespace = namespace
         self.is_primitive = type in ["string", "int", "unsigned int", "float", "double", "bool"]
 
     def __str__(self):
