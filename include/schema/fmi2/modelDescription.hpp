@@ -230,9 +230,8 @@ namespace ssp4cpp::fmi2
     {
     public:
         int index;
-        vector<unsigned int> dependencies;
-        vector<string> dependencies_kind_str;
-        vector<DependenciesKind> dependencies_kind;
+        string dependencies;
+        string dependenciesKind;
 
         string to_string(void) const;
     };
@@ -250,7 +249,7 @@ namespace ssp4cpp::fmi2
     class ModelVariables : public IXmlNode
     {
     public:
-        vector<fmi2ScalarVariable> list;
+        vector<fmi2ScalarVariable> ScalarVariable;
 
         string to_string(void) const;
     };

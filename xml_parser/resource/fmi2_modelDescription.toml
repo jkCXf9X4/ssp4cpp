@@ -136,9 +136,8 @@ Annotations = { type = "fmi2Annotation", list = true }
 # unknown structure
 [unknown]
 index = { type = "int" }
-dependencies = { type = "unsigned int", list = true }
-dependencies_kind_str = { type = "string", list = true }
-dependencies_kind = { type = "DependenciesKind", list = true }
+dependencies = { type = "string" }
+dependenciesKind = { type = "string" }
 
 # ModelStructure structure
 [ModelStructure]
@@ -148,7 +147,7 @@ initialUnknowns = { type = "unknown", list = true }
 
 # ModelVariables structure
 [ModelVariables]
-list = { type = "fmi2ScalarVariable", list = true }
+ScalarVariable = { type = "fmi2ScalarVariable", list = true }
 
 # File structure
 [File]

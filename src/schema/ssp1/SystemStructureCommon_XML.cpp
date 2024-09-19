@@ -1,16 +1,17 @@
 #include <boost/log/trivial.hpp>
 
 #include "SystemStructureCommon.hpp"
+
 #include "xml_deserialize.hpp"
 
 #include "SystemStructureCommon_XML.hpp"
 
-
-namespace ssp4cpp::ssp1::ssc
-{
     using namespace std;
     using namespace pugi;
     using namespace ssp4cpp::xml;
+
+namespace ssp4cpp::ssp1::ssc
+{
     
     void from_xml(const xml_node &node, TAnnotations &annotations) {}
     void from_xml(const xml_node &node, TEnumerations &enumerations) {}

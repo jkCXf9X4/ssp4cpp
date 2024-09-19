@@ -10,6 +10,7 @@
     using namespace std;
     using namespace pugi;
     using namespace ssp4cpp::xml;
+    
 namespace ssp4cpp::ssp1::ssd
 {
 

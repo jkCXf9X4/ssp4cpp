@@ -226,10 +226,9 @@ namespace ssp4cpp::fmi2
     string unknown::to_string(void) const
     {
         return "unknown { \n"
-               "index                  : " + to_str( index                  ) + "\n" +
-               "dependencies           : " + to_str( dependencies           ) + "\n" +
-               "dependencies_kind_str  : " + to_str( dependencies_kind_str  ) + "\n" +
-               "dependencies_kind      : " + to_str( dependencies_kind      ) + "\n" +
+               "index             : " + to_str( index             ) + "\n" +
+               "dependencies      : " + to_str( dependencies      ) + "\n" +
+               "dependenciesKind  : " + to_str( dependenciesKind  ) + "\n" +
                "}";
     }
 
@@ -247,7 +246,7 @@ namespace ssp4cpp::fmi2
     string ModelVariables::to_string(void) const
     {
         return "ModelVariables { \n"
-               "list  : " + to_str( list  ) + "\n" +
+               "ScalarVariable  : " + to_str( ScalarVariable  ) + "\n" +
                "}";
     }
 
