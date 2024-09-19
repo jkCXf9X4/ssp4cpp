@@ -1,22 +1,4 @@
-#pragma once
-
-#include <string>
-#include <vector>
-#include <optional>
-#include <iostream>
-
-#include "common_enums.hpp"
-#include "SystemStructureCommon.hpp"
-
-namespace ssp4cpp::ssp1::ssd
 {
-    using namespace std;
-    using namespace ssp4cpp::ssp1;
-
-    // Forward declarations
-    struct TSystem;
-
-    
     class SystemGeometry
     {
     public:

@@ -1,5 +1,0 @@
-{
-"SystemStructureDescription" :[
- {"name":"id", "type" : "string", "optional":"false", "list":"false"}
-]
-}

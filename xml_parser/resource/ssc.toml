@@ -1,0 +1,71 @@
+[Annotation]
+annotation_type = {type = "string", optional=true}
+any = {type = "string", optional=true}
+
+[TAnnotations]
+list = {type = "Annotation", list = true}
+
+[BooleanMapEntry]
+source = {type = "bool"}
+target = {type = "bool"}
+
+[BooleanMappingTransformation]
+list = {type = "BooleanMapEntry", list = true}
+
+[IntegerMapEntry]
+source = {type = "int"}
+target = {type = "int"}
+
+[IntegerMappingTransformation]
+list = {type = "IntegerMapEntry", list = true}
+
+[EnumerationMapEntry]
+source = {type = "string"}
+target = {type = "string"}
+
+[EnumerationMappingTransformation]
+list = {type = "EnumerationMapEntry", list = true}
+
+[TEnumerations]
+# No fields defined, empty struct
+
+[BaseUnit]
+kg = {type = "int", optional=true}
+m = {type = "int", optional=true}
+s = {type = "int", optional=true}
+a = {type = "int", optional=true}
+k = {type = "int", optional=true}
+mol = {type = "int", optional=true}
+cd = {type = "int", optional=true}
+rad = {type = "int", optional=true}
+factor = {type = "double", optional=true}
+offset = {type = "double", optional=true}
+
+[TUnits]
+id = {type = "string", optional=true}
+description = {type = "string", optional=true}
+name = {type = "string"}
+baseUnit = {type = "BaseUnit"}
+annotations = {type = "TAnnotations", optional=true}
+
+[GTypeReal]
+unit = {type = "string", optional=true}
+
+[GTypeInteger]
+# No fields defined, empty struct
+
+[GTypeBoolean]
+# No fields defined, empty struct
+
+[GTypeString]
+# No fields defined, empty struct
+
+[GTypeEnumeration]
+name = {type = "string", optional=true}
+
+[GTypeBinary]
+mime_type = {type = "string", optional=true}
+
+[LinearTransformation]
+factor = {type = "double", optional=true}
+offset = {type = "double", optional=true}
