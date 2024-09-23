@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <optional>
+#include <stdexcept>
 
 #include <type_traits>
 
@@ -41,14 +42,9 @@ std::string to_str(const T &obj)
     {
         return obj.to_string();
     }
-    else if constexpr (std::is_enum_v<T>)
-    {
-        // some enums have static to_string functions
-        // hope for the best!
-        return to_string(obj);
-    }
     else 
     {
+        throw runtime_error("Unable to print object");
         //ERROR
     }
 }

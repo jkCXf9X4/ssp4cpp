@@ -18,99 +18,50 @@ namespace ssp4cpp::xml
     using namespace pugi;
 
     template <typename T>
-    T get_attribute(const xml_node &node, const string &name)
+    void get_attribute(const xml_node &node, T &obj, const string &name)
     {
-        auto attrib = node.attribute(name.c_str());
+        cout << "get_attribute: " << name << endl;
         if constexpr (is_same_v<T, int>)
         {
-            return attrib.as_int();
+            obj = node.attribute(name.c_str()).as_int();
         }
         else if constexpr (is_same_v<T, unsigned int>)
         {
-            return attrib.as_uint();
+            obj = node.attribute(name.c_str()).as_uint();
         }
         else if constexpr (is_same_v<T, double>)
         {
-            return attrib.as_double();
+            obj = node.attribute(name.c_str()).as_double();
         }
         else if constexpr (is_same_v<T, bool>)
         {
-            return attrib.as_bool();
+            obj = node.attribute(name.c_str()).as_bool();
         }
         else if constexpr (is_same_v<T, string>)
         {
-            return attrib.as_string();
+            obj = node.attribute(name.c_str()).as_string();
+            // cout << "get_attribute: " << name << " : " << obj << endl;
         }
         else
         {
-            throw runtime_error("Unable to parse attribute: " + name);
+            throw runtime_error("Unable to parse attribute: " + name + " : " + typeid(T).name());
         }
     }
 
     template <typename T>
-    void get_attribute_2(const xml_node &node, T obj, const string &name)
+    void get_class(const xml_node &node, T &obj, const string &name)
     {
-        auto attrib = node.attribute(name.c_str());
-        if constexpr (is_same_v<T, int>)
-        {
-            obj = attrib.as_int();
-        }
-        else if constexpr (is_same_v<T, unsigned int>)
-        {
-            obj =  attrib.as_uint();
-        }
-        else if constexpr (is_same_v<T, double>)
-        {
-            obj =  attrib.as_double();
-        }
-        else if constexpr (is_same_v<T, bool>)
-        {
-            obj =  attrib.as_bool();
-        }
-        else if constexpr (is_same_v<T, string>)
-        {
-            obj =  attrib.as_string();
-        }
-        else
-        {
-            throw runtime_error("Unable to parse attribute: " + name);
-        }
+        cout << "get_class: " << name << endl;
+
+        obj = T();
+        from_xml(node.child(name.c_str()), obj);
     }
 
     template <typename T>
-    optional<T> get_optional_attribute(const xml_node &node, const string &name)
+    void get_vector(const xml_node &node, vector<T> &list, const string &name)
     {
-        if (node.attribute(name.c_str()).empty())
-        {
-            return nullopt;
-        }
-        return get_attribute<T>(node, name);
-    }
-
-    template <typename T>
-    void get_optional_attribute_2(const xml_node &node, optional<T> obj, const string &name)
-    {
-        if (node.attribute(name.c_str()).empty())
-        {
-            obj = nullopt;
-        }
-        get_attribute_2(node, obj, name);
-    }
-
-    template <typename T>
-    void get_optional_class(const xml_node &node, const char *name, optional<T> &obj)
-    {
-        if (auto child = node.child(name))
-        {
-            obj = T(); // check!
-            from_xml(child, *obj);
-        }
-    }
-
-    template <typename T>
-    void get_vector(const xml_node &node, const char *name, vector<T> &list)
-    {
-        for (auto child : node.children(name))
+        cout << "get_vector: " << name << endl;
+        for (auto child : node.children(name.c_str()))
         {
             T t;
             from_xml(child, t);
@@ -119,35 +70,99 @@ namespace ssp4cpp::xml
     }
 
     template <typename T>
-    void parse_xml(const xml_node &node, T &obj, const string &name)
+    void get_optional_attribute(const xml_node &node, optional<T> &obj, const string &name)
     {
-        if constexpr (is_same_v<T, int> ||
-                           is_same_v<T, unsigned int> ||
-                           is_same_v<T, double> ||
-                           is_same_v<T, bool> ||
-                           is_same_v<T, string>)
+        cout << "get_optional_attribute: " << name << endl;
+        if (node.attribute(name.c_str()).empty())
         {
-            get_attribute_2(node, obj, name);
+            cout << "get_optional_attribute: " << name << " : empty" << endl;
+            obj = nullopt;
         }
-        else if constexpr (is_same_v<T, optional<int>> ||
-                           is_same_v<T, optional<unsigned int>> ||
-                           is_same_v<T, optional<double>> ||
-                           is_same_v<T, optional<bool>> ||
-                           is_same_v<T, optional<string>>)
+        else
         {
-            get_optional_attribute_2(node, obj, name);
+            obj = T(); // can it be removed?
+            get_attribute(node, *obj, name);
+        }
+    }
+
+    template <typename T>
+    void get_optional_class(const xml_node &node, optional<T> &obj, const string &name)
+    {
+        cout << "get_optional_class: " << name << endl;
+        if (auto child = node.child(name.c_str()))
+        {
+            obj = T();
+            get_class(child, *obj, name);
+        }
+        else
+        {
+            obj = nullopt;
+        }
+    }
+
+    // template <typename T, typename = std::enable_if_t<is_optional<T>>>
+    template <typename T>
+    void parse_xml_optional(const xml_node &node, optional<T> &obj, const string &name)
+    {
+        cout << "parse_xml <optional>: " << name << endl;
+        if constexpr (is_same_v<T, int> ||
+                      is_same_v<T, unsigned int> ||
+                      is_same_v<T, double> ||
+                      is_same_v<T, bool> ||
+                      is_same_v<T, string>)
+        {
+            get_optional_attribute(node, obj, name);
+        }
+        else if constexpr (is_base_of_v<IXmlNode, T>)
+        {
+            get_optional_class(node, obj, name);
+        }
+        else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
+        {
+            throw runtime_error("Not implemented... : " + name + " : " + typeid(T).name());
+        }
+        else
+        {
+            throw runtime_error("Unreachable : " + name + " : " + typeid(T).name());
+        }
+    }
+
+    // template <typename T, typename = std::enable_if_t<std::is_vector<T>::value>>
+    template <typename T>
+    void parse_xml_vector(const xml_node &node, vector<T> &obj, const string &name)
+    {
+        cout << "parse_xml <vector>: " << name << endl;
+        if constexpr (is_base_of_v<IXmlNode, T>)
+        {
+            get_vector(node, obj, name);
+        }
+        else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
+        {
+            throw runtime_error("Not implemented... : " + name + " : " + typeid(T).name());
+        }
+        else
+        {
+            throw runtime_error("Unreachable : " + name + " : " + typeid(T).name());
+        }
+    }
+
+    // template <typename T, typename = std::enable_if_t<!std::is_vector<T>::value> && !std::is_optional<T>::value >>
+    // template <typename T, typename = std::enable_if_t<!is_optional<T>>>
+    template <typename T>
+    void parse_xml_norm(const xml_node &node, T &obj, const string &name)
+    {
+        cout << "parse_xml_norm: " << name << endl;
+        if constexpr (is_same_v<T, int> ||
+                      is_same_v<T, unsigned int> ||
+                      is_same_v<T, double> ||
+                      is_same_v<T, bool> ||
+                      is_same_v<T, string>)
+        {
+            get_attribute(node, obj, name);
         }
         else if constexpr (is_base_of_v<IXmlNode, T>) // class
         {
-            from_xml(node.child(name.c_str()), obj);
-        }
-        else if constexpr (is_same_v<T, vector<T>>) // vector
-        {
-            get_vector(node, name, obj);
-        }
-        else if constexpr (is_same_v<T, optional<T>>) // optional
-        {
-            get_optional_class(node, name, obj);
+            get_class(node, obj, name);
         }
         else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
         {
@@ -156,7 +171,46 @@ namespace ssp4cpp::xml
         }
         else
         {
-            throw runtime_error("Unreachable : " + name);
+            throw runtime_error("Unreachable parse_xml_norm: " + name + " : " + typeid(T).name());
+        }
+    }
+
+    template <typename>
+    constexpr bool is_optional_impl = false;
+    template <typename T>
+    constexpr bool is_optional_impl<std::optional<T>> = true;
+    template <>
+    constexpr bool is_optional_impl<std::nullopt_t> = true;
+
+    template <typename T>
+    constexpr bool is_optional_v = is_optional_impl<std::decay_t<T>>;
+
+    template <typename C>
+    struct is_vector : std::false_type
+    {
+    };
+    template <typename T, typename A>
+    struct is_vector<std::vector<T, A>> : std::true_type
+    {
+    };
+    template <typename C>
+    inline constexpr bool is_vector_v = is_vector<C>::value;
+
+    template <typename T>
+    void parse_xml(const xml_node &node, T &obj, const string &name)
+    {
+        cout << "parse_xml: " << name << endl;
+        if constexpr (is_optional_v<T>)
+        {
+            parse_xml_optional(node, obj, name);
+        }
+        else if constexpr (is_vector_v<T>)
+        {
+            parse_xml_vector(node, obj, name);
+        }
+        else
+        {
+            parse_xml_norm(node, obj, name);
         }
     }
 }

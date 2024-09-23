@@ -11,7 +11,9 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, ConnectorGeometry &obj);
     void from_xml(const xml_node &node, ElementGeometry &obj);
     void from_xml(const xml_node &node, ConnectionGeometry &obj);
+    void from_xml(const xml_node &node, SignalDictionary &obj);
     void from_xml(const xml_node &node, TSignalDictionaries &obj);
+    void from_xml(const xml_node &node, ParameterBinding &obj);
     void from_xml(const xml_node &node, TParameterBindings &obj);
     void from_xml(const xml_node &node, GraphicalElements &obj);
     void from_xml(const xml_node &node, TDefaultExperiment &obj);
@@ -24,7 +26,6 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, Elements &obj);
     void from_xml(const xml_node &node, TSystem &obj);
     void from_xml(const xml_node &node, SystemStructureDescription &obj);
+
 }
-
-
 

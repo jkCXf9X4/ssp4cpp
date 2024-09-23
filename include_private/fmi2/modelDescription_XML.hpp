@@ -34,6 +34,5 @@ namespace ssp4cpp::fmi2
     void from_xml(const xml_node &node, ModelExchange &obj);
     void from_xml(const xml_node &node, CoSimulation &obj);
     void from_xml(const xml_node &node, fmi2ModelDescription &obj);
+
 }
-
-

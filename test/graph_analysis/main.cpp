@@ -30,7 +30,7 @@ using namespace fmi4cpp;
 
 int main()
 {
-    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::debug);
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::trace);
 
     // Opening zip
     cout << "Opening ssp\n";

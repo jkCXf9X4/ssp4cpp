@@ -23,7 +23,6 @@ SignalDictionaries = {type = "ssd::SignalDictionary", list = true, namespace="ss
 
 [TParameterBindings]
 ParameterBindings = {type = "ssd::ParameterBinding", list = true, namespace="ssd", xml_tag="ParameterBinding"}
-# Empty struct, may have future elements, but nothing is currently defined.
 
 [GraphicalElements]
 # Empty struct, may have future elements, but nothing is currently defined.
