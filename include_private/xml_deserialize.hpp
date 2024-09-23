@@ -14,6 +14,31 @@
 
 namespace ssp4cpp::xml
 {
+    namespace
+    {
+        template <typename>
+        constexpr bool is_optional_impl = false;
+        template <typename T>
+        constexpr bool is_optional_impl<std::optional<T>> = true;
+        template <>
+        constexpr bool is_optional_impl<std::nullopt_t> = true;
+
+        template <typename T>
+        constexpr bool is_optional_v = is_optional_impl<std::decay_t<T>>;
+
+        template <typename C>
+        struct is_vector : std::false_type
+        {
+        };
+        template <typename T, typename A>
+        struct is_vector<std::vector<T, A>> : std::true_type
+        {
+        };
+        template <typename C>
+        inline constexpr bool is_vector_v = is_vector<C>::value;
+
+    }
+
     using namespace std;
     using namespace pugi;
 
@@ -40,7 +65,6 @@ namespace ssp4cpp::xml
         else if constexpr (is_same_v<T, string>)
         {
             obj = node.attribute(name.c_str()).as_string();
-            // cout << "get_attribute: " << name << " : " << obj << endl;
         }
         else
         {
@@ -60,7 +84,8 @@ namespace ssp4cpp::xml
     template <typename T>
     void get_vector(const xml_node &node, vector<T> &list, const string &name)
     {
-        cout << "get_vector: " << name << endl;
+        cout << "get_vector: " << name + " : " + typeid(T).name() << endl;
+
         for (auto child : node.children(name.c_str()))
         {
             T t;
@@ -89,10 +114,10 @@ namespace ssp4cpp::xml
     void get_optional_class(const xml_node &node, optional<T> &obj, const string &name)
     {
         cout << "get_optional_class: " << name << endl;
-        if (auto child = node.child(name.c_str()))
+        if (node.child(name.c_str()))
         {
             obj = T();
-            get_class(child, *obj, name);
+            get_class(node, *obj, name);
         }
         else
         {
@@ -131,7 +156,7 @@ namespace ssp4cpp::xml
     template <typename T>
     void parse_xml_vector(const xml_node &node, vector<T> &obj, const string &name)
     {
-        cout << "parse_xml <vector>: " << name << endl;
+        cout << "parse_xml <vector>: " + name + " : " + typeid(T).name() << endl;
         if constexpr (is_base_of_v<IXmlNode, T>)
         {
             get_vector(node, obj, name);
@@ -175,31 +200,10 @@ namespace ssp4cpp::xml
         }
     }
 
-    template <typename>
-    constexpr bool is_optional_impl = false;
-    template <typename T>
-    constexpr bool is_optional_impl<std::optional<T>> = true;
-    template <>
-    constexpr bool is_optional_impl<std::nullopt_t> = true;
-
-    template <typename T>
-    constexpr bool is_optional_v = is_optional_impl<std::decay_t<T>>;
-
-    template <typename C>
-    struct is_vector : std::false_type
-    {
-    };
-    template <typename T, typename A>
-    struct is_vector<std::vector<T, A>> : std::true_type
-    {
-    };
-    template <typename C>
-    inline constexpr bool is_vector_v = is_vector<C>::value;
-
     template <typename T>
     void parse_xml(const xml_node &node, T &obj, const string &name)
     {
-        cout << "parse_xml: " << name << endl;
+        cout << "parse_xml: " << name + " : " + typeid(T).name() << endl;
         if constexpr (is_optional_v<T>)
         {
             parse_xml_optional(node, obj, name);
