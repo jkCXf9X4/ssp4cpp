@@ -1,5 +1,4 @@
 from typing import List
-import tomli
 from nodes import ClassNode, VariableNode
 
 from misc import indent_strings
@@ -13,6 +12,8 @@ class XmlParserExporter:
         self.variable_nodes : List[VariableNode] = class_node.children
         self.indent = indent
 
+        self.longest_name = max([0,] +[len(v.name) for v in self.variable_nodes])
+
     def generate_from_xml_declarations(self):
         return f"""void from_xml(const xml_node &node, {self.class_node.name } &obj);\n"""
 
@@ -23,23 +24,7 @@ class XmlParserExporter:
         else:
             name = variable.name if not variable.namespace else f"{variable.namespace}:{variable.name}"
 
-        # list
-        if variable.list:
-            return f"get_vector(node, \"{name}\", obj.{variable.name});"
-
-        # primitive
-        if variable.is_primitive:
-            if variable.optional:
-                return f'obj.{variable.name} = get_optional_attribute<{variable.type}>(node, "{variable.name}");'
-            else:
-                return f'obj.{variable.name} = get_attribute<{variable.type}>(node, "{variable.name}");'
-
-        # complex
-        if variable.optional:
-            return f"get_optional_class(node, \"{name}\", obj.{variable.name});"
-        else:
-            return f"from_xml(node.child(\"{name}\"), obj.{variable.name});"
-            
+        return f"parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, \"{name}\");"
 
     def generate_parsers(self):
         variables = [self.generate_variable_declaration(v) for v in self.variable_nodes]

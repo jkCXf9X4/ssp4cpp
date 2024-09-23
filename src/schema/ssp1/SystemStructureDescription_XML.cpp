@@ -209,21 +209,21 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SystemStructureDescription" << std::endl;
 
-        obj.version = get_attribute<string>(node, "version");
-        obj.name = get_attribute<string>(node, "name");
-        obj.id = get_optional_attribute<string>(node, "id");
-        obj.description = get_optional_attribute<string>(node, "description");
-        obj.author = get_optional_attribute<string>(node, "author");
-        obj.fileversion = get_optional_attribute<string>(node, "fileversion");
-        obj.copyright = get_optional_attribute<string>(node, "copyright");
-        obj.license = get_optional_attribute<string>(node, "license");
-        obj.generationTool = get_optional_attribute<string>(node, "generationTool");
-        obj.generationDateAndTime = get_optional_attribute<string>(node, "generationDateAndTime");
-        from_xml(node.child("ssd:System"), obj.System);
-        get_optional_class(node, "ssc:Enumerations", obj.Enumerations);
-        get_optional_class(node, "ssc:Units", obj.Units);
-        get_optional_class(node, "ssd:DefaultExperiment", obj.DefaultExperiment);
-        get_optional_class(node, "ssc:Annotations", obj.Annotations);
+        parse_xml(node, obj.version                , "version");
+        parse_xml(node, obj.name                   , "name");
+        parse_xml(node, obj.id                     , "id");
+        parse_xml(node, obj.description            , "description");
+        parse_xml(node, obj.author                 , "author");
+        parse_xml(node, obj.fileversion            , "fileversion");
+        parse_xml(node, obj.copyright              , "copyright");
+        parse_xml(node, obj.license                , "license");
+        parse_xml(node, obj.generationTool         , "generationTool");
+        parse_xml(node, obj.generationDateAndTime  , "generationDateAndTime");
+        parse_xml(node, obj.System                 , "ssd:System");
+        parse_xml(node, obj.Enumerations           , "ssc:Enumerations");
+        parse_xml(node, obj.Units                  , "ssc:Units");
+        parse_xml(node, obj.DefaultExperiment      , "ssd:DefaultExperiment");
+        parse_xml(node, obj.Annotations            , "ssc:Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed SystemStructureDescription" << std::endl;
     }

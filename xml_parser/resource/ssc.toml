@@ -83,6 +83,6 @@ unit = {type = "string", optional=true}
 name = {type = "string", optional=true}
 
 [GTypeBinary]
-mime_type = {type = "string", optional=true, , xml_tag="mime-type"}
+mime_type = {type = "string", optional=true, xml_tag="mime-type"}
 
 
