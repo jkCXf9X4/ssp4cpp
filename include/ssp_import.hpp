@@ -61,7 +61,6 @@ namespace ssp4cpp::ssp1
         }
 
     private:
-        optional<path> import_ssp(const string &fileName);
         ssd::SystemStructureDescription parse_system_structure(const string &fileName);
     };
 

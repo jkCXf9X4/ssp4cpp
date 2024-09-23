@@ -1,11 +1,11 @@
 #include <boost/log/trivial.hpp>
 
-#include "schema/ssp1/SystemStructureDescription.hpp"
-#include "ssp_import.hpp"
-
 #include <pugixml.hpp>
 #include <iostream>
 
+#include "ssp_import.hpp"
+
+#include "SystemStructureDescription.hpp"
 #include "SystemStructureDescription_XML.hpp"
 
 #include "zip.hpp"
@@ -18,7 +18,7 @@ namespace ssp4cpp::ssp1
     SspImport::SspImport(const path &file) : original_file(file)
     {
         BOOST_LOG_TRIVIAL(trace) << "Importing ssp: " << file << std::endl;
-        temp_dir = import_ssp(file.string()).value();
+        temp_dir = ssp4cpp::zip_ns::unzip_to_temp_dir(file.string());
         
         ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
 
@@ -57,28 +57,5 @@ namespace ssp4cpp::ssp1
         from_xml(root, ssd);
 
         return ssd;
-    }
-
-    optional<fs::path> SspImport::import_ssp(const string &fileName)
-    {
-        auto ssp_file = fs::path(fileName);
-        if (!fs::exists(ssp_file))
-        {
-            BOOST_LOG_TRIVIAL(warning) << "File does not exist: " << fileName << "  " << std::endl;
-            return nullopt;
-        }
-
-        std::string tmp_folder = std::tmpnam(nullptr);
-        BOOST_LOG_TRIVIAL(debug) << "Temp folder: " << tmp_folder << endl;
-        cout << "Temp folder: " << tmp_folder << endl;
-
-        auto temp_dir = fs::path(tmp_folder.append("-ssp"));
-        BOOST_LOG_TRIVIAL(debug) << "Temp dir: " << temp_dir << endl;
-
-        fs::create_directory(temp_dir);
-
-        ssp4cpp::zip_ns::unzip(ssp_file, temp_dir);
-
-        return temp_dir;
     }
 }

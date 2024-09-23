@@ -4,5 +4,5 @@
 
 namespace ssp4cpp::zip_ns
 {
-    bool unzip(std::filesystem::path &file, const std::filesystem::path &tmp_path);
+    std::filesystem::path unzip_to_temp_dir(const std::string &fileName);
 }

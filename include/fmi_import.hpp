@@ -36,7 +36,6 @@ namespace ssp4cpp::fmi2
         }
 
     private:
-        optional<path> import_fmi(const string &fileName);
         fmi2ModelDescription parse_model_description(const string &fileName);
     };
 
