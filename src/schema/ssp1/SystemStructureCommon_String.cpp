@@ -15,8 +15,8 @@ namespace ssp4cpp::ssp1::ssc
     string Annotation::to_string(void) const
     {
         return "Annotation { \n"
-               "annotation_type  : " + to_str( annotation_type  ) + "\n" +
-               "any              : " + to_str( any              ) + "\n" +
+               "type  : " + to_str( type  ) + "\n" +
+               "any   : " + to_str( any   ) + "\n" +
                "}";
     }
 
@@ -24,7 +24,16 @@ namespace ssp4cpp::ssp1::ssc
     string TAnnotations::to_string(void) const
     {
         return "TAnnotations { \n"
-               "list  : " + to_str( list  ) + "\n" +
+               "Annotations  : " + to_str( Annotations  ) + "\n" +
+               "}";
+    }
+
+     // LinearTransformation
+    string LinearTransformation::to_string(void) const
+    {
+        return "LinearTransformation { \n"
+               "factor  : " + to_str( factor  ) + "\n" +
+               "offset  : " + to_str( offset  ) + "\n" +
                "}";
     }
 
@@ -41,7 +50,7 @@ namespace ssp4cpp::ssp1::ssc
     string BooleanMappingTransformation::to_string(void) const
     {
         return "BooleanMappingTransformation { \n"
-               "list  : " + to_str( list  ) + "\n" +
+               "MapEntrys  : " + to_str( MapEntrys  ) + "\n" +
                "}";
     }
 
@@ -58,7 +67,7 @@ namespace ssp4cpp::ssp1::ssc
     string IntegerMappingTransformation::to_string(void) const
     {
         return "IntegerMappingTransformation { \n"
-               "list  : " + to_str( list  ) + "\n" +
+               "MapEntrys  : " + to_str( MapEntrys  ) + "\n" +
                "}";
     }
 
@@ -75,7 +84,28 @@ namespace ssp4cpp::ssp1::ssc
     string EnumerationMappingTransformation::to_string(void) const
     {
         return "EnumerationMappingTransformation { \n"
-               "list  : " + to_str( list  ) + "\n" +
+               "MapEntrys  : " + to_str( MapEntrys  ) + "\n" +
+               "}";
+    }
+
+     // Item
+    string Item::to_string(void) const
+    {
+        return "Item { \n"
+               "name   : " + to_str( name   ) + "\n" +
+               "value  : " + to_str( value  ) + "\n" +
+               "}";
+    }
+
+     // TEnumeration
+    string TEnumeration::to_string(void) const
+    {
+        return "TEnumeration { \n"
+               "id           : " + to_str( id           ) + "\n" +
+               "description  : " + to_str( description  ) + "\n" +
+               "name         : " + to_str( name         ) + "\n" +
+               "Item         : " + to_str( Item         ) + "\n" +
+               "Annotations  : " + to_str( Annotations  ) + "\n" +
                "}";
     }
 
@@ -83,7 +113,7 @@ namespace ssp4cpp::ssp1::ssc
     string TEnumerations::to_string(void) const
     {
         return "TEnumerations { \n"
-
+               "Enumerations  : " + to_str( Enumerations  ) + "\n" +
                "}";
     }
 
@@ -104,15 +134,23 @@ namespace ssp4cpp::ssp1::ssc
                "}";
     }
 
+     // TUnit
+    string TUnit::to_string(void) const
+    {
+        return "TUnit { \n"
+               "id           : " + to_str( id           ) + "\n" +
+               "description  : " + to_str( description  ) + "\n" +
+               "name         : " + to_str( name         ) + "\n" +
+               "BaseUnit     : " + to_str( BaseUnit     ) + "\n" +
+               "Annotations  : " + to_str( Annotations  ) + "\n" +
+               "}";
+    }
+
      // TUnits
     string TUnits::to_string(void) const
     {
         return "TUnits { \n"
-               "id           : " + to_str( id           ) + "\n" +
-               "description  : " + to_str( description  ) + "\n" +
-               "name         : " + to_str( name         ) + "\n" +
-               "baseUnit     : " + to_str( baseUnit     ) + "\n" +
-               "annotations  : " + to_str( annotations  ) + "\n" +
+               "Units  : " + to_str( Units  ) + "\n" +
                "}";
     }
 
@@ -161,15 +199,6 @@ namespace ssp4cpp::ssp1::ssc
     {
         return "GTypeBinary { \n"
                "mime_type  : " + to_str( mime_type  ) + "\n" +
-               "}";
-    }
-
-     // LinearTransformation
-    string LinearTransformation::to_string(void) const
-    {
-        return "LinearTransformation { \n"
-               "factor  : " + to_str( factor  ) + "\n" +
-               "offset  : " + to_str( offset  ) + "\n" +
                "}";
     }
 

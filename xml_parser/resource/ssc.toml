@@ -38,7 +38,7 @@ value = {type = "int"}
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string"}
-Item = {type = "Item", list=true, namespace="ssc"}
+Item = {type = "ssc::Item", list=true, namespace="ssc"}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 

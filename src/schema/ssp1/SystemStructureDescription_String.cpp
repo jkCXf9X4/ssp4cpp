@@ -44,10 +44,26 @@ namespace ssp4cpp::ssp1::ssd
                "}";
     }
 
+     // SignalDictionary
+    string SignalDictionary::to_string(void) const
+    {
+        return "SignalDictionary { \n"
+
+               "}";
+    }
+
      // TSignalDictionaries
     string TSignalDictionaries::to_string(void) const
     {
         return "TSignalDictionaries { \n"
+               "SignalDictionaries  : " + to_str( SignalDictionaries  ) + "\n" +
+               "}";
+    }
+
+     // ParameterBinding
+    string ParameterBinding::to_string(void) const
+    {
+        return "ParameterBinding { \n"
 
                "}";
     }
@@ -56,7 +72,7 @@ namespace ssp4cpp::ssp1::ssd
     string TParameterBindings::to_string(void) const
     {
         return "TParameterBindings { \n"
-
+               "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
                "}";
     }
 
@@ -72,7 +88,9 @@ namespace ssp4cpp::ssp1::ssd
     string TDefaultExperiment::to_string(void) const
     {
         return "TDefaultExperiment { \n"
-
+               "startTime    : " + to_str( startTime    ) + "\n" +
+               "stopTime     : " + to_str( stopTime     ) + "\n" +
+               "Annotations  : " + to_str( Annotations  ) + "\n" +
                "}";
     }
 
@@ -80,6 +98,8 @@ namespace ssp4cpp::ssp1::ssd
     string Connection::to_string(void) const
     {
         return "Connection { \n"
+               "id                                : " + to_str( id                                ) + "\n" +
+               "description                       : " + to_str( description                       ) + "\n" +
                "startElement                      : " + to_str( startElement                      ) + "\n" +
                "startConnector                    : " + to_str( startConnector                    ) + "\n" +
                "endElement                        : " + to_str( endElement                        ) + "\n" +
@@ -98,7 +118,7 @@ namespace ssp4cpp::ssp1::ssd
     string Connections::to_string(void) const
     {
         return "Connections { \n"
-               "Connection  : " + to_str( Connection  ) + "\n" +
+               "Connections  : " + to_str( Connections  ) + "\n" +
                "}";
     }
 
@@ -125,7 +145,7 @@ namespace ssp4cpp::ssp1::ssd
     string TConnectors::to_string(void) const
     {
         return "TConnectors { \n"
-               "Connector  : " + to_str( Connector  ) + "\n" +
+               "Connectors  : " + to_str( Connectors  ) + "\n" +
                "}";
     }
 
@@ -150,10 +170,13 @@ namespace ssp4cpp::ssp1::ssd
     string TSignalDictionaryReference::to_string(void) const
     {
         return "TSignalDictionaryReference { \n"
-               "dictionary         : " + to_str( dictionary         ) + "\n" +
+               "id                 : " + to_str( id                 ) + "\n" +
+               "description        : " + to_str( description        ) + "\n" +
+               "name               : " + to_str( name               ) + "\n" +
                "Connectors         : " + to_str( Connectors         ) + "\n" +
                "ElementGeometry    : " + to_str( ElementGeometry    ) + "\n" +
                "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
+               "dictionary         : " + to_str( dictionary         ) + "\n" +
                "Annotations        : " + to_str( Annotations        ) + "\n" +
                "}";
     }
@@ -162,9 +185,9 @@ namespace ssp4cpp::ssp1::ssd
     string Elements::to_string(void) const
     {
         return "Elements { \n"
-               "Component                  : " + to_str( Component                  ) + "\n" +
-               "SignalDictionaryReference  : " + to_str( SignalDictionaryReference  ) + "\n" +
-               "System                     : " + to_str( System                     ) + "\n" +
+               "Components                  : " + to_str( Components                  ) + "\n" +
+               "SignalDictionaryReferences  : " + to_str( SignalDictionaryReferences  ) + "\n" +
+               "Systems                     : " + to_str( Systems                     ) + "\n" +
                "}";
     }
 

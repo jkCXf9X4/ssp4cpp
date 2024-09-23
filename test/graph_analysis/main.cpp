@@ -63,7 +63,6 @@ int main()
 
         return 0;
 
-
         auto resource = ssp.resources[i];
         auto fmu = fmi2::fmu(resource.file.c_str());
 
@@ -112,10 +111,10 @@ int main()
     {
         int connector_index = 0;
         // index all connectors
-        for (auto component : ssp.ssd.System.Elements.value().Component)
+        for (auto component : ssp.ssd.System.Elements.value().Components)
         {
             // cout << component  << endl;
-            for (auto connector : component.Connectors.value().Connector)
+            for (auto connector : component.Connectors.value().Connectors)
             {
                 if (connector.kind == "input" || connector.kind == "output")
                 {
@@ -138,7 +137,7 @@ int main()
         boost::put(boost::vertex_name_t(), g, index, name);
     }
 
-    for (auto connection : ssp.ssd.System.Connections.value().Connection)
+    for (auto connection : ssp.ssd.System.Connections.value().Connections)
     {
         auto start = connection.startElement.value() + "." + connection.startConnector;
         auto end = connection.endElement.value() + "." + connection.endConnector;

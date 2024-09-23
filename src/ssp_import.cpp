@@ -26,7 +26,7 @@ namespace ssp4cpp::ssp1
         if (elements)
         {
 
-            for (auto comp : elements.value().Component)
+            for (auto comp : elements.value().Components)
             {
                 SspResource res;
                 res.type = comp.type;

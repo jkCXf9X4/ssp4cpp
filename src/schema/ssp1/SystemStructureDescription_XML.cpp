@@ -50,20 +50,38 @@ namespace ssp4cpp::ssp1::ssd
         BOOST_LOG_TRIVIAL(trace) << "Completed ConnectionGeometry" << std::endl;
     }
 
+    void from_xml(const xml_node &node, SignalDictionary &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing SignalDictionary" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed SignalDictionary" << std::endl;
+    }
+
     void from_xml(const xml_node &node, TSignalDictionaries &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TSignalDictionaries" << std::endl;
 
-
+        parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionary");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TSignalDictionaries" << std::endl;
+    }
+
+    void from_xml(const xml_node &node, ParameterBinding &obj)
+    {
+        BOOST_LOG_TRIVIAL(trace) << "Parsing ParameterBinding" << std::endl;
+
+
+
+        BOOST_LOG_TRIVIAL(trace) << "Completed ParameterBinding" << std::endl;
     }
 
     void from_xml(const xml_node &node, TParameterBindings &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TParameterBindings" << std::endl;
 
-
+        parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBinding");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TParameterBindings" << std::endl;
     }
@@ -81,7 +99,9 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TDefaultExperiment" << std::endl;
 
-
+        parse_xml(node, obj.startTime    , "startTime");
+        parse_xml(node, obj.stopTime     , "stopTime");
+        parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TDefaultExperiment" << std::endl;
     }
@@ -90,17 +110,19 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connection" << std::endl;
 
-        obj.startElement = get_optional_attribute<string>(node, "startElement");
-        obj.startConnector = get_attribute<string>(node, "startConnector");
-        obj.endElement = get_optional_attribute<string>(node, "endElement");
-        obj.endConnector = get_attribute<string>(node, "endConnector");
-        obj.suppressUnitConversion = get_optional_attribute<bool>(node, "suppressUnitConversion");
-        get_optional_class(node, "ssc:LinearTransformation", obj.LinearTransformation);
-        get_optional_class(node, "ssc:BooleanMappingTransformation", obj.BooleanMappingTransformation);
-        get_optional_class(node, "ssc:IntegerMappingTransformation", obj.IntegerMappingTransformation);
-        get_optional_class(node, "ssc:EnumerationMappingTransformation", obj.EnumerationMappingTransformation);
-        get_optional_class(node, "ssd:ConnectionGeometry", obj.ConnectionGeometry);
-        get_optional_class(node, "ssc:Annotations", obj.Annotations);
+        parse_xml(node, obj.id                                , "id");
+        parse_xml(node, obj.description                       , "description");
+        parse_xml(node, obj.startElement                      , "startElement");
+        parse_xml(node, obj.startConnector                    , "startConnector");
+        parse_xml(node, obj.endElement                        , "endElement");
+        parse_xml(node, obj.endConnector                      , "endConnector");
+        parse_xml(node, obj.suppressUnitConversion            , "suppressUnitConversion");
+        parse_xml(node, obj.LinearTransformation              , "ssc:LinearTransformation");
+        parse_xml(node, obj.BooleanMappingTransformation      , "ssc:BooleanMappingTransformation");
+        parse_xml(node, obj.IntegerMappingTransformation      , "ssc:IntegerMappingTransformation");
+        parse_xml(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation");
+        parse_xml(node, obj.ConnectionGeometry                , "ssd:ConnectionGeometry");
+        parse_xml(node, obj.Annotations                       , "ssc:Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Connection" << std::endl;
     }
@@ -109,7 +131,7 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connections" << std::endl;
 
-        get_vector(node, "ssd:Connection", obj.Connection);
+        parse_xml(node, obj.Connections  , "ssd:Connection");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Connections" << std::endl;
     }
@@ -118,18 +140,18 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Connector" << std::endl;
 
-        obj.id = get_optional_attribute<string>(node, "id");
-        obj.description = get_optional_attribute<string>(node, "description");
-        obj.name = get_attribute<string>(node, "name");
-        obj.kind = get_attribute<string>(node, "kind");
-        get_optional_class(node, "ssc:Real", obj.Real);
-        get_optional_class(node, "ssc:Integer", obj.Integer);
-        get_optional_class(node, "ssc:Boolean", obj.Boolean);
-        get_optional_class(node, "ssc:String", obj.String);
-        get_optional_class(node, "ssc:Enumeration", obj.Enumeration);
-        get_optional_class(node, "ssc:Binary", obj.Binary);
-        get_optional_class(node, "ssd:ConnectorGeometry", obj.ConnectorGeometry);
-        get_optional_class(node, "ssc:Annotations", obj.Annotations);
+        parse_xml(node, obj.id                 , "id");
+        parse_xml(node, obj.description        , "description");
+        parse_xml(node, obj.name               , "name");
+        parse_xml(node, obj.kind               , "kind");
+        parse_xml(node, obj.Real               , "ssc:Real");
+        parse_xml(node, obj.Integer            , "ssc:Integer");
+        parse_xml(node, obj.Boolean            , "ssc:Boolean");
+        parse_xml(node, obj.String             , "ssc:String");
+        parse_xml(node, obj.Enumeration        , "ssc:Enumeration");
+        parse_xml(node, obj.Binary             , "ssc:Binary");
+        parse_xml(node, obj.ConnectorGeometry  , "ssd:ConnectorGeometry");
+        parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Connector" << std::endl;
     }
@@ -138,7 +160,7 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TConnectors" << std::endl;
 
-        get_vector(node, "ssd:Connector", obj.Connector);
+        parse_xml(node, obj.Connectors  , "ssd:Connector");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TConnectors" << std::endl;
     }
@@ -147,16 +169,16 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TComponent" << std::endl;
 
-        obj.id = get_optional_attribute<string>(node, "id");
-        obj.description = get_optional_attribute<string>(node, "description");
-        obj.name = get_optional_attribute<string>(node, "name");
-        get_optional_class(node, "ssd:Connectors", obj.Connectors);
-        get_optional_class(node, "ssd:ElementGeometry", obj.ElementGeometry);
-        get_optional_class(node, "ssd:ParameterBindings", obj.ParameterBindings);
-        obj.type = get_optional_attribute<string>(node, "type");
-        obj.source = get_attribute<string>(node, "source");
-        obj.implementation = get_optional_attribute<string>(node, "implementation");
-        get_optional_class(node, "ssc:Annotations", obj.Annotations);
+        parse_xml(node, obj.id                 , "id");
+        parse_xml(node, obj.description        , "description");
+        parse_xml(node, obj.name               , "name");
+        parse_xml(node, obj.Connectors         , "ssd:Connectors");
+        parse_xml(node, obj.ElementGeometry    , "ssd:ElementGeometry");
+        parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBindings");
+        parse_xml(node, obj.type               , "type");
+        parse_xml(node, obj.source             , "source");
+        parse_xml(node, obj.implementation     , "implementation");
+        parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TComponent" << std::endl;
     }
@@ -165,11 +187,14 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TSignalDictionaryReference" << std::endl;
 
-        obj.dictionary = get_attribute<string>(node, "dictionary");
-        get_optional_class(node, "ssd:Connectors", obj.Connectors);
-        get_optional_class(node, "ssd:ElementGeometry", obj.ElementGeometry);
-        get_optional_class(node, "ssd:ParameterBindings", obj.ParameterBindings);
-        get_optional_class(node, "ssc:Annotations", obj.Annotations);
+        parse_xml(node, obj.id                 , "id");
+        parse_xml(node, obj.description        , "description");
+        parse_xml(node, obj.name               , "name");
+        parse_xml(node, obj.Connectors         , "ssd:Connectors");
+        parse_xml(node, obj.ElementGeometry    , "ssd:ElementGeometry");
+        parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBindings");
+        parse_xml(node, obj.dictionary         , "dictionary");
+        parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TSignalDictionaryReference" << std::endl;
     }
@@ -178,9 +203,9 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Elements" << std::endl;
 
-        get_vector(node, "ssd:Component", obj.Component);
-        get_vector(node, "ssd:SignalDictionaryReference", obj.SignalDictionaryReference);
-        get_vector(node, "ssd:System", obj.System);
+        parse_xml(node, obj.Components                  , "ssd:Component");
+        parse_xml(node, obj.SignalDictionaryReferences  , "ssd:SignalDictionaryReference");
+        parse_xml(node, obj.Systems                     , "ssd:System");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Elements" << std::endl;
     }
@@ -189,18 +214,18 @@ namespace ssp4cpp::ssp1::ssd
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TSystem" << std::endl;
 
-        obj.id = get_optional_attribute<string>(node, "id");
-        obj.description = get_optional_attribute<string>(node, "description");
-        obj.name = get_optional_attribute<string>(node, "name");
-        get_optional_class(node, "ssd:Connectors", obj.Connectors);
-        get_optional_class(node, "ssd:ElementGeometry", obj.ElementGeometry);
-        get_optional_class(node, "ssd:ParameterBindings", obj.ParameterBindings);
-        get_optional_class(node, "ssd:Elements", obj.Elements);
-        get_optional_class(node, "ssd:Connections", obj.Connections);
-        get_optional_class(node, "ssd:SignalDictionaries", obj.SignalDictionaries);
-        get_optional_class(node, "ssd:SystemGeometry", obj.SystemGeometry);
-        get_optional_class(node, "ssd:GraphicalElements", obj.GraphicalElements);
-        get_optional_class(node, "ssc:Annotations", obj.Annotations);
+        parse_xml(node, obj.id                  , "id");
+        parse_xml(node, obj.description         , "description");
+        parse_xml(node, obj.name                , "name");
+        parse_xml(node, obj.Connectors          , "ssd:Connectors");
+        parse_xml(node, obj.ElementGeometry     , "ssd:ElementGeometry");
+        parse_xml(node, obj.ParameterBindings   , "ssd:ParameterBindings");
+        parse_xml(node, obj.Elements            , "ssd:Elements");
+        parse_xml(node, obj.Connections         , "ssd:Connections");
+        parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionaries");
+        parse_xml(node, obj.SystemGeometry      , "ssd:SystemGeometry");
+        parse_xml(node, obj.GraphicalElements   , "ssd:GraphicalElements");
+        parse_xml(node, obj.Annotations         , "ssc:Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TSystem" << std::endl;
     }

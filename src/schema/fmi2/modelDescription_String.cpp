@@ -171,7 +171,7 @@ namespace ssp4cpp::fmi2
     string LogCategories::to_string(void) const
     {
         return "LogCategories { \n"
-               "categories  : " + to_str( categories  ) + "\n" +
+               "Categories  : " + to_str( Categories  ) + "\n" +
                "}";
     }
 
@@ -236,9 +236,9 @@ namespace ssp4cpp::fmi2
     string ModelStructure::to_string(void) const
     {
         return "ModelStructure { \n"
-               "outputs          : " + to_str( outputs          ) + "\n" +
-               "derivatives      : " + to_str( derivatives      ) + "\n" +
-               "initialUnknowns  : " + to_str( initialUnknowns  ) + "\n" +
+               "Outputs          : " + to_str( Outputs          ) + "\n" +
+               "Derivatives      : " + to_str( Derivatives      ) + "\n" +
+               "InitialUnknowns  : " + to_str( InitialUnknowns  ) + "\n" +
                "}";
     }
 

@@ -32,6 +32,7 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class DisplayUnit : public IXmlNode
     {
     public:
@@ -41,6 +42,7 @@ namespace ssp4cpp::fmi2
 
         string to_string(void) const;
     };
+
 
     class fmi2Unit : public IXmlNode
     {
@@ -52,13 +54,15 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class UnitDefinitions : public IXmlNode
     {
     public:
-        vector<fmi2Unit> Units;
+        vector<fmi2::fmi2Unit> Units;
 
         string to_string(void) const;
     };
+
 
     class Boolean : public IXmlNode
     {
@@ -68,6 +72,7 @@ namespace ssp4cpp::fmi2
 
         string to_string(void) const;
     };
+
 
     class Integer : public IXmlNode
     {
@@ -81,6 +86,7 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class String : public IXmlNode
     {
     public:
@@ -89,6 +95,7 @@ namespace ssp4cpp::fmi2
 
         string to_string(void) const;
     };
+
 
     class Real : public IXmlNode
     {
@@ -109,6 +116,7 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class Enumeration : public IXmlNode
     {
     public:
@@ -121,6 +129,7 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class SimpleTypeEnumerationItem : public IXmlNode
     {
     public:
@@ -131,14 +140,16 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class SimpleTypeEnumeration : public IXmlNode
     {
     public:
         optional<string> quantity;
-        vector<SimpleTypeEnumerationItem> item;
+        vector<fmi2::SimpleTypeEnumerationItem> item;
 
         string to_string(void) const;
     };
+
 
     class fmi2SimpleType : public IXmlNode
     {
@@ -149,18 +160,20 @@ namespace ssp4cpp::fmi2
         optional<fmi2::Integer> Integer;
         optional<fmi2::Boolean> Boolean;
         optional<fmi2::String> String;
-        optional<SimpleTypeEnumeration> Enumeration;
+        optional<fmi2::SimpleTypeEnumeration> Enumeration;
 
         string to_string(void) const;
     };
+
 
     class TypeDefinitions : public IXmlNode
     {
     public:
-        vector<fmi2SimpleType> SimpleTypes;
+        vector<fmi2::fmi2SimpleType> SimpleTypes;
 
         string to_string(void) const;
     };
+
 
     class Category : public IXmlNode
     {
@@ -171,13 +184,15 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class LogCategories : public IXmlNode
     {
     public:
-        vector<Category> categories;
+        vector<fmi2::Category> Categories;
 
         string to_string(void) const;
     };
+
 
     class fmi2Annotation : public IXmlNode
     {
@@ -187,13 +202,15 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class VendorAnnotations : public IXmlNode
     {
     public:
-        vector<fmi2Annotation> Annotations;
+        vector<fmi2::fmi2Annotation> Annotations;
 
         string to_string(void) const;
     };
+
 
     class DefaultExperiment : public IXmlNode
     {
@@ -205,6 +222,7 @@ namespace ssp4cpp::fmi2
 
         string to_string(void) const;
     };
+
 
     class fmi2ScalarVariable : public IXmlNode
     {
@@ -221,10 +239,11 @@ namespace ssp4cpp::fmi2
         optional<fmi2::Boolean> Boolean;
         optional<fmi2::String> String;
         optional<fmi2::Enumeration> Enumeration;
-        vector<fmi2Annotation> Annotations;
+        vector<fmi2::fmi2Annotation> Annotations;
 
         string to_string(void) const;
     };
+
 
     class unknown : public IXmlNode
     {
@@ -236,23 +255,26 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class ModelStructure : public IXmlNode
     {
     public:
-        vector<unknown> outputs;
-        vector<unknown> derivatives;
-        vector<unknown> initialUnknowns;
+        vector<fmi2::unknown> Outputs;
+        vector<fmi2::unknown> Derivatives;
+        vector<fmi2::unknown> InitialUnknowns;
 
         string to_string(void) const;
     };
+
 
     class ModelVariables : public IXmlNode
     {
     public:
-        vector<fmi2ScalarVariable> ScalarVariable;
+        vector<fmi2::fmi2ScalarVariable> ScalarVariable;
 
         string to_string(void) const;
     };
+
 
     class File : public IXmlNode
     {
@@ -261,6 +283,7 @@ namespace ssp4cpp::fmi2
 
         string to_string(void) const;
     };
+
 
     class ModelExchange : public IXmlNode
     {
@@ -278,6 +301,7 @@ namespace ssp4cpp::fmi2
         string to_string(void) const;
     };
 
+
     class CoSimulation : public IXmlNode
     {
     public:
@@ -292,10 +316,11 @@ namespace ssp4cpp::fmi2
         optional<bool> canGetAndSetFMUstate;
         optional<bool> canSerializeFMUstate;
         optional<bool> providesDirectionalDerivatives;
-        vector<File> SourceFiles;
+        vector<fmi2::File> SourceFiles;
 
         string to_string(void) const;
     };
+
 
     class fmi2ModelDescription : public IXmlNode
     {
@@ -324,5 +349,6 @@ namespace ssp4cpp::fmi2
 
         string to_string(void) const;
     };
+
 
 }

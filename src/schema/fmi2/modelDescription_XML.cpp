@@ -16,16 +16,16 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing BaseUnit" << std::endl;
 
-        obj.kg = get_optional_attribute<int>(node, "kg");
-        obj.m = get_optional_attribute<int>(node, "m");
-        obj.s = get_optional_attribute<int>(node, "s");
-        obj.a = get_optional_attribute<int>(node, "a");
-        obj.k = get_optional_attribute<int>(node, "k");
-        obj.mol = get_optional_attribute<int>(node, "mol");
-        obj.cd = get_optional_attribute<int>(node, "cd");
-        obj.rad = get_optional_attribute<int>(node, "rad");
-        obj.factor = get_optional_attribute<double>(node, "factor");
-        obj.offset = get_optional_attribute<double>(node, "offset");
+        parse_xml(node, obj.kg      , "kg");
+        parse_xml(node, obj.m       , "m");
+        parse_xml(node, obj.s       , "s");
+        parse_xml(node, obj.a       , "a");
+        parse_xml(node, obj.k       , "k");
+        parse_xml(node, obj.mol     , "mol");
+        parse_xml(node, obj.cd      , "cd");
+        parse_xml(node, obj.rad     , "rad");
+        parse_xml(node, obj.factor  , "factor");
+        parse_xml(node, obj.offset  , "offset");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed BaseUnit" << std::endl;
     }
@@ -34,9 +34,9 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing DisplayUnit" << std::endl;
 
-        obj.name = get_attribute<string>(node, "name");
-        obj.factor = get_optional_attribute<double>(node, "factor");
-        obj.offset = get_optional_attribute<double>(node, "offset");
+        parse_xml(node, obj.name    , "name");
+        parse_xml(node, obj.factor  , "factor");
+        parse_xml(node, obj.offset  , "offset");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed DisplayUnit" << std::endl;
     }
@@ -45,9 +45,9 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing fmi2Unit" << std::endl;
 
-        obj.name = get_attribute<string>(node, "name");
-        get_optional_class(node, "BaseUnit", obj.BaseUnit);
-        get_vector(node, "DisplayUnit", obj.DisplayUnit);
+        parse_xml(node, obj.name         , "name");
+        parse_xml(node, obj.BaseUnit     , "BaseUnit");
+        parse_xml(node, obj.DisplayUnit  , "DisplayUnit");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2Unit" << std::endl;
     }
@@ -56,7 +56,7 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing UnitDefinitions" << std::endl;
 
-        get_vector(node, "Units", obj.Units);
+        parse_xml(node, obj.Units  , "Units");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed UnitDefinitions" << std::endl;
     }
@@ -65,8 +65,8 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Boolean" << std::endl;
 
-        obj.declaredType = get_optional_attribute<string>(node, "declaredType");
-        obj.start = get_optional_attribute<string>(node, "start");
+        parse_xml(node, obj.declaredType  , "declaredType");
+        parse_xml(node, obj.start         , "start");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Boolean" << std::endl;
     }
@@ -75,11 +75,11 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Integer" << std::endl;
 
-        obj.declaredType = get_optional_attribute<string>(node, "declaredType");
-        obj.start = get_optional_attribute<string>(node, "start");
-        obj.quantity = get_optional_attribute<string>(node, "quantity");
-        obj.min = get_optional_attribute<int>(node, "min");
-        obj.max = get_optional_attribute<int>(node, "max");
+        parse_xml(node, obj.declaredType  , "declaredType");
+        parse_xml(node, obj.start         , "start");
+        parse_xml(node, obj.quantity      , "quantity");
+        parse_xml(node, obj.min           , "min");
+        parse_xml(node, obj.max           , "max");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Integer" << std::endl;
     }
@@ -88,8 +88,8 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing String" << std::endl;
 
-        obj.declaredType = get_optional_attribute<string>(node, "declaredType");
-        obj.start = get_optional_attribute<string>(node, "start");
+        parse_xml(node, obj.declaredType  , "declaredType");
+        parse_xml(node, obj.start         , "start");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed String" << std::endl;
     }
@@ -98,18 +98,18 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Real" << std::endl;
 
-        obj.declaredType = get_optional_attribute<string>(node, "declaredType");
-        obj.quantity = get_optional_attribute<string>(node, "quantity");
-        obj.unit = get_optional_attribute<string>(node, "unit");
-        obj.displayUnit = get_optional_attribute<string>(node, "displayUnit");
-        obj.relativeQuantity = get_optional_attribute<bool>(node, "relativeQuantity");
-        obj.min = get_optional_attribute<double>(node, "min");
-        obj.max = get_optional_attribute<double>(node, "max");
-        obj.nominal = get_optional_attribute<double>(node, "nominal");
-        obj.unbounded = get_optional_attribute<bool>(node, "unbounded");
-        obj.start = get_optional_attribute<double>(node, "start");
-        obj.derivative = get_optional_attribute<unsigned int>(node, "derivative");
-        obj.reinit = get_optional_attribute<bool>(node, "reinit");
+        parse_xml(node, obj.declaredType      , "declaredType");
+        parse_xml(node, obj.quantity          , "quantity");
+        parse_xml(node, obj.unit              , "unit");
+        parse_xml(node, obj.displayUnit       , "displayUnit");
+        parse_xml(node, obj.relativeQuantity  , "relativeQuantity");
+        parse_xml(node, obj.min               , "min");
+        parse_xml(node, obj.max               , "max");
+        parse_xml(node, obj.nominal           , "nominal");
+        parse_xml(node, obj.unbounded         , "unbounded");
+        parse_xml(node, obj.start             , "start");
+        parse_xml(node, obj.derivative        , "derivative");
+        parse_xml(node, obj.reinit            , "reinit");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Real" << std::endl;
     }
@@ -118,11 +118,11 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Enumeration" << std::endl;
 
-        obj.declaredType = get_attribute<string>(node, "declaredType");
-        obj.quantity = get_optional_attribute<string>(node, "quantity");
-        obj.min = get_optional_attribute<int>(node, "min");
-        obj.max = get_optional_attribute<int>(node, "max");
-        obj.start = get_optional_attribute<int>(node, "start");
+        parse_xml(node, obj.declaredType  , "declaredType");
+        parse_xml(node, obj.quantity      , "quantity");
+        parse_xml(node, obj.min           , "min");
+        parse_xml(node, obj.max           , "max");
+        parse_xml(node, obj.start         , "start");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Enumeration" << std::endl;
     }
@@ -131,9 +131,9 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SimpleTypeEnumerationItem" << std::endl;
 
-        obj.name = get_attribute<string>(node, "name");
-        obj.value = get_attribute<int>(node, "value");
-        obj.description = get_optional_attribute<string>(node, "description");
+        parse_xml(node, obj.name         , "name");
+        parse_xml(node, obj.value        , "value");
+        parse_xml(node, obj.description  , "description");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed SimpleTypeEnumerationItem" << std::endl;
     }
@@ -142,8 +142,8 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SimpleTypeEnumeration" << std::endl;
 
-        obj.quantity = get_optional_attribute<string>(node, "quantity");
-        get_vector(node, "item", obj.item);
+        parse_xml(node, obj.quantity  , "quantity");
+        parse_xml(node, obj.item      , "item");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed SimpleTypeEnumeration" << std::endl;
     }
@@ -152,13 +152,13 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing fmi2SimpleType" << std::endl;
 
-        obj.name = get_attribute<string>(node, "name");
-        obj.description = get_optional_attribute<string>(node, "description");
-        get_optional_class(node, "Real", obj.Real);
-        get_optional_class(node, "Integer", obj.Integer);
-        get_optional_class(node, "Boolean", obj.Boolean);
-        get_optional_class(node, "String", obj.String);
-        get_optional_class(node, "Enumeration", obj.Enumeration);
+        parse_xml(node, obj.name         , "name");
+        parse_xml(node, obj.description  , "description");
+        parse_xml(node, obj.Real         , "Real");
+        parse_xml(node, obj.Integer      , "Integer");
+        parse_xml(node, obj.Boolean      , "Boolean");
+        parse_xml(node, obj.String       , "String");
+        parse_xml(node, obj.Enumeration  , "Enumeration");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2SimpleType" << std::endl;
     }
@@ -167,7 +167,7 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TypeDefinitions" << std::endl;
 
-        get_vector(node, "SimpleTypes", obj.SimpleTypes);
+        parse_xml(node, obj.SimpleTypes  , "SimpleTypes");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TypeDefinitions" << std::endl;
     }
@@ -176,8 +176,8 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Category" << std::endl;
 
-        obj.name = get_attribute<string>(node, "name");
-        obj.description = get_optional_attribute<string>(node, "description");
+        parse_xml(node, obj.name         , "name");
+        parse_xml(node, obj.description  , "description");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Category" << std::endl;
     }
@@ -186,7 +186,7 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing LogCategories" << std::endl;
 
-        get_vector(node, "categories", obj.categories);
+        parse_xml(node, obj.Categories  , "Category");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed LogCategories" << std::endl;
     }
@@ -195,7 +195,7 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing fmi2Annotation" << std::endl;
 
-        obj.annotation = get_attribute<string>(node, "annotation");
+        parse_xml(node, obj.annotation  , "annotation");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2Annotation" << std::endl;
     }
@@ -204,7 +204,7 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing VendorAnnotations" << std::endl;
 
-        get_vector(node, "Annotations", obj.Annotations);
+        parse_xml(node, obj.Annotations  , "Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed VendorAnnotations" << std::endl;
     }
@@ -213,10 +213,10 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing DefaultExperiment" << std::endl;
 
-        obj.startTime = get_optional_attribute<double>(node, "startTime");
-        obj.stopTime = get_optional_attribute<double>(node, "stopTime");
-        obj.tolerance = get_optional_attribute<double>(node, "tolerance");
-        obj.stepSize = get_optional_attribute<double>(node, "stepSize");
+        parse_xml(node, obj.startTime  , "startTime");
+        parse_xml(node, obj.stopTime   , "stopTime");
+        parse_xml(node, obj.tolerance  , "tolerance");
+        parse_xml(node, obj.stepSize   , "stepSize");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed DefaultExperiment" << std::endl;
     }
@@ -225,19 +225,19 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing fmi2ScalarVariable" << std::endl;
 
-        obj.name = get_attribute<string>(node, "name");
-        obj.valueReference = get_optional_attribute<unsigned int>(node, "valueReference");
-        obj.description = get_optional_attribute<string>(node, "description");
-        obj.causality = get_optional_attribute<string>(node, "causality");
-        obj.variability = get_optional_attribute<string>(node, "variability");
-        obj.initial = get_optional_attribute<string>(node, "initial");
-        obj.canHandleMultipleSetPerTimeInstant = get_optional_attribute<bool>(node, "canHandleMultipleSetPerTimeInstant");
-        get_optional_class(node, "Real", obj.Real);
-        get_optional_class(node, "Integer", obj.Integer);
-        get_optional_class(node, "Boolean", obj.Boolean);
-        get_optional_class(node, "String", obj.String);
-        get_optional_class(node, "Enumeration", obj.Enumeration);
-        get_vector(node, "Annotations", obj.Annotations);
+        parse_xml(node, obj.name                                , "name");
+        parse_xml(node, obj.valueReference                      , "valueReference");
+        parse_xml(node, obj.description                         , "description");
+        parse_xml(node, obj.causality                           , "causality");
+        parse_xml(node, obj.variability                         , "variability");
+        parse_xml(node, obj.initial                             , "initial");
+        parse_xml(node, obj.canHandleMultipleSetPerTimeInstant  , "canHandleMultipleSetPerTimeInstant");
+        parse_xml(node, obj.Real                                , "Real");
+        parse_xml(node, obj.Integer                             , "Integer");
+        parse_xml(node, obj.Boolean                             , "Boolean");
+        parse_xml(node, obj.String                              , "String");
+        parse_xml(node, obj.Enumeration                         , "Enumeration");
+        parse_xml(node, obj.Annotations                         , "Annotations");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2ScalarVariable" << std::endl;
     }
@@ -246,9 +246,9 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing unknown" << std::endl;
 
-        obj.index = get_attribute<int>(node, "index");
-        obj.dependencies = get_attribute<string>(node, "dependencies");
-        obj.dependenciesKind = get_attribute<string>(node, "dependenciesKind");
+        parse_xml(node, obj.index             , "index");
+        parse_xml(node, obj.dependencies      , "dependencies");
+        parse_xml(node, obj.dependenciesKind  , "dependenciesKind");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed unknown" << std::endl;
     }
@@ -257,9 +257,9 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing ModelStructure" << std::endl;
 
-        get_vector(node, "outputs", obj.outputs);
-        get_vector(node, "derivatives", obj.derivatives);
-        get_vector(node, "initialUnknowns", obj.initialUnknowns);
+        parse_xml(node, obj.Outputs          , "Outputs");
+        parse_xml(node, obj.Derivatives      , "Derivatives");
+        parse_xml(node, obj.InitialUnknowns  , "InitialUnknowns");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed ModelStructure" << std::endl;
     }
@@ -268,7 +268,7 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing ModelVariables" << std::endl;
 
-        get_vector(node, "ScalarVariable", obj.ScalarVariable);
+        parse_xml(node, obj.ScalarVariable  , "ScalarVariable");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed ModelVariables" << std::endl;
     }
@@ -277,7 +277,7 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing File" << std::endl;
 
-        obj.name = get_attribute<string>(node, "name");
+        parse_xml(node, obj.name  , "name");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed File" << std::endl;
     }
@@ -286,15 +286,15 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing ModelExchange" << std::endl;
 
-        obj.modelIdentifier = get_attribute<string>(node, "modelIdentifier");
-        obj.needsExecutionTool = get_optional_attribute<bool>(node, "needsExecutionTool");
-        obj.completedIntegratorStepNotNeeded = get_optional_attribute<bool>(node, "completedIntegratorStepNotNeeded");
-        obj.canBeInstantiatedOnlyOncePerProcess = get_optional_attribute<bool>(node, "canBeInstantiatedOnlyOncePerProcess");
-        obj.canNotUseMemoryManagementFunctions = get_optional_attribute<bool>(node, "canNotUseMemoryManagementFunctions");
-        obj.canGetAndSetFMUstate = get_optional_attribute<bool>(node, "canGetAndSetFMUstate");
-        obj.canSerializeFMUstate = get_optional_attribute<bool>(node, "canSerializeFMUstate");
-        obj.providesDirectionalDerivatives = get_optional_attribute<bool>(node, "providesDirectionalDerivatives");
-        get_vector(node, "SourceFiles", obj.SourceFiles);
+        parse_xml(node, obj.modelIdentifier                      , "modelIdentifier");
+        parse_xml(node, obj.needsExecutionTool                   , "needsExecutionTool");
+        parse_xml(node, obj.completedIntegratorStepNotNeeded     , "completedIntegratorStepNotNeeded");
+        parse_xml(node, obj.canBeInstantiatedOnlyOncePerProcess  , "canBeInstantiatedOnlyOncePerProcess");
+        parse_xml(node, obj.canNotUseMemoryManagementFunctions   , "canNotUseMemoryManagementFunctions");
+        parse_xml(node, obj.canGetAndSetFMUstate                 , "canGetAndSetFMUstate");
+        parse_xml(node, obj.canSerializeFMUstate                 , "canSerializeFMUstate");
+        parse_xml(node, obj.providesDirectionalDerivatives       , "providesDirectionalDerivatives");
+        parse_xml(node, obj.SourceFiles                          , "SourceFiles");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed ModelExchange" << std::endl;
     }
@@ -303,18 +303,18 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing CoSimulation" << std::endl;
 
-        obj.modelIdentifier = get_attribute<string>(node, "modelIdentifier");
-        obj.needsExecutionTool = get_optional_attribute<bool>(node, "needsExecutionTool");
-        obj.canHandleVariableCommunicationStepSize = get_optional_attribute<bool>(node, "canHandleVariableCommunicationStepSize");
-        obj.canInterpolateInputs = get_optional_attribute<bool>(node, "canInterpolateInputs");
-        obj.maxOutputDerivativeOrder = get_optional_attribute<bool>(node, "maxOutputDerivativeOrder");
-        obj.canRunAsynchronuously = get_optional_attribute<bool>(node, "canRunAsynchronuously");
-        obj.canBeInstantiatedOnlyOncePerProcess = get_optional_attribute<bool>(node, "canBeInstantiatedOnlyOncePerProcess");
-        obj.canNotUseMemoryManagementFunctions = get_optional_attribute<bool>(node, "canNotUseMemoryManagementFunctions");
-        obj.canGetAndSetFMUstate = get_optional_attribute<bool>(node, "canGetAndSetFMUstate");
-        obj.canSerializeFMUstate = get_optional_attribute<bool>(node, "canSerializeFMUstate");
-        obj.providesDirectionalDerivatives = get_optional_attribute<bool>(node, "providesDirectionalDerivatives");
-        get_vector(node, "SourceFiles", obj.SourceFiles);
+        parse_xml(node, obj.modelIdentifier                         , "modelIdentifier");
+        parse_xml(node, obj.needsExecutionTool                      , "needsExecutionTool");
+        parse_xml(node, obj.canHandleVariableCommunicationStepSize  , "canHandleVariableCommunicationStepSize");
+        parse_xml(node, obj.canInterpolateInputs                    , "canInterpolateInputs");
+        parse_xml(node, obj.maxOutputDerivativeOrder                , "maxOutputDerivativeOrder");
+        parse_xml(node, obj.canRunAsynchronuously                   , "canRunAsynchronuously");
+        parse_xml(node, obj.canBeInstantiatedOnlyOncePerProcess     , "canBeInstantiatedOnlyOncePerProcess");
+        parse_xml(node, obj.canNotUseMemoryManagementFunctions      , "canNotUseMemoryManagementFunctions");
+        parse_xml(node, obj.canGetAndSetFMUstate                    , "canGetAndSetFMUstate");
+        parse_xml(node, obj.canSerializeFMUstate                    , "canSerializeFMUstate");
+        parse_xml(node, obj.providesDirectionalDerivatives          , "providesDirectionalDerivatives");
+        parse_xml(node, obj.SourceFiles                             , "SourceFiles");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed CoSimulation" << std::endl;
     }
@@ -323,29 +323,30 @@ namespace ssp4cpp::fmi2
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing fmi2ModelDescription" << std::endl;
 
-        obj.fmiVersion = get_attribute<string>(node, "fmiVersion");
-        obj.modelName = get_attribute<string>(node, "modelName");
-        obj.guid = get_attribute<string>(node, "guid");
-        obj.description = get_optional_attribute<string>(node, "description");
-        obj.author = get_optional_attribute<string>(node, "author");
-        obj.version = get_optional_attribute<string>(node, "version");
-        obj.copyright = get_optional_attribute<string>(node, "copyright");
-        obj.license = get_optional_attribute<string>(node, "license");
-        obj.generationTool = get_optional_attribute<string>(node, "generationTool");
-        obj.generationDateAndTime = get_optional_attribute<string>(node, "generationDateAndTime");
-        obj.variableNamingConvention = get_optional_attribute<string>(node, "variableNamingConvention");
-        obj.numberOfEventIndicators = get_optional_attribute<string>(node, "numberOfEventIndicators");
-        get_optional_class(node, "ModelExchange", obj.ModelExchange);
-        get_optional_class(node, "CoSimulation", obj.CoSimulation);
-        get_optional_class(node, "UnitDefinitions", obj.UnitDefinitions);
-        get_optional_class(node, "TypeDefinitions", obj.TypeDefinitions);
-        get_optional_class(node, "LogCategories", obj.LogCategories);
-        get_optional_class(node, "DefaultExperiment", obj.DefaultExperiment);
-        get_optional_class(node, "VendorAnnotations", obj.VendorAnnotations);
-        from_xml(node.child("ModelVariables"), obj.ModelVariables);
-        from_xml(node.child("ModelStructure"), obj.ModelStructure);
+        parse_xml(node, obj.fmiVersion                , "fmiVersion");
+        parse_xml(node, obj.modelName                 , "modelName");
+        parse_xml(node, obj.guid                      , "guid");
+        parse_xml(node, obj.description               , "description");
+        parse_xml(node, obj.author                    , "author");
+        parse_xml(node, obj.version                   , "version");
+        parse_xml(node, obj.copyright                 , "copyright");
+        parse_xml(node, obj.license                   , "license");
+        parse_xml(node, obj.generationTool            , "generationTool");
+        parse_xml(node, obj.generationDateAndTime     , "generationDateAndTime");
+        parse_xml(node, obj.variableNamingConvention  , "variableNamingConvention");
+        parse_xml(node, obj.numberOfEventIndicators   , "numberOfEventIndicators");
+        parse_xml(node, obj.ModelExchange             , "ModelExchange");
+        parse_xml(node, obj.CoSimulation              , "CoSimulation");
+        parse_xml(node, obj.UnitDefinitions           , "UnitDefinitions");
+        parse_xml(node, obj.TypeDefinitions           , "TypeDefinitions");
+        parse_xml(node, obj.LogCategories             , "LogCategories");
+        parse_xml(node, obj.DefaultExperiment         , "DefaultExperiment");
+        parse_xml(node, obj.VendorAnnotations         , "VendorAnnotations");
+        parse_xml(node, obj.ModelVariables            , "ModelVariables");
+        parse_xml(node, obj.ModelStructure            , "ModelStructure");
 
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2ModelDescription" << std::endl;
     }
 
 }
+
