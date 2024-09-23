@@ -47,8 +47,5 @@ def main():
     export("xml_parser/resource/ssc.toml", "ssc")
     export("xml_parser/resource/fmi2_modelDescription.toml", "fmi2_md")
 
-
-
-
-
-main()
+if __name__ == "__main__":
+    main()

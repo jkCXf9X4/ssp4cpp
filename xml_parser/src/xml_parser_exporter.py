@@ -18,12 +18,16 @@ class XmlParserExporter:
 
     def generate_variable_declaration(self, variable : VariableNode):
 
-        name = variable.name if not variable.namespace else f"{variable.namespace}:{variable.name}"
+        if variable.xml_tag:
+            name = variable.xml_tag if not variable.namespace else f"{variable.namespace}:{variable.xml_tag}"
+        else:
+            name = variable.name if not variable.namespace else f"{variable.namespace}:{variable.name}"
 
+        # list
         if variable.list:
             return f"get_vector(node, \"{name}\", obj.{variable.name});"
 
-    
+        # primitive
         if variable.is_primitive:
             if variable.optional:
                 return f'obj.{variable.name} = get_optional_attribute<{variable.type}>(node, "{variable.name}");'

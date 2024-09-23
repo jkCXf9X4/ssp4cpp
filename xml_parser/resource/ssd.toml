@@ -12,19 +12,30 @@
 [ConnectionGeometry]
 # Empty struct, may have future elements, but nothing is currently defined.
 
+[SignalDictionary]
+# Empty struct, may have future elements, but nothing is currently defined.
+
 [TSignalDictionaries]
+SignalDictionaries = {type = "ssd::SignalDictionary", list = true, namespace="ssd", xml_tag="SignalDictionary"}
+
+[ParameterBinding]
 # Empty struct, may have future elements, but nothing is currently defined.
 
 [TParameterBindings]
+ParameterBindings = {type = "ssd::ParameterBinding", list = true, namespace="ssd", xml_tag="ParameterBinding"}
 # Empty struct, may have future elements, but nothing is currently defined.
 
 [GraphicalElements]
 # Empty struct, may have future elements, but nothing is currently defined.
 
 [TDefaultExperiment]
-# Empty struct, may have future elements, but nothing is currently defined.
+startTime = {type = "double", optional=true}
+stopTime = {type = "double", optional=true}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [Connection]
+id = {type = "string", optional=true}
+description = {type = "string", optional=true}
 startElement = {type = "string", optional=true}
 startConnector = {type = "string"}
 endElement = {type = "string", optional=true}
@@ -38,7 +49,7 @@ ConnectionGeometry = {type = "ssd::ConnectionGeometry", optional=true, namespace
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [Connections]
-Connection = {type = "ssd::Connection", list = true, namespace="ssd"}
+Connections = {type = "ssd::Connection", list = true, namespace="ssd", xml_tag="Connection"}
 
 [Connector]
 id = {type = "string", optional=true}
@@ -55,7 +66,7 @@ ConnectorGeometry = {type = "ssd::ConnectorGeometry", optional=true, namespace="
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [TConnectors]
-Connector = {type = "ssd::Connector", list = true, namespace="ssd"}
+Connectors = {type = "ssd::Connector", list = true, namespace="ssd", xml_tag="Connector"}
 
 [TComponent]
 id = {type = "string", optional=true}
@@ -65,22 +76,24 @@ Connectors = {type = "ssd::TConnectors", optional=true, namespace="ssd"}
 ElementGeometry = {type = "ssd::ElementGeometry", optional=true, namespace="ssd"}
 ParameterBindings = {type = "ssd::TParameterBindings", optional=true, namespace="ssd"}
 type = {type = "string", optional=true}
-#component_type = {type = "ComponentType", optional=true}
 source = {type = "string"}
 implementation = {type = "string", optional=true}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [TSignalDictionaryReference]
-dictionary = {type = "string"}
+id = {type = "string", optional=true}
+description = {type = "string", optional=true}
+name = {type = "string", optional=true}
 Connectors = {type = "ssd::TConnectors", optional=true, namespace="ssd"}
 ElementGeometry = {type = "ssd::ElementGeometry", optional=true, namespace="ssd"}
 ParameterBindings = {type = "ssd::TParameterBindings", optional=true, namespace="ssd"}
+dictionary = {type = "string"}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [Elements]
-Component = {type = "ssd::TComponent", list = true, namespace="ssd"}
-SignalDictionaryReference = {type = "ssd::TSignalDictionaryReference", list = true, namespace="ssd"}
-System = {type = "ssd::TSystem", list = true, namespace="ssd"}
+Components = {type = "ssd::TComponent", list = true, namespace="ssd", xml_tag="Component"}
+SignalDictionaryReferences = {type = "ssd::TSignalDictionaryReference", list = true, namespace="ssd", xml_tag="SignalDictionaryReference"}
+Systems = {type = "ssd::TSystem", list = true, namespace="ssd", xml_tag="System"}
 
 [TSystem]
 id = {type = "string", optional=true}

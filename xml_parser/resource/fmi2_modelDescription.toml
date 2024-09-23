@@ -1,4 +1,4 @@
-# BaseUnit structure
+
 [BaseUnit]
 kg = { type = "int", optional = true }
 m = { type = "int", optional = true }
@@ -11,28 +11,28 @@ rad = { type = "int", optional = true }
 factor = { type = "double", optional = true }
 offset = { type = "double", optional = true }
 
-# DisplayUnit structure
+
 [DisplayUnit]
 name = { type = "string" }
 factor = { type = "double", optional = true }
 offset = { type = "double", optional = true }
 
-# fmi2Unit structure
+
 [fmi2Unit]
 name = { type = "string" }
 BaseUnit = { type = "fmi2::BaseUnit", optional = true }
 DisplayUnit = { type = "fmi2::DisplayUnit", list = true }
 
-# UnitDefinitions structure
-[UnitDefinitions]
-Units = { type = "fmi2Unit", list = true }
 
-# Boolean structure
+[UnitDefinitions]
+Units = { type = "fmi2::fmi2Unit", list = true }
+
+
 [Boolean]
 declaredType = { type = "string", optional = true }
 start = { type = "string", optional = true }
 
-# Integer structure
+
 [Integer]
 declaredType = { type = "string", optional = true }
 start = { type = "string", optional = true }
@@ -40,12 +40,12 @@ quantity = { type = "string", optional = true }
 min = { type = "int", optional = true }
 max = { type = "int", optional = true }
 
-# String structure
+
 [String]
 declaredType = { type = "string", optional = true }
 start = { type = "string", optional = true }
 
-# Real structure
+
 [Real]
 declaredType = { type = "string", optional = true }
 quantity = { type = "string", optional = true }
@@ -60,7 +60,7 @@ start = { type = "double", optional = true }
 derivative = { type = "unsigned int", optional = true }
 reinit = { type = "bool", optional = true }
 
-# Enumeration structure
+
 [Enumeration]
 declaredType = { type = "string" }
 quantity = { type = "string", optional = true }
@@ -68,18 +68,18 @@ min = { type = "int", optional = true }
 max = { type = "int", optional = true }
 start = { type = "int", optional = true }
 
-# SimpleTypeEnumerationItem structure
+
 [SimpleTypeEnumerationItem]
 name = { type = "string" }
 value = { type = "int" }
 description = { type = "string", optional = true }
 
-# SimpleTypeEnumeration structure
+
 [SimpleTypeEnumeration]
 quantity = { type = "string", optional = true }
-item = { type = "SimpleTypeEnumerationItem", list = true }
+item = { type = "fmi2::SimpleTypeEnumerationItem", list = true }
 
-# fmi2SimpleType structure
+
 [fmi2SimpleType]
 name = { type = "string" }
 description = { type = "string", optional = true }
@@ -87,37 +87,37 @@ Real = { type = "fmi2::Real", optional = true }
 Integer = { type = "fmi2::Integer", optional = true }
 Boolean = { type = "fmi2::Boolean", optional = true }
 String = { type = "fmi2::String", optional = true }
-Enumeration = { type = "SimpleTypeEnumeration", optional = true }
+Enumeration = { type = "fmi2::SimpleTypeEnumeration", optional = true }
 
-# TypeDefinitions structure
+
 [TypeDefinitions]
-SimpleTypes = { type = "fmi2SimpleType", list = true }
+SimpleTypes = { type = "fmi2::fmi2SimpleType", list = true }
 
-# Category structure
+
 [Category]
 name = { type = "string" }
 description = { type = "string", optional = true }
 
-# LogCategories structure
-[LogCategories]
-categories = { type = "Category", list = true }
 
-# fmi2Annotation structure
+[LogCategories]
+Categories = { type = "fmi2::Category", list = true, xml_tag="Category"}
+
+
 [fmi2Annotation]
 annotation = { type = "string" }
 
-# VendorAnnotations structure
-[VendorAnnotations]
-Annotations = { type = "fmi2Annotation", list = true }
 
-# DefaultExperiment structure
+[VendorAnnotations]
+Annotations = { type = "fmi2::fmi2Annotation", list = true }
+
+
 [DefaultExperiment]
 startTime = { type = "double", optional = true }
 stopTime = { type = "double", optional = true }
 tolerance = { type = "double", optional = true }
 stepSize = { type = "double", optional = true }
 
-# fmi2ScalarVariable structure
+
 [fmi2ScalarVariable]
 name = { type = "string" }
 valueReference = { type = "unsigned int", optional = true }
@@ -131,29 +131,29 @@ Integer = { type = "fmi2::Integer", optional = true }
 Boolean = { type = "fmi2::Boolean", optional = true }
 String = { type = "fmi2::String", optional = true }
 Enumeration = { type = "fmi2::Enumeration", optional = true }
-Annotations = { type = "fmi2Annotation", list = true }
+Annotations = { type = "fmi2::fmi2Annotation", list = true }
 
-# unknown structure
+
 [unknown]
 index = { type = "int" }
 dependencies = { type = "string" }
 dependenciesKind = { type = "string" }
 
-# ModelStructure structure
+
 [ModelStructure]
-outputs = { type = "unknown", list = true }
-derivatives = { type = "unknown", list = true }
-initialUnknowns = { type = "unknown", list = true }
+Outputs = { type = "fmi2::unknown", list = true }
+Derivatives = { type = "fmi2::unknown", list = true }
+InitialUnknowns = { type = "fmi2::unknown", list = true }
 
-# ModelVariables structure
+
 [ModelVariables]
-ScalarVariable = { type = "fmi2ScalarVariable", list = true }
+ScalarVariable = { type = "fmi2::fmi2ScalarVariable", list = true }
 
-# File structure
+
 [File]
 name = { type = "string" }
 
-# ModelExchange structure
+
 [ModelExchange]
 modelIdentifier = { type = "string" }
 needsExecutionTool = { type = "bool", optional = true }
@@ -165,7 +165,7 @@ canSerializeFMUstate = { type = "bool", optional = true }
 providesDirectionalDerivatives = { type = "bool", optional = true }
 SourceFiles = { type = "File", list = true }
 
-# CoSimulation structure
+
 [CoSimulation]
 modelIdentifier = { type = "string" }
 needsExecutionTool = { type = "bool", optional = true }
@@ -178,9 +178,9 @@ canNotUseMemoryManagementFunctions = { type = "bool", optional = true }
 canGetAndSetFMUstate = { type = "bool", optional = true }
 canSerializeFMUstate = { type = "bool", optional = true }
 providesDirectionalDerivatives = { type = "bool", optional = true }
-SourceFiles = { type = "File", list = true }
+SourceFiles = { type = "fmi2::File", list = true }
 
-# fmi2ModelDescription structure
+
 [fmi2ModelDescription]
 fmiVersion = { type = "string" }
 modelName = { type = "string" }

@@ -4,6 +4,9 @@
 #include <vector>
 #include <optional>
 
+#include <type_traits>
+
+
 #include "IXmlNode.hpp"
 
 
@@ -34,11 +37,19 @@ std::string to_str(const T &obj)
     {
         return obj.to_string();
     }
-    else 
+    else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
     {
-        // some enumns have static to_string functions
+        return obj.to_string();
+    }
+    else if constexpr (std::is_enum_v<T>)
+    {
+        // some enums have static to_string functions
         // hope for the best!
         return to_string(obj);
+    }
+    else 
+    {
+        //ERROR
     }
 }
 

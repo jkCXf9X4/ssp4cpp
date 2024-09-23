@@ -10,13 +10,13 @@ namespace ssp4cpp::fmi2
 {
     enum class Causality
     {
-        Parameter,
-        CalculatedParameter,
-        Input,
-        Output,
-        Local,
-        Independent,
-        Unknown
+        parameter,
+        calculatedParameter,
+        input,
+        output,
+        local,
+        independent,
+        unknown
     };
     string to_string(const Causality &obj);
 
@@ -58,4 +58,21 @@ namespace ssp4cpp::fmi2
     string to_string(const DependenciesKind &obj);
 
     Initial dependenciesKind_from_string(const string &str);
+
+    enum class LogCategory
+    {
+        logEvents,
+        logSingularLinearSystems,
+        logNonlinearSystems,
+        logDynamicStateSelection,
+        logStatusWarning,
+        logStatusDiscard,
+        logStatusError,
+        logStatusFatal,
+        logStatusPending,
+        logAll
+    };
+
+    string to_string(const LogCategory &obj);
+
 }

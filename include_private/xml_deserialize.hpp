@@ -40,11 +40,11 @@ namespace ssp4cpp::xml
         {
             return node.attribute(name.c_str()).as_string();
         }
-        else if constexpr (is_same_v<T, ssp4cpp::ssp1::ssd::ComponentType>)
-        {
-            auto s = node.attribute(name.c_str()).as_string();
-            return ssp4cpp::ssp1::ssd::componentType_from_string(s);
-        }
+        // else if constexpr (is_same_v<T, ssp4cpp::ssp1::ssd::ComponentType>)
+        // {
+        //     auto s = node.attribute(name.c_str()).as_string();
+        //     return ssp4cpp::ssp1::ssd::componentType_from_string(s);
+        // }
         else
         {
             throw runtime_error("Unable to parse attribute: " + name);
@@ -80,5 +80,31 @@ namespace ssp4cpp::xml
             from_xml(child, t);
             list.push_back(t);
         }
+    }
+
+    template <typename T>
+    void parse_xml(const xml_node &node, T &obj, const string &name)
+    {
+        if constexpr (is_base_of_v<IXmlNode, T>) // class
+        {
+
+        }
+        else if constexpr (is_same_v<T, vector<T>>) // vector
+        {
+
+        }
+        else if constexpr (is_same_v<T, optional<T>>) // optional
+        {
+
+        }
+        else if constexpr (std::is_enum_v<T>)
+        {
+
+        }
+        else // int, bool, double, string
+        {
+            throw runtime_error("Unable to parse attribute: " + name);
+        }
+
     }
 }

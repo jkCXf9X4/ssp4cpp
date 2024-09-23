@@ -4,7 +4,7 @@ from nodes import ClassNode, VariableNode
 
 from misc import indent_strings
 
-default_values = {"string": "\"null\"", "int": "0", "unsigned int": "0", "double": "0.0", "bool": "false"}
+
 
 class ClassExporter:
 
@@ -56,5 +56,6 @@ public:
 
     string to_string(void) const;
 }};
+
 """
         return class_template

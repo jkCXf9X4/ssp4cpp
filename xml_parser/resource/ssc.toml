@@ -1,33 +1,49 @@
 [Annotation]
-annotation_type = {type = "string", optional=true}
+type = {type = "string"}
 any = {type = "string", optional=true}
 
 [TAnnotations]
-list = {type = "Annotation", list = true}
+Annotations = {type = "Annotation", list = true, xml_tag="Annotation"}
+
+[LinearTransformation]
+factor = {type = "double", optional=true}
+offset = {type = "double", optional=true}
 
 [BooleanMapEntry]
 source = {type = "bool"}
 target = {type = "bool"}
 
 [BooleanMappingTransformation]
-list = {type = "BooleanMapEntry", list = true}
+MapEntrys = {type = "ssc::BooleanMapEntry", list = true, namespace="ssc", xml_tag="MapEntry"}
 
 [IntegerMapEntry]
 source = {type = "int"}
 target = {type = "int"}
 
 [IntegerMappingTransformation]
-list = {type = "IntegerMapEntry", list = true}
+MapEntrys = {type = "ssc::IntegerMapEntry", list = true, namespace="ssc", xml_tag="MapEntry"}
 
 [EnumerationMapEntry]
 source = {type = "string"}
 target = {type = "string"}
 
 [EnumerationMappingTransformation]
-list = {type = "EnumerationMapEntry", list = true}
+MapEntrys = {type = "ssc::EnumerationMapEntry", list = true, namespace="ssc", xml_tag="MapEntry"}
+
+[Item]
+name = {type = "string"}
+value = {type = "int"}
+
+[TEnumeration]
+id = {type = "string", optional=true}
+description = {type = "string", optional=true}
+name = {type = "string"}
+Item = {type = "Item", list=true, namespace="ssc"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
+
 
 [TEnumerations]
-# No fields defined, empty struct
+Enumerations = {type = "ssc::TEnumeration", list = true, namespace="ssc", xml_tag="TEnumeration"}
 
 [BaseUnit]
 kg = {type = "int", optional=true}
@@ -41,12 +57,15 @@ rad = {type = "int", optional=true}
 factor = {type = "double", optional=true}
 offset = {type = "double", optional=true}
 
-[TUnits]
+[TUnit]
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string"}
-baseUnit = {type = "BaseUnit"}
-annotations = {type = "TAnnotations", optional=true}
+BaseUnit = {type = "ssc::BaseUnit", namespace="ssc"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
+
+[TUnits]
+Units = {type = "ssc::TUnit", list = true, namespace="ssc", xml_tag="Unit"}
 
 [GTypeReal]
 unit = {type = "string", optional=true}
@@ -64,8 +83,6 @@ unit = {type = "string", optional=true}
 name = {type = "string", optional=true}
 
 [GTypeBinary]
-mime_type = {type = "string", optional=true}
+mime_type = {type = "string", optional=true, , xml_tag="mime-type"}
 
-[LinearTransformation]
-factor = {type = "double", optional=true}
-offset = {type = "double", optional=true}
+
