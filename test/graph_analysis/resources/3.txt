@@ -1,0 +1,255 @@
+fmi2ModelDescription { 
+fmiVersion                : 2.0
+modelName                 : atmos
+guid                      : {870fb078-b6e2-4034-90ef-1ef1fb7d227b}
+description               : null
+author                    : null
+version                   : null
+copyright                 : null
+license                   : null
+generationTool            : Dymola Version 2020 (64-bit), 2019-04-10
+generationDateAndTime     : 2021-04-07T10:56:40Z
+variableNamingConvention  : structured
+numberOfEventIndicators   : 2
+ModelExchange             : null
+CoSimulation              : CoSimulation { 
+modelIdentifier                         : atmos
+needsExecutionTool                      : null
+canHandleVariableCommunicationStepSize  : true
+canInterpolateInputs                    : true
+maxOutputDerivativeOrder                : true
+canRunAsynchronuously                   : null
+canBeInstantiatedOnlyOncePerProcess     : null
+canNotUseMemoryManagementFunctions      : null
+canGetAndSetFMUstate                    : true
+canSerializeFMUstate                    : true
+providesDirectionalDerivatives          : null
+SourceFiles                             : null
+}
+UnitDefinitions           : null
+TypeDefinitions           : TypeDefinitions { 
+SimpleTypes  : {
+fmi2SimpleType { 
+name         : Modelica.Blocks.Interfaces.RealOutput
+description  : null
+Real         : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+fmi2SimpleType { 
+name         : ModelicaFluidLite.Common.RealIn
+description  : null
+Real         : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+}
+
+}
+LogCategories             : null
+DefaultExperiment         : DefaultExperiment { 
+startTime  : 0.000000
+stopTime   : 1.000000
+tolerance  : 0.000100
+stepSize   : null
+}
+VendorAnnotations         : null
+ModelVariables            : ModelVariables { 
+ScalarVariable  : {
+fmi2ScalarVariable { 
+name                                : Tamb
+valueReference                      : 335544320
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealOutput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Pamb
+valueReference                      : 335544321
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealOutput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Alt
+valueReference                      : 352321536
+description                         : Altitude
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : ModelicaFluidLite.Common.RealIn
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Ma
+valueReference                      : 352321537
+description                         : Mach number
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : ModelicaFluidLite.Common.RealIn
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : DTisa
+valueReference                      : 16777216
+description                         : null
+causality                           : parameter
+variability                         : tunable
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+}
+
+}
+ModelStructure            : ModelStructure { 
+Outputs          : Outputs { 
+Outputs  : {
+}
+
+}
+Derivatives      : null
+InitialUnknowns  : InitialUnknowns { 
+InitialUnknowns  : {
+}
+
+}
+}
+}

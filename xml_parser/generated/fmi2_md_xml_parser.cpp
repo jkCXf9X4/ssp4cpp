@@ -1,15 +1,3 @@
-#include <boost/log/trivial.hpp>
-
-#include "modelDescription_XML.hpp"
-
-#include "xml_deserialize.hpp"
-
-using namespace std;
-using namespace pugi;
-using namespace ssp4cpp::xml;
-
-
-namespace ssp4cpp::fmi2
 {
 
     void from_xml(const xml_node &node, BaseUnit &obj)

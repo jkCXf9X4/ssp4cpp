@@ -11,6 +11,9 @@
 #include <optional>
 #include <random>
 
+#include <chrono>
+#include <thread>
+
 #include <boost/log/trivial.hpp>
 
 #include "zip.hpp"
@@ -27,22 +30,21 @@ namespace ssp4cpp::zip_ns
         const char charset[] = "0123456789"
                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                "abcdefghijklmnopqrstuvwxyz";
-        const size_t max_index = (sizeof(charset) - 1);
+        const size_t max_index = (sizeof(charset) - 2);
 
         std::random_device rd;        // Obtain a random number from hardware
         std::mt19937 generator(rd()); // Seed the generator
         std::uniform_int_distribution<> distribution(0, max_index);
 
-        std::stringstream ss;
+        std::string result = "";
         for (size_t i = 0; i < length; ++i)
         {
-            ss << charset[distribution(generator)];
+            result = result + charset[distribution(generator)];
         }
-
-        return ss.str();
+        return result;
     }
 
-    bool unzip(fs::path &file, const fs::path &tmp_path)
+    bool unzip(fs::path file, const fs::path tmp_path)
     {
         BOOST_LOG_TRIVIAL(trace) << "Unzipping " << file << std::endl;
 
@@ -82,20 +84,20 @@ namespace ssp4cpp::zip_ns
                     }
                     zf = zip_fopen_index(za, i, 0);
 
-                    std::ofstream file;
-                    std::cout << "newFile: " << newFile << std::endl;
-                    file.open(newFile, std::ios::out | std::ios::binary);
+                    std::ofstream file_;
+                    BOOST_LOG_TRIVIAL(trace) << "newFile: " << newFile << std::endl;
+                    file_.open(newFile, std::ios::out | std::ios::binary);
 
                     sum = 0;
                     while (sum != sb.size)
                     {
                         len = zip_fread(zf, contents.data(), bufferSize);
-                        file.write(contents.data(), len);
+                        file_.write(contents.data(), len);
                         sum += len;
                     }
 
-                    file.flush();
-                    file.close();
+                    file_.flush();
+                    file_.close();
 
                     zip_fclose(zf);
                 }
@@ -108,30 +110,39 @@ namespace ssp4cpp::zip_ns
         return true;
     }
 
-    fs::path create_temp_dir(const std::string &fileName, const std::string &pre)
+    fs::path create_temp_dir(const std::string fileName, const std::string pre)
     {
         auto temp_dir_base = fs::temp_directory_path();
         auto unique_id = random_generator();
         auto temp_dir = temp_dir_base / (pre + unique_id);
 
-        BOOST_LOG_TRIVIAL(debug) << "Temp dir: " << temp_dir << std::endl;
-        std::cout << "Temp dir: " << temp_dir << std::endl;
 
-        fs::create_directory(temp_dir);
+        if (fs::create_directory(temp_dir))
+        {
+            BOOST_LOG_TRIVIAL(debug) << "Temp dir: " << temp_dir << std::endl;
+        }
+        else
+        {
+            throw std::runtime_error("Failed to create temp dir: " + temp_dir.string());
+        }
 
         return temp_dir;
     }
 
-    fs::path unzip_to_temp_dir(const std::string &fileName)
+    fs::path unzip_to_temp_dir(const std::string fileName, std::string pre)
     {
         auto file = fs::path(fileName);
         if (!fs::exists(file))
         {
-            BOOST_LOG_TRIVIAL(warning) << "File does not exist: " << fileName << "  " << std::endl;
             throw std::runtime_error("File does not exist: " + fileName);
         }
 
-        auto temp_dir = create_temp_dir(fileName, "ssp4cpp_");
+        auto temp_dir = create_temp_dir(fileName, "ssp4cpp_" + pre);
+
+        if (!fs::exists(temp_dir))
+        {
+            throw std::runtime_error("Failed to create temp dir: " + temp_dir.string());
+        }
 
         ssp4cpp::zip_ns::unzip(file, temp_dir);
 

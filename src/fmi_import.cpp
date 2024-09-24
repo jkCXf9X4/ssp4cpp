@@ -19,14 +19,14 @@ namespace ssp4cpp::fmi2
     FmiImport::FmiImport(const path &file) : original_file(file)
     {
         BOOST_LOG_TRIVIAL(trace) << "Importing fmi: " << file << std::endl;
-        temp_dir = ssp4cpp::zip_ns::unzip_to_temp_dir(file.string());
+        temp_dir = ssp4cpp::zip_ns::unzip_to_temp_dir(file.string(), "fmi_");
         
         md = parse_model_description(temp_dir.string() + "/modelDescription.xml");
     }
 
     FmiImport::~FmiImport()
     {
-        fs::remove_all(temp_dir);
+        // fs::remove_all(temp_dir);
     }
 
     fmi2ModelDescription FmiImport::parse_model_description(const string &fileName)

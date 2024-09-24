@@ -1,12 +1,3 @@
-#pragma once
-
-#include <pugixml.hpp>
-
-#include "modelDescription.hpp"
-
-using namespace pugi;
-
-namespace ssp4cpp::fmi2
 {
     void from_xml(const xml_node &node, BaseUnit &obj);
     void from_xml(const xml_node &node, DisplayUnit &obj);

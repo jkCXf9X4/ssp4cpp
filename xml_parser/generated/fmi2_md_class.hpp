@@ -1,18 +1,3 @@
-
-#pragma once
-
-#include <string>
-
-#include <optional>
-#include <vector>
-#include <string>
-
-#include "FMI_Enums.hpp"
-
-#include "IXmlNode.hpp"
-
-using namespace std;
-namespace ssp4cpp::fmi2
 {
 
     class BaseUnit : public IXmlNode

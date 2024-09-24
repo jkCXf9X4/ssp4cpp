@@ -42,29 +42,49 @@ namespace ssp4cpp::xml
     using namespace std;
     using namespace pugi;
 
+    inline string parents_to_string(const xml_node &node)
+    {
+        string s = string(node.name());
+        for (auto p = node.parent(); p; p = p.parent())
+        {
+            s = string(p.name()) + "/" + s;
+        }
+        return s;
+    }
+
     template <typename T>
     void get_attribute(const xml_node &node, T &obj, const string &name)
     {
+        auto attr = node.attribute(name.c_str());
         // cout << "get_attribute: " << name << endl;
+        // cout << "attr: " << attr.as_string() << endl;
+
+        if (attr.empty())
+        {
+            string erro_msg = "ERROR: In Node: " + parents_to_string(node) + "\n Attribute not found: " + name;
+            cout << erro_msg << endl;
+            // throw runtime_error(erro_msg);
+        }
+
         if constexpr (is_same_v<T, int>)
         {
-            obj = node.attribute(name.c_str()).as_int();
+            obj = attr.as_int();
         }
         else if constexpr (is_same_v<T, unsigned int>)
         {
-            obj = node.attribute(name.c_str()).as_uint();
+            obj = attr.as_uint();
         }
         else if constexpr (is_same_v<T, double>)
         {
-            obj = node.attribute(name.c_str()).as_double();
+            obj = attr.as_double();
         }
         else if constexpr (is_same_v<T, bool>)
         {
-            obj = node.attribute(name.c_str()).as_bool();
+            obj = attr.as_bool();
         }
         else if constexpr (is_same_v<T, string>)
         {
-            obj = node.attribute(name.c_str()).as_string();
+            obj = attr.as_string();
         }
         else
         {
@@ -75,10 +95,19 @@ namespace ssp4cpp::xml
     template <typename T>
     void get_class(const xml_node &node, T &obj, const string &name)
     {
-        // cout << "get_class: " << name << endl;
-        obj = T();
         auto child = node.child(name.c_str());
-        from_xml(child, obj);
+
+        if (child.empty())
+        {
+            string erro_msg = "ERROR: In Node: " + string(node.name()) + "\n Child not found: " + name;
+            cout << erro_msg << endl;
+            // throw runtime_error(erro_msg);
+        }
+        else
+        {
+            obj = T();
+            from_xml(child, obj);
+        }
     }
 
     template <typename T>

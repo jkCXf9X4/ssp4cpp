@@ -18,7 +18,7 @@ namespace ssp4cpp::ssp1
     SspImport::SspImport(const path &file) : original_file(file)
     {
         BOOST_LOG_TRIVIAL(trace) << "Importing ssp: " << file << std::endl;
-        temp_dir = ssp4cpp::zip_ns::unzip_to_temp_dir(file.string());
+        temp_dir = ssp4cpp::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
         
         ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
 
@@ -39,7 +39,7 @@ namespace ssp4cpp::ssp1
 
     SspImport::~SspImport()
     {
-        fs::remove_all(temp_dir);
+        // fs::remove_all(temp_dir);
     }
 
     ssd::SystemStructureDescription SspImport::parse_system_structure(const string &fileName)

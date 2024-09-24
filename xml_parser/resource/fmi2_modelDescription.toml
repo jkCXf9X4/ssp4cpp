@@ -25,7 +25,7 @@ DisplayUnit = { type = "fmi2::DisplayUnit", list = true }
 
 
 [UnitDefinitions]
-Units = { type = "fmi2::fmi2Unit", list = true }
+Units = { type = "fmi2::fmi2Unit", list = true, xml_tag="Unit"}
 
 
 [Boolean]
@@ -77,7 +77,7 @@ description = { type = "string", optional = true }
 
 [SimpleTypeEnumeration]
 quantity = { type = "string", optional = true }
-item = { type = "fmi2::SimpleTypeEnumerationItem", list = true }
+Items = { type = "fmi2::SimpleTypeEnumerationItem", list = true, xml_tag="Item" }
 
 
 [fmi2SimpleType]
@@ -91,7 +91,7 @@ Enumeration = { type = "fmi2::SimpleTypeEnumeration", optional = true }
 
 
 [TypeDefinitions]
-SimpleTypes = { type = "fmi2::fmi2SimpleType", list = true }
+SimpleTypes = { type = "fmi2::fmi2SimpleType", list = true, xml_tag="SimpleType"}
 
 
 [Category]
@@ -108,7 +108,7 @@ annotation = { type = "string" }
 
 
 [VendorAnnotations]
-Annotations = { type = "fmi2::fmi2Annotation", list = true }
+Annotations = { type = "fmi2::fmi2Annotation", list = true , xml_tag="Annotation"}
 
 
 [DefaultExperiment]
@@ -131,28 +131,36 @@ Integer = { type = "fmi2::Integer", optional = true }
 Boolean = { type = "fmi2::Boolean", optional = true }
 String = { type = "fmi2::String", optional = true }
 Enumeration = { type = "fmi2::Enumeration", optional = true }
-Annotations = { type = "fmi2::fmi2Annotation", list = true }
+Annotations = { type = "fmi2::fmi2Annotation", list = true , xml_tag="Annotation"}
 
 
-[unknown]
+[Unknown]
 index = { type = "int" }
-dependencies = { type = "string" }
-dependenciesKind = { type = "string" }
+dependencies = { type = "string", optional = true }
+dependenciesKind = { type = "string", optional = true }
 
+[Outputs]
+Unknowns = { type = "fmi2::Unknown", list = true, xml_tag="Unknown" }
+
+[Derivatives]
+Unknowns = { type = "fmi2::Unknown", list = true, xml_tag="Unknown" }
+
+[InitialUnknowns]
+Unknowns = { type = "fmi2::Unknown", list = true, xml_tag="Unknown" }
 
 [ModelStructure]
-Outputs = { type = "fmi2::unknown", list = true }
-Derivatives = { type = "fmi2::unknown", list = true }
-InitialUnknowns = { type = "fmi2::unknown", list = true }
-
+Outputs = { type = "fmi2::Outputs", optional = true }
+Derivatives = { type = "fmi2::Derivatives", optional = true }
+InitialUnknowns = { type = "fmi2::InitialUnknowns", optional = true }
 
 [ModelVariables]
 ScalarVariable = { type = "fmi2::fmi2ScalarVariable", list = true }
 
-
 [File]
 name = { type = "string" }
 
+[SourceFiles]
+Files = { type = "fmi2::File", list = true, xml_tag="File" }
 
 [ModelExchange]
 modelIdentifier = { type = "string" }
@@ -163,7 +171,7 @@ canNotUseMemoryManagementFunctions = { type = "bool", optional = true }
 canGetAndSetFMUstate = { type = "bool", optional = true }
 canSerializeFMUstate = { type = "bool", optional = true }
 providesDirectionalDerivatives = { type = "bool", optional = true }
-SourceFiles = { type = "File", list = true }
+SourceFiles = { type = "fmi2::SourceFiles", optional = true }
 
 
 [CoSimulation]
@@ -178,7 +186,7 @@ canNotUseMemoryManagementFunctions = { type = "bool", optional = true }
 canGetAndSetFMUstate = { type = "bool", optional = true }
 canSerializeFMUstate = { type = "bool", optional = true }
 providesDirectionalDerivatives = { type = "bool", optional = true }
-SourceFiles = { type = "fmi2::File", list = true }
+SourceFiles = { type = "fmi2::SourceFiles", optional = true }
 
 
 [fmi2ModelDescription]

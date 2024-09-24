@@ -1,0 +1,208 @@
+fmi2ModelDescription { 
+fmiVersion                : 2.0
+modelName                 : OpenSW
+guid                      : {013b76cb-e938-4cb3-8035-fd19c809e398}
+description               : null
+author                    : null
+version                   : 1.9
+copyright                 : null
+license                   : null
+generationTool            : Simulink 8.11 (R2016b) 25-Aug-2016 with FMI Kit 2.7 (grtfmi.tlc, FixedStepDiscrete, 0.033333333333333333 s)
+generationDateAndTime     : 2021-04-22T14:51:52
+variableNamingConvention  : null
+numberOfEventIndicators   : 0
+ModelExchange             : null
+CoSimulation              : CoSimulation { 
+modelIdentifier                         : OpenSW
+needsExecutionTool                      : null
+canHandleVariableCommunicationStepSize  : true
+canInterpolateInputs                    : null
+maxOutputDerivativeOrder                : null
+canRunAsynchronuously                   : null
+canBeInstantiatedOnlyOncePerProcess     : null
+canNotUseMemoryManagementFunctions      : null
+canGetAndSetFMUstate                    : null
+canSerializeFMUstate                    : null
+providesDirectionalDerivatives          : null
+SourceFiles                             : SourceFiles { 
+Files  : {
+File { 
+name  : fmi2Functions.c
+}
+File { 
+name  : OpenSW.c
+}
+File { 
+name  : OpenSW_data.c
+}
+}
+
+}
+}
+UnitDefinitions           : UnitDefinitions { 
+Units  : {
+fmi2Unit { 
+name         : s
+BaseUnit     : null
+DisplayUnit  : {
+}
+
+}
+}
+
+}
+TypeDefinitions           : TypeDefinitions { 
+SimpleTypes  : {
+fmi2SimpleType { 
+name         : Aircraft_State_Type
+description  : null
+Real         : null
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : SimpleTypeEnumeration { 
+quantity  : null
+Items     : {
+SimpleTypeEnumerationItem { 
+name         : Aircraft_State_Type_Stationary
+value        : 0
+description  : null
+}
+SimpleTypeEnumerationItem { 
+name         : Aircraft_State_Type_Rolling
+value        : 1
+description  : null
+}
+SimpleTypeEnumerationItem { 
+name         : Aircraft_State_Type_Rotating
+value        : 2
+description  : null
+}
+SimpleTypeEnumerationItem { 
+name         : Aircraft_State_Type_Touching_Down
+value        : 3
+description  : null
+}
+SimpleTypeEnumerationItem { 
+name         : Aircraft_State_Type_Airborne
+value        : 4
+description  : null
+}
+}
+
+}
+}
+}
+
+}
+LogCategories             : null
+DefaultExperiment         : DefaultExperiment { 
+startTime  : 0.000000
+stopTime   : 10.000000
+tolerance  : null
+stepSize   : 0.033333
+}
+VendorAnnotations         : null
+ModelVariables            : ModelVariables { 
+ScalarVariable  : {
+fmi2ScalarVariable { 
+name                                : Input.TLiquid
+valueReference                      : 1
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Input.Aircraft_State
+valueReference                      : 2
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : null
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : Enumeration { 
+declaredType  : Aircraft_State_Type
+quantity      : null
+min           : null
+max           : null
+start         : 0
+}
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : TCoolingPack
+valueReference                      : 3
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+}
+
+}
+ModelStructure            : ModelStructure { 
+Outputs          : Outputs { 
+Unknowns  : {
+Unknown { 
+index             : 3
+dependencies      : null
+dependenciesKind  : null
+}
+}
+
+}
+Derivatives      : null
+InitialUnknowns  : null
+}
+}

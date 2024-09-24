@@ -30,7 +30,7 @@ using namespace fmi4cpp;
 
 int main()
 {
-    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::trace);
+    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::debug);
 
     // Opening zip
     cout << "Opening ssp\n";
@@ -48,63 +48,67 @@ int main()
     myfile << ssp.ssd.to_string();
     myfile.close();
 
-    return 0;
 
     // Parsing FMI
-    auto fmus = vector<fmi2::fmu>();
+    auto fmus = vector<ssp4cpp::fmi2::FmiImport>();
 
     auto fmu_name_to_ssp_name = map<string, string>();
 
     for (int i = 0; i < ssp.resources.size(); i++)
     {
 
-        // auto fmi = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
+        auto fmu = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
+        fmus.push_back(fmu);
         // cout << fmi.md.to_string() << endl;
 
-        return 0;
+        ofstream myfile;
+        myfile.open("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/" + std::to_string(i) + ".txt");
+        myfile << fmu.md.to_string();
+        myfile.close();
 
-        auto resource = ssp.resources[i];
-        auto fmu = fmi2::fmu(resource.file.c_str());
 
-        // auto cs_fmu = fmu.as_cs_fmu();
+        // auto resource = ssp.resources[i];
+        // auto fmu = fmi2::fmu(resource.file.c_str());
 
-        cout << "Creating FMU " << i << " : " << resource.name.value_or("null") << endl;
-        cout << "Creating FMU " << i << " : " << fmu.model_name() << endl;
+        // // auto cs_fmu = fmu.as_cs_fmu();
 
-        fmu_name_to_ssp_name[fmu.model_name()] = resource.name.value_or("null");
+        // cout << "Creating FMU " << i << " : " << resource.name.value_or("null") << endl;
+        // cout << "Creating FMU " << i << " : " << fmu.model_name() << endl;
+
+        // fmu_name_to_ssp_name[fmu.model_name()] = resource.name.value_or("null");
         // auto cs_md = cs_fmu->get_model_description(); //smart pointer to a cs_model_description instance
         // std::cout << "model_identifier=" << cs_md->model_identifier << std::endl;
 
-        fmus.push_back(fmu);
+    return 0;
     }
 
-    for (auto fmu : fmus)
-    {
-        cout << fmu.model_name() << endl;
-        auto md = fmu.get_model_description();
-        for (auto output : md->model_structure->outputs)
-        {
-            cout << "Index: " << output.index << endl;
-            if (output.dependencies.has_value())
-            {
-                for (int i = 0; i < output.dependencies.value().size(); i++)
-                {
-                    // cout << i << " : " << output.dependencies.value()[i] << endl;
-                    cout << output.dependencies.value()[i] << " : " << output.dependencies_kind.value()[i] << endl;
-                    if (output.dependencies_kind.value()[i] == "dependent")
-                    {
-                        cout << "Dependent" << endl;
-                    }
-                    else
-                    {
-                        cout << "Independent" << endl;
-                    }
-                }   
-            }
-        }
-        // cout << fmi2_getNumberOfModelStructureOutputs(fmu) << endl;
-        // fmi4c_freeFmu(fmu);
-    }
+    // for (auto fmu : fmus)
+    // {
+    //     cout << fmu.model_name() << endl;
+    //     auto md = fmu.get_model_description();
+    //     for (auto output : md->model_structure->outputs)
+    //     {
+    //         cout << "Index: " << output.index << endl;
+    //         if (output.dependencies.has_value())
+    //         {
+    //             for (int i = 0; i < output.dependencies.value().size(); i++)
+    //             {
+    //                 // cout << i << " : " << output.dependencies.value()[i] << endl;
+    //                 cout << output.dependencies.value()[i] << " : " << output.dependencies_kind.value()[i] << endl;
+    //                 if (output.dependencies_kind.value()[i] == "dependent")
+    //                 {
+    //                     cout << "Dependent" << endl;
+    //                 }
+    //                 else
+    //                 {
+    //                     cout << "Independent" << endl;
+    //                 }
+    //             }   
+    //         }
+    //     }
+    //     // cout << fmi2_getNumberOfModelStructureOutputs(fmu) << endl;
+    //     // fmi4c_freeFmu(fmu);
+    // }
     // return 0;
 
     map<string, int> connector_map;

@@ -1,0 +1,286 @@
+fmi2ModelDescription { 
+fmiVersion                : 2.0
+modelName                 : adaptionUnit
+guid                      : {f0b9ad6a-61ef-4411-a683-3051577cc540}
+description               : null
+author                    : null
+version                   : null
+copyright                 : null
+license                   : null
+generationTool            : Dymola Version 2020 (64-bit), 2019-04-10
+generationDateAndTime     : 2021-04-20T11:31:48Z
+variableNamingConvention  : structured
+numberOfEventIndicators   : 6
+ModelExchange             : null
+CoSimulation              : CoSimulation { 
+modelIdentifier                         : adaptionUnit
+needsExecutionTool                      : null
+canHandleVariableCommunicationStepSize  : true
+canInterpolateInputs                    : true
+maxOutputDerivativeOrder                : true
+canRunAsynchronuously                   : null
+canBeInstantiatedOnlyOncePerProcess     : null
+canNotUseMemoryManagementFunctions      : null
+canGetAndSetFMUstate                    : true
+canSerializeFMUstate                    : true
+providesDirectionalDerivatives          : null
+SourceFiles                             : null
+}
+UnitDefinitions           : null
+TypeDefinitions           : TypeDefinitions { 
+SimpleTypes  : {
+fmi2SimpleType { 
+name         : Modelica.Blocks.Interfaces.IntegerOutput
+description  : null
+Real         : null
+Integer      : Integer { 
+declaredType  : null
+start         : null
+quantity      : null
+min           : null
+max           : null
+}
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+fmi2SimpleType { 
+name         : Modelica.Blocks.Interfaces.RealInput
+description  : null
+Real         : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+fmi2SimpleType { 
+name         : Modelica.Blocks.Interfaces.RealOutput
+description  : null
+Real         : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+}
+
+}
+LogCategories             : null
+DefaultExperiment         : DefaultExperiment { 
+startTime  : 0.000000
+stopTime   : 1.000000
+tolerance  : 0.000100
+stepSize   : null
+}
+VendorAnnotations         : null
+ModelVariables            : ModelVariables { 
+ScalarVariable  : {
+fmi2ScalarVariable { 
+name                                : sWsignals.TLiquid
+valueReference                      : 335544320
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealOutput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : sWsignals.Aircraft_State
+valueReference                      : 335544321
+description                         : null
+causality                           : output
+variability                         : discrete
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : null
+Integer                             : Integer { 
+declaredType  : Modelica.Blocks.Interfaces.IntegerOutput
+start         : null
+quantity      : null
+min           : null
+max           : null
+}
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Aircraft_State
+valueReference                      : 352321536
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealInput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : LHexTout
+valueReference                      : 352321537
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealInput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : realToInteger.u
+valueReference                      : 436207616
+description                         : Connector of Real input signal
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealInput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : realToInteger.y
+valueReference                      : 335544321
+description                         : Connector of Integer output signal
+causality                           : null
+variability                         : discrete
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : null
+Integer                             : Integer { 
+declaredType  : Modelica.Blocks.Interfaces.IntegerOutput
+start         : null
+quantity      : null
+min           : null
+max           : null
+}
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+}
+
+}
+ModelStructure            : ModelStructure { 
+Outputs          : Outputs { 
+Outputs  : {
+}
+
+}
+Derivatives      : null
+InitialUnknowns  : InitialUnknowns { 
+InitialUnknowns  : {
+}
+
+}
+}
+}
