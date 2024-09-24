@@ -8,6 +8,7 @@
 #include "IXmlNode.hpp"
 
 #include "SSP_Enums.hpp"
+using namespace ssp4cpp::interfaces;
 
 namespace ssp4cpp::ssp1::ssc
 {

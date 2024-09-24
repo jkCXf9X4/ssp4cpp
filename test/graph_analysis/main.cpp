@@ -79,8 +79,8 @@ int main()
         // auto cs_md = cs_fmu->get_model_description(); //smart pointer to a cs_model_description instance
         // std::cout << "model_identifier=" << cs_md->model_identifier << std::endl;
 
-    return 0;
     }
+    return 0;
 
     // for (auto fmu : fmus)
     // {

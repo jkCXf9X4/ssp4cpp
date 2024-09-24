@@ -12,6 +12,8 @@
 #include "IXmlNode.hpp"
 
 using namespace std;
+using namespace ssp4cpp::interfaces;
+
 namespace ssp4cpp::fmi2
 {
 
@@ -249,8 +251,8 @@ namespace ssp4cpp::fmi2
     {
     public:
         int index;
-        optional<string> dependencies;
-        optional<string> dependenciesKind;
+        optional<IntList> dependencies;
+        optional<fmi2::DependenciesKindList> dependenciesKind;
 
         string to_string(void) const;
     };

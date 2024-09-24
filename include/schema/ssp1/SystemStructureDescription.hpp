@@ -9,6 +9,8 @@
 
 #include "SystemStructureCommon.hpp"
 
+using namespace ssp4cpp::interfaces;
+
 namespace ssp4cpp::ssp1::ssd
 {
     class TSystem;
@@ -173,7 +175,7 @@ namespace ssp4cpp::ssp1::ssd
         optional<ssd::TConnectors> Connectors;
         optional<ssd::ElementGeometry> ElementGeometry;
         optional<ssd::TParameterBindings> ParameterBindings;
-        optional<string> type;
+        optional<ssd::ComponentType> type;
         string source;
         optional<string> implementation;
         optional<ssc::TAnnotations> Annotations;

@@ -5,8 +5,11 @@
 #include <vector>
 
 #include "IXmlNode.hpp"
+#include "IXmlNodeList.hpp"
 
 using namespace std;
+
+using namespace ssp4cpp::interfaces;
 
 namespace ssp4cpp::fmi2
 {
@@ -270,6 +273,10 @@ namespace ssp4cpp::fmi2
         Value value;
     };
 
+    class DependenciesKindList : public IXmlNodeEnumList<DependenciesKind>
+    {
+    };
+
     class LogCategory : public IXmlNodeEnum
     {
     public:
@@ -370,4 +377,5 @@ namespace ssp4cpp::fmi2
     private:
         Value value;
     };
+
 }

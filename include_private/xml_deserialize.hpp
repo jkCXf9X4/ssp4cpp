@@ -56,14 +56,10 @@ namespace ssp4cpp::xml
     void get_attribute(const xml_node &node, T &obj, const string &name)
     {
         auto attr = node.attribute(name.c_str());
-        // cout << "get_attribute: " << name << endl;
-        // cout << "attr: " << attr.as_string() << endl;
-
         if (attr.empty())
         {
             string erro_msg = "ERROR: In Node: " + parents_to_string(node) + "\n Attribute not found: " + name;
-            cout << erro_msg << endl;
-            // throw runtime_error(erro_msg);
+            throw runtime_error(erro_msg);
         }
 
         if constexpr (is_same_v<T, int>)
@@ -100,14 +96,23 @@ namespace ssp4cpp::xml
         if (child.empty())
         {
             string erro_msg = "ERROR: In Node: " + string(node.name()) + "\n Child not found: " + name;
-            cout << erro_msg << endl;
-            // throw runtime_error(erro_msg);
+            throw runtime_error(erro_msg);
         }
-        else
+
+        from_xml(child, obj);
+    }
+
+    template <typename T>
+    void get_enum(const xml_node &node, T &obj, const string &name)
+    {
+        auto attr = node.attribute(name.c_str());
+        if (attr.empty())
         {
-            obj = T();
-            from_xml(child, obj);
+            string erro_msg = "ERROR: In Node: " + string(node.name()) + "\n Attribute not found: " + name;
+            throw runtime_error(erro_msg);
         }
+
+        obj.from_string(attr.as_string());
     }
 
     template <typename T>
@@ -119,36 +124,6 @@ namespace ssp4cpp::xml
             T t;
             from_xml(child, t);
             list.push_back(t);
-        }
-    }
-
-    template <typename T>
-    void get_optional_attribute(const xml_node &node, optional<T> &obj, const string &name)
-    {
-        // cout << "get_optional_attribute: " << name << endl;
-        if (node.attribute(name.c_str()).empty())
-        {
-            obj = nullopt;
-        }
-        else
-        {
-            obj = T();
-            get_attribute(node, *obj, name);
-        }
-    }
-
-    template <typename T>
-    void get_optional_class(const xml_node &node, optional<T> &obj, const string &name)
-    {
-        // cout << "get_optional_class: " << name << endl;
-        if (node.child(name.c_str()))
-        {
-            obj = T();
-            get_class(node, *obj, name);
-        }
-        else
-        {
-            obj = nullopt;
         }
     }
 
@@ -170,8 +145,7 @@ namespace ssp4cpp::xml
         }
         else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
         {
-            auto s = node.attribute(name.c_str()).as_string();
-            obj.from_string(s);
+            get_enum(node, obj, name);
         }
         else
         {
@@ -187,22 +161,30 @@ namespace ssp4cpp::xml
                       is_same_v<T, unsigned int> ||
                       is_same_v<T, double> ||
                       is_same_v<T, bool> ||
-                      is_same_v<T, string>)
+                      is_same_v<T, string> ||
+                      is_base_of_v<IXmlNodeEnum, T>)
         {
-            get_optional_attribute(node, obj, name);
+            if (node.attribute(name.c_str()).empty())
+            {
+                obj = nullopt;
+                return;
+            }
         }
         else if constexpr (is_base_of_v<IXmlNode, T>)
         {
-            get_optional_class(node, obj, name);
-        }
-        else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
-        {
-            throw runtime_error("Not implemented... : " + name + " : " + typeid(T).name());
+            if (node.child(name.c_str()).empty())
+            {
+                obj = nullopt;
+                return;
+            }
         }
         else
         {
             throw runtime_error("Unreachable : " + name + " : " + typeid(T).name());
         }
+        
+        obj = T();
+        parse_xml(node, *obj, name);
     }
 
     template <typename T, typename = std::enable_if<is_vector_v<T>>>

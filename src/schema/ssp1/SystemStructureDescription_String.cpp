@@ -9,6 +9,7 @@
 
 using namespace std;
 using namespace ssp4cpp::ssp1;
+using namespace ssp4cpp::str;
 
 namespace ssp4cpp::ssp1::ssd
 {

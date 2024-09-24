@@ -9,6 +9,7 @@
 #include "IXmlNode.hpp"
 
 using namespace std;
+using namespace ssp4cpp::interfaces;
 
 namespace ssp4cpp::ssp1::ssd
 {

@@ -16,7 +16,7 @@ namespace ssp4cpp::ssp1
     class SspResource
     {
     public:
-        optional<string> type;
+        // optional<string> type;
         optional<string> name;
         string file;
 
@@ -24,7 +24,7 @@ namespace ssp4cpp::ssp1
         {
             // string type = obj.type.has_value() ? to_string(obj.type.value()) : "null";
             os << "SspResource { \n"
-               << "type: " << obj.type.value_or("null")  << endl
+            //    << "type: " << obj.type.value_or("null")  << endl
                << "name: " << obj.name.value_or("null") << endl
                << "file: " << obj.file << endl
                << " }" << endl;

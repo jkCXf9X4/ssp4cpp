@@ -74,7 +74,7 @@ name = {type = "string", optional=true}
 Connectors = {type = "ssd::TConnectors", optional=true, namespace="ssd"}
 ElementGeometry = {type = "ssd::ElementGeometry", optional=true, namespace="ssd"}
 ParameterBindings = {type = "ssd::TParameterBindings", optional=true, namespace="ssd"}
-type = {type = "string", optional=true}
+type = {type = "ssd::ComponentType", optional=true}
 source = {type = "string"}
 implementation = {type = "string", optional=true}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}

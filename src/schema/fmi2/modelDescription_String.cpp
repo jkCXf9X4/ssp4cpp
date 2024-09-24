@@ -8,6 +8,7 @@
 #include "to_string.hpp"
 
 using namespace std;
+using namespace ssp4cpp::str;
 
 namespace ssp4cpp::fmi2
 {
