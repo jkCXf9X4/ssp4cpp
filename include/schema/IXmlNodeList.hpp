@@ -4,6 +4,7 @@
 #include <vector>
 #include <optional>
 #include <stdexcept>
+#include <sstream>
 
 #include <type_traits>
 

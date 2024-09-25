@@ -1,4 +1,5 @@
 
+new_line = "\n"
 
 def indent_strings(indent, string):
     def indent_f(line):

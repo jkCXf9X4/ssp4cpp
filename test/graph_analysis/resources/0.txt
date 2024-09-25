@@ -134,6 +134,7 @@ Enumeration                         : null
 Annotations                         : {
 }
 
+index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : Input.Aircraft_State
@@ -157,6 +158,7 @@ start         : 0
 Annotations                         : {
 }
 
+index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : TCoolingPack
@@ -187,6 +189,7 @@ Enumeration                         : null
 Annotations                         : {
 }
 
+index                               : 0
 }
 }
 

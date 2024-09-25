@@ -15,6 +15,8 @@
         optional<double> offset;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -26,6 +28,8 @@
         optional<double> offset;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -37,6 +41,8 @@
         vector<fmi2::DisplayUnit> DisplayUnit;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -46,6 +52,8 @@
         vector<fmi2::fmi2Unit> Units;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -56,6 +64,8 @@
         optional<string> start;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -69,6 +79,8 @@
         optional<int> max;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -79,6 +91,8 @@
         optional<string> start;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -99,6 +113,8 @@
         optional<bool> reinit;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -112,6 +128,8 @@
         optional<int> start;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -123,6 +141,8 @@
         optional<string> description;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -133,6 +153,8 @@
         vector<fmi2::SimpleTypeEnumerationItem> Items;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -148,6 +170,8 @@
         optional<fmi2::SimpleTypeEnumeration> Enumeration;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -157,6 +181,8 @@
         vector<fmi2::fmi2SimpleType> SimpleTypes;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -167,6 +193,8 @@
         optional<string> description;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -176,6 +204,8 @@
         vector<fmi2::Category> Categories;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -185,6 +215,8 @@
         string annotation;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -194,6 +226,8 @@
         vector<fmi2::fmi2Annotation> Annotations;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -206,6 +240,8 @@
         optional<double> stepSize;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -227,6 +263,9 @@
         vector<fmi2::fmi2Annotation> Annotations;
 
         string to_string(void) const;
+        // Custom variables
+        int index;
+
     };
 
 
@@ -238,6 +277,8 @@
         optional<fmi2::DependenciesKindList> dependenciesKind;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -247,6 +288,8 @@
         vector<fmi2::Unknown> Unknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -256,6 +299,8 @@
         vector<fmi2::Unknown> Unknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -265,6 +310,8 @@
         vector<fmi2::Unknown> Unknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -276,6 +323,8 @@
         optional<fmi2::InitialUnknowns> InitialUnknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -285,6 +334,9 @@
         vector<fmi2::fmi2ScalarVariable> ScalarVariable;
 
         string to_string(void) const;
+
+        // Custom Functions
+        fmi2::fmi2ScalarVariable get_variable(int index);
     };
 
 
@@ -294,6 +346,8 @@
         string name;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -303,6 +357,8 @@
         vector<fmi2::File> Files;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -320,6 +376,8 @@
         optional<fmi2::SourceFiles> SourceFiles;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -340,6 +398,8 @@
         optional<fmi2::SourceFiles> SourceFiles;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -369,6 +429,8 @@
         fmi2::ModelStructure ModelStructure;
 
         string to_string(void) const;
+
+
     };
 
 

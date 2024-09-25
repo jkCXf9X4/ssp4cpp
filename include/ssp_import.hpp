@@ -5,7 +5,8 @@
 #include <filesystem>
 #include <optional>
 
-#include "ssp1/SystemStructureDescription.hpp"
+#include "SystemStructureDescription.hpp"
+#include "to_string.hpp"
 
 using namespace std;
 using namespace std::filesystem;
@@ -16,17 +17,16 @@ namespace ssp4cpp::ssp1
     class SspResource
     {
     public:
-        // optional<string> type;
+        optional<ssd::ComponentType> type;
         optional<string> name;
         string file;
 
         friend ostream &operator<<(ostream &os, const SspResource &obj)
         {
-            // string type = obj.type.has_value() ? to_string(obj.type.value()) : "null";
             os << "SspResource { \n"
-            //    << "type: " << obj.type.value_or("null")  << endl
-               << "name: " << obj.name.value_or("null") << endl
-               << "file: " << obj.file << endl
+               << "type: " << str::to_str(obj.type)  << endl
+               << "name: " << str::to_str(obj.name) << endl
+               << "file: " << str::to_str(obj.file) << endl
                << " }" << endl;
             return os;
         }

@@ -133,6 +133,9 @@ String = { type = "fmi2::String", optional = true }
 Enumeration = { type = "fmi2::Enumeration", optional = true }
 Annotations = { type = "fmi2::fmi2Annotation", list = true , xml_tag="Annotation"}
 
+#Custom
+index = {type="int", custom="type"}
+
 
 [Unknown]
 index = { type = "int" }
@@ -155,6 +158,9 @@ InitialUnknowns = { type = "fmi2::InitialUnknowns", optional = true }
 
 [ModelVariables]
 ScalarVariable = { type = "fmi2::fmi2ScalarVariable", list = true }
+
+#Custom
+f1 = {type="fmi2::fmi2ScalarVariable get_variable(int index);", custom="function"}
 
 [File]
 name = { type = "string" }

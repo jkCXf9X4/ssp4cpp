@@ -222,6 +222,8 @@ namespace ssp4cpp::fmi2
         DependenciesKind() = default;
         constexpr DependenciesKind(Value value) : value(value) {}
 
+        operator Value () const {return value;}
+
         string to_string() const override
         {
             switch (value)

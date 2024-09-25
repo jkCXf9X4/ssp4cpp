@@ -8,7 +8,6 @@
 
 #include <boost/config.hpp>
 #include <vector>
-#include <iostream>
 #include <algorithm> // std::unique, std::distance
 
 // #include <boost/graph/strong_components.hpp>
@@ -20,6 +19,8 @@
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
 
+#include "SystemStructureDescription.hpp"
+
 #include <fmi4cpp/fmi4cpp.hpp>
 
 #include <list>
@@ -28,26 +29,30 @@ using namespace std;
 using namespace boost;
 using namespace fmi4cpp;
 
+void save_string(const string &filename, const string &content)
+{
+    ofstream myfile;
+    myfile.open(filename);
+    myfile << content;
+    myfile.close();
+}
+
 int main()
 {
     boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::debug);
 
     // Opening zip
-    cout << "Opening ssp\n";
+    std::cout << "Opening ssp\n";
 
     auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/embrace.ssp");
 
-    cout << "Imported ssp! \n";
+    std::cout << "Imported ssp! \n";
 
-    cout << ssp << endl;
+    std::cout << ssp << endl;
 
-    cout << "Parsing ssp to external file\n";
+    std::cout << "Parsing ssp to external file\n";
 
-    ofstream myfile;
-    myfile.open("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/parsed.txt");
-    myfile << ssp.ssd.to_string();
-    myfile.close();
-
+    save_string("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/parsed.txt", ssp.ssd.to_string());
 
     // Parsing FMI
     auto fmus = vector<ssp4cpp::fmi2::FmiImport>();
@@ -59,57 +64,53 @@ int main()
 
         auto fmu = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
         fmus.push_back(fmu);
-        // cout << fmi.md.to_string() << endl;
 
-        ofstream myfile;
-        myfile.open("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/" + std::to_string(i) + ".txt");
-        myfile << fmu.md.to_string();
-        myfile.close();
+        save_string("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/" + std::to_string(i) + ".txt", fmu.md.to_string());
 
-
-        // auto resource = ssp.resources[i];
-        // auto fmu = fmi2::fmu(resource.file.c_str());
-
-        // // auto cs_fmu = fmu.as_cs_fmu();
-
-        // cout << "Creating FMU " << i << " : " << resource.name.value_or("null") << endl;
-        // cout << "Creating FMU " << i << " : " << fmu.model_name() << endl;
-
-        // fmu_name_to_ssp_name[fmu.model_name()] = resource.name.value_or("null");
-        // auto cs_md = cs_fmu->get_model_description(); //smart pointer to a cs_model_description instance
-        // std::cout << "model_identifier=" << cs_md->model_identifier << std::endl;
-
+        auto resource = ssp.resources[i];
+        fmu_name_to_ssp_name[fmu.md.modelName] = resource.name.value_or("null");
     }
-    return 0;
 
-    // for (auto fmu : fmus)
-    // {
-    //     cout << fmu.model_name() << endl;
-    //     auto md = fmu.get_model_description();
-    //     for (auto output : md->model_structure->outputs)
-    //     {
-    //         cout << "Index: " << output.index << endl;
-    //         if (output.dependencies.has_value())
-    //         {
-    //             for (int i = 0; i < output.dependencies.value().size(); i++)
-    //             {
-    //                 // cout << i << " : " << output.dependencies.value()[i] << endl;
-    //                 cout << output.dependencies.value()[i] << " : " << output.dependencies_kind.value()[i] << endl;
-    //                 if (output.dependencies_kind.value()[i] == "dependent")
-    //                 {
-    //                     cout << "Dependent" << endl;
-    //                 }
-    //                 else
-    //                 {
-    //                     cout << "Independent" << endl;
-    //                 }
-    //             }   
-    //         }
-    //     }
-    //     // cout << fmi2_getNumberOfModelStructureOutputs(fmu) << endl;
-    //     // fmi4c_freeFmu(fmu);
-    // }
-    // return 0;
+    for (auto const &x : fmu_name_to_ssp_name)
+    {
+        std::cout << x.first // string (key)
+                  << ':'
+                  << x.second // string's value
+                  << std::endl;
+    }
+
+    for (auto fmu : fmus)
+    {
+        std::cout << fmu.md.modelName << endl;
+        auto outputs = fmu.md.ModelStructure.Outputs;
+        if (!outputs.has_value())
+        {
+            std::cout << "No outputs" << endl;
+            continue;
+        }
+
+        for (ssp4cpp::fmi2::Unknown output : outputs.value().Unknowns)
+        {
+            std::cout << "Index: " << output.index << endl;
+            if (!output.dependencies.has_value())
+            {
+                std::cout << "No dependencies" << endl;
+                continue;
+            }
+            for (int i = 0; i < output.dependencies.value().list.size(); i++)
+            {
+                auto dependency = output.dependencies.value().list[i];
+                auto dependency_kind = output.dependenciesKind.value().list[i];
+
+                if (dependency_kind == ssp4cpp::fmi2::DependenciesKind::Value::dependent)
+                {
+                    std::cout << "Dependent: " << output.index << " : " << dependency << endl;
+                }
+            }
+        }
+    }
+
+    return 0;
 
     map<string, int> connector_map;
     {
@@ -133,7 +134,7 @@ int main()
     typedef adjacency_list<vecS, vecS, boost::directedS, property<vertex_name_t, std::string>> Graph;
     // typedef std::pair<int, int> Edge;
 
-    cout << "Connectors: " << connector_map.size() << endl;
+    std::cout << "Connectors: " << connector_map.size() << endl;
     Graph g(connector_map.size());
 
     for (auto [name, index] : connector_map)
@@ -162,5 +163,5 @@ int main()
     //     cout << connection.startElement.value().append(connection.startConnector) << endl;
     // }
 
-    cout << "Parsing complete\n";
+    std::cout << "Parsing complete\n";
 }

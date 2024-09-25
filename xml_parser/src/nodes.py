@@ -25,14 +25,16 @@ class VariableNode(Node):
     default_values = {"string": "\"null\"", "int": "0", "unsigned int": "0", "double": "0.0", "bool": "false"}
     primitives = list(default_values.keys())
 
-    def __init__(self, name, type = "string", optional=False, list=False, namespace=None, xml_tag=None):
+    def __init__(self, name, type = "string", optional=False, list=False, namespace=None, xml_tag=None, custom=None):
         super().__init__(name)
         self.type = type
         self.optional = optional
         self.list = list
         self.namespace = namespace
         self.xml_tag = xml_tag
+        self.custom = custom
+
         self.is_primitive = type in self.primitives
 
     def __str__(self):
-        return f"{self.name} ({self.type}, optional={self.optional}, list={self.list})"
+        return f"{self.name} ({self.type}, optional={self.optional}, list={self.list}, namespace={self.namespace}, xml_tag={self.xml_tag}, custom={self.custom})"

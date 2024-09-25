@@ -7,6 +7,8 @@
         optional<string> any;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -16,6 +18,8 @@
         vector<Annotation> Annotations;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -26,6 +30,8 @@
         optional<double> offset;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -36,6 +42,8 @@
         bool target;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -45,6 +53,8 @@
         vector<ssc::BooleanMapEntry> MapEntrys;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -55,6 +65,8 @@
         int target;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -64,6 +76,8 @@
         vector<ssc::IntegerMapEntry> MapEntrys;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -74,6 +88,8 @@
         string target;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -83,6 +99,8 @@
         vector<ssc::EnumerationMapEntry> MapEntrys;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -93,6 +111,8 @@
         int value;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -106,6 +126,8 @@
         optional<ssc::TAnnotations> Annotations;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -115,6 +137,8 @@
         vector<ssc::TEnumeration> Enumerations;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -133,6 +157,8 @@
         optional<double> offset;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -146,6 +172,8 @@
         optional<ssc::TAnnotations> Annotations;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -155,6 +183,8 @@
         vector<ssc::TUnit> Units;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -164,6 +194,8 @@
         optional<string> unit;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -173,6 +205,8 @@
 
 
         string to_string(void) const;
+
+
     };
 
 
@@ -182,6 +216,8 @@
 
 
         string to_string(void) const;
+
+
     };
 
 
@@ -191,6 +227,8 @@
 
 
         string to_string(void) const;
+
+
     };
 
 
@@ -200,6 +238,8 @@
         optional<string> name;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -209,6 +249,8 @@
         optional<string> mime_type;
 
         string to_string(void) const;
+
+
     };
 
 

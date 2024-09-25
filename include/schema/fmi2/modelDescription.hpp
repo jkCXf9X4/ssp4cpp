@@ -1,8 +1,6 @@
 
 #pragma once
 
-#include <string>
-
 #include <optional>
 #include <vector>
 #include <string>
@@ -32,6 +30,8 @@ namespace ssp4cpp::fmi2
         optional<double> offset;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -43,6 +43,8 @@ namespace ssp4cpp::fmi2
         optional<double> offset;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -54,6 +56,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::DisplayUnit> DisplayUnit;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -63,6 +67,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::fmi2Unit> Units;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -73,6 +79,8 @@ namespace ssp4cpp::fmi2
         optional<string> start;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -86,6 +94,8 @@ namespace ssp4cpp::fmi2
         optional<int> max;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -96,6 +106,8 @@ namespace ssp4cpp::fmi2
         optional<string> start;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -116,6 +128,8 @@ namespace ssp4cpp::fmi2
         optional<bool> reinit;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -129,6 +143,8 @@ namespace ssp4cpp::fmi2
         optional<int> start;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -140,6 +156,8 @@ namespace ssp4cpp::fmi2
         optional<string> description;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -150,6 +168,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::SimpleTypeEnumerationItem> Items;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -165,6 +185,8 @@ namespace ssp4cpp::fmi2
         optional<fmi2::SimpleTypeEnumeration> Enumeration;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -174,6 +196,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::fmi2SimpleType> SimpleTypes;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -184,6 +208,8 @@ namespace ssp4cpp::fmi2
         optional<string> description;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -193,6 +219,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::Category> Categories;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -202,6 +230,8 @@ namespace ssp4cpp::fmi2
         string annotation;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -211,6 +241,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::fmi2Annotation> Annotations;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -223,6 +255,8 @@ namespace ssp4cpp::fmi2
         optional<double> stepSize;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -244,6 +278,9 @@ namespace ssp4cpp::fmi2
         vector<fmi2::fmi2Annotation> Annotations;
 
         string to_string(void) const;
+        // Custom variables
+        int index = 0;
+
     };
 
 
@@ -255,6 +292,8 @@ namespace ssp4cpp::fmi2
         optional<fmi2::DependenciesKindList> dependenciesKind;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -264,6 +303,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::Unknown> Unknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -273,6 +314,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::Unknown> Unknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -282,6 +325,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::Unknown> Unknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -293,6 +338,8 @@ namespace ssp4cpp::fmi2
         optional<fmi2::InitialUnknowns> InitialUnknowns;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -302,6 +349,9 @@ namespace ssp4cpp::fmi2
         vector<fmi2::fmi2ScalarVariable> ScalarVariable;
 
         string to_string(void) const;
+
+        // Custom Functions
+        fmi2::fmi2ScalarVariable get_variable(int index);
     };
 
 
@@ -311,6 +361,8 @@ namespace ssp4cpp::fmi2
         string name;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -320,6 +372,8 @@ namespace ssp4cpp::fmi2
         vector<fmi2::File> Files;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -337,6 +391,8 @@ namespace ssp4cpp::fmi2
         optional<fmi2::SourceFiles> SourceFiles;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -357,6 +413,8 @@ namespace ssp4cpp::fmi2
         optional<fmi2::SourceFiles> SourceFiles;
 
         string to_string(void) const;
+
+
     };
 
 
@@ -386,6 +444,8 @@ namespace ssp4cpp::fmi2
         fmi2::ModelStructure ModelStructure;
 
         string to_string(void) const;
+
+
     };
 
 

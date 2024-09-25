@@ -27,7 +27,7 @@ class XmlParserExporter:
         return f"parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, \"{name}\");"
 
     def generate_parsers(self):
-        variables = [self.generate_variable_declaration(v) for v in self.variable_nodes]
+        variables = [self.generate_variable_declaration(v) for v in self.variable_nodes if not v.custom]
         variables = "\n".join(variables)
         variables = indent_strings(self.indent, variables)
             
