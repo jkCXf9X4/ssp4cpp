@@ -20,9 +20,10 @@ namespace ssp4cpp::fmi2
             throw invalid_argument("Index out of range");
         }
 
-        return mv.ScalarVariable[index];
+        return mv.ScalarVariable[index-1];
     }
 
+    // output index, dependency index , kind
     vector<tuple<int, int, DependenciesKind>> Unknown_Ext::get_dependencies(Unknown &u, DependenciesKind kind)
     {
         vector<tuple<int, int, DependenciesKind>> result;

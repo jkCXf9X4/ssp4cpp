@@ -69,12 +69,10 @@ int main()
 
     // Parsing FMI
     auto fmus = vector<ssp4cpp::fmi2::FmiImport>();
-
     auto fmu_name_to_ssp_name = map<string, string>();
 
     for (int i = 0; i < ssp.resources.size(); i++)
     {
-
         auto fmu = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
         fmus.push_back(fmu);
 
@@ -86,42 +84,7 @@ int main()
 
     print_map(fmu_name_to_ssp_name);
 
-    // for (auto const &x : fmu_name_to_ssp_name)
-    // {
-    //     std::cout << x.first // string (key)
-    //               << ':'
-    //               << x.second // string's value
-    //               << std::endl;
-    // }
-
-    for (auto fmu : fmus)
-    {
-        std::cout << fmu.md.modelName << endl;
-        auto outputs = fmu.md.ModelStructure.Outputs;
-        if (!outputs.has_value())
-        {
-            std::cout << "No outputs" << endl;
-            continue;
-        }
-        auto dependency_map = map<int, int>();
-
-        for (auto unkown : outputs.value().Unknowns)
-        {
-            auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies(unkown);
-
-            for (auto [index, dependency, kind] : dependencies)
-            {
-                if (kind == ssp4cpp::fmi2::DependenciesKind::Value::dependent)
-                {
-                    dependency_map[index] = dependency;
-                }
-            }
-        }
-        print_map(dependency_map);
-    }
-
-    return 0;
-
+    // Count nodes
     map<string, int> connector_map;
     {
         int connector_index = 0;
@@ -147,11 +110,13 @@ int main()
     std::cout << "Connectors: " << connector_map.size() << endl;
     Graph g(connector_map.size());
 
+    // store name in node
     for (auto [name, index] : connector_map)
     {
         boost::put(boost::vertex_name_t(), g, index, name);
     }
 
+    // add ssp edges
     for (auto connection : ssp.ssd.System.Connections.value().Connections)
     {
         auto start = connection.startElement.value() + "." + connection.startConnector;
@@ -161,17 +126,40 @@ int main()
         // cout << connector_map[start] << " -> " << connector_map[end] << endl;
     }
 
-    // boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
+    for (auto fmu : fmus)
+    {
+        std::cout << fmu.md.modelName << endl;
+        auto outputs = fmu.md.ModelStructure.Outputs;
+        if (!outputs.has_value())
+        {
+            std::cout << "No outputs" << endl;
+            continue;
+        }
 
-    //     startElement: AdaptionUnit
-    // startConnector: sWsignals.TLiquid
-    // endElement: ECS_SW
-    // endConnector: Input.TLiquid
+        for (auto unkown : outputs.value().Unknowns)
+        {
+            auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies(unkown, ssp4cpp::fmi2::DependenciesKind::dependent);
 
-    // for (auto connection : ssp.ssd.System.Connections.value().list)
-    // {
-    //     cout << connection.startElement.value().append(connection.startConnector) << endl;
-    // }
+            //print
+            for (auto [index, dependency, kind] : dependencies)
+            {
+                std::cout << "Dependency: " << index << " -> " << dependency << " kind: " << kind << endl;
+                auto output = ssp4cpp::fmi2::ModelVariables_Ext::get_variable(fmu.md.ModelVariables, index);
+                auto dep = ssp4cpp::fmi2::ModelVariables_Ext::get_variable(fmu.md.ModelVariables, dependency);
+                std::cout << "Input: " << dep.name << " -> " << "Output: " << output.name   << endl;
+
+                auto output_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + output.name;
+                auto input_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + dep.name;
+
+                std::cout << "Input: " << input_name << " -> " << "Output: " << output_name   << endl;
+                add_edge(connector_map[input_name], connector_map[output_name], g);
+            }
+
+        }
+    }
+
+    boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
+
 
     std::cout << "Parsing complete\n";
 }
