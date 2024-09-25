@@ -160,7 +160,7 @@
         optional<ssd::TConnectors> Connectors;
         optional<ssd::ElementGeometry> ElementGeometry;
         optional<ssd::TParameterBindings> ParameterBindings;
-        optional<string> type;
+        optional<ssd::ComponentType> type;
         string source;
         optional<string> implementation;
         optional<ssc::TAnnotations> Annotations;

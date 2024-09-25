@@ -234,8 +234,8 @@
     {
     public:
         int index;
-        optional<string> dependencies;
-        optional<string> dependenciesKind;
+        optional<IntList> dependencies;
+        optional<fmi2::DependenciesKindList> dependenciesKind;
 
         string to_string(void) const;
     };
