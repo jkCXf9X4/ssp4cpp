@@ -103,7 +103,7 @@ namespace ssp4cpp::xml
     }
 
     template <typename T>
-    void get_enum(const xml_node &node, T &obj, const string &name)
+    void from_string(const xml_node &node, T &obj, const string &name)
     {
         auto attr = node.attribute(name.c_str());
         if (attr.empty())
@@ -143,9 +143,9 @@ namespace ssp4cpp::xml
         {
             get_class(node, obj, name);
         }
-        else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
+        else if constexpr (is_base_of_v<IReadable, T>)
         {
-            get_enum(node, obj, name);
+            from_string(node, obj, name);
         }
         else
         {
@@ -162,7 +162,7 @@ namespace ssp4cpp::xml
                       is_same_v<T, double> ||
                       is_same_v<T, bool> ||
                       is_same_v<T, string> ||
-                      is_base_of_v<IXmlNodeEnum, T>)
+                      is_base_of_v<IReadable, T>)
         {
             if (node.attribute(name.c_str()).empty())
             {
@@ -195,7 +195,7 @@ namespace ssp4cpp::xml
         {
             get_vector(node, obj, name);
         }
-        else if constexpr (is_base_of_v<IXmlNodeEnum, T>)
+        else if constexpr (is_base_of_v<IReadable, T>)
         {
             throw runtime_error("Not implemented... : " + name + " : " + typeid(T).name());
         }

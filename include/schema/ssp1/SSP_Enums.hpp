@@ -13,7 +13,7 @@ using namespace ssp4cpp::interfaces;
 
 namespace ssp4cpp::ssp1::ssd
 {
-    class ComponentType : public IXmlNodeEnum
+    class ComponentType : public IReadWrite
     {
     public:
         enum Value :int

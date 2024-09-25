@@ -13,7 +13,7 @@ using namespace ssp4cpp::interfaces;
 
 namespace ssp4cpp::fmi2
 {
-    class Causality : public IXmlNodeEnum
+    class Causality : public IReadWrite
     {
     public:
         enum Value : int
@@ -87,7 +87,7 @@ namespace ssp4cpp::fmi2
         Value value;
     };
 
-    class Variability : public IXmlNodeEnum
+    class Variability : public IReadWrite
     {
     public:
         enum Value : int
@@ -154,7 +154,7 @@ namespace ssp4cpp::fmi2
         Value value;
     };
 
-    class Initial : public IXmlNodeEnum
+    class Initial : public IReadWrite
     {
     public:
         enum Value : int
@@ -207,7 +207,7 @@ namespace ssp4cpp::fmi2
         Value value;
     };
 
-    class DependenciesKind : public IXmlNodeEnum
+    class DependenciesKind : public IReadWrite
     {
     public:
         enum Value : int
@@ -273,11 +273,12 @@ namespace ssp4cpp::fmi2
         Value value;
     };
 
-    class DependenciesKindList : public IXmlNodeEnumList<DependenciesKind>
+
+    class DependenciesKindList : public IList<DependenciesKind>
     {
     };
 
-    class LogCategory : public IXmlNodeEnum
+    class LogCategory : public IReadWrite
     {
     public:
         enum Value : int

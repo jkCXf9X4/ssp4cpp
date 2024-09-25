@@ -136,8 +136,8 @@ Annotations = { type = "fmi2::fmi2Annotation", list = true , xml_tag="Annotation
 
 [Unknown]
 index = { type = "int" }
-dependencies = { type = "string", optional = true }
-dependenciesKind = { type = "string", optional = true }
+dependencies = { type = "IntList", optional = true }
+dependenciesKind = { type = "fmi2::DependenciesKindList", optional = true }
 
 [Outputs]
 Unknowns = { type = "fmi2::Unknown", list = true, xml_tag="Unknown" }

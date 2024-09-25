@@ -4,19 +4,36 @@
 #include <vector>
 #include <sstream>
 
-
 namespace ssp4cpp::interfaces
 {
-    class IXmlNode
+
+    // Writable
+    class IWritable
     {
     public:
         virtual std::string to_string() const = 0;
     };
 
-    class IXmlNodeEnum
+    // Readable
+    class IReadable
     {
     public:
-        virtual std::string to_string() const = 0;
         virtual void from_string(const std::string &str) = 0;
     };
+
+    // Readable and Writable
+    class IReadWrite : public IWritable, public IReadable
+    {
+    };
+
+    // Node
+    class IXmlNode : public IWritable
+    {
+    };
+
+    // Enumeration
+    class IEnum : public IReadWrite
+    {
+    };
+
 }

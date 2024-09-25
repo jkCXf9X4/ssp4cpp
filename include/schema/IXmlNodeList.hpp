@@ -14,9 +14,8 @@ namespace ssp4cpp::interfaces
 {
     using namespace ssp4cpp::str;
 
-    // it should support same interface as IXmlNodeEnum
     template <typename T>
-    class IXmlNodeEnumList : IXmlNodeEnum
+    class IList : public IReadWrite
     {
     public:
         virtual std::string to_string() const
@@ -54,7 +53,7 @@ namespace ssp4cpp::interfaces
                 {
                     item = word;
                 }
-                else if constexpr (std::is_base_of_v<IXmlNodeEnum, T>)
+                else if constexpr (std::is_base_of_v<IReadable, T>)
                 {
                     item.from_string(word);
                 }
@@ -78,96 +77,24 @@ namespace ssp4cpp::interfaces
 
     // some primitive variants to be used
 
-    class IntList : public IXmlNodeEnumList<int>
+    class IntList : public IList<int>
     {
     };
 
-    class UIntList : public IXmlNodeEnumList<unsigned int>
+    class UIntList : public IList<unsigned int>
     {
     };
 
-    class DoubleList : public IXmlNodeEnumList<double>
+    class DoubleList : public IList<double>
     {
     };
 
-    class BoolList : public IXmlNodeEnumList<bool>
+    class BoolList : public IList<bool>
     {
     };
 
-    class StringList : public IXmlNodeEnumList<std::string>
+    class StringList : public IList<std::string>
     {
     };
 
-    // // it should support same interface as IXmlNodeEnum
-    // template <typename T>
-    // class IXmlNodePrimitiveList : IXmlNodeEnum
-    // {
-    // public:
-    //     virtual std::string to_string() const
-    //     {
-    //         return to_str(list);
-    //         // std::string str = "";
-    //         // for (const auto &item : list)
-    //         // {
-    //         //     if constexpr (std::is_same_v<T, bool>)
-    //         //     {
-    //         //         str += item ? "true" : "false";
-    //         //     }
-    //         //     else if constexpr (std::is_same_v<T, std::string>)
-    //         //     {
-    //         //         str += item;
-    //         //     }
-    //         //     else
-    //         //     {
-    //         //         str += std::to_string(item);
-    //         //     }
-    //         //     {
-
-    //         //         str += ", ";
-    //         //     }
-    //         //     return str;
-    //         // }
-    //     }
-    //     virtual void from_string(const std::string &str, const char del)
-    //     {
-    //         list.clear();
-
-    //         std::istringstream ss;
-    //         ss.str(str);
-    //         for (std::string word; std::getline(ss, word, del);)
-    //         {
-    //             T item;
-    //             if constexpr (std::is_same_v<T, int>)
-    //             {
-    //                 item = std::stoi(word);
-    //             }
-    //             else if constexpr (std::is_same_v<T, unsigned int>)
-    //             {
-    //                 item = std::stoul(word);
-    //             }
-    //             else if constexpr (std::is_same_v<T, double>)
-    //             {
-    //                 item = std::stod(word);
-    //             }
-    //             else if constexpr (std::is_same_v<T, bool>)
-    //             {
-    //                 item = word == "true";
-    //             }
-    //             else
-    //             {
-    //                 throw std::runtime_error("Unsupported type");
-    //             }
-    //             list.push_back(item);
-    //         }
-    //     }
-
-    //     // easy to overwrite
-    //     virtual void from_string(const std::string &str)
-    //     {
-    //         from_string(str, ' ');
-    //     }
-
-    //     std::vector<T> list;
-    // };
-
-} // namespace ssp4cpp::str
+} 

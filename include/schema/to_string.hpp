@@ -30,11 +30,7 @@ namespace ssp4cpp::str
         {
             return obj;
         }
-        else if constexpr (std::is_base_of_v<IXmlNode, T>)
-        {
-            return obj.to_string();
-        }
-        else if constexpr (std::is_base_of_v<IXmlNodeEnum, T>)
+        else if constexpr (std::is_base_of_v<IWritable, T>)
         {
             return obj.to_string();
         }
