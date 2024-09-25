@@ -216,7 +216,8 @@ namespace ssp4cpp::fmi2
             constant,
             fixed,
             tunable,
-            discrete
+            discrete,
+            unknown
         };
 
         DependenciesKind() = default;
@@ -267,7 +268,7 @@ namespace ssp4cpp::fmi2
             }
             else
             {
-                value = Value::dependent;
+                value = Value::unknown;
             }
         }
 

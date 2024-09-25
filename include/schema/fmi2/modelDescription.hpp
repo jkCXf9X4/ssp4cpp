@@ -278,8 +278,6 @@ namespace ssp4cpp::fmi2
         vector<fmi2::fmi2Annotation> Annotations;
 
         string to_string(void) const;
-        // Custom variables
-        int index = 0;
 
     };
 
@@ -350,8 +348,6 @@ namespace ssp4cpp::fmi2
 
         string to_string(void) const;
 
-        // Custom Functions
-        fmi2::fmi2ScalarVariable get_variable(int index);
     };
 
 

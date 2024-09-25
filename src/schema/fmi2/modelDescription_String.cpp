@@ -220,7 +220,6 @@ namespace ssp4cpp::fmi2
                "String                              : " + to_str( String                              ) + "\n" +
                "Enumeration                         : " + to_str( Enumeration                         ) + "\n" +
                "Annotations                         : " + to_str( Annotations                         ) + "\n" +
-               "index                               : " + to_str( index                               ) + "\n" +
                "}";
     }
 

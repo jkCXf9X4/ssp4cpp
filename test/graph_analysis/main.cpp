@@ -20,6 +20,7 @@
 #include <boost/log/expressions.hpp>
 
 #include "SystemStructureDescription.hpp"
+#include "modelDescription_Ext.hpp"
 
 #include <fmi4cpp/fmi4cpp.hpp>
 
@@ -35,6 +36,18 @@ void save_string(const string &filename, const string &content)
     myfile.open(filename);
     myfile << content;
     myfile.close();
+}
+
+template <typename T, typename U>
+void print_map(map<T, U> &m)
+{
+    for (auto const &x : m)
+    {
+        std::cout << x.first // string (key)
+                  << ':'
+                  << x.second // string's value
+                  << std::endl;
+    }
 }
 
 int main()
@@ -71,13 +84,15 @@ int main()
         fmu_name_to_ssp_name[fmu.md.modelName] = resource.name.value_or("null");
     }
 
-    for (auto const &x : fmu_name_to_ssp_name)
-    {
-        std::cout << x.first // string (key)
-                  << ':'
-                  << x.second // string's value
-                  << std::endl;
-    }
+    print_map(fmu_name_to_ssp_name);
+
+    // for (auto const &x : fmu_name_to_ssp_name)
+    // {
+    //     std::cout << x.first // string (key)
+    //               << ':'
+    //               << x.second // string's value
+    //               << std::endl;
+    // }
 
     for (auto fmu : fmus)
     {
@@ -88,26 +103,21 @@ int main()
             std::cout << "No outputs" << endl;
             continue;
         }
+        auto dependency_map = map<int, int>();
 
-        for (ssp4cpp::fmi2::Unknown output : outputs.value().Unknowns)
+        for (auto unkown : outputs.value().Unknowns)
         {
-            std::cout << "Index: " << output.index << endl;
-            if (!output.dependencies.has_value())
-            {
-                std::cout << "No dependencies" << endl;
-                continue;
-            }
-            for (int i = 0; i < output.dependencies.value().list.size(); i++)
-            {
-                auto dependency = output.dependencies.value().list[i];
-                auto dependency_kind = output.dependenciesKind.value().list[i];
+            auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies(unkown);
 
-                if (dependency_kind == ssp4cpp::fmi2::DependenciesKind::Value::dependent)
+            for (auto [index, dependency, kind] : dependencies)
+            {
+                if (kind == ssp4cpp::fmi2::DependenciesKind::Value::dependent)
                 {
-                    std::cout << "Dependent: " << output.index << " : " << dependency << endl;
+                    dependency_map[index] = dependency;
                 }
             }
         }
+        print_map(dependency_map);
     }
 
     return 0;

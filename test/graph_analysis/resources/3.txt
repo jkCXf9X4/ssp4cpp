@@ -115,7 +115,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : Pamb
@@ -146,7 +145,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : Alt
@@ -177,7 +175,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : Ma
@@ -208,7 +205,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : DTisa
@@ -239,7 +235,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 }
 

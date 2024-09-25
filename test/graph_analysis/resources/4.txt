@@ -130,7 +130,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : sWsignals.Aircraft_State
@@ -154,7 +153,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : Aircraft_State
@@ -185,7 +183,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : LHexTout
@@ -216,7 +213,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : realToInteger.u
@@ -247,7 +243,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 fmi2ScalarVariable { 
 name                                : realToInteger.y
@@ -271,7 +266,6 @@ Enumeration                         : null
 Annotations                         : {
 }
 
-index                               : 0
 }
 }
 
