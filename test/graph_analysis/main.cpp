@@ -136,27 +136,30 @@ int main()
             continue;
         }
 
-        for (auto unkown : outputs.value().Unknowns)
+        auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies_variables(
+            outputs.value().Unknowns,
+            fmu.md.ModelVariables,
+            ssp4cpp::fmi2::DependenciesKind::dependent);
+
+        for (auto [output, input, kind] : dependencies)
         {
-            auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies_variables(unkown, fmu.md.ModelVariables, ssp4cpp::fmi2::DependenciesKind::dependent);
+            auto output_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + output.name;
+            auto input_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + input.name;
 
-            //print
-            for (auto [output, input, kind] : dependencies)
+            if (input.causality == ssp4cpp::fmi2::Causality::input)
             {
-                std::cout << "Input: " << input.name << " -> " << "Output: " << output.name   << endl;
-
-                auto output_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + output.name;
-                auto input_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + input.name;
-
-                std::cout << "Input: " << input_name << " -> " << "Output: " << output_name   << endl;
+                std::cout << "Input: " << input_name << " -> " << "Output: " << output_name << endl;
                 add_edge(connector_map[input_name], connector_map[output_name], g);
             }
-
+            else
+            {
+                std::cout << "Dependency: " << input_name << " -> " << "Causality: " << to_str(input.causality) << endl;
+            }
         }
     }
+        return 0;
 
     boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
-
 
     std::cout << "Parsing complete\n";
 }

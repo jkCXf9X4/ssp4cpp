@@ -31,6 +31,7 @@ namespace ssp4cpp::fmi2
 
         Causality() = default;
         constexpr Causality(Value value) : value(value) {}
+        operator Value () const {return value;}
 
         string to_string() const override
         {
@@ -104,6 +105,7 @@ namespace ssp4cpp::fmi2
 
         Variability() = default;
         constexpr Variability(Value value) : value(value) {}
+        operator Value () const {return value;}
 
         string to_string() const override
         {
@@ -169,6 +171,7 @@ namespace ssp4cpp::fmi2
 
         Initial() = default;
         constexpr Initial(Value value) : value(value) {}
+        operator Value () const {return value;}
 
         string to_string() const override
         {
@@ -224,7 +227,6 @@ namespace ssp4cpp::fmi2
 
         DependenciesKind() = default;
         constexpr DependenciesKind(Value value) : value(value) {}
-
         operator Value () const {return value;}
 
         string to_string() const override
@@ -302,6 +304,7 @@ namespace ssp4cpp::fmi2
 
         LogCategory() = default;
         constexpr LogCategory(Value value) : value(value) {}
+        operator Value () const {return value;}
 
         string to_string() const override
         {

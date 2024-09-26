@@ -265,7 +265,7 @@ namespace ssp4cpp::fmi2
         string name;
         optional<unsigned int> valueReference;
         optional<string> description;
-        optional<string> causality;
+        optional<fmi2::Causality> causality;
         optional<string> variability;
         optional<string> initial;
         optional<bool> canHandleMultipleSetPerTimeInstant;

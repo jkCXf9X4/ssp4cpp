@@ -122,9 +122,9 @@ stepSize = { type = "double", optional = true }
 name = { type = "string" }
 valueReference = { type = "unsigned int", optional = true }
 description = { type = "string", optional = true }
-causality = { type = "string", optional = true }
-variability = { type = "string", optional = true }
-initial = { type = "string", optional = true }
+causality = { type = "fmi2::Causality", optional = true }
+variability = { type = "fmi2::Variability", optional = true }
+initial = { type = "fmi2::Initial", optional = true }
 canHandleMultipleSetPerTimeInstant = { type = "bool", optional = true }
 Real = { type = "fmi2::Real", optional = true }
 Integer = { type = "fmi2::Integer", optional = true }

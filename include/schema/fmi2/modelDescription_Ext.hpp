@@ -34,6 +34,8 @@ namespace ssp4cpp::fmi2
         static vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv);
 
         static vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind);
+
+        static vector<VariableDependencyCoupling> get_dependencies_variables(vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind);
     };
 
 }

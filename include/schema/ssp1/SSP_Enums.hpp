@@ -25,6 +25,7 @@ namespace ssp4cpp::ssp1::ssd
 
         ComponentType() = default;
         constexpr ComponentType(Value value) : value(value) {}
+        operator Value () const {return value;}
 
         string to_string() const override
         {

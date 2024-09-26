@@ -7,6 +7,7 @@
 #include "FMI_Enums.hpp"
 
 #include "modelDescription_Ext.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -20,6 +21,7 @@ namespace ssp4cpp::fmi2
             throw invalid_argument("Index out of range");
         }
 
+        // index start at 1
         return mv.ScalarVariable[index - 1];
     }
 
@@ -31,7 +33,7 @@ namespace ssp4cpp::fmi2
     // output index, dependency index , kind
     vector<IndexDependencyCoupling> Unknown_Ext::get_dependencies_index(Unknown &u, DependenciesKind kind)
     {
-        vector<IndexDependencyCoupling> result;
+        auto result = vector<IndexDependencyCoupling>();
 
         if (!u.dependencies.has_value())
         {
@@ -45,7 +47,8 @@ namespace ssp4cpp::fmi2
 
             if (kind == DependenciesKind::unknown || dependency_kind == kind)
             {
-                result.push_back(make_tuple(u.index, dependency, dependency_kind));
+                auto t = make_tuple(u.index, dependency, dependency_kind);
+                result.push_back(t);
             }
         }
 
@@ -59,14 +62,14 @@ namespace ssp4cpp::fmi2
 
     vector<VariableDependencyCoupling> Unknown_Ext::get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind)
     {
-        vector<VariableDependencyCoupling> result;
+        auto result = vector<VariableDependencyCoupling>();
 
         auto dependencies = Unknown_Ext::get_dependencies_index(u, kind);
 
         for (auto [index, dependency, kind] : dependencies)
         {
-            auto output = ModelVariables_Ext::get_variable(mv, index);
-            auto dep = ModelVariables_Ext::get_variable(mv, dependency);
+            auto& output = ModelVariables_Ext::get_variable(mv, index);
+            auto& dep = ModelVariables_Ext::get_variable(mv, dependency);
 
             auto t = VariableDependencyCoupling(output, dep, kind);
             result.push_back(t);
@@ -76,12 +79,11 @@ namespace ssp4cpp::fmi2
 
     vector<VariableDependencyCoupling> Unknown_Ext::get_dependencies_variables(vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind)
     {
-        vector<VariableDependencyCoupling> result;
+        auto result = vector<VariableDependencyCoupling>();
 
-        for (auto u : us)
+        for (auto& u : us)
         {
-            auto dependencies = Unknown_Ext::get_dependencies_variables(u, kind);
-
+            auto dependencies = Unknown_Ext::get_dependencies_variables(u, mv, kind);
             result.insert(result.end(), dependencies.begin(), dependencies.end());
         }
         return result;
