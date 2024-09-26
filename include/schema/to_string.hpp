@@ -1,5 +1,7 @@
 #pragma once
 
+#include "IXmlNode.hpp"
+
 #include <string>
 #include <vector>
 #include <optional>
@@ -7,7 +9,6 @@
 
 #include <type_traits>
 
-#include "IXmlNode.hpp"
 
 namespace ssp4cpp::str
 {

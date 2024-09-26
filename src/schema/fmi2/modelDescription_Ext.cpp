@@ -13,20 +13,25 @@ using namespace std;
 namespace ssp4cpp::fmi2
 {
 
-    fmi2::fmi2ScalarVariable &ModelVariables_Ext::get_variable(ModelVariables &mv, int index)
+    fmi2ScalarVariable &ModelVariables_Ext::get_variable(ModelVariables &mv, int index)
     {
         if (index < 0 || index >= mv.ScalarVariable.size())
         {
             throw invalid_argument("Index out of range");
         }
 
-        return mv.ScalarVariable[index-1];
+        return mv.ScalarVariable[index - 1];
+    }
+
+    vector<IndexDependencyCoupling> Unknown_Ext::get_dependencies_index(Unknown &u)
+    {
+        return get_dependencies_index(u, DependenciesKind::unknown);
     }
 
     // output index, dependency index , kind
-    vector<tuple<int, int, DependenciesKind>> Unknown_Ext::get_dependencies(Unknown &u, DependenciesKind kind)
+    vector<IndexDependencyCoupling> Unknown_Ext::get_dependencies_index(Unknown &u, DependenciesKind kind)
     {
-        vector<tuple<int, int, DependenciesKind>> result;
+        vector<IndexDependencyCoupling> result;
 
         if (!u.dependencies.has_value())
         {
@@ -47,9 +52,39 @@ namespace ssp4cpp::fmi2
         return result;
     }
 
-    vector<tuple<int, int, DependenciesKind>> Unknown_Ext::get_dependencies(Unknown &u)
+    vector<VariableDependencyCoupling> Unknown_Ext::get_dependencies_variables(Unknown &u, ModelVariables &mv)
     {
-        return Unknown_Ext::get_dependencies(u, DependenciesKind::unknown);
+        return get_dependencies_variables(u, mv, DependenciesKind::unknown);
     }
 
-}
+    vector<VariableDependencyCoupling> Unknown_Ext::get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind)
+    {
+        vector<VariableDependencyCoupling> result;
+
+        auto dependencies = Unknown_Ext::get_dependencies_index(u, kind);
+
+        for (auto [index, dependency, kind] : dependencies)
+        {
+            auto output = ModelVariables_Ext::get_variable(mv, index);
+            auto dep = ModelVariables_Ext::get_variable(mv, dependency);
+
+            auto t = VariableDependencyCoupling(output, dep, kind);
+            result.push_back(t);
+        }
+        return result;
+    }
+
+    vector<VariableDependencyCoupling> Unknown_Ext::get_dependencies_variables(vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind)
+    {
+        vector<VariableDependencyCoupling> result;
+
+        for (auto u : us)
+        {
+            auto dependencies = Unknown_Ext::get_dependencies_variables(u, kind);
+
+            result.insert(result.end(), dependencies.begin(), dependencies.end());
+        }
+        return result;
+    }
+
+} // namespace ssp4cpp::fmi2

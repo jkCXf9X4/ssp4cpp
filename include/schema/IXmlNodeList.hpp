@@ -1,5 +1,8 @@
 #pragma once
 
+#include "IXmlNode.hpp"
+#include "to_string.hpp"
+
 #include <string>
 #include <vector>
 #include <optional>
@@ -7,9 +10,6 @@
 #include <sstream>
 
 #include <type_traits>
-
-#include "IXmlNode.hpp"
-#include "to_string.hpp"
 
 namespace ssp4cpp::interfaces
 {

@@ -1,8 +1,9 @@
 #pragma once
 
+#include "ssp1/SystemStructureCommon.hpp"
+
 #include <pugixml.hpp>
 
-#include "ssp1/SystemStructureCommon.hpp"
 
 using namespace pugi;
 namespace ssp4cpp::ssp1::ssc

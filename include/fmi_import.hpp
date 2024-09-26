@@ -1,11 +1,12 @@
 #pragma once
 
+#include "modelDescription.hpp"
+
 #include <string>
 #include <vector>
 #include <filesystem>
 #include <optional>
 
-#include "modelDescription.hpp"
 
 using namespace std;
 using namespace std::filesystem;

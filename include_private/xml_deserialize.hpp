@@ -1,4 +1,5 @@
-// #pragma once
+#pragma once
+#include "IXmlNode.hpp"
 
 #include <pugixml.hpp>
 
@@ -8,7 +9,6 @@
 #include <iostream>
 #include <vector>
 
-#include "IXmlNode.hpp"
 
 // deserialize xml to object
 

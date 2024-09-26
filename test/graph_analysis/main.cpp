@@ -98,7 +98,7 @@ int main()
                 {
                     auto name = component.name.value() + "." + connector.name;
                     connector_map[name] = connector_index++;
-                    // cout << name << endl;
+                    cout << name << endl;
                 }
             }
         }
@@ -123,7 +123,7 @@ int main()
         auto end = connection.endElement.value() + "." + connection.endConnector;
 
         add_edge(connector_map[start], connector_map[end], g);
-        // cout << connector_map[start] << " -> " << connector_map[end] << endl;
+        cout << connector_map[start] << " -> " << connector_map[end] << endl;
     }
 
     for (auto fmu : fmus)
@@ -138,18 +138,15 @@ int main()
 
         for (auto unkown : outputs.value().Unknowns)
         {
-            auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies(unkown, ssp4cpp::fmi2::DependenciesKind::dependent);
+            auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies_variables(unkown, fmu.md.ModelVariables, ssp4cpp::fmi2::DependenciesKind::dependent);
 
             //print
-            for (auto [index, dependency, kind] : dependencies)
+            for (auto [output, input, kind] : dependencies)
             {
-                std::cout << "Dependency: " << index << " -> " << dependency << " kind: " << kind << endl;
-                auto output = ssp4cpp::fmi2::ModelVariables_Ext::get_variable(fmu.md.ModelVariables, index);
-                auto dep = ssp4cpp::fmi2::ModelVariables_Ext::get_variable(fmu.md.ModelVariables, dependency);
-                std::cout << "Input: " << dep.name << " -> " << "Output: " << output.name   << endl;
+                std::cout << "Input: " << input.name << " -> " << "Output: " << output.name   << endl;
 
                 auto output_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + output.name;
-                auto input_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + dep.name;
+                auto input_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + input.name;
 
                 std::cout << "Input: " << input_name << " -> " << "Output: " << output_name   << endl;
                 add_edge(connector_map[input_name], connector_map[output_name], g);

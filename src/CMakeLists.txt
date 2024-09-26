@@ -13,7 +13,7 @@ file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 
 add_library(ssp4cpp  ${ALL_SRC})
 
-target_compile_options(ssp4cpp PRIVATE -Wfatal-errors)
+# target_compile_options(ssp4cpp PRIVATE -Wfatal-errors)
 
 find_package(boost_log CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE Boost::log)

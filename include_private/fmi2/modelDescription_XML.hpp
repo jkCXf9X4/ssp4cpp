@@ -1,8 +1,9 @@
 #pragma once
 
+#include "modelDescription.hpp"
+
 #include <pugixml.hpp>
 
-#include "modelDescription.hpp"
 
 using namespace pugi;
 

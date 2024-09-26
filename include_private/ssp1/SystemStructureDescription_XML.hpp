@@ -1,8 +1,9 @@
 #pragma once
 
+#include "ssp1/SystemStructureDescription.hpp"
+
 #include <pugixml.hpp>
 
-#include "ssp1/SystemStructureDescription.hpp"
 
 using namespace pugi;
 namespace ssp4cpp::ssp1::ssd
