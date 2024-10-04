@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.tpp": "cpp",
         "iostream": "cpp",
         "optional": "cpp",
         "cctype": "cpp",
@@ -80,6 +81,8 @@
         "rope": "cpp",
         "shared_mutex": "cpp",
         "*.ipp": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "span": "cpp",
+        "format": "cpp"
     },
 }

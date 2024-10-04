@@ -57,7 +57,7 @@ int main()
     // Opening zip
     std::cout << "Opening ssp\n";
 
-    auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/embrace.ssp");
+    auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/ssp4cpp/repos/ssp4cpp/test/graph_analysis/resources/algebraic_loop_1.ssp");
 
     std::cout << "Imported ssp! \n";
 
@@ -68,21 +68,19 @@ int main()
     save_string("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/parsed.txt", ssp.ssd.to_string());
 
     // Parsing FMI
-    auto fmus = vector<ssp4cpp::fmi2::FmiImport>();
-    auto fmu_name_to_ssp_name = map<string, string>();
+    auto fmus = vector<pair<string, ssp4cpp::fmi2::FmiImport>>();
+    auto fmu_name_to_ssp_name = pair<string, string>();
 
     for (int i = 0; i < ssp.resources.size(); i++)
     {
+        auto resource = ssp.resources[i];
+
         auto fmu = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
-        fmus.push_back(fmu);
+        auto p = pair(resource.name.value_or("null"), fmu);
+        fmus.push_back(p);
 
         save_string("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/" + std::to_string(i) + ".txt", fmu.md.to_string());
-
-        auto resource = ssp.resources[i];
-        fmu_name_to_ssp_name[fmu.md.modelName] = resource.name.value_or("null");
     }
-
-    print_map(fmu_name_to_ssp_name);
 
     // Count nodes
     map<string, int> connector_map;
@@ -98,11 +96,13 @@ int main()
                 {
                     auto name = component.name.value() + "." + connector.name;
                     connector_map[name] = connector_index++;
-                    cout << name << endl;
+                    // cout << name << " : " << connector_map[name] << endl;
                 }
             }
         }
     }
+
+    print_map(connector_map);
 
     typedef adjacency_list<vecS, vecS, boost::directedS, property<vertex_name_t, std::string>> Graph;
     // typedef std::pair<int, int> Edge;
@@ -114,6 +114,7 @@ int main()
     for (auto [name, index] : connector_map)
     {
         boost::put(boost::vertex_name_t(), g, index, name);
+
     }
 
     // add ssp edges
@@ -123,10 +124,10 @@ int main()
         auto end = connection.endElement.value() + "." + connection.endConnector;
 
         add_edge(connector_map[start], connector_map[end], g);
-        cout << connector_map[start] << " -> " << connector_map[end] << endl;
+        cout << start << ": " << connector_map[start] << " -> " << end << ": " << connector_map[end] << endl;
     }
 
-    for (auto fmu : fmus)
+    for (auto [name, fmu] : fmus)
     {
         std::cout << fmu.md.modelName << endl;
         auto outputs = fmu.md.ModelStructure.Outputs;
@@ -143,12 +144,12 @@ int main()
 
         for (auto [output, input, kind] : dependencies)
         {
-            auto output_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + output.name;
-            auto input_name = fmu_name_to_ssp_name[fmu.md.modelName] + "." + input.name;
+            auto input_name = name + "." + input.name;
+            auto output_name = name + "." + output.name;
 
             if (input.causality == ssp4cpp::fmi2::Causality::input)
             {
-                std::cout << "Input: " << input_name << " -> " << "Output: " << output_name << endl;
+                std::cout << "Input: " << input_name << " " << connector_map[input_name] << " -> " << "Output: " << output_name << " " << connector_map[output_name] << endl;
                 add_edge(connector_map[input_name], connector_map[output_name], g);
             }
             else
@@ -157,7 +158,18 @@ int main()
             }
         }
     }
-        return 0;
+    {
+
+        add_edge(connector_map["dynamic_connection_fmu_fmu1.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu1.dynamic_ouput_1"], g);
+        add_edge(connector_map["dynamic_connection_fmu_fmu1.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu1.dynamic_output_2"], g);
+        add_edge(connector_map["dynamic_connection_fmu_fmu2.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu2.dynamic_ouput_1"], g);
+        add_edge(connector_map["dynamic_connection_fmu_fmu2.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu2.dynamic_output_2"], g);
+        add_edge(connector_map["dynamic_connection_fmu_fmu3.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu3.dynamic_ouput_1"], g);
+        add_edge(connector_map["dynamic_connection_fmu_fmu3.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu3.dynamic_output_2"], g);
+        add_edge(connector_map["dynamic_connection_fmu_fmu4.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu4.dynamic_ouput_1"], g);
+        add_edge(connector_map["dynamic_connection_fmu_fmu4.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu4.dynamic_output_2"], g);
+    }
+
 
     boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
 
