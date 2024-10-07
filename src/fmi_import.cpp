@@ -26,7 +26,7 @@ namespace ssp4cpp::fmi2
 
     FmiImport::~FmiImport()
     {
-        // fs::remove_all(temp_dir);
+        fs::remove_all(temp_dir);
     }
 
     fmi2ModelDescription FmiImport::parse_model_description(const string &fileName)

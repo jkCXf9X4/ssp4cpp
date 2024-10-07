@@ -39,7 +39,7 @@ namespace ssp4cpp::ssp1
 
     SspImport::~SspImport()
     {
-        // fs::remove_all(temp_dir);
+        fs::remove_all(temp_dir);
     }
 
     ssd::SystemStructureDescription SspImport::parse_system_structure(const string &fileName)

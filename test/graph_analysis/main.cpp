@@ -57,7 +57,7 @@ int main()
     // Opening zip
     std::cout << "Opening ssp\n";
 
-    auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/ssp4cpp/repos/ssp4cpp/test/graph_analysis/resources/algebraic_loop_1.ssp");
+    auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/ssp4cpp/repos/ssp4cpp/test/graph_analysis/resources/algebraic_loop_3.ssp");
 
     std::cout << "Imported ssp! \n";
 
@@ -83,7 +83,9 @@ int main()
     }
 
     // Count nodes
-    map<string, int> connector_map;
+    map<string, int> connector_str_int_map;
+    map<int, string> connector_int_str_map;
+
     {
         int connector_index = 0;
         // index all connectors
@@ -95,26 +97,29 @@ int main()
                 if (connector.kind == "input" || connector.kind == "output")
                 {
                     auto name = component.name.value() + "." + connector.name;
-                    connector_map[name] = connector_index++;
+
+                    connector_str_int_map[name] = connector_index;
+                    connector_int_str_map[connector_index] = name;
+                    connector_index += 1;
                     // cout << name << " : " << connector_map[name] << endl;
                 }
             }
         }
     }
 
-    print_map(connector_map);
+    // print_map(connector_str_int_map);
+    // print_map(connector_int_str_map);
+    assert(connector_str_int_map.size() == connector_int_str_map.size());
 
     typedef adjacency_list<vecS, vecS, boost::directedS, property<vertex_name_t, std::string>> Graph;
-    // typedef std::pair<int, int> Edge;
 
-    std::cout << "Connectors: " << connector_map.size() << endl;
-    Graph g(connector_map.size());
+    std::cout << "Connectors: " << connector_str_int_map.size() << endl;
+    Graph g(connector_str_int_map.size());
 
     // store name in node
-    for (auto [name, index] : connector_map)
+    for (auto [name, index] : connector_str_int_map)
     {
         boost::put(boost::vertex_name_t(), g, index, name);
-
     }
 
     // add ssp edges
@@ -123,17 +128,17 @@ int main()
         auto start = connection.startElement.value() + "." + connection.startConnector;
         auto end = connection.endElement.value() + "." + connection.endConnector;
 
-        add_edge(connector_map[start], connector_map[end], g);
-        cout << start << ": " << connector_map[start] << " -> " << end << ": " << connector_map[end] << endl;
+        add_edge(connector_str_int_map[start], connector_str_int_map[end], g);
+        // cout << start << ": " << connector_str_int_map[start] << " -> " << end << ": " << connector_str_int_map[end] << endl;
     }
 
     for (auto [name, fmu] : fmus)
     {
-        std::cout << fmu.md.modelName << endl;
+        // std::cout << fmu.md.modelName << endl;
         auto outputs = fmu.md.ModelStructure.Outputs;
         if (!outputs.has_value())
         {
-            std::cout << "No outputs" << endl;
+            std::cout << fmu.md.modelName << " No outputs" << endl;
             continue;
         }
 
@@ -149,29 +154,63 @@ int main()
 
             if (input.causality == ssp4cpp::fmi2::Causality::input)
             {
-                std::cout << "Input: " << input_name << " " << connector_map[input_name] << " -> " << "Output: " << output_name << " " << connector_map[output_name] << endl;
-                add_edge(connector_map[input_name], connector_map[output_name], g);
+                // std::cout << "Input: " << input_name << " " << connector_str_int_map[input_name] << " -> " << "Output: " << output_name << " " << connector_str_int_map[output_name] << endl;
+                add_edge(connector_str_int_map[input_name], connector_str_int_map[output_name], g);
             }
             else
             {
-                std::cout << "Dependency: " << input_name << " -> " << "Causality: " << to_str(input.causality) << endl;
+                // std::cout << "Dependency: " << input_name << " -> " << "Causality: " << to_str(input.causality) << endl;
             }
         }
     }
-    {
 
-        add_edge(connector_map["dynamic_connection_fmu_fmu1.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu1.dynamic_ouput_1"], g);
-        add_edge(connector_map["dynamic_connection_fmu_fmu1.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu1.dynamic_output_2"], g);
-        add_edge(connector_map["dynamic_connection_fmu_fmu2.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu2.dynamic_ouput_1"], g);
-        add_edge(connector_map["dynamic_connection_fmu_fmu2.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu2.dynamic_output_2"], g);
-        add_edge(connector_map["dynamic_connection_fmu_fmu3.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu3.dynamic_ouput_1"], g);
-        add_edge(connector_map["dynamic_connection_fmu_fmu3.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu3.dynamic_output_2"], g);
-        add_edge(connector_map["dynamic_connection_fmu_fmu4.dynamic_input_1"], connector_map["dynamic_connection_fmu_fmu4.dynamic_ouput_1"], g);
-        add_edge(connector_map["dynamic_connection_fmu_fmu4.dynamic_input_2"], connector_map["dynamic_connection_fmu_fmu4.dynamic_output_2"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_1"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_2"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu2.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu2.dynamic_output_1"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu2.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu2.dynamic_output_2"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu3.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu3.dynamic_output_1"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu3.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu3.dynamic_output_2"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_output_1"], g);
+    // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_output_2"], g);
+
+    // Get the number of vertices in the graph
+    size_t N = num_vertices(g);
+
+    // Initialize an N x N adjacency matrix (DSM) with zeros
+    std::vector<std::vector<int>> dsm(N, std::vector<int>(N, 0));
+
+    // Iterate over all edges and populate the DSM
+    graph_traits<Graph>::edge_iterator ei, ei_end;
+    for (tie(ei, ei_end) = edges(g); ei != ei_end; ++ei)
+    {
+        int u = source(*ei, g); // Source vertex of the edge
+        int v = target(*ei, g); // Target vertex of the edge
+        dsm[u][v] = 1;          // Mark the edge in the DSM
     }
 
+    // Display the DSM matrix
+    std::cout << "Design Structure Matrix (DSM):" << std::endl;
+    for (int i = 0; i < N; i++)
+    {
+        if (i == 0)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                std::cout << ";" << connector_int_str_map[j];
+            }
+            std::cout << std::endl;
+        }
 
-    boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
+        std::cout << connector_int_str_map[i];
+        for (int j = 0; j < N; j++)
+        {
+            std::cout << ";" << dsm[i][j];
+        }
+
+        std::cout << std::endl;
+    }
+
+    // boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
 
     std::cout << "Parsing complete\n";
 }
