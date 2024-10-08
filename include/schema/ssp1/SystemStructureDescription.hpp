@@ -6,6 +6,7 @@
 
 #include "IXmlNode.hpp"
 
+#include "FMI_Enums.hpp"
 #include "SystemStructureCommon.hpp"
 
 using namespace ssp4cpp::interfaces;
@@ -142,7 +143,7 @@ namespace ssp4cpp::ssp1::ssd
         optional<string> id;
         optional<string> description;
         string name;
-        string kind;
+        fmi2::Causality kind;
         optional<ssc::GTypeReal> Real;
         optional<ssc::GTypeInteger> Integer;
         optional<ssc::GTypeBoolean> Boolean;

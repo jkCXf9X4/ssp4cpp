@@ -4,7 +4,9 @@ include_directories(${PROJECT_SOURCE_DIR}/include/schema)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema/ssp1)
 include_directories(${PROJECT_SOURCE_DIR}/include/schema/fmi2)
 
-add_executable(ssp4cpp_graph main.cpp)
+file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
+
+add_executable(ssp4cpp_graph ${ALL_SRC})
 target_link_libraries(ssp4cpp_graph PRIVATE ssp4cpp)
 
 # target_compile_options(ssp4cpp_graph PRIVATE -Wfatal-errors)

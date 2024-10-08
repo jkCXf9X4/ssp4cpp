@@ -6,7 +6,7 @@
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 
-namespace ssp4cpp::dms
+namespace ssp4cpp::dsm
 {
     using namespace boost;
 
@@ -16,7 +16,7 @@ namespace ssp4cpp::dms
     {
     public:
         DSM(Graph g);
-        void DSM::print(std::map<int, std::string> name_map);
+        void Print(std::map<int, std::string> name_map);
 
     private:
         size_t N;

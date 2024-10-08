@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <iostream>
+#include <numeric>
+#include <ranges>
 
-namespace ssp4cpp::dms
+namespace ssp4cpp::dsm
 {
     DSM::DSM(Graph g)
     {
@@ -22,8 +24,18 @@ namespace ssp4cpp::dms
         }
     }
 
-    void DSM::print(std::map<int, std::string> name_map)
+    void DSM::Print(std::map<int, std::string> name_map)
     {
+        auto print_row = std::vector<int>(N);
+        auto print_column = std::vector<int>(N);
+
+        for (int i = 0; i < N; i++)
+        {
+            print_row[i] = std::accumulate(dsm_row[i].begin(), dsm_row[i].end(), 0) != 0;
+            print_column[i] = std::accumulate(dsm_column[i].begin(), dsm_column[i].end(), 0) != 0;
+            // std::cout << print_row[i] << std::endl;
+        }
+
         // Display the DSM matrix
         std::cout << "Design Structure Matrix (DSM):" << std::endl;
         for (int i = 0; i < N; i++)
@@ -32,18 +44,27 @@ namespace ssp4cpp::dms
             {
                 for (int j = 0; j < N; j++)
                 {
-                    std::cout << ";" << name_map[j];
+                    if (print_column[j])
+                    {
+                        std::cout << ";" << name_map[j];
+                    }
                 }
                 std::cout << std::endl;
             }
-
-            std::cout << name_map[i];
-            for (int j = 0; j < N; j++)
+            if (print_row[i])
             {
-                std::cout << ";" << dsm_row[i][j];
-            }
+                std::cout << name_map[i];
+                for (int j = 0; j < N; j++)
+                {
+                    if (print_column[j])
+                    {
 
-            std::cout << std::endl;
+                        std::cout << ";" << dsm_row[i][j];
+                    }
+                }
+
+                std::cout << std::endl;
+            }
         }
     }
 

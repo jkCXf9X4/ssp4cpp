@@ -1,10 +1,16 @@
 
-#include <iostream>
-#include <fstream>
-#include <cassert>
 
 #include "ssp_import.hpp"
 #include "fmi_import.hpp"
+
+#include "dsm.hpp"
+
+#include "SystemStructureDescription.hpp"
+#include "modelDescription_Ext.hpp"
+
+#include <iostream>
+#include <fstream>
+#include <cassert>
 
 #include <boost/config.hpp>
 #include <vector>
@@ -18,9 +24,6 @@
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
-
-#include "SystemStructureDescription.hpp"
-#include "modelDescription_Ext.hpp"
 
 #include <fmi4cpp/fmi4cpp.hpp>
 
@@ -57,7 +60,7 @@ int main()
     // Opening zip
     std::cout << "Opening ssp\n";
 
-    auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/ssp4cpp/repos/ssp4cpp/test/graph_analysis/resources/algebraic_loop_3.ssp");
+    auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/ssp4cpp/repos/ssp4cpp/test/graph_analysis/resources/algebraic_loop_4.ssp");
 
     std::cout << "Imported ssp! \n";
 
@@ -94,7 +97,7 @@ int main()
             // cout << component  << endl;
             for (auto connector : component.Connectors.value().Connectors)
             {
-                if (connector.kind == "input" || connector.kind == "output")
+                if (connector.kind == ssp4cpp::fmi2::Causality::input || connector.kind == ssp4cpp::fmi2::Causality::output )
                 {
                     auto name = component.name.value() + "." + connector.name;
 
@@ -173,42 +176,10 @@ int main()
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_output_1"], g);
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_output_2"], g);
 
-    // Get the number of vertices in the graph
-    size_t N = num_vertices(g);
+    ssp4cpp::dsm::DSM dsm(g);
 
-    // Initialize an N x N adjacency matrix (DSM) with zeros
-    std::vector<std::vector<int>> dsm(N, std::vector<int>(N, 0));
+    dsm.Print(connector_int_str_map);
 
-    // Iterate over all edges and populate the DSM
-    graph_traits<Graph>::edge_iterator ei, ei_end;
-    for (tie(ei, ei_end) = edges(g); ei != ei_end; ++ei)
-    {
-        int u = source(*ei, g); // Source vertex of the edge
-        int v = target(*ei, g); // Target vertex of the edge
-        dsm[u][v] = 1;          // Mark the edge in the DSM
-    }
-
-    // Display the DSM matrix
-    std::cout << "Design Structure Matrix (DSM):" << std::endl;
-    for (int i = 0; i < N; i++)
-    {
-        if (i == 0)
-        {
-            for (int j = 0; j < N; j++)
-            {
-                std::cout << ";" << connector_int_str_map[j];
-            }
-            std::cout << std::endl;
-        }
-
-        std::cout << connector_int_str_map[i];
-        for (int j = 0; j < N; j++)
-        {
-            std::cout << ";" << dsm[i][j];
-        }
-
-        std::cout << std::endl;
-    }
 
     // boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
 
