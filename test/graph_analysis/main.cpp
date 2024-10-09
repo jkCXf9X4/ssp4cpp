@@ -89,7 +89,6 @@ int main()
 
     // Count nodes
     map<string, int> connector_str_int_map;
-    map<int, string> connector_int_str_map;
 
     dsm::Graph g;
     ssp4cpp::ssp1::ssd::IndexConnectorComponentTuples connectors;
@@ -107,23 +106,15 @@ int main()
             auto name = component.get().name.value() + "." + connector.get().name;
 
             connector_str_int_map[name] = index;
-            connector_int_str_map[index] = name;
-            cout << index << " : " << connector.get().name << endl;
+            // cout << index << " : " << connector.get().name << endl;
 
-            g[index].name_ = name;
+            g[index].name = name;
             g[index].component = component.get().name.value();
             g[index].connector = connector.get().name;
-
-
-            // store name in node
-            // boost::put(boost::vertex_name_t(), g, index, name);
         }
     }
 
     // print_map(connector_str_int_map);
-    // print_map(connector_int_str_map);
-    assert(connector_str_int_map.size() == connector_int_str_map.size());
-
 
     std::cout << "add ssp edges\n";
     for (auto connection : ssp.ssd.System.Connections.value().Connections)
@@ -168,7 +159,7 @@ int main()
         }
     }
 
-    // boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
+    boost::write_graphviz(std::cout, g, make_label_writer(get(&dsm::vertex_info::name, g)));
 
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_1"], g);
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_2"], g);

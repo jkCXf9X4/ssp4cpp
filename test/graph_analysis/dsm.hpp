@@ -12,7 +12,7 @@ namespace ssp4cpp::dsm
 
     struct vertex_info
     {
-        std::string name_;
+        std::string name;
         std::string component;
         std::string connector;
         int index;

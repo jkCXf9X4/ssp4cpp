@@ -11,7 +11,6 @@ namespace ssp4cpp::dsm
     DSM::DSM(Graph &g) : g_ref(g)
     {
         N = num_vertices(g);
-        // g_ref = g;
         dsm_row = std::vector(N, std::vector<int>(N, 0));
         dsm_column = std::vector(N, std::vector<int>(N, 0));
 
@@ -47,14 +46,14 @@ namespace ssp4cpp::dsm
                 {
                     if (print_column[j])
                     {
-                        std::cout << ";" << g_ref[j].name_;
+                        std::cout << ";" << g_ref[j].name;
                     }
                 }
                 std::cout << std::endl;
             }
             if (print_row[i])
             {
-                std::cout << g_ref[i].name_;
+                std::cout << g_ref[i].name;
                 for (int j = 0; j < N; j++)
                 {
                     if (print_column[j])
