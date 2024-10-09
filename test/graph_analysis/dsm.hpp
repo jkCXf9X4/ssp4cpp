@@ -10,15 +10,25 @@ namespace ssp4cpp::dsm
 {
     using namespace boost;
 
-    typedef adjacency_list<vecS, vecS, directedS, property<vertex_name_t, std::string>> Graph;
+    struct vertex_info
+    {
+        std::string name_;
+        std::string component;
+        std::string connector;
+        int index;
+    };
+
+    typedef adjacency_list<vecS, vecS, boost::directedS, vertex_info> Graph;
 
     class DSM
     {
     public:
-        DSM(Graph g);
-        void Print(std::map<int, std::string> name_map);
+        DSM(Graph &g);
+        void Print();
 
     private:
+
+        Graph& g_ref;
         size_t N;
         std::vector<std::vector<int>> dsm_row;
         std::vector<std::vector<int>> dsm_column;
