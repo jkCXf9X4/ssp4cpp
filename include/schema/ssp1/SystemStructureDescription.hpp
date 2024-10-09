@@ -2,6 +2,7 @@
 
 // This is a generated file, do not alter
 // it is based on ssp1_ssd.toml
+#pragma once
 
 #include "IXmlNode.hpp"
 #include "FMI2_Enums.hpp"

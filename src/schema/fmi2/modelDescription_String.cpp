@@ -1,19 +1,19 @@
 
-#include <string>
 
-#include <optional>
-#include <vector>
+// This is a generated file, do not alter
+// it is based on fmi2_md.toml
 
-#include "modelDescription.hpp"
+#include "FMI2_modelDescription.hpp"
 #include "to_string.hpp"
 
-using namespace std;
-using namespace ssp4cpp::str;
+#include <string>
 
-namespace ssp4cpp::fmi2
+namespace ssp4cpp::fmi2::md
 {
+    using namespace ssp4cpp::str;
+
      // BaseUnit
-    string BaseUnit::to_string(void) const
+    std::string BaseUnit::to_string(void) const
     {
         return "BaseUnit { \n"
                "kg      : " + to_str( kg      ) + "\n" +
@@ -30,7 +30,7 @@ namespace ssp4cpp::fmi2
     }
 
      // DisplayUnit
-    string DisplayUnit::to_string(void) const
+    std::string DisplayUnit::to_string(void) const
     {
         return "DisplayUnit { \n"
                "name    : " + to_str( name    ) + "\n" +
@@ -40,7 +40,7 @@ namespace ssp4cpp::fmi2
     }
 
      // fmi2Unit
-    string fmi2Unit::to_string(void) const
+    std::string fmi2Unit::to_string(void) const
     {
         return "fmi2Unit { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -50,7 +50,7 @@ namespace ssp4cpp::fmi2
     }
 
      // UnitDefinitions
-    string UnitDefinitions::to_string(void) const
+    std::string UnitDefinitions::to_string(void) const
     {
         return "UnitDefinitions { \n"
                "Units  : " + to_str( Units  ) + "\n" +
@@ -58,7 +58,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Boolean
-    string Boolean::to_string(void) const
+    std::string Boolean::to_string(void) const
     {
         return "Boolean { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -67,7 +67,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Integer
-    string Integer::to_string(void) const
+    std::string Integer::to_string(void) const
     {
         return "Integer { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -79,7 +79,7 @@ namespace ssp4cpp::fmi2
     }
 
      // String
-    string String::to_string(void) const
+    std::string String::to_string(void) const
     {
         return "String { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -88,7 +88,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Real
-    string Real::to_string(void) const
+    std::string Real::to_string(void) const
     {
         return "Real { \n"
                "declaredType      : " + to_str( declaredType      ) + "\n" +
@@ -107,7 +107,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Enumeration
-    string Enumeration::to_string(void) const
+    std::string Enumeration::to_string(void) const
     {
         return "Enumeration { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -119,7 +119,7 @@ namespace ssp4cpp::fmi2
     }
 
      // SimpleTypeEnumerationItem
-    string SimpleTypeEnumerationItem::to_string(void) const
+    std::string SimpleTypeEnumerationItem::to_string(void) const
     {
         return "SimpleTypeEnumerationItem { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -129,7 +129,7 @@ namespace ssp4cpp::fmi2
     }
 
      // SimpleTypeEnumeration
-    string SimpleTypeEnumeration::to_string(void) const
+    std::string SimpleTypeEnumeration::to_string(void) const
     {
         return "SimpleTypeEnumeration { \n"
                "quantity  : " + to_str( quantity  ) + "\n" +
@@ -138,7 +138,7 @@ namespace ssp4cpp::fmi2
     }
 
      // fmi2SimpleType
-    string fmi2SimpleType::to_string(void) const
+    std::string fmi2SimpleType::to_string(void) const
     {
         return "fmi2SimpleType { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -152,7 +152,7 @@ namespace ssp4cpp::fmi2
     }
 
      // TypeDefinitions
-    string TypeDefinitions::to_string(void) const
+    std::string TypeDefinitions::to_string(void) const
     {
         return "TypeDefinitions { \n"
                "SimpleTypes  : " + to_str( SimpleTypes  ) + "\n" +
@@ -160,7 +160,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Category
-    string Category::to_string(void) const
+    std::string Category::to_string(void) const
     {
         return "Category { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -169,7 +169,7 @@ namespace ssp4cpp::fmi2
     }
 
      // LogCategories
-    string LogCategories::to_string(void) const
+    std::string LogCategories::to_string(void) const
     {
         return "LogCategories { \n"
                "Categories  : " + to_str( Categories  ) + "\n" +
@@ -177,7 +177,7 @@ namespace ssp4cpp::fmi2
     }
 
      // fmi2Annotation
-    string fmi2Annotation::to_string(void) const
+    std::string fmi2Annotation::to_string(void) const
     {
         return "fmi2Annotation { \n"
                "annotation  : " + to_str( annotation  ) + "\n" +
@@ -185,7 +185,7 @@ namespace ssp4cpp::fmi2
     }
 
      // VendorAnnotations
-    string VendorAnnotations::to_string(void) const
+    std::string VendorAnnotations::to_string(void) const
     {
         return "VendorAnnotations { \n"
                "Annotations  : " + to_str( Annotations  ) + "\n" +
@@ -193,7 +193,7 @@ namespace ssp4cpp::fmi2
     }
 
      // DefaultExperiment
-    string DefaultExperiment::to_string(void) const
+    std::string DefaultExperiment::to_string(void) const
     {
         return "DefaultExperiment { \n"
                "startTime  : " + to_str( startTime  ) + "\n" +
@@ -204,7 +204,7 @@ namespace ssp4cpp::fmi2
     }
 
      // fmi2ScalarVariable
-    string fmi2ScalarVariable::to_string(void) const
+    std::string fmi2ScalarVariable::to_string(void) const
     {
         return "fmi2ScalarVariable { \n"
                "name                                : " + to_str( name                                ) + "\n" +
@@ -224,7 +224,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Unknown
-    string Unknown::to_string(void) const
+    std::string Unknown::to_string(void) const
     {
         return "Unknown { \n"
                "index             : " + to_str( index             ) + "\n" +
@@ -234,7 +234,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Outputs
-    string Outputs::to_string(void) const
+    std::string Outputs::to_string(void) const
     {
         return "Outputs { \n"
                "Unknowns  : " + to_str( Unknowns  ) + "\n" +
@@ -242,7 +242,7 @@ namespace ssp4cpp::fmi2
     }
 
      // Derivatives
-    string Derivatives::to_string(void) const
+    std::string Derivatives::to_string(void) const
     {
         return "Derivatives { \n"
                "Unknowns  : " + to_str( Unknowns  ) + "\n" +
@@ -250,7 +250,7 @@ namespace ssp4cpp::fmi2
     }
 
      // InitialUnknowns
-    string InitialUnknowns::to_string(void) const
+    std::string InitialUnknowns::to_string(void) const
     {
         return "InitialUnknowns { \n"
                "Unknowns  : " + to_str( Unknowns  ) + "\n" +
@@ -258,7 +258,7 @@ namespace ssp4cpp::fmi2
     }
 
      // ModelStructure
-    string ModelStructure::to_string(void) const
+    std::string ModelStructure::to_string(void) const
     {
         return "ModelStructure { \n"
                "Outputs          : " + to_str( Outputs          ) + "\n" +
@@ -268,7 +268,7 @@ namespace ssp4cpp::fmi2
     }
 
      // ModelVariables
-    string ModelVariables::to_string(void) const
+    std::string ModelVariables::to_string(void) const
     {
         return "ModelVariables { \n"
                "ScalarVariable  : " + to_str( ScalarVariable  ) + "\n" +
@@ -276,7 +276,7 @@ namespace ssp4cpp::fmi2
     }
 
      // File
-    string File::to_string(void) const
+    std::string File::to_string(void) const
     {
         return "File { \n"
                "name  : " + to_str( name  ) + "\n" +
@@ -284,7 +284,7 @@ namespace ssp4cpp::fmi2
     }
 
      // SourceFiles
-    string SourceFiles::to_string(void) const
+    std::string SourceFiles::to_string(void) const
     {
         return "SourceFiles { \n"
                "Files  : " + to_str( Files  ) + "\n" +
@@ -292,7 +292,7 @@ namespace ssp4cpp::fmi2
     }
 
      // ModelExchange
-    string ModelExchange::to_string(void) const
+    std::string ModelExchange::to_string(void) const
     {
         return "ModelExchange { \n"
                "modelIdentifier                      : " + to_str( modelIdentifier                      ) + "\n" +
@@ -308,7 +308,7 @@ namespace ssp4cpp::fmi2
     }
 
      // CoSimulation
-    string CoSimulation::to_string(void) const
+    std::string CoSimulation::to_string(void) const
     {
         return "CoSimulation { \n"
                "modelIdentifier                         : " + to_str( modelIdentifier                         ) + "\n" +
@@ -327,7 +327,7 @@ namespace ssp4cpp::fmi2
     }
 
      // fmi2ModelDescription
-    string fmi2ModelDescription::to_string(void) const
+    std::string fmi2ModelDescription::to_string(void) const
     {
         return "fmi2ModelDescription { \n"
                "fmiVersion                : " + to_str( fmiVersion                ) + "\n" +
@@ -353,6 +353,5 @@ namespace ssp4cpp::fmi2
                "ModelStructure            : " + to_str( ModelStructure            ) + "\n" +
                "}";
     }
-
 
 }

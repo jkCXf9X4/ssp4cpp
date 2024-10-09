@@ -1,19 +1,19 @@
-#include <string>
-#include <vector>
-#include <optional>
-#include <iostream>
 
-#include "SystemStructureCommon.hpp"
 
+// This is a generated file, do not alter
+// it is based on ssp1_ssc.toml
+
+#include "SSP1_SystemStructureCommon.hpp"
 #include "to_string.hpp"
 
-using namespace std;
-using namespace ssp4cpp::str;
+#include <string>
 
 namespace ssp4cpp::ssp1::ssc
 {
+    using namespace ssp4cpp::str;
+
      // Annotation
-    string Annotation::to_string(void) const
+    std::string Annotation::to_string(void) const
     {
         return "Annotation { \n"
                "type  : " + to_str( type  ) + "\n" +
@@ -22,7 +22,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // TAnnotations
-    string TAnnotations::to_string(void) const
+    std::string TAnnotations::to_string(void) const
     {
         return "TAnnotations { \n"
                "Annotations  : " + to_str( Annotations  ) + "\n" +
@@ -30,7 +30,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // LinearTransformation
-    string LinearTransformation::to_string(void) const
+    std::string LinearTransformation::to_string(void) const
     {
         return "LinearTransformation { \n"
                "factor  : " + to_str( factor  ) + "\n" +
@@ -39,7 +39,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // BooleanMapEntry
-    string BooleanMapEntry::to_string(void) const
+    std::string BooleanMapEntry::to_string(void) const
     {
         return "BooleanMapEntry { \n"
                "source  : " + to_str( source  ) + "\n" +
@@ -48,7 +48,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // BooleanMappingTransformation
-    string BooleanMappingTransformation::to_string(void) const
+    std::string BooleanMappingTransformation::to_string(void) const
     {
         return "BooleanMappingTransformation { \n"
                "MapEntrys  : " + to_str( MapEntrys  ) + "\n" +
@@ -56,7 +56,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // IntegerMapEntry
-    string IntegerMapEntry::to_string(void) const
+    std::string IntegerMapEntry::to_string(void) const
     {
         return "IntegerMapEntry { \n"
                "source  : " + to_str( source  ) + "\n" +
@@ -65,7 +65,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // IntegerMappingTransformation
-    string IntegerMappingTransformation::to_string(void) const
+    std::string IntegerMappingTransformation::to_string(void) const
     {
         return "IntegerMappingTransformation { \n"
                "MapEntrys  : " + to_str( MapEntrys  ) + "\n" +
@@ -73,7 +73,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // EnumerationMapEntry
-    string EnumerationMapEntry::to_string(void) const
+    std::string EnumerationMapEntry::to_string(void) const
     {
         return "EnumerationMapEntry { \n"
                "source  : " + to_str( source  ) + "\n" +
@@ -82,7 +82,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // EnumerationMappingTransformation
-    string EnumerationMappingTransformation::to_string(void) const
+    std::string EnumerationMappingTransformation::to_string(void) const
     {
         return "EnumerationMappingTransformation { \n"
                "MapEntrys  : " + to_str( MapEntrys  ) + "\n" +
@@ -90,7 +90,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // Item
-    string Item::to_string(void) const
+    std::string Item::to_string(void) const
     {
         return "Item { \n"
                "name   : " + to_str( name   ) + "\n" +
@@ -99,7 +99,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // TEnumeration
-    string TEnumeration::to_string(void) const
+    std::string TEnumeration::to_string(void) const
     {
         return "TEnumeration { \n"
                "id           : " + to_str( id           ) + "\n" +
@@ -111,7 +111,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // TEnumerations
-    string TEnumerations::to_string(void) const
+    std::string TEnumerations::to_string(void) const
     {
         return "TEnumerations { \n"
                "Enumerations  : " + to_str( Enumerations  ) + "\n" +
@@ -119,7 +119,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // BaseUnit
-    string BaseUnit::to_string(void) const
+    std::string BaseUnit::to_string(void) const
     {
         return "BaseUnit { \n"
                "kg      : " + to_str( kg      ) + "\n" +
@@ -136,7 +136,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // TUnit
-    string TUnit::to_string(void) const
+    std::string TUnit::to_string(void) const
     {
         return "TUnit { \n"
                "id           : " + to_str( id           ) + "\n" +
@@ -148,7 +148,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // TUnits
-    string TUnits::to_string(void) const
+    std::string TUnits::to_string(void) const
     {
         return "TUnits { \n"
                "Units  : " + to_str( Units  ) + "\n" +
@@ -156,7 +156,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeReal
-    string GTypeReal::to_string(void) const
+    std::string GTypeReal::to_string(void) const
     {
         return "GTypeReal { \n"
                "unit  : " + to_str( unit  ) + "\n" +
@@ -164,7 +164,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeInteger
-    string GTypeInteger::to_string(void) const
+    std::string GTypeInteger::to_string(void) const
     {
         return "GTypeInteger { \n"
 
@@ -172,7 +172,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeBoolean
-    string GTypeBoolean::to_string(void) const
+    std::string GTypeBoolean::to_string(void) const
     {
         return "GTypeBoolean { \n"
 
@@ -180,7 +180,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeString
-    string GTypeString::to_string(void) const
+    std::string GTypeString::to_string(void) const
     {
         return "GTypeString { \n"
 
@@ -188,7 +188,7 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeEnumeration
-    string GTypeEnumeration::to_string(void) const
+    std::string GTypeEnumeration::to_string(void) const
     {
         return "GTypeEnumeration { \n"
                "name  : " + to_str( name  ) + "\n" +
@@ -196,12 +196,11 @@ namespace ssp4cpp::ssp1::ssc
     }
 
      // GTypeBinary
-    string GTypeBinary::to_string(void) const
+    std::string GTypeBinary::to_string(void) const
     {
         return "GTypeBinary { \n"
                "mime_type  : " + to_str( mime_type  ) + "\n" +
                "}";
     }
-
 
 }

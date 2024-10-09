@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import List
 
-from toml_parser import Node, Attribute, Standard
+from standard import Node, Attribute, Standard
 
 from misc import indent_strings, new_line
 
 
-class NodeExporter:
+class NodeDeclarationExporter:
     def __init__(self, class_node: Node, indent="    "):
         self.class_node = class_node
         self.variable_nodes: List[Attribute] = class_node.children
@@ -78,11 +78,11 @@ public:
         return class_template
 
 
-class ClassExporter:
+class DocumentDeclarationExporter:
     def __init__(self, standard: Standard, indent="    ") -> None:
         self.standard = standard
         self.indent = indent
-        self.nodes = [NodeExporter(t) for t in self.standard.classes]
+        self.nodes = [NodeDeclarationExporter(t) for t in self.standard.classes]
 
     def get_header_content(self):
         classes = [n.generate_class() for n in self.nodes]
@@ -97,6 +97,7 @@ class ClassExporter:
 
 // This is a generated file, do not alter
 // it is based on {self.standard.filename }
+#pragma once
 
 #include "IXmlNode.hpp"
 {headers}
@@ -144,12 +145,12 @@ namespace {self.standard.long_namespece}
         header_path = (
             Path("./include/schema")
             / self.standard.standard.lower()
-            / f"{self.standard.long_name}.hpp"
+            / f"{self.standard.name}.hpp"
         )
         to_string_path = (
             Path("./src/schema")
             / self.standard.standard.lower()
-            / f"{self.standard.long_name}_String.cpp"
+            / f"{self.standard.name}_String.cpp"
         )
 
         print(header_path)

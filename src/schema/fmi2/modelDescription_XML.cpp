@@ -1,16 +1,19 @@
-#include <boost/log/trivial.hpp>
 
-#include "modelDescription_XML.hpp"
+
+// This is a generated file, do not alter
+// it is based on fmi2_md.toml
+
+#include "FMI2_modelDescription.hpp"
+#include "FMI2_modelDescription_XML.hpp"
 
 #include "xml_deserialize.hpp"
 
-using namespace std;
-using namespace pugi;
-using namespace ssp4cpp::xml;
+#include <boost/log/trivial.hpp>
 
-
-namespace ssp4cpp::fmi2
+namespace ssp4cpp::fmi2::md
 {
+    using namespace ssp4cpp::str;
+
 
     void from_xml(const xml_node &node, BaseUnit &obj)
     {
@@ -30,6 +33,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed BaseUnit" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, DisplayUnit &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing DisplayUnit" << std::endl;
@@ -40,6 +44,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed DisplayUnit" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, fmi2Unit &obj)
     {
@@ -52,6 +57,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2Unit" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, UnitDefinitions &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing UnitDefinitions" << std::endl;
@@ -60,6 +66,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed UnitDefinitions" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, Boolean &obj)
     {
@@ -70,6 +77,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Boolean" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, Integer &obj)
     {
@@ -84,6 +92,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed Integer" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, String &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing String" << std::endl;
@@ -93,6 +102,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed String" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, Real &obj)
     {
@@ -114,6 +124,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed Real" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, Enumeration &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Enumeration" << std::endl;
@@ -127,6 +138,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed Enumeration" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, SimpleTypeEnumerationItem &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SimpleTypeEnumerationItem" << std::endl;
@@ -138,6 +150,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed SimpleTypeEnumerationItem" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, SimpleTypeEnumeration &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SimpleTypeEnumeration" << std::endl;
@@ -147,6 +160,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed SimpleTypeEnumeration" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, fmi2SimpleType &obj)
     {
@@ -163,6 +177,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2SimpleType" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, TypeDefinitions &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing TypeDefinitions" << std::endl;
@@ -171,6 +186,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed TypeDefinitions" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, Category &obj)
     {
@@ -182,6 +198,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed Category" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, LogCategories &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing LogCategories" << std::endl;
@@ -190,6 +207,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed LogCategories" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, fmi2Annotation &obj)
     {
@@ -200,6 +218,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2Annotation" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, VendorAnnotations &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing VendorAnnotations" << std::endl;
@@ -208,6 +227,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed VendorAnnotations" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, DefaultExperiment &obj)
     {
@@ -220,6 +240,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed DefaultExperiment" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, fmi2ScalarVariable &obj)
     {
@@ -242,6 +263,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed fmi2ScalarVariable" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, Unknown &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Unknown" << std::endl;
@@ -253,6 +275,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed Unknown" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, Outputs &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing Outputs" << std::endl;
@@ -261,6 +284,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed Outputs" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, Derivatives &obj)
     {
@@ -271,6 +295,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed Derivatives" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, InitialUnknowns &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing InitialUnknowns" << std::endl;
@@ -279,6 +304,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed InitialUnknowns" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, ModelStructure &obj)
     {
@@ -291,6 +317,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed ModelStructure" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, ModelVariables &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing ModelVariables" << std::endl;
@@ -299,6 +326,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed ModelVariables" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, File &obj)
     {
@@ -309,6 +337,7 @@ namespace ssp4cpp::fmi2
         BOOST_LOG_TRIVIAL(trace) << "Completed File" << std::endl;
     }
 
+
     void from_xml(const xml_node &node, SourceFiles &obj)
     {
         BOOST_LOG_TRIVIAL(trace) << "Parsing SourceFiles" << std::endl;
@@ -317,6 +346,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed SourceFiles" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, ModelExchange &obj)
     {
@@ -334,6 +364,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed ModelExchange" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, CoSimulation &obj)
     {
@@ -354,6 +385,7 @@ namespace ssp4cpp::fmi2
 
         BOOST_LOG_TRIVIAL(trace) << "Completed CoSimulation" << std::endl;
     }
+
 
     void from_xml(const xml_node &node, fmi2ModelDescription &obj)
     {

@@ -1,16 +1,22 @@
+
+
+// This is a generated file, do not alter
+// it is based on ssp1_ssc.toml
 #pragma once
+
+#include "IXmlNode.hpp"
+#include "SSP1_Enums.hpp"
 
 #include <string>
 #include <vector>
 #include <optional>
 
-#include "IXmlNode.hpp"
-
-#include "SSP1_Enums.hpp"
-using namespace ssp4cpp::interfaces;
-
 namespace ssp4cpp::ssp1::ssc
 {
+    using namespace ssp4cpp::interfaces;
+
+
+
 
     class Annotation : public IXmlNode
     {
@@ -18,18 +24,16 @@ namespace ssp4cpp::ssp1::ssc
         string type;
         optional<string> any;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class TAnnotations : public IXmlNode
     {
     public:
         vector<Annotation> Annotations;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class LinearTransformation : public IXmlNode
     {
@@ -37,9 +41,8 @@ namespace ssp4cpp::ssp1::ssc
         optional<double> factor;
         optional<double> offset;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class BooleanMapEntry : public IXmlNode
     {
@@ -47,18 +50,16 @@ namespace ssp4cpp::ssp1::ssc
         bool source;
         bool target;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class BooleanMappingTransformation : public IXmlNode
     {
     public:
         vector<ssc::BooleanMapEntry> MapEntrys;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class IntegerMapEntry : public IXmlNode
     {
@@ -66,18 +67,16 @@ namespace ssp4cpp::ssp1::ssc
         int source;
         int target;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class IntegerMappingTransformation : public IXmlNode
     {
     public:
         vector<ssc::IntegerMapEntry> MapEntrys;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class EnumerationMapEntry : public IXmlNode
     {
@@ -85,18 +84,16 @@ namespace ssp4cpp::ssp1::ssc
         string source;
         string target;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class EnumerationMappingTransformation : public IXmlNode
     {
     public:
         vector<ssc::EnumerationMapEntry> MapEntrys;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class Item : public IXmlNode
     {
@@ -104,9 +101,8 @@ namespace ssp4cpp::ssp1::ssc
         string name;
         int value;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class TEnumeration : public IXmlNode
     {
@@ -117,18 +113,16 @@ namespace ssp4cpp::ssp1::ssc
         vector<ssc::Item> Item;
         optional<ssc::TAnnotations> Annotations;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class TEnumerations : public IXmlNode
     {
     public:
         vector<ssc::TEnumeration> Enumerations;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class BaseUnit : public IXmlNode
     {
@@ -144,9 +138,8 @@ namespace ssp4cpp::ssp1::ssc
         optional<double> factor;
         optional<double> offset;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class TUnit : public IXmlNode
     {
@@ -157,71 +150,63 @@ namespace ssp4cpp::ssp1::ssc
         ssc::BaseUnit BaseUnit;
         optional<ssc::TAnnotations> Annotations;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class TUnits : public IXmlNode
     {
     public:
         vector<ssc::TUnit> Units;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class GTypeReal : public IXmlNode
     {
     public:
         optional<string> unit;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class GTypeInteger : public IXmlNode
     {
     public:
 
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class GTypeBoolean : public IXmlNode
     {
     public:
 
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class GTypeString : public IXmlNode
     {
     public:
 
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class GTypeEnumeration : public IXmlNode
     {
     public:
         optional<string> name;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
     class GTypeBinary : public IXmlNode
     {
     public:
         optional<string> mime_type;
 
-        string to_string(void) const;
+        std::string to_string(void) const;
     };
-
 
 }
