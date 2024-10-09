@@ -1,5 +1,5 @@
 from typing import List
-from nodes import ClassNode, VariableNode
+from xml_parser.src.toml_parser import Node, Attribute
 
 from misc import indent_strings
 
@@ -7,9 +7,9 @@ default_values = {"string": "\"null\"", "int": "0", "unsigned int": "0", "double
 
 class XmlParserExporter:
 
-    def __init__(self, class_node : ClassNode, indent="    "):
+    def __init__(self, class_node : Node, indent="    "):
         self.class_node = class_node
-        self.variable_nodes : List[VariableNode] = class_node.children
+        self.variable_nodes : List[Attribute] = class_node.children
         self.indent = indent
 
         self.longest_name = max([0,] +[len(v.name) for v in self.variable_nodes])
@@ -17,7 +17,7 @@ class XmlParserExporter:
     def generate_from_xml_declarations(self):
         return f"""void from_xml(const xml_node &node, {self.class_node.name } &obj);\n"""
 
-    def generate_variable_declaration(self, variable : VariableNode):
+    def generate_variable_declaration(self, variable : Attribute):
 
         if variable.xml_tag:
             name = variable.xml_tag if not variable.namespace else f"{variable.namespace}:{variable.xml_tag}"

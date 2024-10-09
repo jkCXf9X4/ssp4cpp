@@ -1,3 +1,7 @@
+aaa_standard = "FMI2"
+aaa_namespace = "md"
+aaa_name = "modelDescription"
+aaa_headers = ["FMI2_Enums.hpp"]
 
 [BaseUnit]
 kg = { type = "int", optional = true }
