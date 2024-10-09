@@ -25,7 +25,7 @@ class NodeXmlExporter:
         else:
             name = variable.name if not variable.namespace else f"{variable.namespace}:{variable.name}"
 
-        return f"parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, \"{name}\");"
+        return f"ssp4cpp::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, \"{name}\");"
 
     def generate_parser(self):
         variables = [self.generate_variable_declaration(v) for v in self.variable_nodes if not v.custom]
@@ -86,7 +86,6 @@ namespace {self.standard.long_namespece}
 // This is a generated file, do not alter
 // it is based on {self.standard.filename}
 
-#include "{self.standard.long_name}.hpp"
 #include "{self.standard.long_name}_XML.hpp"
 
 #include "xml_deserialize.hpp"
@@ -95,7 +94,7 @@ namespace {self.standard.long_namespece}
 
 namespace {self.standard.long_namespece}
 {{
-{self.indent}using namespace ssp4cpp::str;
+{self.indent}using namespace pugi;
 
 {parsers}
 }}
@@ -106,12 +105,12 @@ namespace {self.standard.long_namespece}
         xml_declaration_path = (
             Path("./include_private")
             / self.standard.standard.lower()
-            / f"{self.standard.name}_XML.hpp"
+            / f"{self.standard.long_name}_XML.hpp"
         )
         xml_definition_path = (
             Path("./src/schema")
             / self.standard.standard.lower()
-            / f"{self.standard.name}_XML.cpp"
+            / f"{self.standard.long_name}_XML.cpp"
         )
 
         print(xml_declaration_path)

@@ -1,5 +1,5 @@
 
-#include "modelDescription_Ext.hpp"
+#include "FMI2_modelDescription_Ext.hpp"
 
 
 #include <optional>
@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace ssp4cpp::fmi2
+namespace ssp4cpp::fmi2::md
 {
 
     reference_wrapper<fmi2ScalarVariable> ModelVariables_Ext::get_variable(ModelVariables &mv, int index)

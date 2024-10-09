@@ -5,8 +5,8 @@
 
 #include "dsm.hpp"
 
-#include "SystemStructureDescription.hpp"
-#include "modelDescription_Ext.hpp"
+// #include "SystemStructureDescription.hpp"
+#include "FMI2_modelDescription_Ext.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -97,7 +97,7 @@ int main()
             // cout << component  << endl;
             for (auto connector : component.Connectors.value().Connectors)
             {
-                if (connector.kind == ssp4cpp::fmi2::Causality::input || connector.kind == ssp4cpp::fmi2::Causality::output )
+                if (connector.kind == ssp4cpp::fmi2::md::Causality::input || connector.kind == ssp4cpp::fmi2::md::Causality::output )
                 {
                     auto name = component.name.value() + "." + connector.name;
 
@@ -145,17 +145,17 @@ int main()
             continue;
         }
 
-        auto dependencies = ssp4cpp::fmi2::Unknown_Ext::get_dependencies_variables(
+        auto dependencies = ssp4cpp::fmi2::md::Unknown_Ext::get_dependencies_variables(
             outputs.value().Unknowns,
             fmu.md.ModelVariables,
-            ssp4cpp::fmi2::DependenciesKind::dependent);
+            ssp4cpp::fmi2::md::DependenciesKind::dependent);
 
         for (auto& [output, input, kind] : dependencies)
         {
             auto input_name = name + "." + input.name;
             auto output_name = name + "." + output.name;
 
-            if (input.causality == ssp4cpp::fmi2::Causality::input)
+            if (input.causality == ssp4cpp::fmi2::md::Causality::input)
             {
                 // std::cout << "Input: " << input_name << " " << connector_str_int_map[input_name] << " -> " << "Output: " << output_name << " " << connector_str_int_map[output_name] << endl;
                 add_edge(connector_str_int_map[input_name], connector_str_int_map[output_name], g);

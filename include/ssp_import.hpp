@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SystemStructureDescription.hpp"
+#include "SSP1_SystemStructureDescription.hpp"
 #include "to_string.hpp"
 
 #include <string>

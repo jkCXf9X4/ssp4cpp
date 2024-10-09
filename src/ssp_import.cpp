@@ -5,8 +5,8 @@
 
 #include "ssp_import.hpp"
 
-#include "SystemStructureDescription.hpp"
-#include "SystemStructureDescription_XML.hpp"
+#include "SSP1_SystemStructureDescription.hpp"
+#include "SSP1_SystemStructureDescription_XML.hpp"
 
 #include "zip.hpp"
 

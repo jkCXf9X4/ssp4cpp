@@ -145,12 +145,12 @@ namespace {self.standard.long_namespece}
         header_path = (
             Path("./include/schema")
             / self.standard.standard.lower()
-            / f"{self.standard.name}.hpp"
+            / f"{self.standard.long_name}.hpp"
         )
         to_string_path = (
             Path("./src/schema")
             / self.standard.standard.lower()
-            / f"{self.standard.name}_String.cpp"
+            / f"{self.standard.long_name}_String.cpp"
         )
 
         print(header_path)
