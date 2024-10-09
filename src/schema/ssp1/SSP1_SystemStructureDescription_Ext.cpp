@@ -19,10 +19,10 @@ namespace views = std::ranges::views;
 namespace ssp4cpp::ssp1::ssd
 {
 
-    vector<IndexConnectorComponentTuple> Elements_Ext::get_connectors(Elements &elements)
+    IndexConnectorComponentTuples Elements_Ext::get_connectors(Elements &elements)
     {
         int i = 0;
-        auto cs = vector<IndexConnectorComponentTuple>();
+        auto cs = IndexConnectorComponentTuples();
 
         for (auto &component : elements.Components)
         {
@@ -39,15 +39,29 @@ namespace ssp4cpp::ssp1::ssd
         return cs;
     }
 
+    void reset_index(IndexConnectorComponentTuples& tuples)
+    {
+        int i = 0;
+        for (auto& [index, connection, component] : tuples)
+        {
+            index = i;
+            i++;
+        }
+    }
+
     // get_connectors(&Elements, {Causality::input, Causality::output})
-    vector<IndexConnectorComponentTuple> Elements_Ext::get_connectors(
+    IndexConnectorComponentTuples Elements_Ext::get_connectors(
         Elements &elements,
         std::initializer_list<fmi2::md::Causality> causalities)
     {
-        auto out = get_connectors(elements);
+        auto in = get_connectors(elements);
+        auto out = IndexConnectorComponentTuples();
 
-        std::erase_if(out, [causalities](IndexConnectorComponentTuple a)
-                      { return !ssp4cpp::misc::enum_in_list(get<1>(a).kind, causalities); });
+        std::copy_if(begin(in), end(in), std::back_inserter(out),
+                     [causalities](IndexConnectorComponentTuple a)
+                     { return ssp4cpp::misc::enum_in_list(get<1>(a).get().kind, causalities); });
+
+        reset_index(out);
 
         return out;
     }

@@ -90,24 +90,25 @@ int main()
     map<string, int> connector_str_int_map;
     map<int, string> connector_int_str_map;
 
+
     if (ssp.ssd.System.Elements.has_value())
     {
         auto connectors = ssp1::ssd::Elements_Ext::get_connectors(
-            ssp.ssd.System.Elements.value());
-            // {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
+            ssp.ssd.System.Elements.value(),
+            {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
 
-        for (auto& [index, connector, component] : connectors)
+        for (auto [index, connector, component] : connectors)
         {
-            auto name = component.name.value() + "." + connector.name;
+            auto name = component.get().name.value() + "." + connector.get().name;
 
             connector_str_int_map[name] = index;
             connector_int_str_map[index] = name;
-            cout << index << " : " << connector.name << endl;
+            cout << index << " : " << connector.get().name << endl;
         }
     }
 
-    print_map(connector_str_int_map);
-    print_map(connector_int_str_map);
+    // print_map(connector_str_int_map);
+    // print_map(connector_int_str_map);
     assert(connector_str_int_map.size() == connector_int_str_map.size());
 
     typedef adjacency_list<vecS, vecS, boost::directedS, property<vertex_name_t, std::string>> Graph;
@@ -115,13 +116,13 @@ int main()
     std::cout << "Connectors: " << connector_str_int_map.size() << endl;
     Graph g(connector_str_int_map.size());
 
-    // store name in node
+    std::cout << "Store name in node\n";
     for (auto [name, index] : connector_str_int_map)
     {
         boost::put(boost::vertex_name_t(), g, index, name);
     }
 
-    // add ssp edges
+    std::cout << "add ssp edges\n";
     for (auto connection : ssp.ssd.System.Connections.value().Connections)
     {
         auto start = connection.startElement.value() + "." + connection.startConnector;
@@ -131,6 +132,7 @@ int main()
         // cout << start << ": " << connector_str_int_map[start] << " -> " << end << ": " << connector_str_int_map[end] << endl;
     }
 
+    std::cout << "add fmu edges\n";
     for (auto [name, fmu] : fmus)
     {
         // std::cout << fmu.md.modelName << endl;
@@ -163,6 +165,8 @@ int main()
         }
     }
 
+    boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
+
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_1"], g);
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_2"], g);
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu2.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu2.dynamic_output_1"], g);
@@ -176,7 +180,6 @@ int main()
 
     dsm.Print(connector_int_str_map);
 
-    // boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
 
     std::cout << "Parsing complete\n";
 }
