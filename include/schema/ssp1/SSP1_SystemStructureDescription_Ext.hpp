@@ -7,16 +7,17 @@
 
 namespace ssp4cpp::ssp1::ssd
 {
-    // using IndexDependencyCoupling = std::tuple<int, int, DependenciesKind>;
+    using IndexConnectorComponentTuple = tuple<int, Connector &, TComponent &>;
 
-    class TConnectors_Ext
+    class Elements_Ext
     {
     public:
-        // get_connectors(&connectors, {Causality::input, Causality::output})
-        static vector<reference_wrapper<Connector>> get_connectors(TConnectors &connectors, std::initializer_list<fmi2::md::Causality> causalities);
+        static vector<IndexConnectorComponentTuple> get_connectors(Elements &elements);
 
+        // get_connectors(&Elements, {Causality::input, Causality::output})
+        static vector<IndexConnectorComponentTuple> get_connectors(
+            Elements &elements,
+            std::initializer_list<fmi2::md::Causality> causalities);
     };
-
-
 
 }

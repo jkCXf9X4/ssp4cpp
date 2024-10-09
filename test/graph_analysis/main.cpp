@@ -5,7 +5,7 @@
 
 #include "dsm.hpp"
 
-// #include "SystemStructureDescription.hpp"
+#include "SSP1_SystemStructureDescription_Ext.hpp"
 #include "FMI2_modelDescription_Ext.hpp"
 
 #include <iostream>
@@ -32,6 +32,7 @@
 using namespace std;
 using namespace boost;
 using namespace fmi4cpp;
+using namespace ssp4cpp;
 
 void save_string(const string &filename, const string &content)
 {
@@ -89,29 +90,24 @@ int main()
     map<string, int> connector_str_int_map;
     map<int, string> connector_int_str_map;
 
+    if (ssp.ssd.System.Elements.has_value())
     {
-        int connector_index = 0;
-        // index all connectors
-        for (auto component : ssp.ssd.System.Elements.value().Components)
-        {
-            // cout << component  << endl;
-            for (auto connector : component.Connectors.value().Connectors)
-            {
-                if (connector.kind == ssp4cpp::fmi2::md::Causality::input || connector.kind == ssp4cpp::fmi2::md::Causality::output )
-                {
-                    auto name = component.name.value() + "." + connector.name;
+        auto connectors = ssp1::ssd::Elements_Ext::get_connectors(
+            ssp.ssd.System.Elements.value());
+            // {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
 
-                    connector_str_int_map[name] = connector_index;
-                    connector_int_str_map[connector_index] = name;
-                    connector_index += 1;
-                    // cout << name << " : " << connector_map[name] << endl;
-                }
-            }
+        for (auto& [index, connector, component] : connectors)
+        {
+            auto name = component.name.value() + "." + connector.name;
+
+            connector_str_int_map[name] = index;
+            connector_int_str_map[index] = name;
+            cout << index << " : " << connector.name << endl;
         }
     }
 
-    // print_map(connector_str_int_map);
-    // print_map(connector_int_str_map);
+    print_map(connector_str_int_map);
+    print_map(connector_int_str_map);
     assert(connector_str_int_map.size() == connector_int_str_map.size());
 
     typedef adjacency_list<vecS, vecS, boost::directedS, property<vertex_name_t, std::string>> Graph;
@@ -150,7 +146,7 @@ int main()
             fmu.md.ModelVariables,
             ssp4cpp::fmi2::md::DependenciesKind::dependent);
 
-        for (auto& [output, input, kind] : dependencies)
+        for (auto &[output, input, kind] : dependencies)
         {
             auto input_name = name + "." + input.name;
             auto output_name = name + "." + output.name;
@@ -179,7 +175,6 @@ int main()
     ssp4cpp::dsm::DSM dsm(g);
 
     dsm.Print(connector_int_str_map);
-
 
     // boost::write_graphviz(std::cout, g, make_label_writer(get(boost::vertex_name_t(), g)));
 
