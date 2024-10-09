@@ -150,7 +150,7 @@ int main()
             fmu.md.ModelVariables,
             ssp4cpp::fmi2::DependenciesKind::dependent);
 
-        for (auto [output, input, kind] : dependencies)
+        for (auto& [output, input, kind] : dependencies)
         {
             auto input_name = name + "." + input.name;
             auto output_name = name + "." + output.name;

@@ -4,7 +4,6 @@
 #include "FMI_Enums.hpp"
 #include "modelDescription.hpp"
 
-#include <optional>
 #include <vector>
 #include <string>
 #include <tuple>
@@ -17,11 +16,11 @@ namespace ssp4cpp::fmi2
     class ModelVariables_Ext
     {
     public:
-        static fmi2::fmi2ScalarVariable &get_variable(ModelVariables &mv, int index);
+        static reference_wrapper<fmi2::fmi2ScalarVariable> get_variable(ModelVariables &mv, int index);
     };
 
-    using IndexDependencyCoupling = tuple<int, int, DependenciesKind>;
-    using VariableDependencyCoupling = tuple<fmi2ScalarVariable &, fmi2ScalarVariable &, DependenciesKind>;
+    using IndexDependencyCoupling = std::tuple<int, int, DependenciesKind>;
+    using VariableDependencyCoupling = std::tuple<fmi2ScalarVariable&, fmi2ScalarVariable&, DependenciesKind>;
 
     class Unknown_Ext
     {

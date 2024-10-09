@@ -1,12 +1,11 @@
 
+#include "modelDescription_Ext.hpp"
+
 
 #include <optional>
 #include <vector>
 #include <string>
 
-#include "FMI_Enums.hpp"
-
-#include "modelDescription_Ext.hpp"
 #include <iostream>
 
 using namespace std;
@@ -14,7 +13,7 @@ using namespace std;
 namespace ssp4cpp::fmi2
 {
 
-    fmi2ScalarVariable &ModelVariables_Ext::get_variable(ModelVariables &mv, int index)
+    reference_wrapper<fmi2ScalarVariable> ModelVariables_Ext::get_variable(ModelVariables &mv, int index)
     {
         if (index < 0 || index >= mv.ScalarVariable.size())
         {
@@ -22,7 +21,7 @@ namespace ssp4cpp::fmi2
         }
 
         // index start at 1
-        return mv.ScalarVariable[index - 1];
+        return std::ref(mv.ScalarVariable[index - 1]);
     }
 
     vector<IndexDependencyCoupling> Unknown_Ext::get_dependencies_index(Unknown &u)
@@ -57,6 +56,7 @@ namespace ssp4cpp::fmi2
 
     vector<VariableDependencyCoupling> Unknown_Ext::get_dependencies_variables(Unknown &u, ModelVariables &mv)
     {
+        // should add 'all'
         return get_dependencies_variables(u, mv, DependenciesKind::unknown);
     }
 
@@ -68,8 +68,8 @@ namespace ssp4cpp::fmi2
 
         for (auto [index, dependency, kind] : dependencies)
         {
-            auto& output = ModelVariables_Ext::get_variable(mv, index);
-            auto& dep = ModelVariables_Ext::get_variable(mv, dependency);
+            auto output = ModelVariables_Ext::get_variable(mv, index);
+            auto dep = ModelVariables_Ext::get_variable(mv, dependency);
 
             auto t = VariableDependencyCoupling(output, dep, kind);
             result.push_back(t);
