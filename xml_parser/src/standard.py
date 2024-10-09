@@ -68,6 +68,7 @@ class Standard:
         self.forward_declarations = []
         self.namespace = ""
         self.standard = ""
+        self.dependencies = []
 
         self.classes = self.get_classes()
         self.long_namespece = "::".join(["ssp4cpp", self.standard.lower(), self.namespace.lower()])
@@ -89,6 +90,8 @@ class Standard:
                 self.namespace = self.toml[name]
             elif name == "aaa_standard":
                 self.standard = self.toml[name]
+            elif name == "aaa_dependencies":
+                self.dependencies = self.toml[name]
 
             else:
                 # print(type)

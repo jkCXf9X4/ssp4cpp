@@ -81,12 +81,16 @@ namespace {self.standard.long_namespece}
         parsers = [n.generate_parser() for n in self.nodes]
         parsers = indent_strings(self.indent, new_line.join(parsers))
 
+        dependencies = new_line.join([f'#include "{h}_XML.hpp"' for h in self.standard.dependencies])
+
+
         text = f"""
 
 // This is a generated file, do not alter
 // it is based on {self.standard.filename}
 
 #include "{self.standard.long_name}_XML.hpp"
+{dependencies}
 
 #include "xml_deserialize.hpp"
 

@@ -93,6 +93,8 @@ class DocumentDeclarationExporter:
             [f"{self.indent}{d}" for d in self.standard.forward_declarations]
         )
 
+        dependencies = new_line.join([f'#include "{h}.hpp"' for h in self.standard.dependencies])
+
         text = f"""
 
 // This is a generated file, do not alter
@@ -101,6 +103,7 @@ class DocumentDeclarationExporter:
 
 #include "IXmlNode.hpp"
 {headers}
+{dependencies}
 
 #include <string>
 #include <vector>

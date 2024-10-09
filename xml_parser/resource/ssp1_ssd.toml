@@ -1,7 +1,8 @@
 aaa_standard = "SSP1"
 aaa_namespace = "ssd"
 aaa_name = "SystemStructureDescription"
-aaa_headers = ["FMI2_Enums.hpp", "SSP1_Enums.hpp", "SSP1_SystemStructureCommon.hpp"]
+aaa_dependencies = ["SSP1_SystemStructureCommon"]
+aaa_headers = ["FMI2_Enums.hpp", "SSP1_Enums.hpp"]
 aaa_forward_declarations =["class TSystem;"]
 
 [SystemGeometry]

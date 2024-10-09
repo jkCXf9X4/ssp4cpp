@@ -3,13 +3,10 @@
 // This is a generated file, do not alter
 // it is based on ssp1_ssd.toml
 
-#include "xml_deserialize.hpp"
 #include "SSP1_SystemStructureDescription_XML.hpp"
 #include "SSP1_SystemStructureCommon_XML.hpp"
 
-using namespace std;
-using namespace pugi;
-using namespace ssp4cpp::xml;
+#include "xml_deserialize.hpp"
 
 #include <boost/log/trivial.hpp>
 
