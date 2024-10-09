@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "FMI_Enums.hpp"
+#include "FMI2_Enums.hpp"
 #include "IXmlNode.hpp"
 
 #include <optional>

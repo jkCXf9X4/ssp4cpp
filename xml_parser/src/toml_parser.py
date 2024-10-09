@@ -71,6 +71,7 @@ class Standard:
 
         self.classes = self.get_classes()
         self.long_namespece = "::".join(["ssp4cpp", self.standard.lower(), self.namespace.lower()])
+        self.long_name = f"{self.standard}_{self.name}"
 
         print(f"{self.name=} {self.headers=} {self.forward_declarations=}")
 
