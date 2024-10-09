@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "FMI_Enums.hpp"
-#include "modelDescription.hpp"
+#include "FMI2_Enums.hpp"
+#include "FMI2_modelDescription.hpp"
 
 #include <vector>
 #include <string>
@@ -10,13 +10,13 @@
 
 using namespace std;
 
-namespace ssp4cpp::fmi2
+namespace ssp4cpp::fmi2::md
 {
 
     class ModelVariables_Ext
     {
     public:
-        static reference_wrapper<fmi2::fmi2ScalarVariable> get_variable(ModelVariables &mv, int index);
+        static reference_wrapper<fmi2ScalarVariable> get_variable(ModelVariables &mv, int index);
     };
 
     using IndexDependencyCoupling = std::tuple<int, int, DependenciesKind>;

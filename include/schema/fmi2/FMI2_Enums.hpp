@@ -13,7 +13,7 @@ using namespace std;
 
 using namespace ssp4cpp::interfaces;
 
-namespace ssp4cpp::fmi2
+namespace ssp4cpp::fmi2::md
 {
     class Causality : public IReadWrite
     {

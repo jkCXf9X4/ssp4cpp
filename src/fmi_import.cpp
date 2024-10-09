@@ -6,8 +6,8 @@
 
 #include "fmi_import.hpp"
 
-#include "modelDescription.hpp"
-#include "modelDescription_XML.hpp"
+#include "FMI2_modelDescription.hpp"
+#include "FMI2_modelDescription_XML.hpp"
 
 #include "zip.hpp"
 
@@ -16,6 +16,7 @@ namespace fs = std::filesystem;
 
 namespace ssp4cpp::fmi2
 {
+    using namespace md;
     FmiImport::FmiImport(const path &file) : original_file(file)
     {
         BOOST_LOG_TRIVIAL(info) << "Importing fmi: " << file << std::endl;

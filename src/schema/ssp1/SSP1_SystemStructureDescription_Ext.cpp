@@ -1,5 +1,5 @@
 
-#include "SystemStructureDescription_Ext.hpp"
+#include "SSP1_SystemStructureDescription_Ext.hpp"
 
 #include <optional>
 #include <iostream>
@@ -12,7 +12,7 @@ using namespace ssp4cpp::str;
 
 namespace ssp4cpp::ssp1::ssd
 {
-    vector<reference_wrapper<Connector>> TConnectors_Ext::get_connectors(TConnectors &connectors, std::initializer_list<fmi2::Causality> causalities)
+    vector<reference_wrapper<Connector>> TConnectors_Ext::get_connectors(TConnectors &connectors, std::initializer_list<fmi2::md::Causality> causalities)
     {
         auto cs = vector<reference_wrapper<Connector>>();
         for (auto &connector : connectors.Connectors)

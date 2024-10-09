@@ -1,6 +1,19 @@
+
+
+// This is a generated file, do not alter
+// it is based on ssp1_ssd.toml
+
+#include "SSP1_SystemStructureDescription.hpp"
+#include "to_string.hpp"
+
+#include <string>
+
+namespace ssp4cpp::ssp1::ssd
 {
+    using namespace ssp4cpp::str;
+
      // SystemGeometry
-    string SystemGeometry::to_string(void) const
+    std::string SystemGeometry::to_string(void) const
     {
         return "SystemGeometry { \n"
 
@@ -8,7 +21,7 @@
     }
 
      // ConnectorGeometry
-    string ConnectorGeometry::to_string(void) const
+    std::string ConnectorGeometry::to_string(void) const
     {
         return "ConnectorGeometry { \n"
 
@@ -16,7 +29,7 @@
     }
 
      // ElementGeometry
-    string ElementGeometry::to_string(void) const
+    std::string ElementGeometry::to_string(void) const
     {
         return "ElementGeometry { \n"
 
@@ -24,7 +37,7 @@
     }
 
      // ConnectionGeometry
-    string ConnectionGeometry::to_string(void) const
+    std::string ConnectionGeometry::to_string(void) const
     {
         return "ConnectionGeometry { \n"
 
@@ -32,7 +45,7 @@
     }
 
      // SignalDictionary
-    string SignalDictionary::to_string(void) const
+    std::string SignalDictionary::to_string(void) const
     {
         return "SignalDictionary { \n"
 
@@ -40,7 +53,7 @@
     }
 
      // TSignalDictionaries
-    string TSignalDictionaries::to_string(void) const
+    std::string TSignalDictionaries::to_string(void) const
     {
         return "TSignalDictionaries { \n"
                "SignalDictionaries  : " + to_str( SignalDictionaries  ) + "\n" +
@@ -48,7 +61,7 @@
     }
 
      // ParameterBinding
-    string ParameterBinding::to_string(void) const
+    std::string ParameterBinding::to_string(void) const
     {
         return "ParameterBinding { \n"
 
@@ -56,7 +69,7 @@
     }
 
      // TParameterBindings
-    string TParameterBindings::to_string(void) const
+    std::string TParameterBindings::to_string(void) const
     {
         return "TParameterBindings { \n"
                "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
@@ -64,7 +77,7 @@
     }
 
      // GraphicalElements
-    string GraphicalElements::to_string(void) const
+    std::string GraphicalElements::to_string(void) const
     {
         return "GraphicalElements { \n"
 
@@ -72,7 +85,7 @@
     }
 
      // TDefaultExperiment
-    string TDefaultExperiment::to_string(void) const
+    std::string TDefaultExperiment::to_string(void) const
     {
         return "TDefaultExperiment { \n"
                "startTime    : " + to_str( startTime    ) + "\n" +
@@ -82,7 +95,7 @@
     }
 
      // Connection
-    string Connection::to_string(void) const
+    std::string Connection::to_string(void) const
     {
         return "Connection { \n"
                "id                                : " + to_str( id                                ) + "\n" +
@@ -102,7 +115,7 @@
     }
 
      // Connections
-    string Connections::to_string(void) const
+    std::string Connections::to_string(void) const
     {
         return "Connections { \n"
                "Connections  : " + to_str( Connections  ) + "\n" +
@@ -110,7 +123,7 @@
     }
 
      // Connector
-    string Connector::to_string(void) const
+    std::string Connector::to_string(void) const
     {
         return "Connector { \n"
                "id                 : " + to_str( id                 ) + "\n" +
@@ -129,7 +142,7 @@
     }
 
      // TConnectors
-    string TConnectors::to_string(void) const
+    std::string TConnectors::to_string(void) const
     {
         return "TConnectors { \n"
                "Connectors  : " + to_str( Connectors  ) + "\n" +
@@ -137,7 +150,7 @@
     }
 
      // TComponent
-    string TComponent::to_string(void) const
+    std::string TComponent::to_string(void) const
     {
         return "TComponent { \n"
                "id                 : " + to_str( id                 ) + "\n" +
@@ -154,7 +167,7 @@
     }
 
      // TSignalDictionaryReference
-    string TSignalDictionaryReference::to_string(void) const
+    std::string TSignalDictionaryReference::to_string(void) const
     {
         return "TSignalDictionaryReference { \n"
                "id                 : " + to_str( id                 ) + "\n" +
@@ -169,7 +182,7 @@
     }
 
      // Elements
-    string Elements::to_string(void) const
+    std::string Elements::to_string(void) const
     {
         return "Elements { \n"
                "Components                  : " + to_str( Components                  ) + "\n" +
@@ -179,7 +192,7 @@
     }
 
      // TSystem
-    string TSystem::to_string(void) const
+    std::string TSystem::to_string(void) const
     {
         return "TSystem { \n"
                "id                  : " + to_str( id                  ) + "\n" +
@@ -198,7 +211,7 @@
     }
 
      // SystemStructureDescription
-    string SystemStructureDescription::to_string(void) const
+    std::string SystemStructureDescription::to_string(void) const
     {
         return "SystemStructureDescription { \n"
                "version                : " + to_str( version                ) + "\n" +
@@ -218,6 +231,5 @@
                "Annotations            : " + to_str( Annotations            ) + "\n" +
                "}";
     }
-
 
 }

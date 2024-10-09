@@ -14,6 +14,7 @@
 
 namespace ssp4cpp::xml
 {
+    
     namespace
     {
         template <typename>
@@ -41,6 +42,7 @@ namespace ssp4cpp::xml
 
     using namespace std;
     using namespace pugi;
+    using namespace ssp4cpp::interfaces;
 
     inline string parents_to_string(const xml_node &node)
     {

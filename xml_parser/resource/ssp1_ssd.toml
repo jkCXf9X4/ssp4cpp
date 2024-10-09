@@ -1,4 +1,9 @@
-
+aaa_standard = "SSP1"
+aaa_namespace = "ssd"
+aaa_name = "SystemStructureDescription"
+aaa_dependencies = ["SSP1_SystemStructureCommon"]
+aaa_headers = ["FMI2_Enums.hpp", "SSP1_Enums.hpp"]
+aaa_forward_declarations =["class TSystem;"]
 
 [SystemGeometry]
 # Empty struct, may have future elements, but nothing is currently defined.
@@ -54,7 +59,7 @@ Connections = {type = "ssd::Connection", list = true, namespace="ssd", xml_tag="
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string"}
-kind = {type = "string"}
+kind = {type = "fmi2::md::Causality"}
 Real = {type = "ssc::GTypeReal", optional=true, namespace="ssc"}
 Integer = {type = "ssc::GTypeInteger", optional=true, namespace="ssc"}
 Boolean = {type = "ssc::GTypeBoolean", optional=true, namespace="ssc"}

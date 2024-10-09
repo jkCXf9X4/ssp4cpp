@@ -1,10 +1,9 @@
 
 
-#include "SystemStructureDescription.hpp"
+#include "SSP1_SystemStructureDescription.hpp"
 
 #include <string>
 #include <vector>
-
 
 namespace ssp4cpp::ssp1::ssd
 {
@@ -14,7 +13,7 @@ namespace ssp4cpp::ssp1::ssd
     {
     public:
         // get_connectors(&connectors, {Causality::input, Causality::output})
-        static vector<reference_wrapper<Connector>> get_connectors(TConnectors &connectors, std::initializer_list<fmi2::Causality> causalities);
+        static vector<reference_wrapper<Connector>> get_connectors(TConnectors &connectors, std::initializer_list<fmi2::md::Causality> causalities);
 
     };
 

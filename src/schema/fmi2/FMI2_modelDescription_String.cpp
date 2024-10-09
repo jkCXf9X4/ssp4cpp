@@ -1,6 +1,19 @@
+
+
+// This is a generated file, do not alter
+// it is based on fmi2_md.toml
+
+#include "FMI2_modelDescription.hpp"
+#include "to_string.hpp"
+
+#include <string>
+
+namespace ssp4cpp::fmi2::md
 {
+    using namespace ssp4cpp::str;
+
      // BaseUnit
-    string BaseUnit::to_string(void) const
+    std::string BaseUnit::to_string(void) const
     {
         return "BaseUnit { \n"
                "kg      : " + to_str( kg      ) + "\n" +
@@ -17,7 +30,7 @@
     }
 
      // DisplayUnit
-    string DisplayUnit::to_string(void) const
+    std::string DisplayUnit::to_string(void) const
     {
         return "DisplayUnit { \n"
                "name    : " + to_str( name    ) + "\n" +
@@ -27,7 +40,7 @@
     }
 
      // fmi2Unit
-    string fmi2Unit::to_string(void) const
+    std::string fmi2Unit::to_string(void) const
     {
         return "fmi2Unit { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -37,7 +50,7 @@
     }
 
      // UnitDefinitions
-    string UnitDefinitions::to_string(void) const
+    std::string UnitDefinitions::to_string(void) const
     {
         return "UnitDefinitions { \n"
                "Units  : " + to_str( Units  ) + "\n" +
@@ -45,7 +58,7 @@
     }
 
      // Boolean
-    string Boolean::to_string(void) const
+    std::string Boolean::to_string(void) const
     {
         return "Boolean { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -54,7 +67,7 @@
     }
 
      // Integer
-    string Integer::to_string(void) const
+    std::string Integer::to_string(void) const
     {
         return "Integer { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -66,7 +79,7 @@
     }
 
      // String
-    string String::to_string(void) const
+    std::string String::to_string(void) const
     {
         return "String { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -75,7 +88,7 @@
     }
 
      // Real
-    string Real::to_string(void) const
+    std::string Real::to_string(void) const
     {
         return "Real { \n"
                "declaredType      : " + to_str( declaredType      ) + "\n" +
@@ -94,7 +107,7 @@
     }
 
      // Enumeration
-    string Enumeration::to_string(void) const
+    std::string Enumeration::to_string(void) const
     {
         return "Enumeration { \n"
                "declaredType  : " + to_str( declaredType  ) + "\n" +
@@ -106,7 +119,7 @@
     }
 
      // SimpleTypeEnumerationItem
-    string SimpleTypeEnumerationItem::to_string(void) const
+    std::string SimpleTypeEnumerationItem::to_string(void) const
     {
         return "SimpleTypeEnumerationItem { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -116,7 +129,7 @@
     }
 
      // SimpleTypeEnumeration
-    string SimpleTypeEnumeration::to_string(void) const
+    std::string SimpleTypeEnumeration::to_string(void) const
     {
         return "SimpleTypeEnumeration { \n"
                "quantity  : " + to_str( quantity  ) + "\n" +
@@ -125,7 +138,7 @@
     }
 
      // fmi2SimpleType
-    string fmi2SimpleType::to_string(void) const
+    std::string fmi2SimpleType::to_string(void) const
     {
         return "fmi2SimpleType { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -139,7 +152,7 @@
     }
 
      // TypeDefinitions
-    string TypeDefinitions::to_string(void) const
+    std::string TypeDefinitions::to_string(void) const
     {
         return "TypeDefinitions { \n"
                "SimpleTypes  : " + to_str( SimpleTypes  ) + "\n" +
@@ -147,7 +160,7 @@
     }
 
      // Category
-    string Category::to_string(void) const
+    std::string Category::to_string(void) const
     {
         return "Category { \n"
                "name         : " + to_str( name         ) + "\n" +
@@ -156,7 +169,7 @@
     }
 
      // LogCategories
-    string LogCategories::to_string(void) const
+    std::string LogCategories::to_string(void) const
     {
         return "LogCategories { \n"
                "Categories  : " + to_str( Categories  ) + "\n" +
@@ -164,7 +177,7 @@
     }
 
      // fmi2Annotation
-    string fmi2Annotation::to_string(void) const
+    std::string fmi2Annotation::to_string(void) const
     {
         return "fmi2Annotation { \n"
                "annotation  : " + to_str( annotation  ) + "\n" +
@@ -172,7 +185,7 @@
     }
 
      // VendorAnnotations
-    string VendorAnnotations::to_string(void) const
+    std::string VendorAnnotations::to_string(void) const
     {
         return "VendorAnnotations { \n"
                "Annotations  : " + to_str( Annotations  ) + "\n" +
@@ -180,7 +193,7 @@
     }
 
      // DefaultExperiment
-    string DefaultExperiment::to_string(void) const
+    std::string DefaultExperiment::to_string(void) const
     {
         return "DefaultExperiment { \n"
                "startTime  : " + to_str( startTime  ) + "\n" +
@@ -191,7 +204,7 @@
     }
 
      // fmi2ScalarVariable
-    string fmi2ScalarVariable::to_string(void) const
+    std::string fmi2ScalarVariable::to_string(void) const
     {
         return "fmi2ScalarVariable { \n"
                "name                                : " + to_str( name                                ) + "\n" +
@@ -207,12 +220,11 @@
                "String                              : " + to_str( String                              ) + "\n" +
                "Enumeration                         : " + to_str( Enumeration                         ) + "\n" +
                "Annotations                         : " + to_str( Annotations                         ) + "\n" +
-               "index                               : " + to_str( index                               ) + "\n" +
                "}";
     }
 
      // Unknown
-    string Unknown::to_string(void) const
+    std::string Unknown::to_string(void) const
     {
         return "Unknown { \n"
                "index             : " + to_str( index             ) + "\n" +
@@ -222,7 +234,7 @@
     }
 
      // Outputs
-    string Outputs::to_string(void) const
+    std::string Outputs::to_string(void) const
     {
         return "Outputs { \n"
                "Unknowns  : " + to_str( Unknowns  ) + "\n" +
@@ -230,7 +242,7 @@
     }
 
      // Derivatives
-    string Derivatives::to_string(void) const
+    std::string Derivatives::to_string(void) const
     {
         return "Derivatives { \n"
                "Unknowns  : " + to_str( Unknowns  ) + "\n" +
@@ -238,7 +250,7 @@
     }
 
      // InitialUnknowns
-    string InitialUnknowns::to_string(void) const
+    std::string InitialUnknowns::to_string(void) const
     {
         return "InitialUnknowns { \n"
                "Unknowns  : " + to_str( Unknowns  ) + "\n" +
@@ -246,7 +258,7 @@
     }
 
      // ModelStructure
-    string ModelStructure::to_string(void) const
+    std::string ModelStructure::to_string(void) const
     {
         return "ModelStructure { \n"
                "Outputs          : " + to_str( Outputs          ) + "\n" +
@@ -256,7 +268,7 @@
     }
 
      // ModelVariables
-    string ModelVariables::to_string(void) const
+    std::string ModelVariables::to_string(void) const
     {
         return "ModelVariables { \n"
                "ScalarVariable  : " + to_str( ScalarVariable  ) + "\n" +
@@ -264,7 +276,7 @@
     }
 
      // File
-    string File::to_string(void) const
+    std::string File::to_string(void) const
     {
         return "File { \n"
                "name  : " + to_str( name  ) + "\n" +
@@ -272,7 +284,7 @@
     }
 
      // SourceFiles
-    string SourceFiles::to_string(void) const
+    std::string SourceFiles::to_string(void) const
     {
         return "SourceFiles { \n"
                "Files  : " + to_str( Files  ) + "\n" +
@@ -280,7 +292,7 @@
     }
 
      // ModelExchange
-    string ModelExchange::to_string(void) const
+    std::string ModelExchange::to_string(void) const
     {
         return "ModelExchange { \n"
                "modelIdentifier                      : " + to_str( modelIdentifier                      ) + "\n" +
@@ -296,7 +308,7 @@
     }
 
      // CoSimulation
-    string CoSimulation::to_string(void) const
+    std::string CoSimulation::to_string(void) const
     {
         return "CoSimulation { \n"
                "modelIdentifier                         : " + to_str( modelIdentifier                         ) + "\n" +
@@ -315,7 +327,7 @@
     }
 
      // fmi2ModelDescription
-    string fmi2ModelDescription::to_string(void) const
+    std::string fmi2ModelDescription::to_string(void) const
     {
         return "fmi2ModelDescription { \n"
                "fmiVersion                : " + to_str( fmiVersion                ) + "\n" +
@@ -341,6 +353,5 @@
                "ModelStructure            : " + to_str( ModelStructure            ) + "\n" +
                "}";
     }
-
 
 }

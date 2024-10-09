@@ -1,6 +1,6 @@
 #pragma once
 
-#include "modelDescription.hpp"
+#include "FMI2_modelDescription.hpp"
 
 #include <string>
 #include <vector>
@@ -19,7 +19,7 @@ namespace ssp4cpp::fmi2
     public:
         path original_file;
         path temp_dir;
-        fmi2ModelDescription md;
+        md::fmi2ModelDescription md;
 
         FmiImport(const path &file);
 
@@ -37,7 +37,7 @@ namespace ssp4cpp::fmi2
         }
 
     private:
-        fmi2ModelDescription parse_model_description(const string &fileName);
+        md::fmi2ModelDescription parse_model_description(const string &fileName);
     };
 
 }

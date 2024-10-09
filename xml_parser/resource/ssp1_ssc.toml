@@ -1,3 +1,8 @@
+aaa_standard = "SSP1"
+aaa_namespace = "ssc"
+aaa_name = "SystemStructureCommon"
+aaa_headers = ["SSP1_Enums.hpp"]
+
 [Annotation]
 type = {type = "string"}
 any = {type = "string", optional=true}
