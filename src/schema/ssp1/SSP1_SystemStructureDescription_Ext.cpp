@@ -59,7 +59,7 @@ namespace ssp4cpp::ssp1::ssd
 
         std::copy_if(begin(in), end(in), std::back_inserter(out),
                      [causalities](IndexConnectorComponentTuple a)
-                     { return ssp4cpp::misc::enum_in_list(get<1>(a).get().kind, causalities); });
+                     { return ssp4cpp::misc::is_in_list(get<1>(a).get().kind, causalities); });
 
         reset_index(out);
 

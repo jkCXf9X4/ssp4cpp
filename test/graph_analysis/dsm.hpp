@@ -1,6 +1,9 @@
 #pragma once
 
+#include "matrix.hpp"
+
 #include <vector>
+#include <map>
 
 // #include <boost/graph/strong_components.hpp>
 #include <boost/graph/graph_traits.hpp>
@@ -27,11 +30,11 @@ namespace ssp4cpp::dsm
         void Print();
 
     private:
-
-        Graph& g_ref;
+        Graph &g_ref;
         size_t N;
-        std::vector<std::vector<int>> dsm_row;
-        std::vector<std::vector<int>> dsm_column;
-    };
 
+        std::vector<int> group_order;
+
+        Matrix<int> matrix;
+    };
 }
