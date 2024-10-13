@@ -1,4 +1,6 @@
 #pragma once
+
+#include "misc.hpp"
 #include "IXmlNode.hpp"
 
 #include <pugixml.hpp>
@@ -14,35 +16,10 @@
 
 namespace ssp4cpp::xml
 {
-    
-    namespace
-    {
-        template <typename>
-        constexpr bool is_optional_impl = false;
-        template <typename T>
-        constexpr bool is_optional_impl<std::optional<T>> = true;
-        template <>
-        constexpr bool is_optional_impl<std::nullopt_t> = true;
-
-        template <typename T>
-        constexpr bool is_optional_v = is_optional_impl<std::decay_t<T>>;
-
-        template <typename C>
-        struct is_vector : std::false_type
-        {
-        };
-        template <typename T, typename A>
-        struct is_vector<std::vector<T, A>> : std::true_type
-        {
-        };
-        template <typename C>
-        inline constexpr bool is_vector_v = is_vector<C>::value;
-
-    }
-
     using namespace std;
     using namespace pugi;
     using namespace ssp4cpp::interfaces;
+    using namespace ssp4cpp::misc::types;
 
     inline string parents_to_string(const xml_node &node)
     {
