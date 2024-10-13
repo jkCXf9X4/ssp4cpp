@@ -159,7 +159,7 @@ int main()
         }
     }
 
-    boost::write_graphviz(std::cout, g, make_label_writer(get(&dsm::vertex_info::name, g)));
+    // boost::write_graphviz(std::cout, g, make_label_writer(get(&dsm::vertex_info::name, g)));
 
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_1"], g);
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu1.dynamic_output_2"], g);
@@ -170,9 +170,12 @@ int main()
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_input_1"], connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_output_1"], g);
     // add_edge(connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_input_2"], connector_str_int_map["dynamic_connection_fmu_fmu4.dynamic_output_2"], g);
 
+
     ssp4cpp::dsm::DSM dsm(g);
 
+    
     dsm.Print();
+    dsm.PrintGroups();
 
 
     std::cout << "Parsing complete\n";

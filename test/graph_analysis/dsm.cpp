@@ -13,16 +13,37 @@ namespace ssp4cpp::dsm
         N = num_vertices(g);
         matrix = Matrix<int>(N);
  
-
+        // group_order
+        std::map<std::string, int> comp_map;
+        int group_id = 1;
         graph_traits<Graph>::edge_iterator ei, ei_end;
         for (tie(ei, ei_end) = edges(g); ei != ei_end; ++ei)
         {
-            int u = source(*ei, g); // Source vertex of the edge
-            int v = target(*ei, g); // Target vertex of the edge
-            matrix[u, v] = 1;      // Mark the edge in the DSM
+            int row = source(*ei, g); // Source vertex of the edge
+            int column = target(*ei, g); // Target vertex of the edge
+            matrix[row, column] = 1;      // Mark the edge in the DSM
+
+            auto component = g[row].component;
+            if(!comp_map.contains(component))
+            {
+                std::cout << component << " : " << group_id << std::endl;
+                comp_map[component] = group_id++;
+            }
+            matrix.set_group(row, comp_map[component]);
+
         }
+
+
     }
 
+    void DSM::PrintGroups()
+    {
+        auto groups = matrix.get_group_map();
+        for (int i = 0; i < N; i++)
+        {
+            std::cout << "Row " << i << " group: " << groups[i] << std::endl;
+        }
+    }
 
 
     void DSM::Print()

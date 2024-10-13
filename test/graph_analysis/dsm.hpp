@@ -28,6 +28,7 @@ namespace ssp4cpp::dsm
     public:
         DSM(Graph &g);
         void Print();
+        void PrintGroups();
 
     private:
         Graph &g_ref;

@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.ssd": "xml",
         "*.tpp": "cpp",
         "iostream": "cpp",
         "optional": "cpp",
@@ -84,6 +85,7 @@
         "charconv": "cpp",
         "span": "cpp",
         "format": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "stdfloat": "cpp"
     },
 }
