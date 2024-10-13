@@ -36,12 +36,11 @@ namespace ssp4cpp::dsm
             {
                 if (misc::is_in_list(group, groups))
                 {
-                    groups.push_back(group)
+                    groups.push_back(group);
                 }
             }
             return groups;
         }
-
 
 
         // Function to get a reference to a specific row
@@ -89,13 +88,13 @@ namespace ssp4cpp::dsm
 
         T row_sum(size_t index)
         {
-            auto row = row(index);
+            auto row = this->row(index);
             return std::accumulate(row.begin(), row.end(), 0);
         }
 
         T column_sum(size_t index)
         {
-            auto column = column(index);
+            auto column = this->column(index);
             return std::accumulate(column.begin(), column.end(), 0);
         }
 

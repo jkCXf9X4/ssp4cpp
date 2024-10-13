@@ -62,7 +62,7 @@ int main()
     // Opening zip
     std::cout << "Opening ssp\n";
 
-    auto ssp = ssp4cpp::ssp1::SspImport("/home/eriro/pwa/2_work/ssp4cpp/repos/ssp4cpp/test/graph_analysis/resources/algebraic_loop_4.ssp");
+    auto ssp = ssp4cpp::ssp1::SspImport("./test/graph_analysis/resources/algebraic_loop_4.ssp");
 
     std::cout << "Imported ssp! \n";
 

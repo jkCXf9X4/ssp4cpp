@@ -2,6 +2,8 @@
 #include <initializer_list>
 #include <vector>
 
+#include <algorithm>
+
 
 namespace ssp4cpp::misc
 {
