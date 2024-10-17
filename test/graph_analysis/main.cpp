@@ -70,7 +70,7 @@ int main()
 
     std::cout << "Parsing ssp to external file\n";
 
-    save_string("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/parsed.txt", ssp.ssd.to_string());
+    save_string("./test/graph_analysis/resources/parsed.txt", ssp.ssd.to_string());
 
     // Parsing FMI
     auto fmus = vector<pair<string, ssp4cpp::fmi2::FmiImport>>();
@@ -84,7 +84,7 @@ int main()
         auto p = pair(resource.name.value_or("null"), fmu);
         fmus.push_back(p);
 
-        save_string("/home/eriro/pwa/2_work/loop/repos/ssp4cpp/test/graph_analysis/resources/" + std::to_string(i) + ".txt", fmu.md.to_string());
+        save_string("./test/graph_analysis/resources/" + std::to_string(i) + ".txt", fmu.md.to_string());
     }
 
     // Count nodes
@@ -173,9 +173,8 @@ int main()
 
     ssp4cpp::dsm::DSM dsm(g);
 
-    
-    dsm.Print();
-    dsm.PrintGroups();
+    save_string("./test/graph_analysis/resources/raw_dsm.txt", dsm.GetCSV() );
+    // dsm.PrintGroups();
 
 
     std::cout << "Parsing complete\n";

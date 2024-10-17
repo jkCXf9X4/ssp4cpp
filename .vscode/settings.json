@@ -88,4 +88,5 @@
         "ranges": "cpp",
         "stdfloat": "cpp"
     },
+    "CodeGPT.apiKey": "Ollama",
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <numeric>
 #include <ranges>
+#include <format>
 
 namespace ssp4cpp::dsm
 {
@@ -38,46 +39,47 @@ namespace ssp4cpp::dsm
 
     void DSM::PrintGroups()
     {
+        std::string out = "";
         auto groups = matrix.get_group_map();
         for (int i = 0; i < N; i++)
         {
-            std::cout << "Row " << i << " group: " << groups[i] << std::endl;
+            out += std::format("Row: {} group: {}\n", i,  groups[i]);
         }
+        std::cout << out;
     }
 
 
-    void DSM::Print()
+    std::string DSM::GetCSV()
     {
-
-        // Display the DSM matrix
-        std::cout << "Design Structure Matrix (DSM):" << std::endl;
+        std::string out = "";
         for (int i = 0; i < N; i++)
         {
             if (i == 0)
             {
+                out += "node";
                 for (int j = 0; j < N; j++)
                 {
-                    if (matrix.column_has_value(j))
+                    // if (matrix.column_has_value(j))
                     {
-                        std::cout << ";" << g_ref[j].name;
+                        out += std::format(";{}", g_ref[j].name);
                     }
                 }
-                std::cout << std::endl;
+                out += "\n";
             }
-            if (matrix.row_has_value(i))
+            // if (matrix.row_has_value(i))
             {
-                std::cout << g_ref[i].name;
+                out += g_ref[i].name;
                 for (int j = 0; j < N; j++)
                 {
-                    if (matrix.column_has_value(j))
+                    // if (matrix.column_has_value(j))
                     {
-                        std::cout << ";" << matrix[i, j];
+                        out += std::format(";{}", matrix[i, j]);
                     }
                 }
-
-                std::cout << std::endl;
+                out += "\n";
             }
         }
+        return out;
     }
 
 }

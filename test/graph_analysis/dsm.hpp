@@ -9,6 +9,7 @@
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 
+// design structure matrix
 namespace ssp4cpp::dsm
 {
     using namespace boost;
@@ -21,13 +22,13 @@ namespace ssp4cpp::dsm
         int index;
     };
 
-    typedef adjacency_list<vecS, vecS, boost::directedS, vertex_info> Graph;
+    typedef adjacency_list<vecS, vecS, boost::directedS, vertex_info, vertex_info> Graph;
 
     class DSM
     {
     public:
         DSM(Graph &g);
-        void Print();
+        std::string GetCSV();
         void PrintGroups();
 
     private:
