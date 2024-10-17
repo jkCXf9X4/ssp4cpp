@@ -1,169 +1,515 @@
 fmi2ModelDescription { 
 fmiVersion                : 2.0
-modelName                 : adaptionUnit
-guid                      : {f0b9ad6a-61ef-4411-a683-3051577cc540}
-description               : null
+modelName                 : ErikResearch.dynamic_connection_fmu
+guid                      : {a3d9d603-c2b0-49e0-b842-5b835e62819a}
+description               : 
 author                    : null
-version                   : null
+version                   : 
 copyright                 : null
 license                   : null
-generationTool            : Dymola Version 2020 (64-bit), 2019-04-10
-generationDateAndTime     : 2021-04-20T11:31:48Z
+generationTool            : OpenModelica Compiler OpenModelica 1.24.0~dev.beta.0
+generationDateAndTime     : 2024-10-07T10:46:29Z
 variableNamingConvention  : structured
-numberOfEventIndicators   : 6
-ModelExchange             : null
-CoSimulation              : CoSimulation { 
-modelIdentifier                         : adaptionUnit
-needsExecutionTool                      : null
-canHandleVariableCommunicationStepSize  : true
-canInterpolateInputs                    : true
-maxOutputDerivativeOrder                : true
-canRunAsynchronuously                   : null
-canBeInstantiatedOnlyOncePerProcess     : null
-canNotUseMemoryManagementFunctions      : null
-canGetAndSetFMUstate                    : true
-canSerializeFMUstate                    : true
-providesDirectionalDerivatives          : null
-SourceFiles                             : null
+numberOfEventIndicators   : 2
+ModelExchange             : ModelExchange { 
+modelIdentifier                      : dynamic_connection_fmu
+needsExecutionTool                   : false
+completedIntegratorStepNotNeeded     : false
+canBeInstantiatedOnlyOncePerProcess  : false
+canNotUseMemoryManagementFunctions   : false
+canGetAndSetFMUstate                 : false
+canSerializeFMUstate                 : false
+providesDirectionalDerivatives       : null
+SourceFiles                          : SourceFiles { 
+Files  : {
+File { 
+name  : dynamic_connection_fmu.c
 }
-UnitDefinitions           : null
-TypeDefinitions           : TypeDefinitions { 
-SimpleTypes  : {
-fmi2SimpleType { 
-name         : Modelica.Blocks.Interfaces.IntegerOutput
-description  : null
-Real         : null
-Integer      : Integer { 
-declaredType  : null
-start         : null
-quantity      : null
-min           : null
-max           : null
+File { 
+name  : dynamic_connection_fmu_functions.c
 }
-Boolean      : null
-String       : null
-Enumeration  : null
+File { 
+name  : dynamic_connection_fmu_records.c
 }
-fmi2SimpleType { 
-name         : Modelica.Blocks.Interfaces.RealInput
-description  : null
-Real         : Real { 
-declaredType      : null
-quantity          : null
-unit              : null
-displayUnit       : null
-relativeQuantity  : null
-min               : null
-max               : null
-nominal           : null
-unbounded         : null
-start             : null
-derivative        : null
-reinit            : null
+File { 
+name  : dynamic_connection_fmu_01exo.c
 }
-Integer      : null
-Boolean      : null
-String       : null
-Enumeration  : null
+File { 
+name  : dynamic_connection_fmu_02nls.c
 }
-fmi2SimpleType { 
-name         : Modelica.Blocks.Interfaces.RealOutput
-description  : null
-Real         : Real { 
-declaredType      : null
-quantity          : null
-unit              : null
-displayUnit       : null
-relativeQuantity  : null
-min               : null
-max               : null
-nominal           : null
-unbounded         : null
-start             : null
-derivative        : null
-reinit            : null
+File { 
+name  : dynamic_connection_fmu_03lsy.c
 }
-Integer      : null
-Boolean      : null
-String       : null
-Enumeration  : null
+File { 
+name  : dynamic_connection_fmu_04set.c
+}
+File { 
+name  : dynamic_connection_fmu_05evt.c
+}
+File { 
+name  : dynamic_connection_fmu_06inz.c
+}
+File { 
+name  : dynamic_connection_fmu_07dly.c
+}
+File { 
+name  : dynamic_connection_fmu_08bnd.c
+}
+File { 
+name  : dynamic_connection_fmu_09alg.c
+}
+File { 
+name  : dynamic_connection_fmu_10asr.c
+}
+File { 
+name  : dynamic_connection_fmu_11mix.c
+}
+File { 
+name  : dynamic_connection_fmu_12jac.c
+}
+File { 
+name  : dynamic_connection_fmu_13opt.c
+}
+File { 
+name  : dynamic_connection_fmu_14lnz.c
+}
+File { 
+name  : dynamic_connection_fmu_15syn.c
+}
+File { 
+name  : dynamic_connection_fmu_16dae.c
+}
+File { 
+name  : dynamic_connection_fmu_17inl.c
+}
+File { 
+name  : dynamic_connection_fmu_18spd.c
+}
+File { 
+name  : dynamic_connection_fmu_init_fmu.c
+}
+File { 
+name  : dynamic_connection_fmu_FMU.c
+}
+File { 
+name  : ./gc/memory_pool.c
+}
+File { 
+name  : ./gc/omc_gc.c
+}
+File { 
+name  : ./util/base_array.c
+}
+File { 
+name  : ./util/boolean_array.c
+}
+File { 
+name  : ./util/context.c
+}
+File { 
+name  : ./util/division.c
+}
+File { 
+name  : ./util/doubleEndedList.c
+}
+File { 
+name  : ./util/generic_array.c
+}
+File { 
+name  : ./util/index_spec.c
+}
+File { 
+name  : ./util/integer_array.c
+}
+File { 
+name  : ./util/list.c
+}
+File { 
+name  : ./util/modelica_string_lit.c
+}
+File { 
+name  : ./util/modelica_string.c
+}
+File { 
+name  : ./util/ModelicaUtilities.c
+}
+File { 
+name  : ./util/omc_error.c
+}
+File { 
+name  : ./util/omc_file.c
+}
+File { 
+name  : ./util/omc_init.c
+}
+File { 
+name  : ./util/omc_mmap.c
+}
+File { 
+name  : ./util/omc_msvc.c
+}
+File { 
+name  : ./util/omc_numbers.c
+}
+File { 
+name  : ./util/parallel_helper.c
+}
+File { 
+name  : ./util/rational.c
+}
+File { 
+name  : ./util/real_array.c
+}
+File { 
+name  : ./util/ringbuffer.c
+}
+File { 
+name  : ./util/simulation_options.c
+}
+File { 
+name  : ./util/string_array.c
+}
+File { 
+name  : ./util/utility.c
+}
+File { 
+name  : ./util/varinfo.c
+}
+File { 
+name  : ./math-support/pivot.c
+}
+File { 
+name  : ./simulation/jacobian_util.c
+}
+File { 
+name  : ./simulation/omc_simulation_util.c
+}
+File { 
+name  : ./simulation/options.c
+}
+File { 
+name  : ./simulation/simulation_info_json.c
+}
+File { 
+name  : ./simulation/simulation_omc_assert.c
+}
+File { 
+name  : ./simulation/solver/delay.c
+}
+File { 
+name  : ./simulation/solver/fmi_events.c
+}
+File { 
+name  : ./simulation/solver/model_help.c
+}
+File { 
+name  : ./simulation/solver/omc_math.c
+}
+File { 
+name  : ./simulation/solver/spatialDistribution.c
+}
+File { 
+name  : ./simulation/solver/stateset.c
+}
+File { 
+name  : ./simulation/solver/synchronous.c
+}
+File { 
+name  : ./simulation/solver/initialization/initialization.c
+}
+File { 
+name  : ./meta/meta_modelica_catch.c
 }
 }
 
 }
-LogCategories             : null
+}
+CoSimulation              : CoSimulation { 
+modelIdentifier                         : dynamic_connection_fmu
+needsExecutionTool                      : false
+canHandleVariableCommunicationStepSize  : true
+canInterpolateInputs                    : true
+maxOutputDerivativeOrder                : true
+canRunAsynchronuously                   : false
+canBeInstantiatedOnlyOncePerProcess     : false
+canNotUseMemoryManagementFunctions      : false
+canGetAndSetFMUstate                    : false
+canSerializeFMUstate                    : false
+providesDirectionalDerivatives          : null
+SourceFiles                             : SourceFiles { 
+Files  : {
+File { 
+name  : dynamic_connection_fmu.c
+}
+File { 
+name  : dynamic_connection_fmu_functions.c
+}
+File { 
+name  : dynamic_connection_fmu_records.c
+}
+File { 
+name  : dynamic_connection_fmu_01exo.c
+}
+File { 
+name  : dynamic_connection_fmu_02nls.c
+}
+File { 
+name  : dynamic_connection_fmu_03lsy.c
+}
+File { 
+name  : dynamic_connection_fmu_04set.c
+}
+File { 
+name  : dynamic_connection_fmu_05evt.c
+}
+File { 
+name  : dynamic_connection_fmu_06inz.c
+}
+File { 
+name  : dynamic_connection_fmu_07dly.c
+}
+File { 
+name  : dynamic_connection_fmu_08bnd.c
+}
+File { 
+name  : dynamic_connection_fmu_09alg.c
+}
+File { 
+name  : dynamic_connection_fmu_10asr.c
+}
+File { 
+name  : dynamic_connection_fmu_11mix.c
+}
+File { 
+name  : dynamic_connection_fmu_12jac.c
+}
+File { 
+name  : dynamic_connection_fmu_13opt.c
+}
+File { 
+name  : dynamic_connection_fmu_14lnz.c
+}
+File { 
+name  : dynamic_connection_fmu_15syn.c
+}
+File { 
+name  : dynamic_connection_fmu_16dae.c
+}
+File { 
+name  : dynamic_connection_fmu_17inl.c
+}
+File { 
+name  : dynamic_connection_fmu_18spd.c
+}
+File { 
+name  : dynamic_connection_fmu_init_fmu.c
+}
+File { 
+name  : dynamic_connection_fmu_FMU.c
+}
+File { 
+name  : ./gc/memory_pool.c
+}
+File { 
+name  : ./gc/omc_gc.c
+}
+File { 
+name  : ./util/base_array.c
+}
+File { 
+name  : ./util/boolean_array.c
+}
+File { 
+name  : ./util/context.c
+}
+File { 
+name  : ./util/division.c
+}
+File { 
+name  : ./util/doubleEndedList.c
+}
+File { 
+name  : ./util/generic_array.c
+}
+File { 
+name  : ./util/index_spec.c
+}
+File { 
+name  : ./util/integer_array.c
+}
+File { 
+name  : ./util/list.c
+}
+File { 
+name  : ./util/modelica_string_lit.c
+}
+File { 
+name  : ./util/modelica_string.c
+}
+File { 
+name  : ./util/ModelicaUtilities.c
+}
+File { 
+name  : ./util/omc_error.c
+}
+File { 
+name  : ./util/omc_file.c
+}
+File { 
+name  : ./util/omc_init.c
+}
+File { 
+name  : ./util/omc_mmap.c
+}
+File { 
+name  : ./util/omc_msvc.c
+}
+File { 
+name  : ./util/omc_numbers.c
+}
+File { 
+name  : ./util/parallel_helper.c
+}
+File { 
+name  : ./util/rational.c
+}
+File { 
+name  : ./util/real_array.c
+}
+File { 
+name  : ./util/ringbuffer.c
+}
+File { 
+name  : ./util/simulation_options.c
+}
+File { 
+name  : ./util/string_array.c
+}
+File { 
+name  : ./util/utility.c
+}
+File { 
+name  : ./util/varinfo.c
+}
+File { 
+name  : ./math-support/pivot.c
+}
+File { 
+name  : ./simulation/jacobian_util.c
+}
+File { 
+name  : ./simulation/omc_simulation_util.c
+}
+File { 
+name  : ./simulation/options.c
+}
+File { 
+name  : ./simulation/simulation_info_json.c
+}
+File { 
+name  : ./simulation/simulation_omc_assert.c
+}
+File { 
+name  : ./simulation/solver/delay.c
+}
+File { 
+name  : ./simulation/solver/fmi_events.c
+}
+File { 
+name  : ./simulation/solver/model_help.c
+}
+File { 
+name  : ./simulation/solver/omc_math.c
+}
+File { 
+name  : ./simulation/solver/spatialDistribution.c
+}
+File { 
+name  : ./simulation/solver/stateset.c
+}
+File { 
+name  : ./simulation/solver/synchronous.c
+}
+File { 
+name  : ./simulation/solver/initialization/initialization.c
+}
+File { 
+name  : ./meta/meta_modelica_catch.c
+}
+}
+
+}
+}
+UnitDefinitions           : null
+TypeDefinitions           : null
+LogCategories             : LogCategories { 
+Categories  : {
+Category { 
+name         : logEvents
+description  : null
+}
+Category { 
+name         : logSingularLinearSystems
+description  : null
+}
+Category { 
+name         : logNonlinearSystems
+description  : null
+}
+Category { 
+name         : logDynamicStateSelection
+description  : null
+}
+Category { 
+name         : logStatusWarning
+description  : null
+}
+Category { 
+name         : logStatusDiscard
+description  : null
+}
+Category { 
+name         : logStatusError
+description  : null
+}
+Category { 
+name         : logStatusFatal
+description  : null
+}
+Category { 
+name         : logStatusPending
+description  : null
+}
+Category { 
+name         : logAll
+description  : null
+}
+Category { 
+name         : logFmi2Call
+description  : null
+}
+}
+
+}
 DefaultExperiment         : DefaultExperiment { 
 startTime  : 0.000000
 stopTime   : 1.000000
-tolerance  : 0.000100
-stepSize   : null
+tolerance  : 0.000001
+stepSize   : 0.002000
 }
 VendorAnnotations         : null
 ModelVariables            : ModelVariables { 
 ScalarVariable  : {
 fmi2ScalarVariable { 
-name                                : sWsignals.TLiquid
-valueReference                      : 335544320
+name                                : rollingIntegrator_1.y
+valueReference                      : 0
 description                         : null
-causality                           : output
+causality                           : null
 variability                         : null
-initial                             : null
+initial                             : exact
 canHandleMultipleSetPerTimeInstant  : null
 Real                                : Real { 
-declaredType      : Modelica.Blocks.Interfaces.RealOutput
-quantity          : null
-unit              : null
-displayUnit       : null
-relativeQuantity  : null
-min               : null
-max               : null
-nominal           : null
-unbounded         : null
-start             : null
-derivative        : null
-reinit            : null
-}
-Integer                             : null
-Boolean                             : null
-String                              : null
-Enumeration                         : null
-Annotations                         : {
-}
-
-}
-fmi2ScalarVariable { 
-name                                : sWsignals.Aircraft_State
-valueReference                      : 335544321
-description                         : null
-causality                           : output
-variability                         : discrete
-initial                             : null
-canHandleMultipleSetPerTimeInstant  : null
-Real                                : null
-Integer                             : Integer { 
-declaredType  : Modelica.Blocks.Interfaces.IntegerOutput
-start         : null
-quantity      : null
-min           : null
-max           : null
-}
-Boolean                             : null
-String                              : null
-Enumeration                         : null
-Annotations                         : {
-}
-
-}
-fmi2ScalarVariable { 
-name                                : Aircraft_State
-valueReference                      : 352321536
-description                         : null
-causality                           : input
-variability                         : null
-initial                             : null
-canHandleMultipleSetPerTimeInstant  : null
-Real                                : Real { 
-declaredType      : Modelica.Blocks.Interfaces.RealInput
+declaredType      : null
 quantity          : null
 unit              : null
 displayUnit       : null
@@ -185,15 +531,15 @@ Annotations                         : {
 
 }
 fmi2ScalarVariable { 
-name                                : LHexTout
-valueReference                      : 352321537
+name                                : rollingIntegrator_2.y
+valueReference                      : 1
 description                         : null
-causality                           : input
+causality                           : null
 variability                         : null
-initial                             : null
+initial                             : exact
 canHandleMultipleSetPerTimeInstant  : null
 Real                                : Real { 
-declaredType      : Modelica.Blocks.Interfaces.RealInput
+declaredType      : null
 quantity          : null
 unit              : null
 displayUnit       : null
@@ -215,15 +561,135 @@ Annotations                         : {
 
 }
 fmi2ScalarVariable { 
-name                                : realToInteger.u
-valueReference                      : 436207616
-description                         : Connector of Real input signal
+name                                : der(rollingIntegrator_1.y)
+valueReference                      : 2
+description                         : null
 causality                           : null
 variability                         : null
 initial                             : null
 canHandleMultipleSetPerTimeInstant  : null
 Real                                : Real { 
-declaredType      : Modelica.Blocks.Interfaces.RealInput
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : 1
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : der(rollingIntegrator_2.y)
+valueReference                      : 3
+description                         : null
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : 2
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : direct_input_1
+valueReference                      : 4
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : direct_input_2
+valueReference                      : 5
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : direct_output_1
+valueReference                      : 6
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
 quantity          : null
 unit              : null
 displayUnit       : null
@@ -245,21 +711,568 @@ Annotations                         : {
 
 }
 fmi2ScalarVariable { 
-name                                : realToInteger.y
-valueReference                      : 335544321
-description                         : Connector of Integer output signal
-causality                           : null
-variability                         : discrete
+name                                : direct_output_2
+valueReference                      : 7
+description                         : null
+causality                           : output
+variability                         : null
 initial                             : null
 canHandleMultipleSetPerTimeInstant  : null
-Real                                : null
-Integer                             : Integer { 
-declaredType  : Modelica.Blocks.Interfaces.IntegerOutput
-start         : null
-quantity      : null
-min           : null
-max           : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
 }
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : dynamic_input_1
+valueReference                      : 8
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : dynamic_input_2
+valueReference                      : 9
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : dynamic_output_1
+valueReference                      : 10
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : dynamic_output_2
+valueReference                      : 11
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_1.dy_dt
+valueReference                      : 12
+description                         : Derivative of the moving average
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_1.u_delayed
+valueReference                      : 13
+description                         : Delayed input
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_2.dy_dt
+valueReference                      : 14
+description                         : Derivative of the moving average
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_2.u_delayed
+valueReference                      : 15
+description                         : Delayed input
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : gain_1.k
+valueReference                      : 16
+description                         : Gain value multiplied with input signal
+causality                           : parameter
+variability                         : fixed
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 1.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : gain_2.k
+valueReference                      : 17
+description                         : Gain value multiplied with input signal
+causality                           : parameter
+variability                         : fixed
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 1.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_1.T
+valueReference                      : 18
+description                         : Window length
+causality                           : parameter
+variability                         : fixed
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 1.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_2.T
+valueReference                      : 19
+description                         : Window length
+causality                           : parameter
+variability                         : fixed
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 1.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : gain_1.u
+valueReference                      : 4
+description                         : Input signal connector
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : gain_1.y
+valueReference                      : 6
+description                         : Output signal connector
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : gain_2.u
+valueReference                      : 5
+description                         : Input signal connector
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : gain_2.y
+valueReference                      : 7
+description                         : Output signal connector
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_1.u
+valueReference                      : 8
+description                         : null
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : rollingIntegrator_2.u
+valueReference                      : 9
+description                         : null
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
 Boolean                             : null
 String                              : null
 Enumeration                         : null
@@ -274,20 +1287,42 @@ ModelStructure            : ModelStructure {
 Outputs          : Outputs { 
 Unknowns  : {
 Unknown { 
-index             : 1
+index             : 7
 dependencies      : {
-4
+5
 }
 
 dependenciesKind  : {
-fixed
+dependent
 }
 
 }
 Unknown { 
-index             : 2
+index             : 8
 dependencies      : {
-3
+6
+}
+
+dependenciesKind  : {
+dependent
+}
+
+}
+Unknown { 
+index             : 11
+dependencies      : {
+1
+}
+
+dependenciesKind  : {
+dependent
+}
+
+}
+Unknown { 
+index             : 12
+dependencies      : {
+2
 }
 
 dependenciesKind  : {
@@ -298,13 +1333,91 @@ dependent
 }
 
 }
-Derivatives      : null
+Derivatives      : Derivatives { 
+Unknowns  : {
+Unknown { 
+index             : 3
+dependencies      : {
+9
+}
+
+dependenciesKind  : {
+dependent
+}
+
+}
+Unknown { 
+index             : 4
+dependencies      : {
+10
+}
+
+dependenciesKind  : {
+dependent
+}
+
+}
+}
+
+}
 InitialUnknowns  : InitialUnknowns { 
 Unknowns  : {
 Unknown { 
-index             : 1
+index             : 3
 dependencies      : {
-4
+9
+19
+}
+
+dependenciesKind  : {
+dependent
+dependent
+}
+
+}
+Unknown { 
+index             : 4
+dependencies      : {
+10
+20
+}
+
+dependenciesKind  : {
+dependent
+dependent
+}
+
+}
+Unknown { 
+index             : 7
+dependencies      : {
+5
+17
+}
+
+dependenciesKind  : {
+dependent
+dependent
+}
+
+}
+Unknown { 
+index             : 8
+dependencies      : {
+6
+18
+}
+
+dependenciesKind  : {
+dependent
+dependent
+}
+
+}
+Unknown { 
+index             : 11
+dependencies      : {
+1
 }
 
 dependenciesKind  : {
@@ -313,9 +1426,9 @@ dependent
 
 }
 Unknown { 
-index             : 2
+index             : 12
 dependencies      : {
-3
+2
 }
 
 dependenciesKind  : {
