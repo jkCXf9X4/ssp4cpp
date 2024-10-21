@@ -28,31 +28,6 @@ class DoubleMap:
         return out
 
 
-class RowInfo:
-
-    def __init__(self) -> None:
-        self.component = ""
-        self.group = ""
-        self.row_index = -1
-
-class Matrix:
-    def __init__(self, size) -> None:
-        self.size = size
-        self.matrix : List[List[int]] = [[0]*self.size]*self.size
-
-    def __getitem__(self, row, column):
-        return self.matrix[row][column]
-    
-    def __setitem__(self, row, column, value):
-        self.matrix[row][column] = value
-
-    def transpose(self):
-        """return a transposed version"""
-        new_matrix = Matrix(self.size)
-        for row in range(self.size):
-            for column in range(self.size):
-                new_matrix[row][column] = self.matrix[column][row]
-        return new_matrix
 
 class DSM:
     def __init__(self, filename) -> None:
