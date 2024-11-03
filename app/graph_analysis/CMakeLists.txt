@@ -1,16 +1,20 @@
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/include/schema)
-include_directories(${PROJECT_SOURCE_DIR}/include/schema/ssp1)
-include_directories(${PROJECT_SOURCE_DIR}/include/schema/fmi2)
-include_directories(${PROJECT_SOURCE_DIR}/include_private/)
-
-
 
 file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 
+message(ALL_SRC ssp4cpp_graph ="${ALL_SRC}")
+
 add_executable(ssp4cpp_graph ${ALL_SRC})
-target_link_libraries(ssp4cpp_graph PRIVATE ssp4cpp)
+
+target_include_directories(ssp4cpp_graph
+  PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/include
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/lib/schema_parser/include_private
+)
+
+
+target_link_libraries(ssp4cpp_graph PRIVATE schema_parser)
 
 # target_compile_options(ssp4cpp_graph PRIVATE -Wfatal-errors)
 

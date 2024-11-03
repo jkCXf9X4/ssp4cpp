@@ -21,14 +21,16 @@ Tested on:
 
 Uses vcpkg for dependencies
 
-'''
+```
+git submodule init && git submodule update
+
 cmake --preset=vcpkg
 
 cmake --build build
 
 cmake --build build && ./build/test/graph_analysis/ssp4cpp_graph
 cmake --build build &> build.log && ./build/test/graph_analysis/ssp4cpp_graph
-'''
+```
 
 
 # Credits

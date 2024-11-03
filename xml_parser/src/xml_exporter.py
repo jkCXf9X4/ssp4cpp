@@ -4,34 +4,57 @@ from standard import Node, Attribute, Standard
 
 from misc import indent_strings, new_line
 
-default_values = {"string": "\"null\"", "int": "0", "unsigned int": "0", "double": "0.0", "bool": "false"}
+default_values = {
+    "string": '"null"',
+    "int": "0",
+    "unsigned int": "0",
+    "double": "0.0",
+    "bool": "false",
+}
+
 
 class NodeXmlExporter:
-
-    def __init__(self, class_node : Node, indent="    "):
+    def __init__(self, class_node: Node, indent="    "):
         self.class_node = class_node
-        self.variable_nodes : List[Attribute] = class_node.children
+        self.variable_nodes: List[Attribute] = class_node.children
         self.indent = indent
 
-        self.longest_name = max([0,] +[len(v.name) for v in self.variable_nodes])
+        self.longest_name = max(
+            [
+                0,
+            ]
+            + [len(v.name) for v in self.variable_nodes]
+        )
 
     def generate_from_xml_declarations(self):
-        return f"""void from_xml(const xml_node &node, {self.class_node.name } &obj);\n"""
+        return (
+            f"""void from_xml(const xml_node &node, {self.class_node.name } &obj);\n"""
+        )
 
-    def generate_variable_declaration(self, variable : Attribute):
-
+    def generate_variable_declaration(self, variable: Attribute):
         if variable.xml_tag:
-            name = variable.xml_tag if not variable.namespace else f"{variable.namespace}:{variable.xml_tag}"
+            name = (
+                variable.xml_tag
+                if not variable.namespace
+                else f"{variable.namespace}:{variable.xml_tag}"
+            )
         else:
-            name = variable.name if not variable.namespace else f"{variable.namespace}:{variable.name}"
+            name = (
+                variable.name
+                if not variable.namespace
+                else f"{variable.namespace}:{variable.name}"
+            )
 
-        return f"ssp4cpp::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, \"{name}\");"
+        return f'ssp4cpp::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, "{name}");'
 
     def generate_parser(self):
-        variables = [self.generate_variable_declaration(v) for v in self.variable_nodes if not v.custom]
+        variables = [
+            self.generate_variable_declaration(v)
+            for v in self.variable_nodes
+            if not v.custom
+        ]
         variables = "\n".join(variables)
         variables = indent_strings(self.indent, variables)
-            
 
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
@@ -44,7 +67,6 @@ void from_xml(const xml_node &node, {self.class_node.name} &obj)
 }}
 """
         return template
-
 
 
 class DocumentXmlExporter:
@@ -81,8 +103,9 @@ namespace {self.standard.long_namespece}
         parsers = [n.generate_parser() for n in self.nodes]
         parsers = indent_strings(self.indent, new_line.join(parsers))
 
-        dependencies = new_line.join([f'#include "{h}_XML.hpp"' for h in self.standard.dependencies])
-
+        dependencies = new_line.join(
+            [f'#include "{h}_XML.hpp"' for h in self.standard.dependencies]
+        )
 
         text = f"""
 
@@ -105,14 +128,16 @@ namespace {self.standard.long_namespece}
 """
         return text
 
-    def export(self):
+    def export(self, base_path):
         xml_declaration_path = (
-            Path("./include_private")
+            base_path
+            / "include_private"
             / self.standard.standard.lower()
             / f"{self.standard.long_name}_XML.hpp"
         )
         xml_definition_path = (
-            Path("./src/schema")
+            base_path
+            / "src/schema"
             / self.standard.standard.lower()
             / f"{self.standard.long_name}_XML.cpp"
         )

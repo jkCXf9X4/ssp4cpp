@@ -93,7 +93,9 @@ class DocumentDeclarationExporter:
             [f"{self.indent}{d}" for d in self.standard.forward_declarations]
         )
 
-        dependencies = new_line.join([f'#include "{h}.hpp"' for h in self.standard.dependencies])
+        dependencies = new_line.join(
+            [f'#include "{h}.hpp"' for h in self.standard.dependencies]
+        )
 
         text = f"""
 
@@ -144,14 +146,16 @@ namespace {self.standard.long_namespece}
 """
         return text
 
-    def export(self):
+    def export(self, base_path):
         header_path = (
-            Path("./include/schema")
+            base_path
+            / "include/schema"
             / self.standard.standard.lower()
             / f"{self.standard.long_name}.hpp"
         )
         to_string_path = (
-            Path("./src/schema")
+            base_path
+            / "src/schema"
             / self.standard.standard.lower()
             / f"{self.standard.long_name}_String.cpp"
         )

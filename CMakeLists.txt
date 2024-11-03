@@ -19,6 +19,7 @@ project(ssp4cpp)
 
 add_subdirectory(3rdParty)
 
-add_subdirectory(src)
-add_subdirectory(test/graph_analysis)
+add_subdirectory(lib/schema_parser)
+
+add_subdirectory(app/graph_analysis)
 
