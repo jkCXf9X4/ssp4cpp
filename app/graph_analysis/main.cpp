@@ -62,7 +62,7 @@ int main()
     // Opening zip
     std::cout << "Opening ssp\n";
 
-    auto ssp = ssp4cpp::ssp1::SspImport("./test/graph_analysis/resources/algebraic_loop_4.ssp");
+    auto ssp = ssp4cpp::ssp1::SspImport("./app/graph_analysis/resources/algebraic_loop_4.ssp");
 
     std::cout << "Imported ssp! \n";
 
@@ -70,7 +70,7 @@ int main()
 
     std::cout << "Parsing ssp to external file\n";
 
-    save_string("./test/graph_analysis/resources/parsed.txt", ssp.ssd.to_string());
+    save_string("./app/graph_analysis/resources/parsed.txt", ssp.ssd.to_string());
 
     // Parsing FMI
     auto fmus = vector<pair<string, ssp4cpp::fmi2::FmiImport>>();
@@ -84,7 +84,7 @@ int main()
         auto p = pair(resource.name.value_or("null"), fmu);
         fmus.push_back(p);
 
-        save_string("./test/graph_analysis/resources/" + std::to_string(i) + ".txt", fmu.md.to_string());
+        save_string("./app/graph_analysis/resources/" + std::to_string(i) + ".txt", fmu.md.to_string());
     }
 
     // Count nodes
@@ -173,7 +173,7 @@ int main()
 
     ssp4cpp::dsm::DSM dsm(g);
 
-    save_string("./test/graph_analysis/resources/raw_dsm.txt", dsm.GetCSV() );
+    save_string("./app/graph_analysis/resources/raw_dsm.txt", dsm.GetCSV() );
     // dsm.PrintGroups();
 
 

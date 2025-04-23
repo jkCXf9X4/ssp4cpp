@@ -38,7 +38,6 @@ namespace ssp4cpp::str
         else
         {
             throw std::runtime_error("Unable to print object");
-            // ERROR
         }
     }
 
