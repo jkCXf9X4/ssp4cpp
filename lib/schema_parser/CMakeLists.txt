@@ -13,6 +13,7 @@ target_include_directories(schema_parser
     ${CMAKE_CURRENT_LIST_DIR}/include/schema
     ${CMAKE_CURRENT_LIST_DIR}/include/schema/ssp1
     ${CMAKE_CURRENT_LIST_DIR}/include/schema/fmi2
+    ${CMAKE_CURRENT_LIST_DIR}/include/schema_ext
 
   PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include_private

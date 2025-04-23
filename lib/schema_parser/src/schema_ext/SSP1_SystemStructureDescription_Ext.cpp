@@ -2,6 +2,7 @@
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 
 #include "misc.hpp"
+#include "string_conversion.hpp"
 
 #include <vector>
 #include <tuple>
