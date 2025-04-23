@@ -4,7 +4,7 @@
 // it is based on ssp1_ssd.toml
 
 #include "SSP1_SystemStructureDescription.hpp"
-#include "to_string.hpp"
+#include "string_conversion.hpp"
 
 #include <string>
 

@@ -4,7 +4,7 @@
 // it is based on ssp1_ssc.toml
 
 #include "SSP1_SystemStructureCommon.hpp"
-#include "to_string.hpp"
+#include "string_conversion.hpp"
 
 #include <string>
 

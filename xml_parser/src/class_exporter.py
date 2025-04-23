@@ -133,7 +133,7 @@ namespace {self.standard.long_namespece}
 // it is based on {self.standard.filename }
 
 #include "{self.standard.long_name}.hpp"
-#include "to_string.hpp"
+#include "string_conversion.hpp"
 
 #include <string>
 
