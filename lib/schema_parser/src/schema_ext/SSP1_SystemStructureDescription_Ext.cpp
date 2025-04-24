@@ -16,7 +16,7 @@
 
 using namespace std;
 using namespace ssp4cpp::ssp1;
-using namespace ssp4cpp::common::string;
+using namespace ssp4cpp::common::str;
 namespace views = std::ranges::views;
 
 namespace ssp4cpp::ssp1::ssd

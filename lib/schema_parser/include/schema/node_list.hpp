@@ -5,6 +5,7 @@
 
 namespace ssp4cpp::schema
 {
+    using namespace ssp4cpp::common::str;
 
     template <typename T>
     class NodeList : public ssp4cpp::common::interfaces::IList
@@ -13,17 +14,17 @@ namespace ssp4cpp::schema
 
         std::string to_string() const
         {
-            return common::string::to_str<T>(list);
+            return to_str<T>(list);
         }
 
         void from_string(const std::string &str, const char del)
         {
-            list = common::string::from_strs<T>(str, del);
+            list = from_strs<T>(str, del);
         }
 
         void from_string(const std::string &str)
         {
-            list = common::string::from_strs<T>(str);
+            list = from_strs<T>(str);
         }
         std::vector<T> list;
     };

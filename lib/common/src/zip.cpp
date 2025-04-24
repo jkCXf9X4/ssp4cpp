@@ -20,7 +20,7 @@
 
 // from https://github.com/NTNU-IHB/FMI4cpp/blob/master/src/fmi4cpp/tools/unzipper.hpp
 
-namespace ssp4cpp::zip_ns
+namespace ssp4cpp::common::zip_ns
 {
 
     namespace fs = std::filesystem;
@@ -144,7 +144,7 @@ namespace ssp4cpp::zip_ns
             throw std::runtime_error("Failed to create temp dir: " + temp_dir.string());
         }
 
-        ssp4cpp::zip_ns::unzip(file, temp_dir);
+        unzip(file, temp_dir);
 
         return temp_dir;
     }

@@ -14,7 +14,7 @@
 
 // deserialize xml to object
 
-namespace ssp4cpp::xml
+namespace ssp4cpp::common::xml
 {
     using namespace std;
     using namespace pugi;

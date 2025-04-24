@@ -45,7 +45,7 @@ class NodeXmlExporter:
                 else f"{variable.namespace}:{variable.name}"
             )
 
-        return f'ssp4cpp::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, "{name}");'
+        return f'ssp4cpp::common::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, "{name}");'
 
     def generate_parser(self):
         variables = [

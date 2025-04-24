@@ -10,7 +10,7 @@
 
 using namespace std;
 using namespace std::filesystem;
-using namespace ssp4cpp::common::string;
+using namespace ssp4cpp::common::str;
 
 namespace ssp4cpp::ssp1
 {

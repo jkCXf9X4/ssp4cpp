@@ -143,7 +143,7 @@ namespace {self.standard.long_namespece}
 
 namespace {self.standard.long_namespece}
 {{
-{self.indent}using namespace ssp4cpp::common::string;
+{self.indent}using namespace ssp4cpp::common::str;
 
 
 {declarations}

@@ -10,7 +10,8 @@
 
 #include <type_traits>
 
-namespace ssp4cpp::common::string
+// dont name this 'string' to many collisions
+namespace ssp4cpp::common::str
 {
     using namespace interfaces;
 
