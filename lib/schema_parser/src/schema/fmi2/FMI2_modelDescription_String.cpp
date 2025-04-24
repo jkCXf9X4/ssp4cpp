@@ -4,13 +4,13 @@
 // it is based on fmi2_md.toml
 
 #include "FMI2_modelDescription.hpp"
-#include "string_conversion.hpp"
+#include "common_string.hpp"
 
 #include <string>
 
 namespace ssp4cpp::fmi2::md
 {
-    using namespace ssp4cpp::str;
+    using namespace ssp4cpp::common::string;
 
      // BaseUnit
     std::string BaseUnit::to_string(void) const

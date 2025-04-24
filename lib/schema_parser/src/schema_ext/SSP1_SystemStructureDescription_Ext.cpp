@@ -1,8 +1,10 @@
 
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 
-#include "misc.hpp"
-#include "string_conversion.hpp"
+
+#include "common_string.hpp"
+#include "common_list.hpp"
+
 
 #include <vector>
 #include <tuple>
@@ -14,7 +16,7 @@
 
 using namespace std;
 using namespace ssp4cpp::ssp1;
-using namespace ssp4cpp::str;
+using namespace ssp4cpp::common::string;
 namespace views = std::ranges::views;
 
 namespace ssp4cpp::ssp1::ssd
@@ -60,7 +62,7 @@ namespace ssp4cpp::ssp1::ssd
 
         std::copy_if(begin(in), end(in), std::back_inserter(out),
                      [causalities](IndexConnectorComponentTuple a)
-                     { return ssp4cpp::misc::is_in_list(get<1>(a).get().kind, causalities); });
+                     { return ssp4cpp::common::list::is_in_list(get<1>(a).get().kind, causalities); });
 
         reset_index(out);
 

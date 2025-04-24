@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace ssp4cpp::interfaces
+namespace ssp4cpp::common::interfaces
 {
 
     class IWritable
@@ -27,5 +27,10 @@ namespace ssp4cpp::interfaces
 
     class IEnum : public IReadWrite
     {
+    };
+
+    class IList : public IReadWrite
+    {
+
     };
 }

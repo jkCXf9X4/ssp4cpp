@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IXmlNode.hpp"
-#include "IXmlNodeList.hpp"
+#include "common_interface.hpp"
+#include "node_list.hpp"
 
 
 #include <string>
@@ -11,11 +11,12 @@
 
 using namespace std;
 
-using namespace ssp4cpp::interfaces;
+using namespace ssp4cpp::common::interfaces;
+using namespace ssp4cpp::schema;
 
 namespace ssp4cpp::fmi2::md
 {
-    class Causality : public IReadWrite
+    class Causality : public IEnum
     {
     public:
         enum Value : int
@@ -90,7 +91,7 @@ namespace ssp4cpp::fmi2::md
         Value value;
     };
 
-    class Variability : public IReadWrite
+    class Variability : public IEnum
     {
     public:
         enum Value : int
@@ -158,7 +159,7 @@ namespace ssp4cpp::fmi2::md
         Value value;
     };
 
-    class Initial : public IReadWrite
+    class Initial : public IEnum
     {
     public:
         enum Value : int
@@ -212,7 +213,7 @@ namespace ssp4cpp::fmi2::md
         Value value;
     };
 
-    class DependenciesKind : public IReadWrite
+    class DependenciesKind : public IEnum
     {
     public:
         enum Value : int
@@ -281,11 +282,11 @@ namespace ssp4cpp::fmi2::md
     };
 
 
-    class DependenciesKindList : public IList<DependenciesKind>
+    class DependenciesKindList : public NodeList<DependenciesKind>
     {
     };
 
-    class LogCategory : public IReadWrite
+    class LogCategory : public IEnum
     {
     public:
         enum Value : int

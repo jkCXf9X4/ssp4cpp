@@ -4,13 +4,13 @@
 // it is based on ssp1_ssd.toml
 
 #include "SSP1_SystemStructureDescription.hpp"
-#include "string_conversion.hpp"
+#include "common_string.hpp"
 
 #include <string>
 
 namespace ssp4cpp::ssp1::ssd
 {
-    using namespace ssp4cpp::str;
+    using namespace ssp4cpp::common::string;
 
      // SystemGeometry
     std::string SystemGeometry::to_string(void) const

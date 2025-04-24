@@ -4,7 +4,8 @@
 // it is based on fmi2_md.toml
 #pragma once
 
-#include "IXmlNode.hpp"
+#include "common_interface.hpp"
+#include "node_list.hpp"
 #include "FMI2_Enums.hpp"
 
 
@@ -14,9 +15,9 @@
 
 namespace ssp4cpp::fmi2::md
 {
-    using namespace ssp4cpp::interfaces;
-
-
+    using namespace ssp4cpp::common::interfaces;
+    using namespace ssp4cpp::schema;
+    using namespace std;
 
 
     class BaseUnit : public IXmlNode

@@ -2,18 +2,19 @@
 
 #pragma once
 
+#include "common_interface.hpp"
+
 #include <string>
 #include <vector>
 #include <optional>
 
-#include "IXmlNode.hpp"
 
 using namespace std;
-using namespace ssp4cpp::interfaces;
+using namespace ssp4cpp::common::interfaces;
 
 namespace ssp4cpp::ssp1::ssd
 {
-    class ComponentType : public IReadWrite
+    class ComponentType : public IEnum
     {
     public:
         enum Value :int

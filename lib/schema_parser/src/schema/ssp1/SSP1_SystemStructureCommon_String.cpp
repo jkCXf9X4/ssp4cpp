@@ -4,13 +4,13 @@
 // it is based on ssp1_ssc.toml
 
 #include "SSP1_SystemStructureCommon.hpp"
-#include "string_conversion.hpp"
+#include "common_string.hpp"
 
 #include <string>
 
 namespace ssp4cpp::ssp1::ssc
 {
-    using namespace ssp4cpp::str;
+    using namespace ssp4cpp::common::string;
 
      // Annotation
     std::string Annotation::to_string(void) const

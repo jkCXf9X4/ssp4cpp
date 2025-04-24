@@ -1,7 +1,7 @@
 #pragma once
 
-#include "misc.hpp"
-#include "IXmlNode.hpp"
+#include "common_interface.hpp"
+#include "common_types.hpp"
 
 #include <pugixml.hpp>
 
@@ -18,8 +18,9 @@ namespace ssp4cpp::xml
 {
     using namespace std;
     using namespace pugi;
-    using namespace ssp4cpp::interfaces;
-    using namespace ssp4cpp::misc::types;
+
+    using namespace ssp4cpp::common::interfaces;
+    using namespace ssp4cpp::common::types;
 
     inline string parents_to_string(const xml_node &node)
     {

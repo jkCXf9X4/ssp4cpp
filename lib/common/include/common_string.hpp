@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IXmlNode.hpp"
+#include "common_interface.hpp"
 
 #include <string>
 #include <vector>
@@ -10,7 +10,7 @@
 
 #include <type_traits>
 
-namespace ssp4cpp::str
+namespace ssp4cpp::common::string
 {
     using namespace interfaces;
 
@@ -114,7 +114,7 @@ namespace ssp4cpp::str
     template <typename T>
     std::vector<T> from_strs(const std::string &str)
     {
-        return ssp4cpp::str::from_strs<T>(str, ' ');
+        return from_strs<T>(str, ' ');
     }
 
 } // namespace ssp4cpp::str

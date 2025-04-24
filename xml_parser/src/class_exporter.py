@@ -103,7 +103,8 @@ class DocumentDeclarationExporter:
 // it is based on {self.standard.filename }
 #pragma once
 
-#include "IXmlNode.hpp"
+#include "common_interface.hpp"
+#include "node_list.hpp"
 {headers}
 {dependencies}
 
@@ -113,7 +114,9 @@ class DocumentDeclarationExporter:
 
 namespace {self.standard.long_namespece}
 {{
-{self.indent}using namespace ssp4cpp::interfaces;
+{self.indent}using namespace ssp4cpp::common::interfaces;
+{self.indent}using namespace ssp4cpp::schema;
+{self.indent}using namespace std;
 
 {forward_declarations}
 

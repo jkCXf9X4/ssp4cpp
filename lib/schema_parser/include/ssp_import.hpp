@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SSP1_SystemStructureDescription.hpp"
-#include "string_conversion.hpp"
+#include "common_string.hpp"
 
 #include <string>
 #include <vector>
@@ -10,6 +10,7 @@
 
 using namespace std;
 using namespace std::filesystem;
+using namespace ssp4cpp::common::string;
 
 namespace ssp4cpp::ssp1
 {
@@ -24,9 +25,9 @@ namespace ssp4cpp::ssp1
         friend ostream &operator<<(ostream &os, const SspResource &obj)
         {
             os << "SspResource { \n"
-               << "type: " << str::to_str(obj.type)  << endl
-               << "name: " << str::to_str(obj.name) << endl
-               << "file: " << str::to_str(obj.file) << endl
+               << "type: " << to_str(obj.type)  << endl
+               << "name: " << to_str(obj.name) << endl
+               << "file: " << to_str(obj.file) << endl
                << " }" << endl;
             return os;
         }

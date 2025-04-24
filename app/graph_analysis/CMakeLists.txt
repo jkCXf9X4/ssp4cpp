@@ -10,11 +10,12 @@ target_include_directories(ssp4cpp_graph
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/include
   PRIVATE
-    ${CMAKE_SOURCE_DIR}/lib/schema_parser/include_private
+    ${CMAKE_CURRENT_LIST_DIR}/include_private
 )
 
 
 target_link_libraries(ssp4cpp_graph PRIVATE schema_parser)
+target_link_libraries(ssp4cpp_graph PRIVATE common)
 
 # target_compile_options(ssp4cpp_graph PRIVATE -Wfatal-errors)
 

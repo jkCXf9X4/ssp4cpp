@@ -4,7 +4,8 @@
 // it is based on ssp1_ssc.toml
 #pragma once
 
-#include "IXmlNode.hpp"
+#include "common_interface.hpp"
+#include "node_list.hpp"
 #include "SSP1_Enums.hpp"
 
 
@@ -14,9 +15,9 @@
 
 namespace ssp4cpp::ssp1::ssc
 {
-    using namespace ssp4cpp::interfaces;
-
-
+    using namespace ssp4cpp::common::interfaces;
+    using namespace ssp4cpp::schema;
+    using namespace std;
 
 
     class Annotation : public IXmlNode
