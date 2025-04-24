@@ -12,6 +12,7 @@ namespace ssp4cpp::ssp1::ssd
 {
     using namespace ssp4cpp::common::string;
 
+
      // SystemGeometry
     std::string SystemGeometry::to_string(void) const
     {

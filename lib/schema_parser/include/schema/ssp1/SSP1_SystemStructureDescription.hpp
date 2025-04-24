@@ -5,6 +5,7 @@
 #pragma once
 
 #include "common_interface.hpp"
+#include "node_list.hpp"
 
 #include "FMI2_Enums.hpp"
 #include "SSP1_Enums.hpp"

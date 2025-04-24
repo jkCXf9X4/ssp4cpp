@@ -12,6 +12,7 @@ namespace ssp4cpp::ssp1::ssc
 {
     using namespace ssp4cpp::common::string;
 
+
      // Annotation
     std::string Annotation::to_string(void) const
     {

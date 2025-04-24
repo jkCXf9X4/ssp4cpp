@@ -6,6 +6,7 @@
 
 #include "common_interface.hpp"
 #include "node_list.hpp"
+
 #include "SSP1_Enums.hpp"
 
 
@@ -18,6 +19,8 @@ namespace ssp4cpp::ssp1::ssc
     using namespace ssp4cpp::common::interfaces;
     using namespace ssp4cpp::schema;
     using namespace std;
+
+
 
 
     class Annotation : public IXmlNode

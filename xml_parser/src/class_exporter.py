@@ -105,6 +105,7 @@ class DocumentDeclarationExporter:
 
 #include "common_interface.hpp"
 #include "node_list.hpp"
+
 {headers}
 {dependencies}
 
@@ -136,13 +137,14 @@ namespace {self.standard.long_namespece}
 // it is based on {self.standard.filename }
 
 #include "{self.standard.long_name}.hpp"
-#include "string_conversion.hpp"
+#include "common_string.hpp"
 
 #include <string>
 
 namespace {self.standard.long_namespece}
 {{
-{self.indent}using namespace ssp4cpp::str;
+{self.indent}using namespace ssp4cpp::common::string;
+
 
 {declarations}
 }}
