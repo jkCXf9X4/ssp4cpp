@@ -1,14 +1,33 @@
-# Cyber-Physical Systems Simulator Architecture Overview
+# Cyber-Physical Systems Simulator
+## Goals:
+- Evaluate how to simulate cyber physical systems (CPS) in a credible manner
+- Evaluate how to simulate cps in an effective manner
+  - Could include, but not limited to, parallelization, variable step sizes, other efficiency methods
 
-## 1. Core Components
-- **Model Definition Layer**: Utilize classes from the FMI and SSP schemas to define models, including parameters, signals, and connections.
-- **Simulation Engine**: Implement a simulation engine that can handle both model exchange and co-simulation, leveraging the capabilities defined in the FMI standard.
+## Requirements:
+- Simulation credibility - simulation should, depending on intended use, be able to produce results that are credible and usable
+  - Reproduce system behaviors in a realistic manner 
+- Simulation determinism - simulation should always produce identical results for identical input
+  - Information propagation between modes to be done in a deterministic way
+- Enable physical, logical, sw models to be co-simulated
 
-## 2. Data Management
-- **Parameter and Signal Management**: Create a robust system for managing parameters and signals, allowing for dynamic configuration and extensibility.
-- **Data Storage**: Use a database or file-based storage system to persist model configurations and simulation results.
-  
-  
-## 5. Documentation and Support
-- **Comprehensive Documentation**: Provide detailed documentation for users, including examples and best practices for model creation and simulation.
-- **Community Support**: Establish a community forum or support system for users to share experiences and seek assistance.
+
+## Info
+### Models
+- Physical models: lives in the medium to long time domain. Information propagation between models often slow
+- Logical models: lives in the short time domain. Information propagation between models often very quick
+- Sw models: Lives in both short and long time domain. Information between models often very quick
+
+## Efficiency
+- models to be simulated as efficiently as possible, enable parallelization to a large extent
+
+
+## Method
+
+Design a experimental simulation engine for testing and evaluation of methods
+It should be constrained to handle co-simulation and leveraging the capabilities defined in the FMI and SSP standard.
+
+
+### Limitations
+- Should not include model exchange, no solvers are needed
+- Should not provide options for any alterations to models FMI/SSP. Only load and execute 
