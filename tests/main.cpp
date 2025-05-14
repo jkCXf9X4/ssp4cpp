@@ -40,7 +40,7 @@ int main()
     log.debug("{}", ssp.to_str());
 
     log.debug("Parsing ssp to external file");
-    save_string("./resources/ssd.txt", ssp.ssd.to_string());
+    save_string("./tests/references/ssd.txt", ssp.ssd.to_string());
 
     // Parsing FMI
     auto fmus = vector<pair<string, ssp4cpp::fmi2::FmiImport>>();
@@ -55,7 +55,7 @@ int main()
         fmus.push_back(p);
 
         // If these changes, evaluate if correct
-        save_string("./test/fmu_" + std::to_string(i) + ".txt", fmu.md.to_string());
+        save_string("./tests/references/fmu_" + std::to_string(i) + ".txt", fmu.md.to_string());
     }
 
     std::cout << "Parsing complete\n";
