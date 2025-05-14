@@ -4,7 +4,7 @@
 #include "Scheduler.hpp"
 #include "DependencyManager.hpp"
 #include "ParameterManager.hpp"
-#include "DataLogger.hpp"
+#include "common_log.hpp"
 
 namespace ssp4cpp::cosim
 {
@@ -22,7 +22,7 @@ namespace ssp4cpp::cosim
         Scheduler *scheduler;
         DependencyManager *dependencyManager;
         ParameterManager *parameterManager;
-        DataLogger *dataLogger;
+        common::Logger log;
     };
 
 }

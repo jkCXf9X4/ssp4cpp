@@ -26,6 +26,8 @@ namespace ssp4cpp::common::zip_ns
 
     namespace fs = std::filesystem;
 
+    Logger log = Logger("common.zip", LogLevel::info);
+
     std::string random_generator(size_t length = 16)
     {
         const char charset[] = "0123456789"
@@ -47,7 +49,7 @@ namespace ssp4cpp::common::zip_ns
 
     bool unzip(fs::path file, const fs::path tmp_path)
     {
-        Logger::trace("Unzipping");
+        log.trace("[unzip] File {}", file);
 
         int *err = nullptr;
         zip *za = zip_open(absolute(file).string().c_str(), 0, err);
@@ -86,7 +88,7 @@ namespace ssp4cpp::common::zip_ns
                     zf = zip_fopen_index(za, i, 0);
 
                     std::ofstream file_;
-                    Logger::trace("Newfile {}", newFile);
+                    log.trace("[unzip] Newfile {}", newFile);
 
                     file_.open(newFile, std::ios::out | std::ios::binary);
 
@@ -107,7 +109,7 @@ namespace ssp4cpp::common::zip_ns
         }
         zip_close(za);
 
-        Logger::trace("Completed Unzipping {}", file);
+        log.trace("[unzip] Completed {}", file);
 
         return true;
     }
@@ -121,7 +123,7 @@ namespace ssp4cpp::common::zip_ns
 
         if (fs::create_directory(temp_dir))
         {
-            Logger::debug("Temp dir {}", temp_dir); 
+            log.debug("[create_temp_dir]Temp dir {}", temp_dir); 
         }
         else
         {

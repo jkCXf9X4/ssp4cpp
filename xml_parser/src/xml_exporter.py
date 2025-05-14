@@ -59,11 +59,11 @@ class NodeXmlExporter:
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
 {{
-    Logger::trace("Parsing {self.class_node.name}");
+    log.ext_trace("Parsing {self.class_node.name}");
 
 {variables}
 
-    Logger::trace("Completed {self.class_node.name}");
+    log.ext_trace("Completed {self.class_node.name}");
 }}
 """
         return template
@@ -123,6 +123,8 @@ namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace pugi;
 {self.indent}using namespace common;
+
+{self.indent}auto log = Logger("{self.standard.long_namespece.replace('::', '.')}", LogLevel::info);
 
 {parsers}
 }}

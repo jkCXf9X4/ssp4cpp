@@ -30,9 +30,7 @@ using namespace common;
 
 int main()
 {
-    Logger(LogLevel::debug);
-
-    Logger::debug("hello! {}", "me");
+    auto log = Logger("cosim.main", LogLevel::debug);
 
     // Opening zip
     std::cout << "Opening ssp\n";

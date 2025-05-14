@@ -15,112 +15,114 @@ namespace ssp4cpp::ssp1::ssd
     using namespace pugi;
     using namespace common;
 
+    auto log = Logger("ssp4cpp.ssp1.ssd", LogLevel::info);
+
 
     void from_xml(const xml_node &node, SystemGeometry &obj)
     {
-        Logger::trace("Parsing SystemGeometry");
+        log.ext_trace("Parsing SystemGeometry");
 
 
 
-        Logger::trace("Completed SystemGeometry");
+        log.ext_trace("Completed SystemGeometry");
     }
 
 
     void from_xml(const xml_node &node, ConnectorGeometry &obj)
     {
-        Logger::trace("Parsing ConnectorGeometry");
+        log.ext_trace("Parsing ConnectorGeometry");
 
 
 
-        Logger::trace("Completed ConnectorGeometry");
+        log.ext_trace("Completed ConnectorGeometry");
     }
 
 
     void from_xml(const xml_node &node, ElementGeometry &obj)
     {
-        Logger::trace("Parsing ElementGeometry");
+        log.ext_trace("Parsing ElementGeometry");
 
 
 
-        Logger::trace("Completed ElementGeometry");
+        log.ext_trace("Completed ElementGeometry");
     }
 
 
     void from_xml(const xml_node &node, ConnectionGeometry &obj)
     {
-        Logger::trace("Parsing ConnectionGeometry");
+        log.ext_trace("Parsing ConnectionGeometry");
 
 
 
-        Logger::trace("Completed ConnectionGeometry");
+        log.ext_trace("Completed ConnectionGeometry");
     }
 
 
     void from_xml(const xml_node &node, SignalDictionary &obj)
     {
-        Logger::trace("Parsing SignalDictionary");
+        log.ext_trace("Parsing SignalDictionary");
 
 
 
-        Logger::trace("Completed SignalDictionary");
+        log.ext_trace("Completed SignalDictionary");
     }
 
 
     void from_xml(const xml_node &node, TSignalDictionaries &obj)
     {
-        Logger::trace("Parsing TSignalDictionaries");
+        log.ext_trace("Parsing TSignalDictionaries");
 
         ssp4cpp::common::xml::parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionary");
 
-        Logger::trace("Completed TSignalDictionaries");
+        log.ext_trace("Completed TSignalDictionaries");
     }
 
 
     void from_xml(const xml_node &node, ParameterBinding &obj)
     {
-        Logger::trace("Parsing ParameterBinding");
+        log.ext_trace("Parsing ParameterBinding");
 
 
 
-        Logger::trace("Completed ParameterBinding");
+        log.ext_trace("Completed ParameterBinding");
     }
 
 
     void from_xml(const xml_node &node, TParameterBindings &obj)
     {
-        Logger::trace("Parsing TParameterBindings");
+        log.ext_trace("Parsing TParameterBindings");
 
         ssp4cpp::common::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBinding");
 
-        Logger::trace("Completed TParameterBindings");
+        log.ext_trace("Completed TParameterBindings");
     }
 
 
     void from_xml(const xml_node &node, GraphicalElements &obj)
     {
-        Logger::trace("Parsing GraphicalElements");
+        log.ext_trace("Parsing GraphicalElements");
 
 
 
-        Logger::trace("Completed GraphicalElements");
+        log.ext_trace("Completed GraphicalElements");
     }
 
 
     void from_xml(const xml_node &node, TDefaultExperiment &obj)
     {
-        Logger::trace("Parsing TDefaultExperiment");
+        log.ext_trace("Parsing TDefaultExperiment");
 
         ssp4cpp::common::xml::parse_xml(node, obj.startTime    , "startTime");
         ssp4cpp::common::xml::parse_xml(node, obj.stopTime     , "stopTime");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
-        Logger::trace("Completed TDefaultExperiment");
+        log.ext_trace("Completed TDefaultExperiment");
     }
 
 
     void from_xml(const xml_node &node, Connection &obj)
     {
-        Logger::trace("Parsing Connection");
+        log.ext_trace("Parsing Connection");
 
         ssp4cpp::common::xml::parse_xml(node, obj.id                                , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description                       , "description");
@@ -136,23 +138,23 @@ namespace ssp4cpp::ssp1::ssd
         ssp4cpp::common::xml::parse_xml(node, obj.ConnectionGeometry                , "ssd:ConnectionGeometry");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations                       , "ssc:Annotations");
 
-        Logger::trace("Completed Connection");
+        log.ext_trace("Completed Connection");
     }
 
 
     void from_xml(const xml_node &node, Connections &obj)
     {
-        Logger::trace("Parsing Connections");
+        log.ext_trace("Parsing Connections");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Connections  , "ssd:Connection");
 
-        Logger::trace("Completed Connections");
+        log.ext_trace("Completed Connections");
     }
 
 
     void from_xml(const xml_node &node, Connector &obj)
     {
-        Logger::trace("Parsing Connector");
+        log.ext_trace("Parsing Connector");
 
         ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
@@ -167,23 +169,23 @@ namespace ssp4cpp::ssp1::ssd
         ssp4cpp::common::xml::parse_xml(node, obj.ConnectorGeometry  , "ssd:ConnectorGeometry");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
-        Logger::trace("Completed Connector");
+        log.ext_trace("Completed Connector");
     }
 
 
     void from_xml(const xml_node &node, TConnectors &obj)
     {
-        Logger::trace("Parsing TConnectors");
+        log.ext_trace("Parsing TConnectors");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Connectors  , "ssd:Connector");
 
-        Logger::trace("Completed TConnectors");
+        log.ext_trace("Completed TConnectors");
     }
 
 
     void from_xml(const xml_node &node, TComponent &obj)
     {
-        Logger::trace("Parsing TComponent");
+        log.ext_trace("Parsing TComponent");
 
         ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
@@ -196,13 +198,13 @@ namespace ssp4cpp::ssp1::ssd
         ssp4cpp::common::xml::parse_xml(node, obj.implementation     , "implementation");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
-        Logger::trace("Completed TComponent");
+        log.ext_trace("Completed TComponent");
     }
 
 
     void from_xml(const xml_node &node, TSignalDictionaryReference &obj)
     {
-        Logger::trace("Parsing TSignalDictionaryReference");
+        log.ext_trace("Parsing TSignalDictionaryReference");
 
         ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
@@ -213,25 +215,25 @@ namespace ssp4cpp::ssp1::ssd
         ssp4cpp::common::xml::parse_xml(node, obj.dictionary         , "dictionary");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
-        Logger::trace("Completed TSignalDictionaryReference");
+        log.ext_trace("Completed TSignalDictionaryReference");
     }
 
 
     void from_xml(const xml_node &node, Elements &obj)
     {
-        Logger::trace("Parsing Elements");
+        log.ext_trace("Parsing Elements");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Components                  , "ssd:Component");
         ssp4cpp::common::xml::parse_xml(node, obj.SignalDictionaryReferences  , "ssd:SignalDictionaryReference");
         ssp4cpp::common::xml::parse_xml(node, obj.Systems                     , "ssd:System");
 
-        Logger::trace("Completed Elements");
+        log.ext_trace("Completed Elements");
     }
 
 
     void from_xml(const xml_node &node, TSystem &obj)
     {
-        Logger::trace("Parsing TSystem");
+        log.ext_trace("Parsing TSystem");
 
         ssp4cpp::common::xml::parse_xml(node, obj.id                  , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description         , "description");
@@ -246,13 +248,13 @@ namespace ssp4cpp::ssp1::ssd
         ssp4cpp::common::xml::parse_xml(node, obj.GraphicalElements   , "ssd:GraphicalElements");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations         , "ssc:Annotations");
 
-        Logger::trace("Completed TSystem");
+        log.ext_trace("Completed TSystem");
     }
 
 
     void from_xml(const xml_node &node, SystemStructureDescription &obj)
     {
-        Logger::trace("Parsing SystemStructureDescription");
+        log.ext_trace("Parsing SystemStructureDescription");
 
         ssp4cpp::common::xml::parse_xml(node, obj.version                , "version");
         ssp4cpp::common::xml::parse_xml(node, obj.name                   , "name");
@@ -270,7 +272,7 @@ namespace ssp4cpp::ssp1::ssd
         ssp4cpp::common::xml::parse_xml(node, obj.DefaultExperiment      , "ssd:DefaultExperiment");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
 
-        Logger::trace("Completed SystemStructureDescription");
+        log.ext_trace("Completed SystemStructureDescription");
     }
 
 }

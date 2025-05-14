@@ -26,6 +26,7 @@ namespace ssp4cpp::common
 
     enum class LogLevel : int
     {
+        ext_trace,
         trace,
         debug,
         info,
@@ -40,69 +41,89 @@ namespace ssp4cpp::common
     public:
         static inline bool enabled = false;
         static inline LogLevel static_level = LogLevel::debug;
+        std::string name;
+        LogLevel level = LogLevel::debug;
 
-        Logger(LogLevel level)
+        Logger(){}
+
+        Logger(std::string name_, LogLevel lvl)
         {
             Logger::enabled = true;
-            Logger::static_level = level;
+            level = lvl;
+            name = name_;
         }
 
         template <typename... Args>
-        static void trace(std::format_string<Args...> s, Args &&...args)
+        void ext_trace(std::format_string<Args...> s, Args &&...args)
+        {
+            log<LogLevel::ext_trace>(s, std::forward<Args>(args)...);
+        }
+
+        template <typename... Args>
+        void trace(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::trace>(s, std::forward<Args>(args)...);
         }
 
         template <typename... Args>
-        static void debug(std::format_string<Args...> s, Args &&...args)
+        void debug(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::debug>(s, std::forward<Args>(args)...);
         }
 
         template <typename... Args>
-        static void info(std::format_string<Args...> s, Args &&...args)
+        void info(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::info>(s, std::forward<Args>(args)...);
         }
 
         template <typename... Args>
-        static void success(std::format_string<Args...> s, Args &&...args)
+        void success(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::success>(s, std::forward<Args>(args)...);
         }
 
         template <typename... Args>
-        static void warning(std::format_string<Args...> s, Args &&...args)
+        void warning(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::warning>(s, std::forward<Args>(args)...);
         }
 
         template <typename... Args>
-        static void error(std::format_string<Args...> s, Args &&...args)
+        void error(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::error>(s, std::forward<Args>(args)...);
         }
 
         template <typename... Args>
-        static void fatal(std::format_string<Args...> s, Args &&...args)
+        void fatal(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::fatal>(s, std::forward<Args>(args)...);
         }
 
         template <LogLevel Level, typename... Args>
-        static void log(std::format_string<Args...> s, Args &&...args)
+        void log(std::format_string<Args...> s, Args &&...args)
+        {
+            if (Level >= level)
+            {
+                const auto time = std::chrono::system_clock::now();
+                auto str = std::format(s, std::forward<Args>(args)...);
+
+                std::cout << std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str) << std::endl ;
+            }
+        }
+
+        // static variant of log
+        // avoid if possible
+        template <LogLevel Level, typename... Args>
+        static void slog(std::format_string<Args...> s, Args &&...args)
         {
             if (Level >= Logger::static_level)
             {
-                const auto time = std::chrono::system_clock::now();
-
-                // const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-                //                     time.time_since_epoch())
-                //                     .count();
-    
+                const auto time = std::chrono::system_clock::now();    
                 auto str = std::format(s, std::forward<Args>(args)...);
                 
-                std::cout << std::format("[{}] {} - {}", log_level_to_str(Level), time, str) << std::endl ;
+                std::cout << std::format("[{}][{}] {}", log_level_to_str(Level), time, str) << std::endl ;
             }
         }
 

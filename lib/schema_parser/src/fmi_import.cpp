@@ -19,12 +19,14 @@ namespace ssp4cpp::fmi2
 {
     using namespace common;
     using namespace md;
+
     FmiImport::FmiImport(const path &file) : original_file(file)
     {
-        Logger::info("Importing fmi: {}", file); 
+        log = Logger("fmi2.FmiImport", LogLevel::info);
+        log.info("Importing fmi: {}", file);
 
         temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "fmi_");
-        
+
         md = parse_model_description(temp_dir.string() + "/modelDescription.xml");
     }
 

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "FMI2_modelDescription.hpp"
+#include "common_log.hpp"
 
 #include <string>
 #include <vector>
 #include <filesystem>
 #include <optional>
-
 
 using namespace std;
 using namespace std::filesystem;
@@ -20,6 +20,7 @@ namespace ssp4cpp::fmi2
         path original_file;
         path temp_dir;
         md::fmi2ModelDescription md;
+        common::Logger log;
 
         FmiImport(const path &file);
 

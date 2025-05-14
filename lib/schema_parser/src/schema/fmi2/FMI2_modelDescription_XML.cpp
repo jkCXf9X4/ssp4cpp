@@ -15,10 +15,12 @@ namespace ssp4cpp::fmi2::md
     using namespace pugi;
     using namespace common;
 
+    auto log = Logger("ssp4cpp.fmi2.md", LogLevel::info);
+
 
     void from_xml(const xml_node &node, BaseUnit &obj)
     {
-        Logger::trace("Parsing BaseUnit");
+        log.ext_trace("Parsing BaseUnit");
 
         ssp4cpp::common::xml::parse_xml(node, obj.kg      , "kg");
         ssp4cpp::common::xml::parse_xml(node, obj.m       , "m");
@@ -31,58 +33,58 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.factor  , "factor");
         ssp4cpp::common::xml::parse_xml(node, obj.offset  , "offset");
 
-        Logger::trace("Completed BaseUnit");
+        log.ext_trace("Completed BaseUnit");
     }
 
 
     void from_xml(const xml_node &node, DisplayUnit &obj)
     {
-        Logger::trace("Parsing DisplayUnit");
+        log.ext_trace("Parsing DisplayUnit");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name    , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.factor  , "factor");
         ssp4cpp::common::xml::parse_xml(node, obj.offset  , "offset");
 
-        Logger::trace("Completed DisplayUnit");
+        log.ext_trace("Completed DisplayUnit");
     }
 
 
     void from_xml(const xml_node &node, fmi2Unit &obj)
     {
-        Logger::trace("Parsing fmi2Unit");
+        log.ext_trace("Parsing fmi2Unit");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.BaseUnit     , "BaseUnit");
         ssp4cpp::common::xml::parse_xml(node, obj.DisplayUnit  , "DisplayUnit");
 
-        Logger::trace("Completed fmi2Unit");
+        log.ext_trace("Completed fmi2Unit");
     }
 
 
     void from_xml(const xml_node &node, UnitDefinitions &obj)
     {
-        Logger::trace("Parsing UnitDefinitions");
+        log.ext_trace("Parsing UnitDefinitions");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Units  , "Unit");
 
-        Logger::trace("Completed UnitDefinitions");
+        log.ext_trace("Completed UnitDefinitions");
     }
 
 
     void from_xml(const xml_node &node, Boolean &obj)
     {
-        Logger::trace("Parsing Boolean");
+        log.ext_trace("Parsing Boolean");
 
         ssp4cpp::common::xml::parse_xml(node, obj.declaredType  , "declaredType");
         ssp4cpp::common::xml::parse_xml(node, obj.start         , "start");
 
-        Logger::trace("Completed Boolean");
+        log.ext_trace("Completed Boolean");
     }
 
 
     void from_xml(const xml_node &node, Integer &obj)
     {
-        Logger::trace("Parsing Integer");
+        log.ext_trace("Parsing Integer");
 
         ssp4cpp::common::xml::parse_xml(node, obj.declaredType  , "declaredType");
         ssp4cpp::common::xml::parse_xml(node, obj.start         , "start");
@@ -90,24 +92,24 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.min           , "min");
         ssp4cpp::common::xml::parse_xml(node, obj.max           , "max");
 
-        Logger::trace("Completed Integer");
+        log.ext_trace("Completed Integer");
     }
 
 
     void from_xml(const xml_node &node, String &obj)
     {
-        Logger::trace("Parsing String");
+        log.ext_trace("Parsing String");
 
         ssp4cpp::common::xml::parse_xml(node, obj.declaredType  , "declaredType");
         ssp4cpp::common::xml::parse_xml(node, obj.start         , "start");
 
-        Logger::trace("Completed String");
+        log.ext_trace("Completed String");
     }
 
 
     void from_xml(const xml_node &node, Real &obj)
     {
-        Logger::trace("Parsing Real");
+        log.ext_trace("Parsing Real");
 
         ssp4cpp::common::xml::parse_xml(node, obj.declaredType      , "declaredType");
         ssp4cpp::common::xml::parse_xml(node, obj.quantity          , "quantity");
@@ -122,13 +124,13 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.derivative        , "derivative");
         ssp4cpp::common::xml::parse_xml(node, obj.reinit            , "reinit");
 
-        Logger::trace("Completed Real");
+        log.ext_trace("Completed Real");
     }
 
 
     void from_xml(const xml_node &node, Enumeration &obj)
     {
-        Logger::trace("Parsing Enumeration");
+        log.ext_trace("Parsing Enumeration");
 
         ssp4cpp::common::xml::parse_xml(node, obj.declaredType  , "declaredType");
         ssp4cpp::common::xml::parse_xml(node, obj.quantity      , "quantity");
@@ -136,36 +138,36 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.max           , "max");
         ssp4cpp::common::xml::parse_xml(node, obj.start         , "start");
 
-        Logger::trace("Completed Enumeration");
+        log.ext_trace("Completed Enumeration");
     }
 
 
     void from_xml(const xml_node &node, SimpleTypeEnumerationItem &obj)
     {
-        Logger::trace("Parsing SimpleTypeEnumerationItem");
+        log.ext_trace("Parsing SimpleTypeEnumerationItem");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.value        , "value");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
 
-        Logger::trace("Completed SimpleTypeEnumerationItem");
+        log.ext_trace("Completed SimpleTypeEnumerationItem");
     }
 
 
     void from_xml(const xml_node &node, SimpleTypeEnumeration &obj)
     {
-        Logger::trace("Parsing SimpleTypeEnumeration");
+        log.ext_trace("Parsing SimpleTypeEnumeration");
 
         ssp4cpp::common::xml::parse_xml(node, obj.quantity  , "quantity");
         ssp4cpp::common::xml::parse_xml(node, obj.Items     , "Item");
 
-        Logger::trace("Completed SimpleTypeEnumeration");
+        log.ext_trace("Completed SimpleTypeEnumeration");
     }
 
 
     void from_xml(const xml_node &node, fmi2SimpleType &obj)
     {
-        Logger::trace("Parsing fmi2SimpleType");
+        log.ext_trace("Parsing fmi2SimpleType");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
@@ -175,77 +177,77 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.String       , "String");
         ssp4cpp::common::xml::parse_xml(node, obj.Enumeration  , "Enumeration");
 
-        Logger::trace("Completed fmi2SimpleType");
+        log.ext_trace("Completed fmi2SimpleType");
     }
 
 
     void from_xml(const xml_node &node, TypeDefinitions &obj)
     {
-        Logger::trace("Parsing TypeDefinitions");
+        log.ext_trace("Parsing TypeDefinitions");
 
         ssp4cpp::common::xml::parse_xml(node, obj.SimpleTypes  , "SimpleType");
 
-        Logger::trace("Completed TypeDefinitions");
+        log.ext_trace("Completed TypeDefinitions");
     }
 
 
     void from_xml(const xml_node &node, Category &obj)
     {
-        Logger::trace("Parsing Category");
+        log.ext_trace("Parsing Category");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
 
-        Logger::trace("Completed Category");
+        log.ext_trace("Completed Category");
     }
 
 
     void from_xml(const xml_node &node, LogCategories &obj)
     {
-        Logger::trace("Parsing LogCategories");
+        log.ext_trace("Parsing LogCategories");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Categories  , "Category");
 
-        Logger::trace("Completed LogCategories");
+        log.ext_trace("Completed LogCategories");
     }
 
 
     void from_xml(const xml_node &node, fmi2Annotation &obj)
     {
-        Logger::trace("Parsing fmi2Annotation");
+        log.ext_trace("Parsing fmi2Annotation");
 
         ssp4cpp::common::xml::parse_xml(node, obj.annotation  , "annotation");
 
-        Logger::trace("Completed fmi2Annotation");
+        log.ext_trace("Completed fmi2Annotation");
     }
 
 
     void from_xml(const xml_node &node, VendorAnnotations &obj)
     {
-        Logger::trace("Parsing VendorAnnotations");
+        log.ext_trace("Parsing VendorAnnotations");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "Annotation");
 
-        Logger::trace("Completed VendorAnnotations");
+        log.ext_trace("Completed VendorAnnotations");
     }
 
 
     void from_xml(const xml_node &node, DefaultExperiment &obj)
     {
-        Logger::trace("Parsing DefaultExperiment");
+        log.ext_trace("Parsing DefaultExperiment");
 
         ssp4cpp::common::xml::parse_xml(node, obj.startTime  , "startTime");
         ssp4cpp::common::xml::parse_xml(node, obj.stopTime   , "stopTime");
         ssp4cpp::common::xml::parse_xml(node, obj.tolerance  , "tolerance");
         ssp4cpp::common::xml::parse_xml(node, obj.stepSize   , "stepSize");
 
-        Logger::trace("Completed DefaultExperiment");
+        log.ext_trace("Completed DefaultExperiment");
     }
 
 
     void from_xml(const xml_node &node, fmi2ScalarVariable &obj)
     {
-        Logger::trace("Parsing fmi2ScalarVariable");
+        log.ext_trace("Parsing fmi2ScalarVariable");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name                                , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.valueReference                      , "valueReference");
@@ -261,97 +263,97 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.Enumeration                         , "Enumeration");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations                         , "Annotation");
 
-        Logger::trace("Completed fmi2ScalarVariable");
+        log.ext_trace("Completed fmi2ScalarVariable");
     }
 
 
     void from_xml(const xml_node &node, Unknown &obj)
     {
-        Logger::trace("Parsing Unknown");
+        log.ext_trace("Parsing Unknown");
 
         ssp4cpp::common::xml::parse_xml(node, obj.index             , "index");
         ssp4cpp::common::xml::parse_xml(node, obj.dependencies      , "dependencies");
         ssp4cpp::common::xml::parse_xml(node, obj.dependenciesKind  , "dependenciesKind");
 
-        Logger::trace("Completed Unknown");
+        log.ext_trace("Completed Unknown");
     }
 
 
     void from_xml(const xml_node &node, Outputs &obj)
     {
-        Logger::trace("Parsing Outputs");
+        log.ext_trace("Parsing Outputs");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Unknowns  , "Unknown");
 
-        Logger::trace("Completed Outputs");
+        log.ext_trace("Completed Outputs");
     }
 
 
     void from_xml(const xml_node &node, Derivatives &obj)
     {
-        Logger::trace("Parsing Derivatives");
+        log.ext_trace("Parsing Derivatives");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Unknowns  , "Unknown");
 
-        Logger::trace("Completed Derivatives");
+        log.ext_trace("Completed Derivatives");
     }
 
 
     void from_xml(const xml_node &node, InitialUnknowns &obj)
     {
-        Logger::trace("Parsing InitialUnknowns");
+        log.ext_trace("Parsing InitialUnknowns");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Unknowns  , "Unknown");
 
-        Logger::trace("Completed InitialUnknowns");
+        log.ext_trace("Completed InitialUnknowns");
     }
 
 
     void from_xml(const xml_node &node, ModelStructure &obj)
     {
-        Logger::trace("Parsing ModelStructure");
+        log.ext_trace("Parsing ModelStructure");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Outputs          , "Outputs");
         ssp4cpp::common::xml::parse_xml(node, obj.Derivatives      , "Derivatives");
         ssp4cpp::common::xml::parse_xml(node, obj.InitialUnknowns  , "InitialUnknowns");
 
-        Logger::trace("Completed ModelStructure");
+        log.ext_trace("Completed ModelStructure");
     }
 
 
     void from_xml(const xml_node &node, ModelVariables &obj)
     {
-        Logger::trace("Parsing ModelVariables");
+        log.ext_trace("Parsing ModelVariables");
 
         ssp4cpp::common::xml::parse_xml(node, obj.ScalarVariable  , "ScalarVariable");
 
-        Logger::trace("Completed ModelVariables");
+        log.ext_trace("Completed ModelVariables");
     }
 
 
     void from_xml(const xml_node &node, File &obj)
     {
-        Logger::trace("Parsing File");
+        log.ext_trace("Parsing File");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name  , "name");
 
-        Logger::trace("Completed File");
+        log.ext_trace("Completed File");
     }
 
 
     void from_xml(const xml_node &node, SourceFiles &obj)
     {
-        Logger::trace("Parsing SourceFiles");
+        log.ext_trace("Parsing SourceFiles");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Files  , "File");
 
-        Logger::trace("Completed SourceFiles");
+        log.ext_trace("Completed SourceFiles");
     }
 
 
     void from_xml(const xml_node &node, ModelExchange &obj)
     {
-        Logger::trace("Parsing ModelExchange");
+        log.ext_trace("Parsing ModelExchange");
 
         ssp4cpp::common::xml::parse_xml(node, obj.modelIdentifier                      , "modelIdentifier");
         ssp4cpp::common::xml::parse_xml(node, obj.needsExecutionTool                   , "needsExecutionTool");
@@ -363,13 +365,13 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.providesDirectionalDerivatives       , "providesDirectionalDerivatives");
         ssp4cpp::common::xml::parse_xml(node, obj.SourceFiles                          , "SourceFiles");
 
-        Logger::trace("Completed ModelExchange");
+        log.ext_trace("Completed ModelExchange");
     }
 
 
     void from_xml(const xml_node &node, CoSimulation &obj)
     {
-        Logger::trace("Parsing CoSimulation");
+        log.ext_trace("Parsing CoSimulation");
 
         ssp4cpp::common::xml::parse_xml(node, obj.modelIdentifier                         , "modelIdentifier");
         ssp4cpp::common::xml::parse_xml(node, obj.needsExecutionTool                      , "needsExecutionTool");
@@ -384,13 +386,13 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.providesDirectionalDerivatives          , "providesDirectionalDerivatives");
         ssp4cpp::common::xml::parse_xml(node, obj.SourceFiles                             , "SourceFiles");
 
-        Logger::trace("Completed CoSimulation");
+        log.ext_trace("Completed CoSimulation");
     }
 
 
     void from_xml(const xml_node &node, fmi2ModelDescription &obj)
     {
-        Logger::trace("Parsing fmi2ModelDescription");
+        log.ext_trace("Parsing fmi2ModelDescription");
 
         ssp4cpp::common::xml::parse_xml(node, obj.fmiVersion                , "fmiVersion");
         ssp4cpp::common::xml::parse_xml(node, obj.modelName                 , "modelName");
@@ -414,7 +416,7 @@ namespace ssp4cpp::fmi2::md
         ssp4cpp::common::xml::parse_xml(node, obj.ModelVariables            , "ModelVariables");
         ssp4cpp::common::xml::parse_xml(node, obj.ModelStructure            , "ModelStructure");
 
-        Logger::trace("Completed fmi2ModelDescription");
+        log.ext_trace("Completed fmi2ModelDescription");
     }
 
 }

@@ -2,6 +2,7 @@
 
 #include "SSP1_SystemStructureDescription.hpp"
 #include "common_string.hpp"
+#include "common_log.hpp"
 
 #include <string>
 #include <vector>
@@ -40,6 +41,7 @@ namespace ssp4cpp::ssp1
         path temp_dir;
         ssd::SystemStructureDescription ssd;
         vector<SspResource> resources;
+        common::Logger log;
 
         SspImport(const path &file);
 
