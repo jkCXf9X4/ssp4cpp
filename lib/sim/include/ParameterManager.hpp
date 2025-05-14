@@ -1,12 +1,13 @@
-#ifndef PARAMETERMANAGER_HPP
-#define PARAMETERMANAGER_HPP
+#pragma once
 
 #include <string>
-
-class ParameterManager {
-public:
-    void setParameter(const std::string& name, const void* value);
-    void* getParameter(const std::string& name);
-};
-
-#endif // PARAMETERMANAGER_HPP
+namespace ssp4cpp::cosim
+{
+    
+    class ParameterManager {
+        public:
+        void setParameter(const std::string& name, const void* value);
+        void* getParameter(const std::string& name);
+    };
+    
+}

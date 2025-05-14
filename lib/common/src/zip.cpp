@@ -10,11 +10,12 @@
 #include <filesystem>
 #include <optional>
 #include <random>
+#include <format>
 
 #include <chrono>
 #include <thread>
 
-#include <boost/log/trivial.hpp>
+#include "common_log.hpp"
 
 #include "zip.hpp"
 
@@ -46,7 +47,7 @@ namespace ssp4cpp::common::zip_ns
 
     bool unzip(fs::path file, const fs::path tmp_path)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Unzipping " << file << std::endl;
+        Logger::trace("Unzipping");
 
         int *err = nullptr;
         zip *za = zip_open(absolute(file).string().c_str(), 0, err);
@@ -85,7 +86,8 @@ namespace ssp4cpp::common::zip_ns
                     zf = zip_fopen_index(za, i, 0);
 
                     std::ofstream file_;
-                    BOOST_LOG_TRIVIAL(trace) << "newFile: " << newFile << std::endl;
+                    Logger::trace("Newfile {}", newFile);
+
                     file_.open(newFile, std::ios::out | std::ios::binary);
 
                     sum = 0;
@@ -105,7 +107,7 @@ namespace ssp4cpp::common::zip_ns
         }
         zip_close(za);
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed Unzipping " << file << std::endl;
+        Logger::trace("Completed Unzipping {}", file);
 
         return true;
     }
@@ -119,7 +121,7 @@ namespace ssp4cpp::common::zip_ns
 
         if (fs::create_directory(temp_dir))
         {
-            BOOST_LOG_TRIVIAL(debug) << "Temp dir: " << temp_dir << std::endl;
+            Logger::debug("Temp dir {}", temp_dir); 
         }
         else
         {

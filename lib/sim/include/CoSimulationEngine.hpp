@@ -1,5 +1,4 @@
-#ifndef COSIMULATIONENGINE_HPP
-#define COSIMULATIONENGINE_HPP
+#pragma once
 
 #include "System.hpp"
 #include "Scheduler.hpp"
@@ -7,19 +6,23 @@
 #include "ParameterManager.hpp"
 #include "DataLogger.hpp"
 
-class CoSimulationEngine {
-public:
-    void start();
-    void stop();
-    void reset();
-    void loadSystem(System* system);
-    
-private:
-    System* managedSystem;
-    Scheduler* scheduler;
-    DependencyManager* dependencyManager;
-    ParameterManager* parameterManager;
-    DataLogger* dataLogger;
-};
+namespace ssp4cpp::cosim
+{
 
-#endif // COSIMULATIONENGINE_HPP
+    class CoSimulationEngine
+    {
+    public:
+        void start();
+        void stop();
+        void reset();
+        void loadSystem(System *system);
+
+    private:
+        System *managedSystem;
+        Scheduler *scheduler;
+        DependencyManager *dependencyManager;
+        ParameterManager *parameterManager;
+        DataLogger *dataLogger;
+    };
+
+}

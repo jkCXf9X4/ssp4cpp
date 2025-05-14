@@ -1,12 +1,12 @@
-#ifndef DEPENDENCYMANAGER_HPP
-#define DEPENDENCYMANAGER_HPP
+#pragma once
 
 #include <list>
-
-class DependencyManager {
-public:
-    void analyzeDependencies();
-    std::list<int> getExecutionOrder();
-};
-
-#endif // DEPENDENCYMANAGER_HPP
+namespace ssp4cpp::cosim
+{
+    class DependencyManager {
+        public:
+        void analyzeDependencies();
+        std::list<int> getExecutionOrder();
+    };
+    
+}

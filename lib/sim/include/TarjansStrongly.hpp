@@ -1,11 +1,14 @@
-#ifndef TARJANSSTRONGLY_HPP
-#define TARJANSSTRONGLY_HPP
+#pragma once
 
 #include <list>
 
-class TarjansStrongly {
-public:
-    std::list<int> getStronglyConnectedComponents();
-};
+namespace ssp4cpp::cosim
+{
 
-#endif // TARJANSSTRONGLY_HPP
+    class TarjansStrongly
+    {
+    public:
+        std::list<int> getStronglyConnectedComponents();
+    };
+
+}

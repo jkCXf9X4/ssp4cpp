@@ -18,3 +18,9 @@ target_include_directories(common
 
 find_package(boost_log CONFIG REQUIRED)
 target_link_libraries(common PRIVATE Boost::log)
+
+find_package(boost_graph REQUIRED CONFIG)
+target_link_libraries(common PRIVATE Boost::graph)
+
+find_package(libzip CONFIG REQUIRED)
+target_link_libraries(common PRIVATE libzip::zip)

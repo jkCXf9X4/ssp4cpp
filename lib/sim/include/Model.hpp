@@ -1,10 +1,12 @@
-#ifndef MODEL_HPP
-#define MODEL_HPP
+#pragma once
 
-class Model {
-public:
-    void loadModel();
-    void unloadModel();
-};
-
-#endif // MODEL_HPP
+namespace ssp4cpp::cosim
+{
+    
+    class Model {
+        public:
+        void loadModel();
+        void unloadModel();
+    };
+    
+}

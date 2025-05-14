@@ -1,17 +1,19 @@
-#ifndef SYSTEM_HPP
-#define SYSTEM_HPP
+#pragma once
 
 #include "Model.hpp"
 #include "ParameterManager.hpp"
+namespace ssp4cpp::cosim
+{
+    class System
+    {
 
-class System {
-public:
-    void loadSystem();
-    void unloadSystem();
-    
-private:
-    Model* managedModel;
-    ParameterManager* parameterManager;
-};
+    public:
+        void loadSystem();
+        void unloadSystem();
 
-#endif // SYSTEM_HPP
+    private:
+        Model *managedModel;
+        ParameterManager *parameterManager;
+    };
+
+}

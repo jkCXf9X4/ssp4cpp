@@ -59,11 +59,11 @@ class NodeXmlExporter:
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
 {{
-    BOOST_LOG_TRIVIAL(trace) << "Parsing {self.class_node.name}" << std::endl;
+    Logger::trace("Parsing {self.class_node.name}");
 
 {variables}
 
-    BOOST_LOG_TRIVIAL(trace) << "Completed {self.class_node.name}" << std::endl;
+    Logger::trace("Completed {self.class_node.name}");
 }}
 """
         return template
@@ -117,11 +117,12 @@ namespace {self.standard.long_namespece}
 
 #include "xml_deserialize.hpp"
 
-#include <boost/log/trivial.hpp>
+#include "common_log.hpp"
 
 namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace pugi;
+{self.indent}using namespace common;
 
 {parsers}
 }}

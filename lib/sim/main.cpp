@@ -26,10 +26,13 @@ using namespace boost;
 using namespace fmi4cpp;
 using namespace ssp4cpp;
 using namespace common::io;
+using namespace common;
 
 int main()
 {
-    common::log::setup_log();
+    Logger(LogLevel::debug);
+
+    Logger::debug("hello! {}", "me");
 
     // Opening zip
     std::cout << "Opening ssp\n";

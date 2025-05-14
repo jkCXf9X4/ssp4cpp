@@ -1,10 +1,12 @@
-#ifndef DATAMANAGER_HPP
-#define DATAMANAGER_HPP
+#pragma once
 
-class DataManager {
-public:
-    void getData();
-    void setData();
-};
-
-#endif // DATAMANAGER_HPP
+namespace ssp4cpp::cosim
+{
+    
+    class DataManager {
+        public:
+        void getData();
+        void setData();
+    };
+    
+}

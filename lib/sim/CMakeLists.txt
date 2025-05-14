@@ -20,13 +20,5 @@ target_include_directories(sim
 target_link_libraries(sim PRIVATE schema_parser)
 target_link_libraries(sim PRIVATE common)
 
-# target_compile_options(ssp4cpp_graph PRIVATE -Wfatal-errors)
-
-find_package(boost_log REQUIRED CONFIG)
-target_link_libraries(sim PRIVATE Boost::log)
-
 find_package(fmi4cpp REQUIRED CONFIG)
 target_link_libraries(sim PRIVATE fmi4cpp::fmi4cpp)
-
-find_package(boost_graph REQUIRED CONFIG)
-target_link_libraries(sim PRIVATE Boost::graph)

@@ -8,122 +8,123 @@
 
 #include "xml_deserialize.hpp"
 
-#include <boost/log/trivial.hpp>
+#include "common_log.hpp"
 
 namespace ssp4cpp::ssp1::ssc
 {
     using namespace pugi;
+    using namespace common;
 
 
     void from_xml(const xml_node &node, Annotation &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing Annotation" << std::endl;
+        Logger::trace("Parsing Annotation");
 
         ssp4cpp::common::xml::parse_xml(node, obj.type  , "type");
         ssp4cpp::common::xml::parse_xml(node, obj.any   , "any");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed Annotation" << std::endl;
+        Logger::trace("Completed Annotation");
     }
 
 
     void from_xml(const xml_node &node, TAnnotations &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing TAnnotations" << std::endl;
+        Logger::trace("Parsing TAnnotations");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "Annotation");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed TAnnotations" << std::endl;
+        Logger::trace("Completed TAnnotations");
     }
 
 
     void from_xml(const xml_node &node, LinearTransformation &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing LinearTransformation" << std::endl;
+        Logger::trace("Parsing LinearTransformation");
 
         ssp4cpp::common::xml::parse_xml(node, obj.factor  , "factor");
         ssp4cpp::common::xml::parse_xml(node, obj.offset  , "offset");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed LinearTransformation" << std::endl;
+        Logger::trace("Completed LinearTransformation");
     }
 
 
     void from_xml(const xml_node &node, BooleanMapEntry &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing BooleanMapEntry" << std::endl;
+        Logger::trace("Parsing BooleanMapEntry");
 
         ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
         ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed BooleanMapEntry" << std::endl;
+        Logger::trace("Completed BooleanMapEntry");
     }
 
 
     void from_xml(const xml_node &node, BooleanMappingTransformation &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing BooleanMappingTransformation" << std::endl;
+        Logger::trace("Parsing BooleanMappingTransformation");
 
         ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed BooleanMappingTransformation" << std::endl;
+        Logger::trace("Completed BooleanMappingTransformation");
     }
 
 
     void from_xml(const xml_node &node, IntegerMapEntry &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing IntegerMapEntry" << std::endl;
+        Logger::trace("Parsing IntegerMapEntry");
 
         ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
         ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed IntegerMapEntry" << std::endl;
+        Logger::trace("Completed IntegerMapEntry");
     }
 
 
     void from_xml(const xml_node &node, IntegerMappingTransformation &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing IntegerMappingTransformation" << std::endl;
+        Logger::trace("Parsing IntegerMappingTransformation");
 
         ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed IntegerMappingTransformation" << std::endl;
+        Logger::trace("Completed IntegerMappingTransformation");
     }
 
 
     void from_xml(const xml_node &node, EnumerationMapEntry &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing EnumerationMapEntry" << std::endl;
+        Logger::trace("Parsing EnumerationMapEntry");
 
         ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
         ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed EnumerationMapEntry" << std::endl;
+        Logger::trace("Completed EnumerationMapEntry");
     }
 
 
     void from_xml(const xml_node &node, EnumerationMappingTransformation &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing EnumerationMappingTransformation" << std::endl;
+        Logger::trace("Parsing EnumerationMappingTransformation");
 
         ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed EnumerationMappingTransformation" << std::endl;
+        Logger::trace("Completed EnumerationMappingTransformation");
     }
 
 
     void from_xml(const xml_node &node, Item &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing Item" << std::endl;
+        Logger::trace("Parsing Item");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name   , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed Item" << std::endl;
+        Logger::trace("Completed Item");
     }
 
 
     void from_xml(const xml_node &node, TEnumeration &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing TEnumeration" << std::endl;
+        Logger::trace("Parsing TEnumeration");
 
         ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
@@ -131,23 +132,23 @@ namespace ssp4cpp::ssp1::ssc
         ssp4cpp::common::xml::parse_xml(node, obj.Item         , "ssc:Item");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed TEnumeration" << std::endl;
+        Logger::trace("Completed TEnumeration");
     }
 
 
     void from_xml(const xml_node &node, TEnumerations &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing TEnumerations" << std::endl;
+        Logger::trace("Parsing TEnumerations");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Enumerations  , "ssc:TEnumeration");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed TEnumerations" << std::endl;
+        Logger::trace("Completed TEnumerations");
     }
 
 
     void from_xml(const xml_node &node, BaseUnit &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing BaseUnit" << std::endl;
+        Logger::trace("Parsing BaseUnit");
 
         ssp4cpp::common::xml::parse_xml(node, obj.kg      , "kg");
         ssp4cpp::common::xml::parse_xml(node, obj.m       , "m");
@@ -160,13 +161,13 @@ namespace ssp4cpp::ssp1::ssc
         ssp4cpp::common::xml::parse_xml(node, obj.factor  , "factor");
         ssp4cpp::common::xml::parse_xml(node, obj.offset  , "offset");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed BaseUnit" << std::endl;
+        Logger::trace("Completed BaseUnit");
     }
 
 
     void from_xml(const xml_node &node, TUnit &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing TUnit" << std::endl;
+        Logger::trace("Parsing TUnit");
 
         ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
@@ -174,77 +175,77 @@ namespace ssp4cpp::ssp1::ssc
         ssp4cpp::common::xml::parse_xml(node, obj.BaseUnit     , "ssc:BaseUnit");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed TUnit" << std::endl;
+        Logger::trace("Completed TUnit");
     }
 
 
     void from_xml(const xml_node &node, TUnits &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing TUnits" << std::endl;
+        Logger::trace("Parsing TUnits");
 
         ssp4cpp::common::xml::parse_xml(node, obj.Units  , "ssc:Unit");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed TUnits" << std::endl;
+        Logger::trace("Completed TUnits");
     }
 
 
     void from_xml(const xml_node &node, GTypeReal &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing GTypeReal" << std::endl;
+        Logger::trace("Parsing GTypeReal");
 
         ssp4cpp::common::xml::parse_xml(node, obj.unit  , "unit");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed GTypeReal" << std::endl;
+        Logger::trace("Completed GTypeReal");
     }
 
 
     void from_xml(const xml_node &node, GTypeInteger &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing GTypeInteger" << std::endl;
+        Logger::trace("Parsing GTypeInteger");
 
 
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed GTypeInteger" << std::endl;
+        Logger::trace("Completed GTypeInteger");
     }
 
 
     void from_xml(const xml_node &node, GTypeBoolean &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing GTypeBoolean" << std::endl;
+        Logger::trace("Parsing GTypeBoolean");
 
 
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed GTypeBoolean" << std::endl;
+        Logger::trace("Completed GTypeBoolean");
     }
 
 
     void from_xml(const xml_node &node, GTypeString &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing GTypeString" << std::endl;
+        Logger::trace("Parsing GTypeString");
 
 
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed GTypeString" << std::endl;
+        Logger::trace("Completed GTypeString");
     }
 
 
     void from_xml(const xml_node &node, GTypeEnumeration &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing GTypeEnumeration" << std::endl;
+        Logger::trace("Parsing GTypeEnumeration");
 
         ssp4cpp::common::xml::parse_xml(node, obj.name  , "name");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed GTypeEnumeration" << std::endl;
+        Logger::trace("Completed GTypeEnumeration");
     }
 
 
     void from_xml(const xml_node &node, GTypeBinary &obj)
     {
-        BOOST_LOG_TRIVIAL(trace) << "Parsing GTypeBinary" << std::endl;
+        Logger::trace("Parsing GTypeBinary");
 
         ssp4cpp::common::xml::parse_xml(node, obj.mime_type  , "mime-type");
 
-        BOOST_LOG_TRIVIAL(trace) << "Completed GTypeBinary" << std::endl;
+        Logger::trace("Completed GTypeBinary");
     }
 
 }

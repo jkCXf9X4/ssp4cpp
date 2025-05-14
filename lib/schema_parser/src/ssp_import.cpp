@@ -1,7 +1,8 @@
-#include <boost/log/trivial.hpp>
 
 #include <pugixml.hpp>
 #include <iostream>
+
+#include "common_log.hpp"
 
 #include "ssp_import.hpp"
 
@@ -15,10 +16,12 @@ namespace fs = std::filesystem;
 
 namespace ssp4cpp::ssp1
 {
+    using namespace common;
+
     SspImport::SspImport(const path &file) : original_file(file)
     {
-        BOOST_LOG_TRIVIAL(info) << "Importing ssp: " << file << std::endl;
-        temp_dir = ssp4cpp::common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
+        Logger::info("Importing ssp: {}", file); 
+        temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
         
         ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
 
