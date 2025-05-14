@@ -7,10 +7,11 @@
 #include <optional>
 #include <stdexcept>
 #include <sstream>
+#include <map>
 
 #include <type_traits>
 
-// dont name this 'string' to many collisions
+// dont name this 'string', to many collisions
 namespace ssp4cpp::common::str
 {
     using namespace interfaces;
@@ -40,6 +41,19 @@ namespace ssp4cpp::common::str
         {
             throw std::runtime_error("Unable to print object");
         }
+    }
+
+    template <typename T, typename U>
+    std::string to_str(const std::map<T, U> &obj)
+    {
+        std::stringstream ss;
+        ss << "Map [key:value]" << std::endl;
+        // key : value
+        for (auto const [key, value] : obj)
+        {
+            ss << key << ':' << value << std::endl;
+        }
+        return ss.str();
     }
 
     template <typename T>
