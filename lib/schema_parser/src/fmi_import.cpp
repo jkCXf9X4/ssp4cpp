@@ -23,7 +23,7 @@ namespace ssp4cpp::fmi2
     FmiImport::FmiImport(const path &file) : original_file(file)
     {
         log = Logger("fmi2.FmiImport", LogLevel::info);
-        log.info("Importing fmi: {}", file);
+        log.info("Importing fmi: {}", file.string());
 
         temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "fmi_");
 

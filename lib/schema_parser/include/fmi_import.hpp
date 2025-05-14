@@ -7,9 +7,11 @@
 #include <vector>
 #include <filesystem>
 #include <optional>
+#include <format>
 
 using namespace std;
 using namespace std::filesystem;
+
 
 namespace ssp4cpp::fmi2
 {
@@ -35,6 +37,11 @@ namespace ssp4cpp::fmi2
                << " }" << endl;
 
             return os;
+        }
+        
+        std::string to_str()
+        {
+            return common::str::stream_to_str(this);
         }
 
     private:

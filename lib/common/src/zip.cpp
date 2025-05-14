@@ -49,7 +49,7 @@ namespace ssp4cpp::common::zip_ns
 
     bool unzip(fs::path file, const fs::path tmp_path)
     {
-        log.trace("[unzip] File {}", file);
+        log.trace("[unzip] File {}", file.string());
 
         int *err = nullptr;
         zip *za = zip_open(absolute(file).string().c_str(), 0, err);
@@ -88,7 +88,7 @@ namespace ssp4cpp::common::zip_ns
                     zf = zip_fopen_index(za, i, 0);
 
                     std::ofstream file_;
-                    log.trace("[unzip] Newfile {}", newFile);
+                    log.trace("[unzip] Newfile {}", newFile.string());
 
                     file_.open(newFile, std::ios::out | std::ios::binary);
 
@@ -109,7 +109,7 @@ namespace ssp4cpp::common::zip_ns
         }
         zip_close(za);
 
-        log.trace("[unzip] Completed {}", file);
+        log.trace("[unzip] Completed {}", file.string());
 
         return true;
     }
@@ -123,7 +123,7 @@ namespace ssp4cpp::common::zip_ns
 
         if (fs::create_directory(temp_dir))
         {
-            log.debug("[create_temp_dir]Temp dir {}", temp_dir); 
+            log.debug("[create_temp_dir]Temp dir {}", temp_dir.string()); 
         }
         else
         {

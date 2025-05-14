@@ -8,18 +8,17 @@
 #include <filesystem>
 #include <stdexcept>
 
-// enable format("{}", std::filesystem::path )
-template <class CharT>
-struct std::formatter<std::filesystem::path, CharT>
-    : std::formatter<std::basic_string<CharT>, CharT> // reuse the string formatter
-{
-    auto format(const std::filesystem::path &p,
-                std::format_context &ctx) const
-    {
-        return std::formatter<std::basic_string<CharT>, CharT>::format(
-            p.template string<CharT>(), ctx); // or u8string/u16string, etc.
-    }
-};
+// // enable format("{}", std::filesystem::path )
+// template <class CharT>
+// struct std::formatter<std::filesystem::path, CharT>
+//     : std::formatter<std::basic_string<CharT>, CharT> // reuse the string formatter
+// {
+//     auto format(const std::filesystem::path &p,
+//                 std::format_context &ctx) const
+//     {
+//         return std::formatter<std::basic_string<CharT>, CharT>::format(p.template string<CharT>(), ctx); // or u8string/u16string, etc.
+//     }
+// };
 
 namespace ssp4cpp::common
 {

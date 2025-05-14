@@ -21,7 +21,7 @@ namespace ssp4cpp::ssp1
     SspImport::SspImport(const path &file) : original_file(file)
     {
         log = Logger("ssp1.SspImport", LogLevel::info);
-        log.info("Importing ssp: {}", file); 
+        log.info("Importing ssp: {}", file.string()); 
 
         temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
         
