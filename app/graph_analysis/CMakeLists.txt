@@ -13,16 +13,10 @@ target_include_directories(ssp4cpp_graph
     ${CMAKE_CURRENT_LIST_DIR}/include_private
 )
 
+# target_compile_options(ssp4cpp_graph PRIVATE -Wfatal-errors)
 
 target_link_libraries(ssp4cpp_graph PRIVATE schema_parser)
 target_link_libraries(ssp4cpp_graph PRIVATE common)
-
-# target_compile_options(ssp4cpp_graph PRIVATE -Wfatal-errors)
-
-# target_link_libraries(ssp4cpp_graph PRIVATE ssp4cpp::3rd::fmi4c)
-
-find_package(boost_log REQUIRED CONFIG)
-target_link_libraries(ssp4cpp_graph PRIVATE Boost::log)
 
 find_package(fmi4cpp REQUIRED CONFIG)
 target_link_libraries(ssp4cpp_graph PRIVATE fmi4cpp::fmi4cpp)

@@ -39,6 +39,9 @@ int main()
     log.debug("Imported ssp! \n");
     log.debug("{}", ssp.to_str());
 
+    log.debug("Parsing ssp to external file");
+    save_string("./resources/ssd.txt", ssp.ssd.to_string());
+
     // Parsing FMI
     auto fmus = vector<pair<string, ssp4cpp::fmi2::FmiImport>>();
     auto fmu_name_to_ssp_name = pair<string, string>();
@@ -50,40 +53,10 @@ int main()
         auto fmu = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
         auto p = pair(resource.name.value_or("null"), fmu);
         fmus.push_back(p);
-        
+
+        // If these changes, evaluate if correct
+        save_string("./test/fmu_" + std::to_string(i) + ".txt", fmu.md.to_string());
     }
-
-
-    // Count nodes
-    map<string, int> connector_str_int_map;
-
-    ssp4cpp::ssp1::ssd::IndexConnectorComponentTuples connectors;
-
-    if (ssp.ssd.System.Elements.has_value())
-    {
-        connectors = ssp1::ssd::Elements_Ext::get_connectors(
-            ssp.ssd.System.Elements.value(),
-            {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
-
-        for (auto [index, connector, component] : connectors)
-        {
-            auto name = component.get().name.value() + "." + connector.get().name;
-            connector_str_int_map[name] = index;
-        }
-    }
-
-    cout << common::str::to_str(connector_str_int_map);
-
-    std::cout << "add ssp edges\n";
-    for (auto connection : ssp.ssd.System.Connections.value().Connections)
-    {
-        auto start = connection.startElement.value() + "." + connection.startConnector;
-        auto end = connection.endElement.value() + "." + connection.endConnector;
-
-        cout << start << ": " << connector_str_int_map[start] << " -> " << end << ": " << connector_str_int_map[end] << endl;
-    }
-
-
 
     std::cout << "Parsing complete\n";
 }

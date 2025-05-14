@@ -15,62 +15,32 @@
 #include <boost/config.hpp>
 #include <vector>
 #include <algorithm> // std::unique, std::distance
+#include <list>
 
 // #include <boost/graph/strong_components.hpp>
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
 
-#include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-
 #include <fmi4cpp/fmi4cpp.hpp>
 
-#include <list>
 
 using namespace std;
 using namespace boost;
 using namespace fmi4cpp;
 using namespace ssp4cpp;
-
-void save_string(const string &filename, const string &content)
-{
-    ofstream myfile;
-    myfile.open(filename);
-    myfile << content;
-    myfile.close();
-}
-
-template <typename T, typename U>
-void print_map(map<T, U> &m)
-{
-    for (auto const &x : m)
-    {
-        std::cout << x.first // string (key)
-                  << ':'
-                  << x.second // string's value
-                  << std::endl;
-    }
-}
+using namespace ssp4cpp::common;
 
 
 int main()
 {
-    boost::log::core::get()->set_filter(boost::log::trivial::severity >= boost::log::trivial::debug);
+    auto log = Logger("graph_analysis.main", LogLevel::debug);
+    
+    log.debug("Opening ssp");
+    auto ssp = ssp4cpp::ssp1::SspImport("./resources/algebraic_loop_4.ssp");
 
-    // Opening zip
-    std::cout << "Opening ssp\n";
-
-    auto ssp = ssp4cpp::ssp1::SspImport("./app/graph_analysis/resources/algebraic_loop_4.ssp");
-
-    std::cout << "Imported ssp! \n";
-
-    std::cout << ssp << endl;
-
-    std::cout << "Parsing ssp to external file\n";
-
-    save_string("./app/graph_analysis/resources/parsed.txt", ssp.ssd.to_string());
+    log.debug("Imported ssp! \n");
+    log.debug("{}", ssp.to_str());
 
     // Parsing FMI
     auto fmus = vector<pair<string, ssp4cpp::fmi2::FmiImport>>();
@@ -84,7 +54,6 @@ int main()
         auto p = pair(resource.name.value_or("null"), fmu);
         fmus.push_back(p);
 
-        save_string("./app/graph_analysis/resources/" + std::to_string(i) + ".txt", fmu.md.to_string());
     }
 
     // Count nodes
@@ -114,7 +83,6 @@ int main()
         }
     }
 
-    // print_map(connector_str_int_map);
 
     std::cout << "add ssp edges\n";
     for (auto connection : ssp.ssd.System.Connections.value().Connections)
@@ -173,7 +141,7 @@ int main()
 
     ssp4cpp::dsm::DSM dsm(g);
 
-    save_string("./app/graph_analysis/resources/raw_dsm.txt", dsm.GetCSV() );
+    cout <<  dsm.GetCSV();
     // dsm.PrintGroups();
 
 

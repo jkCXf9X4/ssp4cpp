@@ -8,6 +8,7 @@
 #include <vector>
 #include <filesystem>
 #include <optional>
+#include <sstream>
 
 using namespace std;
 using namespace std::filesystem;
@@ -61,6 +62,11 @@ namespace ssp4cpp::ssp1
                    os << res << endl;
                }
             return os;
+        }
+
+        std::string to_str()
+        {
+            return common::str::stream_to_str(this);
         }
 
     private:

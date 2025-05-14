@@ -1,14 +1,15 @@
 #pragma once
 
-#include "misc.hpp"
-
 #include <vector>
 #include <map>
 #include <stdexcept>
 #include <numeric>
 
+#include "common_list.hpp"
+
 namespace ssp4cpp::dsm
 {
+
     template <typename T>
     class Matrix
     {
@@ -35,7 +36,7 @@ namespace ssp4cpp::dsm
 
             for (auto [key, group] : group_map)
             {
-                if (misc::is_in_list(group, groups))
+                if (common::list::is_in_list(group, groups))
                 {
                     groups.push_back(group);
                 }

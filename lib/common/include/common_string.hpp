@@ -75,6 +75,14 @@ namespace ssp4cpp::common::str
     }
 
     template <typename T>
+    std::string stream_to_str(const T &obj)
+    {
+        std::stringstream ss;
+        ss << obj;
+        return ss.str();
+    }
+
+    template <typename T>
     T from_str(const std::string &str)
     {
         if constexpr (std::is_same_v<T, int>)
