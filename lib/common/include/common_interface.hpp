@@ -31,6 +31,5 @@ namespace ssp4cpp::common::interfaces
 
     class IList : public IReadWrite
     {
-
     };
 }

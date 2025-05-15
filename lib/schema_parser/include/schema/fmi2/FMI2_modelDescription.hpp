@@ -5,7 +5,7 @@
 #pragma once
 
 #include "common_interface.hpp"
-#include "node_list.hpp"
+#include "common_list.hpp"
 
 #include "FMI2_Enums.hpp"
 
@@ -17,7 +17,7 @@
 namespace ssp4cpp::fmi2::md
 {
     using namespace ssp4cpp::common::interfaces;
-    using namespace ssp4cpp::schema;
+    using namespace ssp4cpp::common::list;
     using namespace std;
 
 
@@ -238,7 +238,7 @@ namespace ssp4cpp::fmi2::md
     {
     public:
         int index;
-        optional<IntList> dependencies;
+        optional<IntXmlList> dependencies;
         optional<fmi2::md::DependenciesKindList> dependenciesKind;
 
         std::string to_string(void) const;

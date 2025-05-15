@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common_interface.hpp"
-#include "node_list.hpp"
+#include "common_list.hpp"
 
 
 #include <string>
@@ -12,7 +12,8 @@
 using namespace std;
 
 using namespace ssp4cpp::common::interfaces;
-using namespace ssp4cpp::schema;
+using namespace ssp4cpp::common::list;
+
 
 namespace ssp4cpp::fmi2::md
 {
@@ -282,7 +283,7 @@ namespace ssp4cpp::fmi2::md
     };
 
 
-    class DependenciesKindList : public NodeList<DependenciesKind>
+    class DependenciesKindList : public XmlNodeList<DependenciesKind>
     {
     };
 

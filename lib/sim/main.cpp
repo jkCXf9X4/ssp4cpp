@@ -25,17 +25,7 @@ using namespace ssp4cpp;
 using namespace common::io;
 using namespace common;
 
-// class Connection
-// {
-//     fmu source_fmu;
-//     connector source_connector;
 
-//     fmu traget_fmu;
-//     connector target_connector;
-
-//     Connection() {}
-
-// };
 
 int main()
 {
@@ -54,7 +44,7 @@ int main()
     for (int i = 0; i < ssp.resources.size(); i++)
     {
         auto resource = ssp.resources[i];
-
+        // TODO: Check that the resource is a fmu...
         auto fmu = ssp4cpp::Fmu(ssp.resources[i].file);
         auto p = pair(resource.name.value_or("null"), fmu);
         fmus.push_back(p);
