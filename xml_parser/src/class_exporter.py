@@ -104,7 +104,7 @@ class DocumentDeclarationExporter:
 #pragma once
 
 #include "common_interface.hpp"
-#include "node_list.hpp"
+#include "common_list.hpp"
 
 {headers}
 {dependencies}
@@ -116,7 +116,7 @@ class DocumentDeclarationExporter:
 namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace ssp4cpp::common::interfaces;
-{self.indent}using namespace ssp4cpp::schema;
+{self.indent}using namespace ssp4cpp::common::list;
 {self.indent}using namespace std;
 
 {forward_declarations}

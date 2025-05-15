@@ -20,7 +20,7 @@ project(ssp4cpp)
 add_subdirectory(3rdParty)
 
 add_subdirectory(lib/common)
-add_subdirectory(lib/schema_parser)
+add_subdirectory(lib/schema)
 add_subdirectory(lib/sim)
 
 add_subdirectory(tests)

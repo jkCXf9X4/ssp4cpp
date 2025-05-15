@@ -15,7 +15,7 @@ target_include_directories(ssp4cpp_graph
 
 # target_compile_options(ssp4cpp_graph PRIVATE -Wfatal-errors)
 
-target_link_libraries(ssp4cpp_graph PRIVATE schema_parser)
+target_link_libraries(ssp4cpp_graph PRIVATE schema)
 target_link_libraries(ssp4cpp_graph PRIVATE common)
 
 find_package(fmi4cpp REQUIRED CONFIG)

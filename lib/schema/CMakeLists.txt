@@ -2,11 +2,11 @@
 
 file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 
-# message(ALL_SRC schema_parser ="${ALL_SRC}")
+# message(ALL_SRC schema ="${ALL_SRC}")
 
-add_library(schema_parser ${ALL_SRC})
+add_library(schema ${ALL_SRC})
 
-target_include_directories(schema_parser
+target_include_directories(schema
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/include
     ${CMAKE_CURRENT_LIST_DIR}/include/interface
@@ -20,9 +20,9 @@ target_include_directories(schema_parser
     ${CMAKE_CURRENT_LIST_DIR}/include_private/fmi2
     ${CMAKE_CURRENT_LIST_DIR}/include_private/ssp1   
 )
-target_compile_options(schema_parser PRIVATE -Wfatal-errors)
+target_compile_options(schema PRIVATE -Wfatal-errors)
 
-target_link_libraries(schema_parser PRIVATE common)
+target_link_libraries(schema PRIVATE common)
 
 find_package(pugixml CONFIG REQUIRED)
-target_link_libraries(schema_parser PRIVATE pugixml::static pugixml::pugixml)
+target_link_libraries(schema PRIVATE pugixml::static pugixml::pugixml)

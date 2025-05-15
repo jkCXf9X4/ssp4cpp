@@ -17,7 +17,7 @@ target_include_directories(sim
 
 # target_compile_options(sim PRIVATE -Wfatal-errors)
 
-target_link_libraries(sim PRIVATE schema_parser)
+target_link_libraries(sim PRIVATE schema)
 target_link_libraries(sim PRIVATE common)
 
 find_package(fmi4cpp REQUIRED CONFIG)

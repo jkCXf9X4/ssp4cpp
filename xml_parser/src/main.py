@@ -10,7 +10,7 @@ def main():
 
     files = ["xml_parser/resource/ssp1_ssd.toml", "xml_parser/resource/ssp1_ssc.toml", "xml_parser/resource/fmi2_md.toml"]
 
-    lib_path = Path("./lib/schema_parser")
+    lib_path = Path("./lib/schema")
 
     for f in files:
         t = Standard(f)

@@ -139,7 +139,7 @@ Annotations = { type = "fmi2::md::fmi2Annotation", list = true , xml_tag="Annota
 
 [Unknown]
 index = { type = "int" }
-dependencies = { type = "IntList", optional = true }
+dependencies = { type = "IntXmlList", optional = true }
 dependenciesKind = { type = "fmi2::md::DependenciesKindList", optional = true }
 
 [Outputs]
