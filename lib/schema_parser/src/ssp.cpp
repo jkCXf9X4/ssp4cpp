@@ -4,7 +4,7 @@
 
 #include "common_log.hpp"
 
-#include "ssp_import.hpp"
+#include "ssp.hpp"
 
 #include "SSP1_SystemStructureDescription.hpp"
 #include "SSP1_SystemStructureDescription_XML.hpp"
@@ -14,13 +14,13 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-namespace ssp4cpp::ssp1
+namespace ssp4cpp
 {
     using namespace common;
 
-    SspImport::SspImport(const path &file) : original_file(file)
+    Ssp::Ssp(const path &file) : original_file(file)
     {
-        log = Logger("ssp1.SspImport", LogLevel::info);
+        log = Logger("Ssp.Ssp", LogLevel::info);
         log.info("Importing ssp: {}", file.string()); 
 
         temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
@@ -42,12 +42,12 @@ namespace ssp4cpp::ssp1
         }
     }
 
-    SspImport::~SspImport()
+    Ssp::~Ssp()
     {
         fs::remove_all(temp_dir);
     }
 
-    ssd::SystemStructureDescription SspImport::parse_system_structure(const string &fileName)
+    ssp1::ssd::SystemStructureDescription Ssp::parse_system_structure(const string &fileName)
     {
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(fileName.c_str());
@@ -57,7 +57,7 @@ namespace ssp4cpp::ssp1
         }
         auto root = doc.child("ssd:SystemStructureDescription");
 
-        ssd::SystemStructureDescription ssd;
+        ssp1::ssd::SystemStructureDescription ssd;
 
         from_xml(root, ssd);
 

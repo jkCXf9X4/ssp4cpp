@@ -1,7 +1,7 @@
 
 
-#include "ssp_import.hpp"
-#include "fmi_import.hpp"
+#include "ssp.hpp"
+#include "fmu.hpp"
 #include "common_io.hpp"
 #include "common_log.hpp"
 
@@ -34,7 +34,7 @@ int main()
     auto log = Logger("cosim.main", LogLevel::debug);
     log.debug("Opening ssp");
 
-    auto ssp = ssp4cpp::ssp1::SspImport("./resources/algebraic_loop_4.ssp");
+    auto ssp = ssp4cpp::Ssp("./resources/algebraic_loop_4.ssp");
 
     log.debug("Imported ssp! \n");
     log.debug("{}", ssp.to_str());
@@ -43,14 +43,14 @@ int main()
     save_string("./tests/references/ssd.txt", ssp.ssd.to_string());
 
     // Parsing FMI
-    auto fmus = vector<pair<string, ssp4cpp::fmi2::FmiImport>>();
+    auto fmus = vector<pair<string, ssp4cpp::Fmu>>();
     auto fmu_name_to_ssp_name = pair<string, string>();
 
     for (int i = 0; i < ssp.resources.size(); i++)
     {
         auto resource = ssp.resources[i];
 
-        auto fmu = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
+        auto fmu = ssp4cpp::Fmu(ssp.resources[i].file);
         auto p = pair(resource.name.value_or("null"), fmu);
         fmus.push_back(p);
 

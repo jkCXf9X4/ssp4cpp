@@ -5,7 +5,7 @@
 
 #include "common_log.hpp"
 
-#include "fmi_import.hpp"
+#include "fmu.hpp"
 
 #include "FMI2_modelDescription.hpp"
 #include "FMI2_modelDescription_XML.hpp"
@@ -15,14 +15,13 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-namespace ssp4cpp::fmi2
+namespace ssp4cpp
 {
     using namespace common;
-    using namespace md;
 
-    FmiImport::FmiImport(const path &file) : original_file(file)
+    Fmu::Fmu(const path &file) : original_file(file)
     {
-        log = Logger("fmi2.FmiImport", LogLevel::info);
+        log = Logger("fmi2.Fmu", LogLevel::info);
         log.info("Importing fmi: {}", file.string());
 
         temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "fmi_");
@@ -30,12 +29,12 @@ namespace ssp4cpp::fmi2
         md = parse_model_description(temp_dir.string() + "/modelDescription.xml");
     }
 
-    FmiImport::~FmiImport()
+    Fmu::~Fmu()
     {
         fs::remove_all(temp_dir);
     }
 
-    fmi2ModelDescription FmiImport::parse_model_description(const string &fileName)
+    fmi2::md::fmi2ModelDescription Fmu::parse_model_description(const string &fileName)
     {
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(fileName.c_str());
@@ -45,7 +44,7 @@ namespace ssp4cpp::fmi2
         }
         auto root = doc.child("fmiModelDescription");
 
-        fmi2ModelDescription md;
+        fmi2::md::fmi2ModelDescription md;
 
         from_xml(root, md);
 

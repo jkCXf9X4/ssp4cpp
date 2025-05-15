@@ -13,24 +13,24 @@ using namespace std;
 using namespace std::filesystem;
 
 
-namespace ssp4cpp::fmi2
+namespace ssp4cpp
 {
 
-    class FmiImport
+    class Fmu
     {
     public:
         path original_file;
         path temp_dir;
-        md::fmi2ModelDescription md;
+        fmi2::md::fmi2ModelDescription md;
         common::Logger log;
 
-        FmiImport(const path &file);
+        Fmu(const path &file);
 
-        ~FmiImport();
+        ~Fmu();
 
-        friend ostream &operator<<(ostream &os, const FmiImport &obj)
+        friend ostream &operator<<(ostream &os, const Fmu &obj)
         {
-            os << "FmiImport { \n"
+            os << "Fmu { \n"
                << "original_file: " << obj.original_file << endl
                << "temp_dir: " << obj.temp_dir << endl
                << "md: " << obj.md.modelName << endl
@@ -45,7 +45,7 @@ namespace ssp4cpp::fmi2
         }
 
     private:
-        static md::fmi2ModelDescription parse_model_description(const string &fileName);
+        static fmi2::md::fmi2ModelDescription parse_model_description(const string &fileName);
     };
 
 }

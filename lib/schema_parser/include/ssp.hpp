@@ -12,15 +12,16 @@
 
 using namespace std;
 using namespace std::filesystem;
+
 using namespace ssp4cpp::common::str;
 
-namespace ssp4cpp::ssp1
+namespace ssp4cpp
 {
 
     class SspResource
     {
     public:
-        optional<ssd::ComponentType> type;
+        optional<ssp1::ssd::ComponentType> type;
         optional<string> name;
         string file;
 
@@ -35,22 +36,22 @@ namespace ssp4cpp::ssp1
         }
     };
 
-    class SspImport
+    class Ssp
     {
     public:
         path original_file;
         path temp_dir;
-        ssd::SystemStructureDescription ssd;
+        ssp1::ssd::SystemStructureDescription ssd;
         vector<SspResource> resources;
         common::Logger log;
 
-        SspImport(const path &file);
+        Ssp(const path &file);
 
-        ~SspImport();
+        ~Ssp();
 
-        friend ostream &operator<<(ostream &os, const SspImport &obj)
+        friend ostream &operator<<(ostream &os, const Ssp &obj)
         {
-            os << "SspImport { \n"
+            os << "Ssp { \n"
                << "original_file: " << obj.original_file << endl
                << "temp_dir: " << obj.temp_dir << endl
                << "ssd: " << obj.ssd.name << endl
@@ -70,7 +71,7 @@ namespace ssp4cpp::ssp1
         }
 
     private:
-        static ssd::SystemStructureDescription parse_system_structure(const string &fileName);
+        static ssp1::ssd::SystemStructureDescription parse_system_structure(const string &fileName);
     };
 
 }
