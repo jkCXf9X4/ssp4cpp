@@ -45,7 +45,7 @@ namespace ssp4cpp::fmi2
         }
 
     private:
-        md::fmi2ModelDescription parse_model_description(const string &fileName);
+        static md::fmi2ModelDescription parse_model_description(const string &fileName);
     };
 
 }

@@ -70,7 +70,7 @@ namespace ssp4cpp::ssp1
         }
 
     private:
-        ssd::SystemStructureDescription parse_system_structure(const string &fileName);
+        static ssd::SystemStructureDescription parse_system_structure(const string &fileName);
     };
 
 }

@@ -5,29 +5,37 @@
 #include "common_io.hpp"
 #include "common_log.hpp"
 
-
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 #include "FMI2_modelDescription_Ext.hpp"
+
+#include <fmi4cpp/fmi4cpp.hpp>
 
 #include <iostream>
 #include <fstream>
 #include <cassert>
 
-#include <boost/config.hpp>
 #include <vector>
-#include <algorithm> 
-
+#include <algorithm>
+#include <map>
 #include <list>
 
-#include <fmi4cpp/fmi4cpp.hpp>
-#include <map>
-
 using namespace std;
-using namespace boost;
 using namespace fmi4cpp;
 using namespace ssp4cpp;
 using namespace common::io;
 using namespace common;
+
+// class Connection
+// {
+//     fmu source_fmu;
+//     connector source_connector;
+
+//     fmu traget_fmu;
+//     connector target_connector;
+
+//     Connection() {}
+
+// };
 
 int main()
 {
@@ -50,9 +58,7 @@ int main()
         auto fmu = ssp4cpp::fmi2::FmiImport(ssp.resources[i].file);
         auto p = pair(resource.name.value_or("null"), fmu);
         fmus.push_back(p);
-        
     }
-
 
     // Count nodes
     map<string, int> connector_str_int_map;
@@ -82,8 +88,6 @@ int main()
 
         cout << start << ": " << connector_str_int_map[start] << " -> " << end << ": " << connector_str_int_map[end] << endl;
     }
-
-
 
     std::cout << "Parsing complete\n";
 }
