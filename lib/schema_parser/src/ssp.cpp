@@ -27,19 +27,7 @@ namespace ssp4cpp
         
         ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
 
-        auto elements = ssd.System.Elements;
-        if (elements)
-        {
-
-            for (auto comp : elements.value().Components)
-            {
-                SspResource res;
-                res.type = comp.type;
-                res.name = comp.name;
-                res.file = temp_dir / comp.source;
-                resources.push_back(res);
-            }
-        }
+        resources = SspResource::parse_resources(ssd, temp_dir);
     }
 
     Ssp::~Ssp()

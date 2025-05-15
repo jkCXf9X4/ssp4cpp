@@ -1,8 +1,10 @@
 #pragma once
 
-#include "SSP1_SystemStructureDescription.hpp"
 #include "common_string.hpp"
 #include "common_log.hpp"
+
+#include "SSP1_SystemStructureDescription.hpp"
+#include "ssp_resource.hpp"
 
 #include <string>
 #include <vector>
@@ -17,24 +19,6 @@ using namespace ssp4cpp::common::str;
 
 namespace ssp4cpp
 {
-
-    class SspResource
-    {
-    public:
-        optional<ssp1::ssd::ComponentType> type;
-        optional<string> name;
-        string file;
-
-        friend ostream &operator<<(ostream &os, const SspResource &obj)
-        {
-            os << "SspResource { \n"
-               << "type: " << to_str(obj.type)  << endl
-               << "name: " << to_str(obj.name) << endl
-               << "file: " << to_str(obj.file) << endl
-               << " }" << endl;
-            return os;
-        }
-    };
 
     class Ssp
     {
