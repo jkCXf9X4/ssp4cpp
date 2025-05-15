@@ -11,8 +11,6 @@
 #include <iostream>
 #include <fstream>
 #include <cassert>
-
-#include <boost/config.hpp>
 #include <vector>
 #include <algorithm> // std::unique, std::distance
 #include <list>
@@ -22,12 +20,8 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graphviz.hpp>
 
-#include <fmi4cpp/fmi4cpp.hpp>
-
 
 using namespace std;
-using namespace boost;
-using namespace fmi4cpp;
 using namespace ssp4cpp;
 using namespace ssp4cpp::common;
 

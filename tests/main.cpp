@@ -12,19 +12,12 @@
 #include <iostream>
 #include <fstream>
 #include <cassert>
-
-#include <boost/config.hpp>
 #include <vector>
 #include <algorithm> 
-
 #include <list>
-
-#include <fmi4cpp/fmi4cpp.hpp>
 #include <map>
 
 using namespace std;
-using namespace boost;
-using namespace fmi4cpp;
 using namespace ssp4cpp;
 using namespace common::io;
 using namespace common;

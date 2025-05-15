@@ -18,8 +18,5 @@ target_include_directories(ssp4cpp_graph
 target_link_libraries(ssp4cpp_graph PRIVATE schema)
 target_link_libraries(ssp4cpp_graph PRIVATE common)
 
-find_package(fmi4cpp REQUIRED CONFIG)
-target_link_libraries(ssp4cpp_graph PRIVATE fmi4cpp::fmi4cpp)
-
 find_package(boost_graph REQUIRED CONFIG)
 target_link_libraries(ssp4cpp_graph PRIVATE Boost::graph)

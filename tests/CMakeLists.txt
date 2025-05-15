@@ -20,5 +20,5 @@ target_include_directories(test_1
 target_link_libraries(test_1 PRIVATE schema)
 target_link_libraries(test_1 PRIVATE common)
 
-find_package(fmi4cpp REQUIRED CONFIG)
-target_link_libraries(test_1 PRIVATE fmi4cpp::fmi4cpp)
+# find_package(fmi4cpp REQUIRED CONFIG)
+# target_link_libraries(test_1 PRIVATE fmi4cpp::fmi4cpp)

@@ -8,23 +8,19 @@
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 #include "FMI2_modelDescription_Ext.hpp"
 
-#include <fmi4cpp/fmi4cpp.hpp>
 
 #include <iostream>
 #include <fstream>
 #include <cassert>
-
 #include <vector>
 #include <algorithm>
 #include <map>
 #include <list>
 
 using namespace std;
-using namespace fmi4cpp;
 using namespace ssp4cpp;
 using namespace common::io;
 using namespace common;
-
 
 
 int main()
