@@ -2,27 +2,51 @@
 
 #include "fmu.hpp"
 #include "common_node.hpp"
+#include "common_string.hpp"
 
-namespace ssp4cpp::cosim::graph
+#include <string>
+
+namespace ssp4cpp::sim::graph
 {
 
-    // class FmuNode : public ssp4cpp::common::graph::Node
-    // {
-    //     Fmu fmu;
-    // }
-
-    // class FmuNode : public ssp4cpp::common::graph::Node
-    // {
-    //     Fmu fmu;
-    // }
-
-    class Connector : public ssp4cpp::common::graph::Node
+    class FmuNode : public ssp4cpp::common::graph::Node
     {
-        Fmu fmu;
+    public:
+        // ssp4cpp::Fmu fmu;
+        std::string name;
 
+        
+        FmuNode(std::string name)
+        {
+            this->name = name;
+            // this->fmu = fmu
+        }
 
-        Connection() {}
+        friend ostream &operator<<(ostream &os, const FmuNode &obj)
+        {
+            os << "FmuNode { \n"
+               << "name: " << obj.name << endl
+               << " }" << endl;
+
+            return os;
+        }
 
     };
 
+    class Connector : public ssp4cpp::common::graph::Node
+    {
+        std::string name;
+        std::string type;
+        // Connector() {}
+
+        friend ostream &operator<<(ostream &os, const Connector &obj)
+        {
+            os << "Connector { \n"
+               << "name: " << obj.name << endl
+               << " }" << endl;
+
+            return os;
+        }
+
+    };
 }

@@ -1,6 +1,5 @@
 {
   "dependencies": [
-    "boost-log",
     "boost-graph",
     "libzip",
     "pugixml",

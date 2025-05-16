@@ -51,7 +51,7 @@ namespace ssp4cpp
 
         std::string to_str()
         {
-            return common::str::stream_to_str(this);
+            return common::str::stream_to_str(*this);
         }
 
     private:

@@ -10,9 +10,10 @@ namespace ssp4cpp::common::graph
 
     class Node
     {
+
         std::vector<Node *> children = {};
         std::vector<Node *> parents = {};
-
+    public:
         Node() {}
 
         void add_child(Node *node)
@@ -54,6 +55,21 @@ namespace ssp4cpp::common::graph
         int nr_parents()
         {
             return parents.size();
+        }
+
+        friend ostream &operator<<(ostream &os, const Node &obj)
+        {
+            os << "Node { \n"
+               << "children: " << obj.children.size() << endl
+               << "parents: " << obj.parents.size() << endl
+               << " }" << endl;
+
+            return os;
+        }
+
+        std::string to_str()
+        {
+            return common::str::stream_to_str(*this);
         }
     };
 }

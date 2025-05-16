@@ -10,14 +10,15 @@ add_executable(sim ${ALL_SRC})
 target_include_directories(sim
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/include
+    ${CMAKE_CURRENT_LIST_DIR}/include/graph
 
   PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include_private  
 )
 
-# target_compile_options(sim PRIVATE -Wfatal-errors)
+target_compile_options(sim PRIVATE -Wfatal-errors)
 
-target_link_libraries(sim PRIVATE schema)
+target_link_libraries(sim PRIVATE schema_lib)
 target_link_libraries(sim PRIVATE common)
 
 find_package(fmi4cpp REQUIRED CONFIG)
