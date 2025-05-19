@@ -24,7 +24,20 @@ namespace ssp4cpp::ssp1::ext
 
     namespace ssd
     {
+        std::vector<TComponent*> get_resources(const ssp1::ssd::SystemStructureDescription& ssd)
+        {
+            auto resources = vector<TComponent*>();
 
+            if (ssd.System.Elements)
+            {
+                for (auto &comp : ssd.System.Elements.value().Components)
+                {
+                    // Make sure that the object is cast as a non const
+                    resources.push_back(const_cast<TComponent*>(&comp));
+                }
+            }
+            return resources;
+        }
     }
 
     namespace elements
@@ -40,7 +53,7 @@ namespace ssp4cpp::ssp1::ext
                 {
                     for (auto &connector : component.Connectors.value().Connectors)
                     {
-                        cs.push_back(make_tuple(i, std::ref(connector), std::ref(component)));
+                        cs.push_back(make_tuple(i, &connector, &component));
                         i++;
                     }
                 }
@@ -68,7 +81,7 @@ namespace ssp4cpp::ssp1::ext
 
             std::copy_if(begin(in), end(in), std::back_inserter(out),
                          [causalities](IndexConnectorComponentTuple a)
-                         { return ssp4cpp::common::list::is_in_list(get<1>(a).get().kind, causalities); });
+                         { return ssp4cpp::common::list::is_in_list(get<1>(a)->kind, causalities); });
 
             reset_index(out);
 

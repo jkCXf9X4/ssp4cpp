@@ -15,7 +15,7 @@ namespace ssp4cpp::fmi2::ext
 
     namespace model_variables
     {
-        reference_wrapper<fmi2ScalarVariable> get_variable(ModelVariables &mv, int index)
+        fmi2ScalarVariable* get_variable(ModelVariables &mv, int index)
         {
             if (index < 0 || index >= mv.ScalarVariable.size())
             {
@@ -23,7 +23,7 @@ namespace ssp4cpp::fmi2::ext
             }
 
             // index start at 1
-            return std::ref(mv.ScalarVariable[index - 1]);
+            return &mv.ScalarVariable[index - 1];
         }
     }
 

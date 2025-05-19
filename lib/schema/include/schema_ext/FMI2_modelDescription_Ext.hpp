@@ -20,7 +20,7 @@ namespace ssp4cpp::fmi2::ext
     {
         inline auto log = common::Logger("fmi2.ext.model_variables", common::LogLevel::debug);
 
-        reference_wrapper<fmi2ScalarVariable> get_variable(ModelVariables &mv, int index);
+        fmi2ScalarVariable* get_variable(ModelVariables &mv, int index);
     }
 
 
@@ -29,7 +29,7 @@ namespace ssp4cpp::fmi2::ext
         inline auto log = common::Logger("fmi2.ext.dependency", common::LogLevel::debug);
         
         using IndexDependencyCoupling = std::tuple<int, int, DependenciesKind>;
-        using VariableDependencyCoupling = std::tuple<fmi2ScalarVariable&, fmi2ScalarVariable&, DependenciesKind>;
+        using VariableDependencyCoupling = std::tuple<fmi2ScalarVariable*, fmi2ScalarVariable*, DependenciesKind>;
     
     
         // Unknowns
