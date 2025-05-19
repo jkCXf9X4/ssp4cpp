@@ -5,6 +5,8 @@
 #include "common_io.hpp"
 #include "common_log.hpp"
 #include "common_string.hpp"
+#include "common_node.hpp"
+#include "tarjan.hpp"
 
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 #include "FMI2_modelDescription_Ext.hpp"
@@ -28,61 +30,63 @@ using namespace common;
 int main()
 {
     auto log = Logger("sim.main", LogLevel::debug);
-    log.debug("Opening ssp");
+    log.debug("Opening SSP");
 
     auto ssp = ssp4cpp::Ssp("./resources/algebraic_loop_4.ssp");
 
-    log.debug("Imported ssp! \n");
-    // log.debug("ssp: {}", ssp.to_string());
+    log.debug("SSP: {}", ssp.to_string());
 
-    auto fmus = map<string, ssp4cpp::Fmu>();
-    for( auto &resource: ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
+    auto fmus = map<string, sim::graph::Model>();
+    for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
     {
-        auto r = *resource;
-        auto name = r.name.value_or("null");
-        auto source = r.source;
-        auto path = ssp.temp_dir / r.source;
-        log.debug("Importing {} {} {}", name, source, path.string());
-        auto fmu = ssp4cpp::Fmu(path);
-        // auto fmu_node = new sim::graph::FmuNode(name);
+        auto name = resource->name.value_or("null");
+        log.debug("Resource {}", name);
         
-        fmus[name] = fmu;
+        auto fmu = ssp4cpp::Fmu(ssp.temp_dir / resource->source);
+        auto fmu_node = sim::graph::Model(name, fmu);
+        fmus[name] = fmu_node;
+    }
+    
+    log.debug("Map {}", common::str::to_str(fmus));
+
+    auto fmu_connections = set<pair<string, string>>();
+
+    for (auto connection : ssp.ssd.System.Connections.value().Connections)
+    {
+        auto p = std::make_pair(connection.startElement.value(), connection.endElement.value());
+        fmu_connections.insert(p);
+
+        // auto start = connection.startElement.value() + "." + connection.startConnector;
+        // auto end = connection.endElement.value() + "." + connection.endConnector;
+
+        // cout << start << ": " << connector_str_int_map[start] << " -> " << end << ": " << connector_str_int_map[end] << endl;
     }
 
+    graph::Node* model;
+    for (auto &[source, target] : fmu_connections)
+    {
+        log.debug("Connection: {} -> {}", source, target);
+        fmus[source].add_child(&fmus[target]);
+        model = &fmus[source];
+    }
 
-    // log.debug("Map {}", common::str::to_str(fmus));
-
-    // for (auto const& [key, value] : fmus)
-    // {
-        // log.debug("{} : {}", key, "");
-    // }
+    log.info("DOT \n{}", model->to_dot());
+    auto nodes = model->all_nodes();
 
 
+    auto ssc = common::graph::strongly_connected_components(nodes);
+    log.info("{}", common::graph::ssc_to_string(ssc));
 
-    // auto fmu_connections = set<pair<string, string>>();
 
-    // for (auto connection : ssp.ssd.System.Connections.value().Connections)
-    // {
-    //     auto p = std::make_pair(connection.startElement.value(), connection.endElement.value());
-    //     fmu_connections.insert(p);
 
-    //     // auto start = connection.startElement.value() + "." + connection.startConnector;
-    //     // auto end = connection.endElement.value() + "." + connection.endConnector;
 
-    //     // cout << start << ": " << connector_str_int_map[start] << " -> " << end << ": " << connector_str_int_map[end] << endl;
-    // }
-
-    // for (auto p : fmu_connections)
-    // {
-    //     log.debug("Connection: {} -> {}", p.first, p.second);
-    // }
 
     // initilize all
 
     // execute graph
     /*
     execute fmus in order for each timestep
-    - this wont work with the timestamp approach. new data will not be available  
+    - this wont work with the timestamp approach. new data will not be available
 
     before fmu execution
     getData -> setVariable
@@ -94,7 +98,6 @@ int main()
 
 
     */
-    
 
     std::cout << "Parsing complete\n";
     return 0;

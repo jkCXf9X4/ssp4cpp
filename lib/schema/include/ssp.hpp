@@ -45,7 +45,7 @@ namespace ssp4cpp
 
                for (auto &res : resources)
                {
-                   os << res->to_string() << endl;
+                   os << "Resource: " << res->name.value_or("null") << endl;
                }
             return os;
         }

@@ -12,21 +12,22 @@ namespace ssp4cpp::sim::graph
     class Model : public ssp4cpp::common::graph::Node
     {
         private:
-        ssp4cpp::Fmu *fmu;
+        ssp4cpp::Fmu fmu;
         uint64_t time;
 
     public:
-        std::string name;
+        Model(){}
 
-        Model(std::string name)
+        Model(std::string name, ssp4cpp::Fmu fmu) :Node(name)
         {
-            this->name = name;
+            this->fmu = fmu;
         }
 
         friend ostream &operator<<(ostream &os, const Model &obj)
         {
             os << "Model { \n"
                << "name: " << obj.name << endl
+               << "Fmu: " << obj.fmu.md.modelName << endl
                << " }" << endl;
 
             return os;

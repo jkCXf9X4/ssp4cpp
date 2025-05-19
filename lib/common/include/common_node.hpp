@@ -4,17 +4,26 @@
 #include <algorithm>
 #include <map>
 #include <list>
+#include <unordered_set>
+#include <stack>
 
 namespace ssp4cpp::common::graph
 {
 
     class Node
     {
-
+    public:
+        std::string name;
         std::vector<Node *> children = {};
         std::vector<Node *> parents = {};
-    public:
-        Node() {}
+
+        Node(){
+            this->name = "";
+        }
+
+        Node(std::string name) {
+            this->name = name;
+        }
 
         void add_child(Node *node)
         {
@@ -60,6 +69,7 @@ namespace ssp4cpp::common::graph
         friend ostream &operator<<(ostream &os, const Node &obj)
         {
             os << "Node { \n"
+               << "name: " << obj.name << endl
                << "children: " << obj.children.size() << endl
                << "parents: " << obj.parents.size() << endl
                << " }" << endl;
@@ -67,9 +77,55 @@ namespace ssp4cpp::common::graph
             return os;
         }
 
+        /** Return every node reachable through either child- or parent-links. */
+        std::vector<Node *> all_nodes() const
+        {
+            std::vector<Node *> result;
+            std::unordered_set<Node *> visited;
+
+            std::stack<Node *> st;
+            st.push(const_cast<Node *>(this)); // root
+
+            while (!st.empty())
+            {
+                Node *cur = st.top();
+                st.pop();
+
+                if (!visited.insert(cur).second) // already seen
+                    continue;
+
+                result.push_back(cur);
+
+                /* explore all outgoing and incoming arcs */
+                for (Node *c : cur->children)
+                    st.push(c);
+                for (Node *p : cur->parents)
+                    st.push(p);
+            }
+            return result;
+        }
+
         std::string to_str()
         {
             return common::str::stream_to_str(*this);
+        }
+
+        std::string to_dot()
+        {
+            std::stringstream ss;
+            ss << "digraph{" << std::endl;
+            
+            auto all_nodes = this->all_nodes();
+            
+            for (auto &node : all_nodes)
+            {
+                for (Node *c : node->children)
+                {
+                    ss << node->name << "->" << c->name << std::endl;
+                }
+            }
+            ss << "}" << std::endl;
+            return ss.str();
         }
     };
 }

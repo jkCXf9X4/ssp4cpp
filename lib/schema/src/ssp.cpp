@@ -21,11 +21,13 @@ namespace ssp4cpp
     Ssp::Ssp(const path &file) : original_file(file)
     {
         log = Logger("Ssp.Ssp", LogLevel::info);
-        log.info("Importing ssp: {}", file.string()); 
-
+        log.info("Importing SSP: {}", file.string()); 
+        
         temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
         
         ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
+
+        log.info("SSP Imported"); 
     }
 
     Ssp::~Ssp()

@@ -35,7 +35,7 @@ namespace ssp4cpp
             os << "Fmu { \n"
                << "original_file: " << obj.original_file << endl
                << "temp_dir: " << obj.temp_dir << endl
-               << "md: " << obj.md.modelName << endl
+               << "modelName: " << obj.md.modelName << endl
                << " }" << endl;
 
             return os;
