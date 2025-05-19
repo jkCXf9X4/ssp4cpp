@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "common_log.hpp"
+
 #include "FMI2_Enums.hpp"
 #include "FMI2_modelDescription.hpp"
 
@@ -10,31 +12,36 @@
 
 using namespace std;
 
-namespace ssp4cpp::fmi2::md
+namespace ssp4cpp::fmi2::ext
 {
+    using namespace ssp4cpp::fmi2::md;
 
-    class ModelVariables_Ext
+    namespace model_variables
     {
-    public:
-        static reference_wrapper<fmi2ScalarVariable> get_variable(ModelVariables &mv, int index);
-    };
+        inline auto log = common::Logger("fmi2.ext.model_variables", common::LogLevel::debug);
 
-    using IndexDependencyCoupling = std::tuple<int, int, DependenciesKind>;
-    using VariableDependencyCoupling = std::tuple<fmi2ScalarVariable&, fmi2ScalarVariable&, DependenciesKind>;
+        reference_wrapper<fmi2ScalarVariable> get_variable(ModelVariables &mv, int index);
+    }
 
-    class Unknown_Ext
+
+    namespace dependency
     {
-
-    public:
-        static vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u);
-
-        static vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u, DependenciesKind kind);
-
-        static vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv);
-
-        static vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind);
-
-        static vector<VariableDependencyCoupling> get_dependencies_variables(vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind);
-    };
+        inline auto log = common::Logger("fmi2.ext.dependency", common::LogLevel::debug);
+        
+        using IndexDependencyCoupling = std::tuple<int, int, DependenciesKind>;
+        using VariableDependencyCoupling = std::tuple<fmi2ScalarVariable&, fmi2ScalarVariable&, DependenciesKind>;
+    
+    
+        // Unknowns
+        vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u);
+    
+        vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u, DependenciesKind kind);
+    
+        vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv);
+    
+        vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind);
+    
+        vector<VariableDependencyCoupling> get_dependencies_variables(vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind);
+    }
 
 }

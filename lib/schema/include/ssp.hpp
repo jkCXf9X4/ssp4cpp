@@ -4,7 +4,7 @@
 #include "common_log.hpp"
 
 #include "SSP1_SystemStructureDescription.hpp"
-#include "ssp_resource.hpp"
+#include "SSP1_SystemStructureDescription_Ext.hpp"
 
 #include <string>
 #include <vector>
@@ -26,7 +26,6 @@ namespace ssp4cpp
         path original_file;
         path temp_dir;
         ssp1::ssd::SystemStructureDescription ssd;
-        vector<SspResource> resources;
         common::Logger log;
 
         Ssp(const path &file);
@@ -35,21 +34,23 @@ namespace ssp4cpp
 
         friend ostream &operator<<(ostream &os, const Ssp &obj)
         {
+            auto resources = ssp1::ext::ssd::get_resources(obj.ssd);
+
             os << "Ssp { \n"
                << "original_file: " << obj.original_file << endl
                << "temp_dir: " << obj.temp_dir << endl
                << "ssd: " << obj.ssd.name << endl
-               << "resources: " << obj.resources.size() << endl
+               << "resources: " << resources.size() << endl
                << " }" << endl;
 
-               for (const auto &res : obj.resources)
+               for (auto &res : resources)
                {
-                   os << res << endl;
+                   os << res->to_string() << endl;
                }
             return os;
         }
 
-        std::string to_str()
+        std::string to_string()
         {
             return common::str::stream_to_str(*this);
         }

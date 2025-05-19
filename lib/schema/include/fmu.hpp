@@ -24,6 +24,8 @@ namespace ssp4cpp
         fmi2::md::fmi2ModelDescription md;
         common::Logger log;
 
+        Fmu(){}
+
         Fmu(const path &file);
 
         ~Fmu();
@@ -39,7 +41,7 @@ namespace ssp4cpp
             return os;
         }
         
-        std::string to_str()
+        std::string to_string()
         {
             return common::str::stream_to_str(*this);
         }

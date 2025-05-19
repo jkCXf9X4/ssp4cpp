@@ -9,44 +9,59 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class FmuNode : public ssp4cpp::common::graph::Node
+    class Model : public ssp4cpp::common::graph::Node
     {
+        private:
+        ssp4cpp::Fmu *fmu;
+        uint64_t time;
+
     public:
-        // ssp4cpp::Fmu fmu;
         std::string name;
 
-        
-        FmuNode(std::string name)
+        Model(std::string name)
         {
             this->name = name;
-            // this->fmu = fmu
         }
 
-        friend ostream &operator<<(ostream &os, const FmuNode &obj)
+        friend ostream &operator<<(ostream &os, const Model &obj)
         {
-            os << "FmuNode { \n"
+            os << "Model { \n"
                << "name: " << obj.name << endl
                << " }" << endl;
 
             return os;
+        }
+
+        void invoke(uint64_t timestep)
+        {
+
         }
 
     };
 
     class Connector : public ssp4cpp::common::graph::Node
     {
-        std::string name;
-        std::string type;
-        // Connector() {}
+        // get/set function pointer
+        Model * model;
+        std::string variable_name;
+        std::string connector_type;
+
+        Connector()
+        {
+
+        }
 
         friend ostream &operator<<(ostream &os, const Connector &obj)
         {
             os << "Connector { \n"
-               << "name: " << obj.name << endl
+               << "variable_name: " << obj.variable_name << endl
+               << "connector_type: " << obj.connector_type << endl
                << " }" << endl;
 
             return os;
         }
+
+        // get set function 
 
     };
 }

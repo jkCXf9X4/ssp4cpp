@@ -1,10 +1,8 @@
 
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 
-
 #include "common_string.hpp"
 #include "common_list.hpp"
-
 
 #include <vector>
 #include <tuple>
@@ -20,53 +18,61 @@ using namespace ssp4cpp::common::str;
 using namespace ssp4cpp::common;
 namespace views = std::ranges::views;
 
-namespace ssp4cpp::ssp1::ssd
+namespace ssp4cpp::ssp1::ext
 {
+    using namespace ssp4cpp::ssp1::ssd;
 
-    IndexConnectorComponentTuples Elements_Ext::get_connectors(Elements &elements)
+    namespace ssd
     {
-        int i = 0;
-        auto cs = IndexConnectorComponentTuples();
 
-        for (auto &component : elements.Components)
+    }
+
+    namespace elements
+    {
+        IndexConnectorComponentTuples get_connectors(Elements &elements)
         {
-            if (component.Connectors.has_value())
+            int i = 0;
+            auto cs = IndexConnectorComponentTuples();
+
+            for (auto &component : elements.Components)
             {
-                for (auto &connector : component.Connectors.value().Connectors)
+                if (component.Connectors.has_value())
                 {
-                    cs.push_back(make_tuple(i, std::ref(connector), std::ref(component)));
-                    i++;
+                    for (auto &connector : component.Connectors.value().Connectors)
+                    {
+                        cs.push_back(make_tuple(i, std::ref(connector), std::ref(component)));
+                        i++;
+                    }
                 }
+            }
+
+            return cs;
+        }
+
+        static void reset_index(IndexConnectorComponentTuples &tuples)
+        {
+            int i = 0;
+            for (auto &[index, connection, component] : tuples)
+            {
+                index = i;
+                i++;
             }
         }
 
-        return cs;
-    }
-
-    void reset_index(IndexConnectorComponentTuples& tuples)
-    {
-        int i = 0;
-        for (auto& [index, connection, component] : tuples)
+        IndexConnectorComponentTuples get_connectors(
+            Elements &elements,
+            std::initializer_list<fmi2::md::Causality> causalities)
         {
-            index = i;
-            i++;
+            auto in = get_connectors(elements);
+            auto out = IndexConnectorComponentTuples();
+
+            std::copy_if(begin(in), end(in), std::back_inserter(out),
+                         [causalities](IndexConnectorComponentTuple a)
+                         { return ssp4cpp::common::list::is_in_list(get<1>(a).get().kind, causalities); });
+
+            reset_index(out);
+
+            return out;
         }
-    }
-
-    // get_connectors(&Elements, {Causality::input, Causality::output})
-    IndexConnectorComponentTuples Elements_Ext::get_connectors(
-        Elements &elements,
-        std::initializer_list<fmi2::md::Causality> causalities)
-    {
-        auto in = get_connectors(elements);
-        auto out = IndexConnectorComponentTuples();
-
-        std::copy_if(begin(in), end(in), std::back_inserter(out),
-                     [causalities](IndexConnectorComponentTuple a)
-                     { return ssp4cpp::common::list::is_in_list(get<1>(a).get().kind, causalities); });
-
-        reset_index(out);
-
-        return out;
     }
 }

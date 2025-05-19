@@ -26,8 +26,6 @@ namespace ssp4cpp
         temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
         
         ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
-
-        resources = SspResource::parse_resources(ssd, temp_dir);
     }
 
     Ssp::~Ssp()

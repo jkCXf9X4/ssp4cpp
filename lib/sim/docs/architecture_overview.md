@@ -29,5 +29,6 @@ It should be constrained to handle co-simulation and leveraging the capabilities
 
 
 ### Limitations
-- Should not include model exchange, no solvers are needed
+- Should not include model exchange only co-sim, no solvers are needed
 - Should not provide options for any alterations to models FMI/SSP. Only load and execute 
+- Should have simple python API

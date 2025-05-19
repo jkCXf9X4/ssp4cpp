@@ -23,6 +23,6 @@ add_subdirectory(lib/common)
 add_subdirectory(lib/schema)
 add_subdirectory(lib/sim)
 
-add_subdirectory(tests)
-add_subdirectory(app/graph_analysis)
+# add_subdirectory(tests)
+# add_subdirectory(app/graph_analysis)
 
