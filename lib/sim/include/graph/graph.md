@@ -8,6 +8,8 @@ input connector -> fmu -> output connectors
 
 output connectors -> input connector
 
+this would enable switching the "fmu" to the internal dependencies later
+
 
 
 # Overview

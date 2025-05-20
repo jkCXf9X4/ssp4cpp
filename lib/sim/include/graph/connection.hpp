@@ -65,4 +65,13 @@ namespace ssp4cpp::sim::graph
         // get set function 
 
     };
+
+    class Connection : public ssp4cpp::common::graph::Node
+    {
+        uint64_t delay;
+
+        Connection() {}
+        
+
+    };
 }
