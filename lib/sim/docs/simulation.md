@@ -1,15 +1,7 @@
 
 
-Physical/SW models: Logical execution time (LET) -> take a known timestep
-Logical/electronics: Zero execution time (ZET) -> assume zero execution time 
-
-Bounded Logical Execution time (BLET) - A mix of Bounded and Logical execution time where the designer sets a range of permissible timesteps.
-- Enable implementing tool to decide what is reasonable when it comes to invocation schemas
-
-
 # Hybrid simulation
 How to simulate hybrid simulations
-
 
 ## Models
 Provide three data points for models and connections to enable conclusions regarding how to simulate models 
@@ -19,19 +11,20 @@ Delay(d): The time the information take to propagate from input to output, relev
 Frequency(f): Periodically run a model
 
 NOTE: If delay is larger than timestep then the information should not be available until the delay is completed 
-NOTE: If delay is shorter than timestep then the information should in theory be available before the model is completed. This will incur a non realistic behavior since the information will be available t-d to late in the simulation
+NOTE: If delay is shorter than timestep then the information could in theory be available before the model is completed. This will incur a non realistic behavior since the information will be available t-d to late in the simulation
+
 
 
 ### Logical execution time (LET)
 Often physical models like hydraulics, fuel, multi body physics and so on
 
-always needs to provide a timestep - LET will always drive time
+always needs to provide a timestep - will always drive time
 might or might not represent a delay - some models may represent a physical delay of information
-not reasonable to provide a frequency - reality does not run periodically
+often not reasonable to provide a frequency - reality does not generally run periodically
 
 
 ### Zero execution time (ZET):
-Often Logical/electric models like sensors, embedded devices 
+Often Logical/electric models like sensors, embedded devices
 
 timestep is always zero
 delay is always zero
@@ -78,6 +71,7 @@ Goal:
 - Use the interpolation possibility in fmi, intermediate update
   - Does anyone support this? 
 
+
 ### Prerequisites 
   - Each connection would have a delay specified to know how it relates to models around it
   - Each model could specify the information delay that is connected to its execution...
@@ -106,28 +100,9 @@ Overview
 - Execute the graphs in parallel
 
 
+### Notes
 
-## Examples
-
-A(BLET)
-B(ZET)
-C(BLET)
-D(ZET)
-
-A -> B 
-B -> C 
-B -> D
-C -> D
-
-The execution order should 
-A -> B -> C -> D
-
-But if we add 
-D -> B
-
-The execution order should 
-A -> iterate(B -> D) -> C -> D
+- Grouping models into larger units would enable increased parallelization between groups with a larger
+  - grouping models -> need to simulate cross vice? 
 
 
-
-A logical/sw/physical model could decide the available range of execution 
