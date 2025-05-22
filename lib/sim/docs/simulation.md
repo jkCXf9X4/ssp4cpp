@@ -3,34 +3,49 @@
 # Hybrid simulation
 How to simulate hybrid simulations
 
+Logical execution time (LET) -> take a known timestep
+Zero execution time (ZET) -> assume zero execution time 
+
 ## Models
 Provide three data points for models and connections to enable conclusions regarding how to simulate models 
 
-TI/TV: Does it have functions that depend on time. Time-invariant (TI) or time-varying (TV) system
+LET/ZET
 Delay(d): Physical or logical motivated time the information takes to propagate from input to output, relevant for models and connections
 Frequency(f): Physical or logical motivated periodicity of execution
 
-Physical/SW models: Logical execution time (LET) -> take a known timestep
-Logical/electronics: Zero execution time (ZET) -> assume zero execution time 
 
 NOTE: If delay is larger than timestep then the information should not be available until the delay is completed 
 NOTE: If delay is shorter than timestep then the information could in theory be available before the model is completed. This will incur a non realistic behavior since the information will be available t-d to late in the simulation
 
-TI == ZET
-if time invariant then it would be safe to assume that the model can be simulated as ZET
 
-### Time-varying (TV) 
-Models containing dynamic attributes
+### LET
+The model is a function of time 
+Models containing dynamic attributes, 
 Often physical models like hydraulics, fuel, multi body physics, computers and so on
 
+Each timestep must be simulated once for correct execution ( not considering rollback) 
 
-### Statefull Time-invariant (STI)
+tids derivator != 0
+
+### ZET
+
+Does not simulate the step but only the current time, the model is not a function of time. 
 Models characterized by algebraic attributes
 Often Logical/electric models like sensors, embedded devices, valves 
 
-Note: a time invariant system may or may not be stateless, it could have internal states that are dependent on execution order but these are not time dependent
+tids derivator == 0
 
-https://en.wikipedia.org/wiki/Linear_time-invariant_system
+Note: may or may not be stateless, it could have internal states that are dependent on execution order but these are not time dependent
+It can use time as input just not have a delay
+
+#### NOTES ZET
+Same timestep could be simulated multiple times, each execution approximates a timestep of zero
+Considering a software model that will send a msg at 0.99s
+- if executing at first at 0.5s
+- next time at 1s, the message is sent. But due to a loop the model will be executed again. this time the msg should not be sent
+
+Kolla upp!
+phase margin / gain margin
 
 ### Examples 
 

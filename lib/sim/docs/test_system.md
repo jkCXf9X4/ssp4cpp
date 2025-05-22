@@ -2,11 +2,8 @@ digraph AircraftExtendedSystem {
     // rankdir=LR;
     node [shape=record];
 
-    // d: seconds
-    // optional<f>: Hz
-    // 
-
-    // ─── Flight-control chain ───────────────────────────────────────────────────
+    // d: seconds   ·  optional <f>: Hz
+    // ─── Flight-control chain ───────────────────────────────────────────────
     AirDataSensor     [label="{Air-Data Sensor|d = 0.0|f = 50}"];
     IMU               [label="{Inertia measurement unit|d = 0.0|f = 100}"];
     NavFilter         [label="{Nav Filter|d = 0.005|f = 50}"];
@@ -18,58 +15,60 @@ digraph AircraftExtendedSystem {
     ServoActuator     [label="{Servo Actuator|d = 0.005}"];
     ElevatorSurface   [label="{Elevator Surface|d = 0.010}"];
 
-    // ─── Hydraulics ─────────────────────────────────────────────────────────────
+    // ─── Hydraulics ────────────────────────────────────────────────────────
     HydraulicPump     [label="{Hydraulic Pump|d = 0.004}"];
     HydraulicManifold [label="{Hydraulic Manifold|d = 0.002}"];
 
-    // ─── Fuel system ───────────────────────────────────────────────────────────
+    // ─── Fuel system ───────────────────────────────────────────────────────
     FuelTankSensor    [label="{Fuel-Tank Sensor|d = 0.0|f = 2}"];
     FuelMgmtComputer  [label="{Fuel-Mgmt Computer|d = 0.005|f = 10}"];
     FuelPump          [label="{Fuel Pump|d = 0.004}"];
 
-    // ─── Engine & FADEC ────────────────────────────────────────────────────────
+    // ─── Engine & FADEC ────────────────────────────────────────────────────
     EngineFADEC       [label="{Engine FADEC|d = 0.0|f = 100}"];
     EngineCore        [label="{Engine|d = 0.005}"];
 
-    // ─── Recorder ──────────────────────────────────────────────────────────────
+    // ─── Recorder ──────────────────────────────────────────────────────────
     DataRecorder      [label="{Flight-Data Recorder|d = 0.0|f = 1}"];
 
-    // ─── Paths ─────────────────────────────────────────────────────────────────
-    // Sensor fusion
-    AirDataSensor  -> NavFilter;
-    IMU            -> NavFilter;
+    // ─── Paths (edge delays added) ─────────────────────────────────────────
+
+    // Sensor fusion (AFDX/ARINC-429 data bus ≈ 1–2 ms)
+    AirDataSensor  -> NavFilter [label="d = 0.002"];
+    IMU            -> NavFilter [label="d = 0.001"];
 
     // Guidance & control
-    NavFilter      -> FCC;
-    FCC            -> ServoActuator;
-    FCC            -> FCC_SW1;
-    FCC_SW1        -> FCC_SW2;
-    FCC_SW1        -> FCC_SW3;
-    FCC_SW2        -> FCC_SW4;
-    FCC_SW3        -> FCC_SW4;
-    FCC_SW4        -> FCC;
-    ServoActuator  -> ElevatorSurface;
+    NavFilter      -> FCC           [label="d = 0.002"]; // gigabit AFDX frame
+    FCC            -> ServoActuator [label="d = 0.004"]; // command bus + drive
+    ServoActuator  -> ElevatorSurface  [label="d = 0.0"]; // mech linkage (≪ 1 ms)
 
-    // Hydraulics power chain
-    EngineCore         -> HydraulicPump;          // mechanical drive
-    HydraulicPump      -> HydraulicManifold;
-    HydraulicManifold  -> ServoActuator;          // pressure feed
+    // FCC internal software scheduling (shared RAM / RTOS context switch)
+    FCC            -> FCC_SW1  [label="d = 0.0"]; 
+    FCC_SW1        -> FCC_SW2  [label="d = 0.0"];
+    FCC_SW1        -> FCC_SW3  [label="d = 0.0"];
+    FCC_SW2        -> FCC_SW4  [label="d = 0.0"];
+    FCC_SW3        -> FCC_SW4  [label="d = 0.0"];
+    FCC_SW4        -> FCC  [label="d = 0.0"];
 
-    // Fuel chain
-    FuelTankSensor     -> FuelMgmtComputer;
-    FuelMgmtComputer   -> FuelPump;
-    FuelPump           -> EngineCore;             // fuel delivery
+    // Hydraulics power chain (fluid inertia & line length)
+    EngineCore        -> HydraulicPump  [label="d = 0.0"];                   // direct shaft (≈ 0)
+    HydraulicPump     -> HydraulicManifold [label="d = 0.020"];
+    HydraulicManifold -> ServoActuator     [label="d = 0.015"];
+
+    // Fuel chain (fuel-line transit)
+    FuelTankSensor    -> FuelMgmtComputer [label="d = 0.005"]; // sensor bus
+    FuelMgmtComputer  -> FuelPump         [label="d = 0.002"];
+    FuelPump          -> EngineCore       [label="d = 0.100"]; // 5-10m line lag
 
     // Engine control loop
-    FCC        -> EngineFADEC;                    // throttle demand
-    EngineCore -> EngineFADEC;                    // feedback sensing
-    EngineFADEC -> EngineCore;                    // fuel/vanes command
+    FCC         -> EngineFADEC  [label="d = 0.002"]; // throttle command
+    EngineCore  -> EngineFADEC  [label="d = 0.0"]; // direct wire
+    EngineFADEC -> EngineCore   [label="d = 0.0"]; // direct wire
 
-    // Monitoring taps
-    AirDataSensor    -> DataRecorder;
-    FCC              -> DataRecorder;
-    ElevatorSurface  -> DataRecorder;
-    FuelMgmtComputer -> DataRecorder;
-    EngineFADEC      -> DataRecorder;
-    EngineCore       -> DataRecorder;
+    // Monitoring taps (shared avionics bus ~1 ms)
+    AirDataSensor    -> DataRecorder [label="d = 0.001"];
+    FCC              -> DataRecorder [label="d = 0.001"];
+    ElevatorSurface  -> DataRecorder [label="d = 0.002"];
+    FuelMgmtComputer -> DataRecorder [label="d = 0.002"];
+    EngineCore       -> DataRecorder [label="d = 0.001"];
 }
