@@ -6,29 +6,41 @@ How to simulate hybrid simulations
 ## Models
 Provide three data points for models and connections to enable conclusions regarding how to simulate models 
 
-Timestep(t): the amount of time that the model will simulate and move into the future
-Delay(d): The time the information take to propagate from input to output, relevant for models and connections
-Frequency(f): Periodically run a model
+TI/TV: Does it have functions that depend on time. Time-invariant (TI) or time-varying (TV) system
+Delay(d): Physical or logical motivated time the information takes to propagate from input to output, relevant for models and connections
+Frequency(f): Physical or logical motivated periodicity of execution
+
+Physical/SW models: Logical execution time (LET) -> take a known timestep
+Logical/electronics: Zero execution time (ZET) -> assume zero execution time 
 
 NOTE: If delay is larger than timestep then the information should not be available until the delay is completed 
 NOTE: If delay is shorter than timestep then the information could in theory be available before the model is completed. This will incur a non realistic behavior since the information will be available t-d to late in the simulation
 
+TI == ZET
+if time invariant then it would be safe to assume that the model can be simulated as ZET
+
+### Time-varying (TV) 
+Models containing dynamic attributes
+Often physical models like hydraulics, fuel, multi body physics, computers and so on
 
 
-### Logical execution time (LET)
-Often physical models like hydraulics, fuel, multi body physics and so on
+### Statefull Time-invariant (STI)
+Models characterized by algebraic attributes
+Often Logical/electric models like sensors, embedded devices, valves 
 
-always needs to provide a timestep - will always drive time
-might or might not represent a delay - some models may represent a physical delay of information
-often not reasonable to provide a frequency - reality does not generally run periodically
+Note: a time invariant system may or may not be stateless, it could have internal states that are dependent on execution order but these are not time dependent
 
+https://en.wikipedia.org/wiki/Linear_time-invariant_system
 
-### Zero execution time (ZET):
-Often Logical/electric models like sensors, embedded devices
+### Examples 
 
-timestep is always zero
-delay is always zero
-Can run with or without a frequency
+Everything is relative, a comparison from a systems perspective
+
+PCB(logical gates): TI, ~no delay, not executed periodically
+Sensor: TI, ~no delay, executed periodically 
+SW: TI/TV, ~no delay/short/long delay, executed periodically 
+Hydraulic system: TV, long delay, not executed periodically
+Advanced computer: TV, short delay and is executed periodically 
 
 
 #### Identifying ZET
@@ -41,14 +53,6 @@ Options:
     - Case study över detta!
 - if the bounded time is low enough the component could be set to as a ZET component with the update frequency within the bound
 - Explicit marker in eg FMI/Model descriptions
-
-
-### Sometimes LET, sometimes ZET
-Areas that may relate to one or the other, simulated software often fall in this category
-
-Sw might or might not provide a timestep - sw may drive time of simulation
-Sw might or might not represent a delay - sw can be slow and may represent a delay of information propagation
-Sw should almost always should provide a frequency - its reasonable that sw run periodically
 
 
 ### Event 
@@ -70,6 +74,7 @@ Goal:
   - This is kind of what Brown does but how can we do it without tlm?
 - Use the interpolation possibility in fmi, intermediate update
   - Does anyone support this? 
+  - Possible to run the model multiple times locally to emulate this... The same interpolation table could potentially be used
 
 
 ### Prerequisites 
@@ -105,4 +110,12 @@ Overview
 - Grouping models into larger units would enable increased parallelization between groups with a larger
   - grouping models -> need to simulate cross vice? 
 
+
+Just because there is a delay does not mean that the timestep should be of this size, a model can be executed multiple times and the information should then be delayed in the integrating tool 
+- Think more on this
+
+splitting the graph is probably an empirical problem. generate -> test -> adapt. Repeat all (generate -> test) or (test -> adapt) 
+
+
+## test system
 
