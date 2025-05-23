@@ -19,21 +19,16 @@ NOTE: If delay is shorter than timestep then the information could in theory be 
 
 
 ### LET
-The model is a function of time 
-Models containing dynamic attributes, 
+Models containing dynamic attributes, time derivatives != 0
 Often physical models like hydraulics, fuel, multi body physics, computers and so on
 
 Each timestep must be simulated once for correct execution ( not considering rollback) 
 
-tids derivator != 0
 
 ### ZET
-
+Models characterized by algebraic attributes, time derivatives == 0
 Does not simulate the step but only the current time, the model is not a function of time. 
-Models characterized by algebraic attributes
 Often Logical/electric models like sensors, embedded devices, valves 
-
-tids derivator == 0
 
 Note: may or may not be stateless, it could have internal states that are dependent on execution order but these are not time dependent
 It can use time as input just not have a delay
