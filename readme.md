@@ -29,9 +29,15 @@ cmake --preset=vcpkg
 cmake --build build
 
 cmake --build build && ./build/app/graph_analysis/ssp4cpp_graph
-cmake --build build &> build.log && ./build/app/graph_analysis/ssp4cpp_graph
+cmake --build build && ./build/app/sim/sim_app
+
 ```
 
+
+```
+cmake --build build && ./build/tests/test_1
+
+```
 
 # Credits
 

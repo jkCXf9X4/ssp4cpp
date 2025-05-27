@@ -4,6 +4,7 @@
     "libzip",
     "pugixml",
     "fmi4cpp",
-    "nlohmann-json"
+    "nlohmann-json",
+    "catch2"
   ]
 }

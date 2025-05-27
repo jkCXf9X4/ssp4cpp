@@ -17,38 +17,38 @@
 #include <list>
 #include <map>
 
+#include <catch.hpp>
+
 using namespace std;
 using namespace ssp4cpp;
 using namespace common::io;
 using namespace common;
 
-int main()
-{
+TEST_CASE("SSP Import", "[SSP]") {
+
     auto log = Logger("cosim.main", LogLevel::debug);
     log.debug("Opening ssp");
 
     auto ssp = ssp4cpp::Ssp("./resources/algebraic_loop_4.ssp");
 
     log.debug("Imported ssp! \n");
-    log.debug("{}", ssp.to_str());
+    log.debug("{}", ssp.to_string());
 
     log.debug("Parsing ssp to external file");
     save_string("./tests/references/ssd.txt", ssp.ssd.to_string());
 
-    // Parsing FMI
-    auto fmus = vector<pair<string, ssp4cpp::Fmu>>();
-    auto fmu_name_to_ssp_name = pair<string, string>();
-
-    for (int i = 0; i < ssp.resources.size(); i++)
+    auto resources = ssp1::ext::ssd::get_resources(ssp.ssd);
+    REQUIRE(resources.size() == 4);
+    
+    for (auto &resource : resources)
     {
-        auto resource = ssp.resources[i];
+        log.debug("Resource: {}", resource->name.value_or("null"));
 
-        auto fmu = ssp4cpp::Fmu(ssp.resources[i].file);
-        auto p = pair(resource.name.value_or("null"), fmu);
-        fmus.push_back(p);
+        auto fmu = ssp4cpp::Fmu(ssp.temp_dir / resource->source);
+        auto p = pair(resource->name.value_or("null"), fmu);
 
         // If these changes, evaluate if correct
-        save_string("./tests/references/fmu_" + std::to_string(i) + ".txt", fmu.md.to_string());
+        save_string("./tests/references/fmu_" + resource->name.value_or("null") + ".txt", fmu.md.to_string());
     }
 
     std::cout << "Parsing complete\n";

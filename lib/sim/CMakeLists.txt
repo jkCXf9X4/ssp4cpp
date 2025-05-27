@@ -1,11 +1,9 @@
 
-
 file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 
 # message(ALL_SRC sim ="${ALL_SRC}")
 
-add_executable(sim ${ALL_SRC})
-# add_library(sim ${ALL_SRC})
+add_library(sim ${ALL_SRC})
 
 target_include_directories(sim
   PUBLIC

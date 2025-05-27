@@ -1,7 +1,7 @@
 {
     "files.associations": {
-        "*.ssd": "xml",
         "*.tpp": "cpp",
+        "*.ssd": "xml",
         "iostream": "cpp",
         "optional": "cpp",
         "cctype": "cpp",
@@ -86,7 +86,8 @@
         "span": "cpp",
         "format": "cpp",
         "ranges": "cpp",
-        "stdfloat": "cpp"
+        "stdfloat": "cpp",
+        "filesystem": "cpp"
     },
     "CodeGPT.apiKey": "Ollama",
 }
