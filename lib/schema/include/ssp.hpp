@@ -24,7 +24,8 @@ namespace ssp4cpp
     {
     public:
         path original_file;
-        path temp_dir;
+        path dir;
+        bool using_tmp_dir;
         ssp1::ssd::SystemStructureDescription ssd;
         common::Logger log;
 
@@ -38,7 +39,7 @@ namespace ssp4cpp
 
             os << "Ssp { \n"
                << "original_file: " << obj.original_file << endl
-               << "temp_dir: " << obj.temp_dir << endl
+               << "dir: " << obj.dir << endl
                << "ssd: " << obj.ssd.name << endl
                << "resources: " << resources.size() << endl
                << " }" << endl;

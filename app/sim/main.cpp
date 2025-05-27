@@ -46,7 +46,7 @@ int main()
         auto name = resource->name.value_or("null");
         log.debug("Resource {}", name);
         
-        auto fmu = ssp4cpp::Fmu(ssp.temp_dir / resource->source);
+        auto fmu = ssp4cpp::Fmu(ssp.dir / resource->source);
         auto fmu_node = sim::graph::Model(name, fmu);
         fmus[name] = fmu_node;
     }

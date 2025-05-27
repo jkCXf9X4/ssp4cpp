@@ -21,18 +21,35 @@ namespace ssp4cpp
     Ssp::Ssp(const path &file) : original_file(file)
     {
         log = Logger("Ssp.Ssp", LogLevel::info);
-        log.info("Importing SSP: {}", file.string()); 
-        
-        temp_dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
-        
-        ssd = parse_system_structure(temp_dir.string() + "/SystemStructure.ssd");
+        log.info("Importing SSP: {}", file.string());
 
-        log.info("SSP Imported"); 
+        if (fs::is_regular_file(file))
+        {
+            dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
+            using_tmp_dir = true;
+        }
+        else if (fs::is_directory(file))
+        {
+            dir = file;
+            using_tmp_dir = false;
+        }
+        else
+        {
+            throw runtime_error("Fmu file is not a regular file or directory: " + file.string());
+        }
+
+
+        ssd = parse_system_structure(dir.string() + "/SystemStructure.ssd");
+
+        log.info("SSP Imported");
     }
 
     Ssp::~Ssp()
     {
-        fs::remove_all(temp_dir);
+        if (using_tmp_dir)
+        {
+            fs::remove_all(dir);
+        }
     }
 
     ssp1::ssd::SystemStructureDescription Ssp::parse_system_structure(const string &fileName)
