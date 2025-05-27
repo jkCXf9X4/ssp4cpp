@@ -1,0 +1,46 @@
+{
+    "Models": {
+        "Model_1": {
+            "delay": 0.005,
+            "frequency": 0
+        },
+        "Model_2": {
+            "delay": 0.005,
+            "frequency": 0
+        },
+        "Model_3": {
+            "delay": 0.005,
+            "frequency": 0
+        },
+        "Model_4": {
+            "delay": 0.005,
+            "frequency": 0
+        },
+        "Model_5": {
+            "delay": 0.005,
+            "frequency": 0
+        }
+    },
+    "Connections": {
+        "c1": {
+            "source": "Model_1",
+            "target": "Model_2",
+            "delay": 0.002
+        },
+        "c2": {
+            "source": "Model_2",
+            "target": "Model_3",
+            "delay": 0.002
+        },
+        "c3": {
+            "source": "Model_3",
+            "target": "Model_4",
+            "delay": 0.002
+        },
+        "c4": {
+            "source": "Model_4",
+            "target": "Model_5",
+            "delay": 0.002
+        }
+    }
+}

@@ -6,13 +6,13 @@ file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 
 add_executable(test_1 ${ALL_SRC})
 
-target_include_directories(test_1
-  PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}/include
+# target_include_directories(test_1
+#   PUBLIC
+#     ${CMAKE_CURRENT_LIST_DIR}/include
 
-  PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/include_private  
-)
+#   PRIVATE
+#     ${CMAKE_CURRENT_LIST_DIR}/include_private  
+# )
 
 # target_compile_options(sim PRIVATE -Wfatal-errors)
 find_package(Catch2 CONFIG REQUIRED)

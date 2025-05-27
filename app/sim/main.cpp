@@ -6,6 +6,7 @@
 #include "common_log.hpp"
 #include "common_string.hpp"
 #include "common_node.hpp"
+#include "common_json.hpp"
 #include "tarjan.hpp"
 
 #include "SSP1_SystemStructureDescription_Ext.hpp"
@@ -27,14 +28,17 @@ using namespace ssp4cpp;
 using namespace common::io;
 using namespace common;
 
+
 int main()
 {
     auto log = Logger("sim.main", LogLevel::debug);
     log.debug("Opening SSP");
 
     auto ssp = ssp4cpp::Ssp("./resources/algebraic_loop_4.ssp");
-
     log.debug("SSP: {}", ssp.to_string());
+
+    auto delays = json::parse_json_file("./resources/model_props.json");
+    log.debug("Extra properties:\n{}\n", json::to_string(delays));
 
     auto fmus = map<string, sim::graph::Model>();
     for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
