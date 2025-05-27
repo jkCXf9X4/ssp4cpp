@@ -3,6 +3,7 @@
     "boost-graph",
     "libzip",
     "pugixml",
-    "fmi4cpp"
+    "fmi4cpp",
+    "nlohmann-json"
   ]
 }

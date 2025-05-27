@@ -16,5 +16,8 @@ target_include_directories(common
 
 # target_compile_options(common PRIVATE -Wfatal-errors)
 
+find_package(nlohmann_json CONFIG REQUIRED)
 find_package(libzip CONFIG REQUIRED)
+
 target_link_libraries(common PRIVATE libzip::zip)
+target_link_libraries(common PRIVATE nlohmann_json::nlohmann_json)
