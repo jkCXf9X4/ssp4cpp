@@ -1,7 +1,17 @@
 
 
+# Related work
+
+Automatic parallelization and scheduling approaches for co-simulation of numerical models on multi-core processors (Saidi)
+https://scholar.google.fr/scholar?oi=bibs&hl=en&cites=11753292007289493711
+
+Towards the Verification of Hybrid Co-simulation Algorithms(Thule)
+Requirements for hybrid cosimulation standards (Broman)
+- samma tankar!
+
+
 # Hybrid simulation
-How to simulate hybrid simulations
+How to simulate hybrid co-simulations in a credible and effective way
 
 Logical execution time (LET) -> take a known timestep
 Zero execution time (ZET) -> assume zero execution time 
@@ -9,9 +19,10 @@ Zero execution time (ZET) -> assume zero execution time
 ## Models
 Provide three data points for models and connections to enable conclusions regarding how to simulate models 
 
-LET/ZET
+LET/ZET: Long/short execution time
 Delay(d): Physical or logical motivated time the information takes to propagate from input to output, relevant for models and connections
 Frequency(f): Physical or logical motivated periodicity of execution
+frequency should be specified if two models should use the same clock, named clock?
 
 
 NOTE: If delay is larger than timestep then the information should not be available until the delay is completed 
@@ -39,18 +50,16 @@ Considering a software model that will send a msg at 0.99s
 - if executing at first at 0.5s
 - next time at 1s, the message is sent. But due to a loop the model will be executed again. this time the msg should not be sent
 
-Kolla upp!
-phase margin / gain margin
 
 ### Examples 
 
 Everything is relative, a comparison from a systems perspective
 
-PCB(logical gates): TI, ~no delay, not executed periodically
-Sensor: TI, ~no delay, executed periodically 
-SW: TI/TV, ~no delay/short/long delay, executed periodically 
-Hydraulic system: TV, long delay, not executed periodically
-Advanced computer: TV, short delay and is executed periodically 
+PCB(logical gates): ZET, ~no delay, not executed periodically
+Sensor: ZET, ~no delay, executed periodically 
+SW: LET/ZET, ~no delay/short/long delay, executed periodically 
+Hydraulic system: LET, long delay, not executed periodically
+Advanced computer: LET, short delay and may be executed periodically 
 
 
 #### Identifying ZET
@@ -72,16 +81,16 @@ Use existing clocks / events mechanisms
 ## How to simulate
 
 Goal:
-- Minimizing errors, maximize credibility
+- Minimizing errors, ensure credibility
 - Maximize the parallelization opportunities to enable faster simulations
 - Maximizing model timesteps to minimize the simulation engine overhead
 
-## Thesis: Information propagation information to enable parallelization
+## Thesis: Information propagation over time to enable parallelization
 
-- Execution graph is constructed from information propagation
 - Delays, that are physically or logically motivated, of information can enable splitting the execution graph into parts that can be executed in parallel
   - This would lead to correct behavior while still enabling high degree of parallelization 
   - This is kind of what Brown does but how can we do it without tlm?
+
 - Use the interpolation possibility in fmi, intermediate update
   - Does anyone support this? 
   - Possible to run the model multiple times locally to emulate this... The same interpolation table could potentially be used
@@ -95,10 +104,19 @@ Goal:
 Splitting the models might be hard when taking delays into account for larger subsystems, if the hydraulics system is one unit using delays might be complex, the quickest dynamic of the system will dictate the model delay
 
 
+## Thesis: Information independence to enable parallelization
+- Execution graph is constructed from information propagation
+
+- If models have no information dependency between them then parallelization is possible
+
+
 ### Simulation 
 
 Split the models into chunks that are equal to the delay between them
 this would enable running that chunks gauss-jacobi and the chunk itself gauss-seidel
+
+- Grouping models into larger units would enable increased parallelization between groups with a larger
+  - grouping models -> need to simulate cross vice? 
 
 NOTE:
 - The LET components must have execution for each step
@@ -117,10 +135,6 @@ Overview
 
 ### Notes
 
-- Grouping models into larger units would enable increased parallelization between groups with a larger
-  - grouping models -> need to simulate cross vice? 
-
-
 Just because there is a delay does not mean that the timestep should be of this size, a model can be executed multiple times and the information should then be delayed in the integrating tool 
 - Think more on this
 
@@ -129,3 +143,21 @@ splitting the graph is probably an empirical problem. generate -> test -> adapt.
 
 ## test system
 
+digraph Test1 {
+    // rankdir=LR;
+    node [shape=record];
+
+    // d: seconds   ·  optional<f>: Hz
+
+    m1     [label="{Model_1|LET|d = 0.005}"];
+    m2     [label="{Model_2|LET|d = 0.005}"];
+    m3     [label="{Model_3|LET|d = 0.005}"];
+    m4     [label="{Model_4|LET|d = 0.005}"];
+    m5     [label="{Model_5|LET|d = 0.005}"];
+
+    // Guidance & control
+    m1 -> m2           [label="d = 0.002"];
+    m2 -> m3           [label="d = 0.002"];
+    m3 -> m4           [label="d = 0.002"];
+    m4 -> m5           [label="d = 0.002"];
+}
