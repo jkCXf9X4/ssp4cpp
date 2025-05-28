@@ -23,7 +23,8 @@ namespace ssp4cpp::sim::graph
         map<string, common::graph::Node*> models;
         for (auto &[str, fmu] : fmus)
         {
-            models[str] = new Model(str, fmu);
+            // ownership of fmu should be decided
+            models[str] = new Model(str, &fmu);
         }
 
         auto fmu_connections = ssp1::ext::elements::get_fmu_connections(ssp.ssd);

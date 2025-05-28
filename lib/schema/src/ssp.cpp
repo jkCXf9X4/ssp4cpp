@@ -1,6 +1,7 @@
 
 #include <pugixml.hpp>
 #include <iostream>
+#include <cstring>
 
 #include "common_log.hpp"
 
@@ -18,14 +19,9 @@ namespace ssp4cpp
 {
     using namespace common;
 
-    Ssp::Ssp()
+    Ssp::Ssp(const path &file)
     {
-        using_tmp_dir = false;
-    }
-
-    Ssp::Ssp(const path &file) : original_file(file)
-    {
-        log = Logger("Ssp.Ssp", LogLevel::info);
+        original_file = file;
         log.info("Importing SSP: {}", file.string());
 
         if (fs::is_regular_file(file))
@@ -43,7 +39,6 @@ namespace ssp4cpp
             throw runtime_error("Fmu file is not a regular file or directory: " + file.string());
         }
 
-
         ssd = parse_system_structure(dir.string() + "/SystemStructure.ssd");
 
         log.info("SSP Imported");
@@ -51,7 +46,7 @@ namespace ssp4cpp
 
     Ssp::~Ssp()
     {
-        log.debug("Destructor called");
+        log.debug("Destructor called for ssp {}", original_file.string());
         if (using_tmp_dir)
         {
             fs::remove_all(dir);

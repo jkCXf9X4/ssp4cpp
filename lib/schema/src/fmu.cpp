@@ -1,7 +1,5 @@
 
 
-
-
 #include "common_log.hpp"
 
 #include "fmu.hpp"
@@ -15,7 +13,6 @@
 #include <filesystem>
 #include <iostream>
 
-
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -23,9 +20,9 @@ namespace ssp4cpp
 {
     using namespace common;
 
-    Fmu::Fmu(const path &file) : original_file(file)
+    Fmu::Fmu(const path &file)
     {
-        log = Logger("fmi2.Fmu", LogLevel::info);
+        original_file = file;
         log.info("Importing fmi: {}", file.string());
 
         if (fs::is_regular_file(file))
@@ -38,7 +35,8 @@ namespace ssp4cpp
             dir = file;
             using_tmp_dir = false;
         }
-        else{
+        else
+        {
             throw runtime_error("Fmu file is not a regular file or directory: " + file.string());
         }
 
@@ -47,6 +45,7 @@ namespace ssp4cpp
 
     Fmu::~Fmu()
     {
+        log.debug("Destructor called for fmu {}", original_file.string());
         if (using_tmp_dir)
         {
             fs::remove_all(dir);

@@ -19,18 +19,25 @@ using namespace ssp4cpp::common::str;
 
 namespace ssp4cpp
 {
+    using namespace common;
 
     class Ssp
     {
     public:
+        Logger log = Logger("Ssp.Ssp", LogLevel::debug);
+        bool using_tmp_dir = false;
         path original_file;
         path dir;
-        bool using_tmp_dir;
         ssp1::ssd::SystemStructureDescription ssd;
-        common::Logger log;
 
-        Ssp();
         Ssp(const path &file);
+        
+
+        Ssp() = delete;
+        // Object is not copyable, 
+        // this would create uncertainty of who own any file references
+        Ssp(Ssp& obj) = delete;
+        Ssp &operator=(const Ssp &other) = delete;
 
         ~Ssp();
 
@@ -45,10 +52,10 @@ namespace ssp4cpp
                << "resources: " << resources.size() << endl
                << " }" << endl;
 
-               for (auto &res : resources)
-               {
-                   os << "Resource: " << res->name.value_or("null") << endl;
-               }
+            for (auto &res : resources)
+            {
+                os << "Resource: " << res->name.value_or("null") << endl;
+            }
             return os;
         }
 

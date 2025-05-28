@@ -41,9 +41,13 @@ namespace ssp4cpp::common
         static inline bool enabled = false;
         static inline LogLevel static_level = LogLevel::debug;
         std::string name;
-        LogLevel level = LogLevel::debug;
+        LogLevel level;
 
-        Logger(){}
+        Logger(){
+            Logger::enabled = true;
+            level = LogLevel::debug;
+            name = "null";
+        }
 
         Logger(std::string name_, LogLevel lvl)
         {

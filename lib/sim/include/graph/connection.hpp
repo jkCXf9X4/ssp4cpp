@@ -12,14 +12,14 @@ namespace ssp4cpp::sim::graph
 
     class Model : public ssp4cpp::common::graph::Node
     {
-        private:
-        ssp4cpp::Fmu fmu;
-        uint64_t time;
+    private:
+        ssp4cpp::Fmu* fmu;
+        uint64_t time = 0;
 
     public:
-        Model(){}
+        Model() {}
 
-        Model(std::string name, ssp4cpp::Fmu fmu) :Node(name)
+        Model(std::string name, ssp4cpp::Fmu* fmu) : Node(name)
         {
             this->fmu = fmu;
         }
@@ -28,7 +28,7 @@ namespace ssp4cpp::sim::graph
         {
             os << "Model { \n"
                << "name: " << obj.name << endl
-               << "Fmu: " << obj.fmu.md.modelName << endl
+               << "Fmu: " << obj.fmu->md.modelName << endl
                << " }" << endl;
 
             return os;
@@ -36,21 +36,18 @@ namespace ssp4cpp::sim::graph
 
         void invoke(uint64_t timestep)
         {
-
         }
-
     };
 
     class Connector : public ssp4cpp::common::graph::Node
     {
         // get/set function pointer
-        Model * model;
+        Model *model;
         std::string variable_name;
         std::string connector_type;
 
         Connector()
         {
-
         }
 
         friend ostream &operator<<(ostream &os, const Connector &obj)
@@ -63,8 +60,7 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        // get set function 
-
+        // get set function
     };
 
     class Connection : public ssp4cpp::common::graph::Node
@@ -72,7 +68,5 @@ namespace ssp4cpp::sim::graph
         uint64_t delay;
 
         Connection() {}
-        
-
     };
 }

@@ -32,18 +32,19 @@ using namespace common;
 class Simulator
 {
 public:
-    common::Logger log;
-    Ssp* ssp;
+    common::Logger log = Logger("Simulator", LogLevel::debug);
+    unique_ptr<Ssp> ssp;
+
     common::json::Json model_props;
+
     // system_graph: Simple graph only showing the connections between fmu's
     vector<common::graph::Node *> system_graph;
     vector<vector<common::graph::Node *>> strong_system_graph;
 
-    Simulator(const std::filesystem::path &ssp_path,
-              const std::filesystem::path &props_path)
-        : log("Simulator", LogLevel::debug)
+    Simulator(const string &ssp_path,
+              const string &props_path)
     {
-        ssp = new ssp4cpp::Ssp(ssp_path);
+        ssp = make_unique<ssp4cpp::Ssp>(ssp_path);
         log.debug("SSP: {}", ssp->to_string());
 
         model_props = json::parse_json_file(props_path);

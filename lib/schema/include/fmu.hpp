@@ -12,24 +12,26 @@
 using namespace std;
 using namespace std::filesystem;
 
-
 namespace ssp4cpp
 {
+
+    using namespace common;
 
     class Fmu
     {
     public:
+        Logger log = Logger("fmi2.Fmu", LogLevel::debug);
+        bool using_tmp_dir = false;
         path original_file;
         path dir;
-        bool using_tmp_dir;
         fmi2::md::fmi2ModelDescription md;
-        common::Logger log;
 
-        Fmu(){}
-
+        Fmu() {}
         Fmu(const path &file);
 
         ~Fmu();
+
+        // Fmu &operator=(const Fmu &other);
 
         friend ostream &operator<<(ostream &os, const Fmu &obj)
         {
@@ -41,7 +43,7 @@ namespace ssp4cpp
 
             return os;
         }
-        
+
         std::string to_string()
         {
             return common::str::stream_to_str(*this);
