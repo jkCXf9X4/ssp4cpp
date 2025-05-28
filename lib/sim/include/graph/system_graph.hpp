@@ -16,15 +16,13 @@ namespace ssp4cpp::sim::graph
 
     inline auto log = common::Logger("sim::graph", common::LogLevel::debug);
 
-    vector<common::graph::Node*> create_system_graph(Ssp &ssp)
+    vector<common::graph::Node*> create_system_graph(Ssp &ssp, map<string, Fmu*> &fmu_map)
     {
-        auto fmus = ssp4cpp::ssp::ext::create_fmu_map(ssp);
-
         map<string, common::graph::Node*> models;
-        for (auto &[str, fmu] : fmus)
+        for (auto &[str, fmu] : fmu_map)
         {
             // ownership of fmu should be decided
-            models[str] = new Model(str, &fmu);
+            models[str] = new Model(str, fmu);
         }
 
         auto fmu_connections = ssp1::ext::elements::get_fmu_connections(ssp.ssd);

@@ -33,7 +33,9 @@ class Simulator
 {
 public:
     common::Logger log = Logger("Simulator", LogLevel::debug);
+    
     unique_ptr<Ssp> ssp;
+    map<string, Fmu*> fmu_map;
 
     common::json::Json model_props;
 
@@ -46,11 +48,12 @@ public:
     {
         ssp = make_unique<ssp4cpp::Ssp>(ssp_path);
         log.debug("SSP: {}", ssp->to_string());
-
+        
         model_props = json::parse_json_file(props_path);
         log.debug("Extra properties:\n{}\n", json::to_string(model_props));
-
-        system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp);
+        
+        fmu_map = ssp4cpp::ssp::ext::create_fmu_map(*ssp);
+        system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map);
         log.info("System graph DOT \n{}", graph::Node::to_dot(system_graph));
 
         strong_system_graph = graph::strongly_connected_components(system_graph);

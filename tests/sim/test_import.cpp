@@ -44,11 +44,11 @@ TEST_CASE("SSP Import", "[SSP]") {
     {
         // log.debug("Resource: {}", resource->name.value_or("null"));
 
-        auto fmu = ssp4cpp::Fmu(ssp.dir / resource->source);
+        auto fmu = new ssp4cpp::Fmu(ssp.dir / resource->source);
         auto p = pair(resource->name.value_or("null"), fmu);
 
         // If these changes, evaluate if correct
-        save_string("./tests/references/fmu_" + resource->name.value_or("null") + ".txt", fmu.md.to_string());
+        save_string("./tests/references/fmu_" + resource->name.value_or("null") + ".txt", fmu->md.to_string());
     }
 
     std::cout << "Parsing complete\n";

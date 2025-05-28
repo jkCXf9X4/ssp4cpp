@@ -1,5 +1,7 @@
 #pragma once
 
+#include "zip.hpp"
+#include "archive.hpp"
 #include "common_string.hpp"
 #include "common_log.hpp"
 
@@ -21,25 +23,17 @@ namespace ssp4cpp
 {
     using namespace common;
 
-    class Ssp
+    class Ssp : public Archive
     {
     public:
-        Logger log = Logger("Ssp.Ssp", LogLevel::debug);
-        bool using_tmp_dir = false;
-        path original_file;
-        path dir;
         ssp1::ssd::SystemStructureDescription ssd;
 
-        Ssp(const path &file);
-        
-
-        Ssp() = delete;
-        // Object is not copyable, 
-        // this would create uncertainty of who own any file references
-        Ssp(Ssp& obj) = delete;
-        Ssp &operator=(const Ssp &other) = delete;
-
-        ~Ssp();
+        Ssp(const path &file)
+            : Archive(Logger("Ssp", LogLevel::debug), file, "ssp_")
+        {
+            ssd = parse_system_structure((dir / "SystemStructure.ssd").string());
+            log.info("SSP Imported");
+        }
 
         friend ostream &operator<<(ostream &os, const Ssp &obj)
         {

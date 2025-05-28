@@ -19,40 +19,6 @@ namespace ssp4cpp
 {
     using namespace common;
 
-    Ssp::Ssp(const path &file)
-    {
-        original_file = file;
-        log.info("Importing SSP: {}", file.string());
-
-        if (fs::is_regular_file(file))
-        {
-            dir = common::zip_ns::unzip_to_temp_dir(file.string(), "ssp_");
-            using_tmp_dir = true;
-        }
-        else if (fs::is_directory(file))
-        {
-            dir = file;
-            using_tmp_dir = false;
-        }
-        else
-        {
-            throw runtime_error("Fmu file is not a regular file or directory: " + file.string());
-        }
-
-        ssd = parse_system_structure(dir.string() + "/SystemStructure.ssd");
-
-        log.info("SSP Imported");
-    }
-
-    Ssp::~Ssp()
-    {
-        log.debug("Destructor called for ssp {}", original_file.string());
-        if (using_tmp_dir)
-        {
-            fs::remove_all(dir);
-        }
-    }
-
     ssp1::ssd::SystemStructureDescription Ssp::parse_system_structure(const string &fileName)
     {
         pugi::xml_document doc;

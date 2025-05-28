@@ -1,5 +1,6 @@
 #pragma once
 
+#include "archive.hpp"
 #include "FMI2_modelDescription.hpp"
 #include "common_log.hpp"
 
@@ -17,21 +18,16 @@ namespace ssp4cpp
 
     using namespace common;
 
-    class Fmu
+    class Fmu : public Archive
     {
     public:
-        Logger log = Logger("fmi2.Fmu", LogLevel::debug);
-        bool using_tmp_dir = false;
-        path original_file;
-        path dir;
         fmi2::md::fmi2ModelDescription md;
 
-        Fmu() {}
-        Fmu(const path &file);
-
-        ~Fmu();
-
-        // Fmu &operator=(const Fmu &other);
+        Fmu(const path &file)
+            : Archive(Logger("Fmu", LogLevel::debug) , file, "fmi_")
+        {
+            md = parse_model_description((dir / "modelDescription.xml").string());
+        }
 
         friend ostream &operator<<(ostream &os, const Fmu &obj)
         {
