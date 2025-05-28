@@ -113,10 +113,10 @@ namespace ssp4cpp::common::graph
         std::string to_dot() const
         {
             auto nodes = this->all_nodes();
-            return Node::to_dot_s(nodes);
+            return Node::to_dot(nodes);
         }
         
-        static std::string to_dot_s(const vector<Node*> &nodes)
+        static std::string to_dot(const vector<Node*> &nodes)
         {
             std::stringstream ss;
             ss << "digraph{" << std::endl;

@@ -18,6 +18,11 @@ namespace ssp4cpp
 {
     using namespace common;
 
+    Ssp::Ssp()
+    {
+        using_tmp_dir = false;
+    }
+
     Ssp::Ssp(const path &file) : original_file(file)
     {
         log = Logger("Ssp.Ssp", LogLevel::info);
@@ -46,6 +51,7 @@ namespace ssp4cpp
 
     Ssp::~Ssp()
     {
+        log.debug("Destructor called");
         if (using_tmp_dir)
         {
             fs::remove_all(dir);

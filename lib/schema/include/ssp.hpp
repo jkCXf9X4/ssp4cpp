@@ -29,6 +29,7 @@ namespace ssp4cpp
         ssp1::ssd::SystemStructureDescription ssd;
         common::Logger log;
 
+        Ssp();
         Ssp(const path &file);
 
         ~Ssp();
