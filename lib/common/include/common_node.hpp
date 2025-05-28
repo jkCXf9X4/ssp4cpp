@@ -110,22 +110,27 @@ namespace ssp4cpp::common::graph
             return common::str::stream_to_str(*this);
         }
 
-        std::string to_dot()
+        std::string to_dot() const
+        {
+            auto nodes = this->all_nodes();
+            return Node::to_dot_s(nodes);
+        }
+        
+        static std::string to_dot_s(const vector<Node*> &nodes)
         {
             std::stringstream ss;
             ss << "digraph{" << std::endl;
             
-            auto all_nodes = this->all_nodes();
-            
-            for (auto &node : all_nodes)
+            for (auto &node : nodes)
             {
                 for (Node *c : node->children)
                 {
-                    ss << node->name << "->" << c->name << std::endl;
+                    ss << '"' << node->name << "\" -> \"" << c->name << "\"\n";
                 }
             }
             ss << "}" << std::endl;
             return ss.str();
         }
+
     };
 }

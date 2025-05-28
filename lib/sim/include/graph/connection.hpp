@@ -5,6 +5,7 @@
 #include "common_string.hpp"
 
 #include <string>
+#include <vector>
 
 namespace ssp4cpp::sim::graph
 {
