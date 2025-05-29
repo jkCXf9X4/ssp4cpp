@@ -43,7 +43,7 @@ namespace ssp4cpp::sim::graph
             for (auto &[index, connector, component] : connectors)
             {
                 auto c = new Connector(component->name.value(), connector);
-                log.debug("[{}] New Connector: {}", __func__, c->name);
+                log.trace("[{}] New Connector: {}", __func__, c->name);
                 items[c->name] = c;
             }
         }
@@ -54,10 +54,11 @@ namespace ssp4cpp::sim::graph
     map<string, Connection *> get_new_connections(ssp4cpp::Ssp &ssp)
     {
         log.ext_trace("[{}] init", __func__);
-        map<string, Connection*> items;     
+        map<string, Connection *> items;
         for (auto &connection : ssp.ssd.System.Connections.value().Connections)
         {
             auto c = new Connection(&connection);
+            log.trace("[{}] New Connection: {}", __func__, c->name);
             items[c->name] = c;
         }
         log.ext_trace("[{}] exit, Total connections created: {}", __func__, items.size());
@@ -73,7 +74,7 @@ namespace ssp4cpp::sim::graph
 
         for (auto &[source, target] : fmu_connections)
         {
-            log.debug("Connection: {} -> {}", source, target);
+            log.debug("[{}] Connecting: {} -> {}", __func__, source, target);
             models[source]->add_child(models[target]);
         }
 
@@ -90,13 +91,30 @@ namespace ssp4cpp::sim::graph
         auto connectors = get_new_connectors(ssp);
         auto connections = get_new_connections(ssp);
 
-        log.debug("[{}] Start linking", __func__);
-        for (auto &[name, connection] : connections)
+        log.debug("[{}] Start Connecting", __func__);
+        for (auto &[name, c] : connections)
         {
-            log.debug("[{}] Linking {}", __func__, connection->name);
-        }
+            log.debug("[{}] Connecting {}", __func__, c->name);
 
-        vector<Node *> n;
+            auto source_model = models[c->start_component];
+            auto target_model = models[c->end_component];
+
+            auto source_connector = connectors[Connector::create_name(c->start_component, c->start_connector)];
+            auto target_connector = connectors[Connector::create_name(c->end_component, c->end_connector)];
+
+            auto connection_name = Connection::create_name(
+                c->start_component, c->start_connector,
+                c->end_component, c->end_connector);
+            auto connection = connections[connection_name];
+
+            source_model->add_child(source_connector);
+            source_connector->add_child(connection);
+            connection->add_child(target_connector);
+            target_connector->add_child(target_model);
+        }
+        
+        auto m = ssp4cpp::common::map_ns::map_to_value_vector_copy(models);
+        auto n = Model::cast_to_parent_ptrs(m);
         log.ext_trace("[{}] exit", __func__);
         return n;
 
