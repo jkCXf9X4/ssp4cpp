@@ -22,14 +22,13 @@ namespace ssp4cpp::common::map_ns
     }
 
     template <typename K, typename V>
-    vector<V*> map_unique_to_ref(const map<K, unique_ptr<V>> &m)
+    map<K,V*> map_unique_to_ref(const map<K, unique_ptr<V>> &m)
     {
-        vector<V*> values;
-        values.reserve(m.size());
+        map<K,V*> items;
         for (auto &[key, value] : m)
         {
-            values.push_back(value.get());
+            items[key] = value.get();
         }
-        return values;
+        return items;
     }
 }

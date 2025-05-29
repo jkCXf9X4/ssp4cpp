@@ -7,6 +7,7 @@
 #include "common_node.hpp"
 #include "common_json.hpp"
 #include "common_node.hpp"
+#include "common_map.hpp"
 #include "tarjan.hpp"
 
 #include "SSP1_SystemStructureDescription_Ext.hpp"
@@ -54,10 +55,7 @@ public:
         log.debug("Extra properties:\n{}\n", json::to_string(model_props));
 
         fmu_map = ssp4cpp::ssp::ext::create_fmu_map(*ssp);
-        for (auto &[key, value] : fmu_map)
-        {
-            fmu_map_ref[key] = value.get();
-        }
+        fmu_map_ref = map_ns::map_unique_to_ref(fmu_map);
 
         // system graph
         system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map_ref);
@@ -66,10 +64,13 @@ public:
         strong_system_graph = graph::strongly_connected_components(system_graph);
         log.info("{}", graph::ssc_to_string(strong_system_graph));
         
-        // create detailed graph
+        // create connection graph
         
         auto connection_graph = ssp4cpp::sim::graph::create_connection_graph(*ssp, fmu_map_ref);
-        log.info("Connections graph DOT \n{}", graph::Node::to_dot(system_graph));
+        log.info("Connections graph DOT \n{}", graph::Node::to_dot(connection_graph));
+
+        auto strong_connection_graph = graph::strongly_connected_components(connection_graph);
+        log.info("{}", graph::ssc_to_string(strong_connection_graph));
 
         // create all models
 
