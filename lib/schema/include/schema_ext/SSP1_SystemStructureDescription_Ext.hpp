@@ -34,7 +34,7 @@ namespace ssp4cpp::ssp1::ext
             Elements &elements,
             std::initializer_list<fmi2::md::Causality> causalities);
 
-        // Get connections between fmu
+        // Get connections between fmus
         // return a set of <source_fmu, target_fmu> strings
         inline set<pair<string, string>> get_fmu_connections(const ssp1::ssd::SystemStructureDescription &ssd)
         {
@@ -46,6 +46,8 @@ namespace ssp4cpp::ssp1::ext
             }
             return fmu_connections;
         }
+
+        
 
     }
 

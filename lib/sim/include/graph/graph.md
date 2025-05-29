@@ -12,11 +12,11 @@ this would enable switching the "fmu" to the internal dependencies later
 
 
 
-# Overview
+# System graph
 
 There is a overview graph showing only the connections between the FMUs
 
-# Detailed 
+# Detailed graph
 
 There is also a detailed graph showing all connectors
 

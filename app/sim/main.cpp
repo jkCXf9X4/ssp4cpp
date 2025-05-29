@@ -33,7 +33,7 @@ class Simulator
 {
 public:
     common::Logger log = Logger("Simulator", LogLevel::debug);
-    
+
     unique_ptr<Ssp> ssp;
     map<string, Fmu*> fmu_map;
 
@@ -48,20 +48,38 @@ public:
     {
         ssp = make_unique<ssp4cpp::Ssp>(ssp_path);
         log.debug("SSP: {}", ssp->to_string());
-        
+
         model_props = json::parse_json_file(props_path);
         log.debug("Extra properties:\n{}\n", json::to_string(model_props));
-        
+
         fmu_map = ssp4cpp::ssp::ext::create_fmu_map(*ssp);
+
+        // system graph
         system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map);
         log.info("System graph DOT \n{}", graph::Node::to_dot(system_graph));
 
         strong_system_graph = graph::strongly_connected_components(system_graph);
         log.info("{}", graph::ssc_to_string(strong_system_graph));
+
+        // create detailed graph
+
+        // create all models
+
+        // create all connectors
+
+
+
+
     }
+
     ~Simulator()
     {
-        // when this is destroyed the application will end, no need to free
+        // delete manual file resources
+        for (auto &[key, fmu] : fmu_map)
+        {
+            delete fmu;
+        }
+        // when this is destroyed the application will end, no need to free memory resources
     }
 
     void execute()

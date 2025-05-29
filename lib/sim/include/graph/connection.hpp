@@ -24,6 +24,11 @@ namespace ssp4cpp::sim::graph
             this->fmu = fmu;
         }
 
+        ~Model()
+        {
+
+        }
+
         friend ostream &operator<<(ostream &os, const Model &obj)
         {
             os << "Model { \n"
@@ -43,17 +48,21 @@ namespace ssp4cpp::sim::graph
     {
         // get/set function pointer
         Model *model;
-        std::string variable_name;
         std::string connector_type;
 
         Connector()
         {
         }
 
+        Connector(string name, Node* model) : Node(name)
+        {
+            this->model = model;
+        }
+
         friend ostream &operator<<(ostream &os, const Connector &obj)
         {
             os << "Connector { \n"
-               << "variable_name: " << obj.variable_name << endl
+               << "variable_name: " << obj.name << endl
                << "connector_type: " << obj.connector_type << endl
                << " }" << endl;
 
