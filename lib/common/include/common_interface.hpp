@@ -21,15 +21,20 @@ namespace ssp4cpp::common::interfaces
     {
     };
 
-    class IXmlNode : public IWritable
-    {
-    };
-
     class IEnum : public IReadWrite
     {
     };
 
     class IList : public IReadWrite
+    {
+        virtual void from_string(const std::string &str, const char del) = 0;
+    };
+
+    class IXmlNode : public IWritable
+    {
+    };
+
+    class IXmlNodeList : public IList
     {
     };
 }

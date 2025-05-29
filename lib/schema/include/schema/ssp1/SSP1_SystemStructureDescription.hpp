@@ -5,7 +5,7 @@
 #pragma once
 
 #include "common_interface.hpp"
-#include "common_list.hpp"
+#include "common_xml.hpp"
 
 #include "FMI2_Enums.hpp"
 #include "SSP1_Enums.hpp"
@@ -18,7 +18,7 @@
 namespace ssp4cpp::ssp1::ssd
 {
     using namespace ssp4cpp::common::interfaces;
-    using namespace ssp4cpp::common::list;
+    using namespace ssp4cpp::common::xml;
     using namespace std;
 
     class TSystem;

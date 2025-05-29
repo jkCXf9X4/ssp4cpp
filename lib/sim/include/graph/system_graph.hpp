@@ -1,4 +1,4 @@
-#include "common_list.hpp"
+#include "common_map.hpp"
 
 #include "connection.hpp"
 #include "ssp_ext.hpp"
@@ -39,7 +39,7 @@ namespace ssp4cpp::sim::graph
             models[source]->add_child(models[target]);
         }
 
-        return ssp4cpp::common::list::map_to_value_vector_copy(models);
+        return ssp4cpp::common::map_ns::map_to_value_vector_copy(models);
 
     }
 
@@ -47,7 +47,7 @@ namespace ssp4cpp::sim::graph
     {
         vector<Node*> nodes;
         return nodes;
-        // auto models = get_new_models(fmu_map);
+        auto models = get_new_models(fmu_map);
 
         // map<string, Node*> connectors;     
         // if (ssp.ssd.System.Elements.has_value())

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common_interface.hpp"
-#include "common_list.hpp"
+#include "common_xml.hpp"
 
 
 #include <string>
@@ -12,7 +12,7 @@
 using namespace std;
 
 using namespace ssp4cpp::common::interfaces;
-using namespace ssp4cpp::common::list;
+using namespace ssp4cpp::common::xml;
 
 
 namespace ssp4cpp::fmi2::md
