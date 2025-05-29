@@ -29,13 +29,17 @@ namespace ssp4cpp::common::graph
 
         void add_child(Node *node)
         {
-            children.push_back(node);
-            node->add_parent(this);
+            if (!contains_child(node)) {
+                children.push_back(node);
+                node->add_parent(this);
+            }
         }
 
         void add_parent(Node *node)
         {
-            parents.push_back(node);
+            if (!contains_parent(node)) {
+                parents.push_back(node);
+            }
         }
 
         bool contains_child(Node *node)

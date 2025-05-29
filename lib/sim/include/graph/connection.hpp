@@ -101,7 +101,7 @@ namespace ssp4cpp::sim::graph
 
         Connection() {}
 
-        Connection(ssp4cpp::ssp1::ssd::Connection *connection) : SimNode(name)
+        Connection(ssp4cpp::ssp1::ssd::Connection *connection)
         {
             this->connection = connection;
             start_component = connection->startElement.value();
