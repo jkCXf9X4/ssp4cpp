@@ -62,11 +62,14 @@ public:
         // system graph
         system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map_ref);
         log.info("System graph DOT \n{}", graph::Node::to_dot(system_graph));
-
+        
         strong_system_graph = graph::strongly_connected_components(system_graph);
         log.info("{}", graph::ssc_to_string(strong_system_graph));
-
+        
         // create detailed graph
+        
+        auto connection_graph = ssp4cpp::sim::graph::create_connection_graph(*ssp, fmu_map_ref);
+        log.info("Connections graph DOT \n{}", graph::Node::to_dot(system_graph));
 
         // create all models
 

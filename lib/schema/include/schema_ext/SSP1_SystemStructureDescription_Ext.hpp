@@ -46,9 +46,6 @@ namespace ssp4cpp::ssp1::ext
             }
             return fmu_connections;
         }
-
-        
-
     }
 
 }

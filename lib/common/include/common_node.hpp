@@ -17,11 +17,13 @@ namespace ssp4cpp::common::graph
         std::vector<Node *> children = {};
         std::vector<Node *> parents = {};
 
-        Node(){
+        Node()
+        {
             this->name = "";
         }
 
-        Node(std::string name) {
+        Node(std::string name)
+        {
             this->name = name;
         }
 
@@ -110,17 +112,24 @@ namespace ssp4cpp::common::graph
             return common::str::stream_to_str(*this);
         }
 
+        template <typename T>
+        static std::vector<Node *> cast_to_parent_ptrs(const std::vector<T *> &node)
+        {
+            std::vector<graph::Node *> node_ptrs(node.begin(), node.end());
+            return node_ptrs;
+        }
+
         std::string to_dot() const
         {
             auto nodes = this->all_nodes();
             return Node::to_dot(nodes);
         }
-        
-        static std::string to_dot(const vector<Node*> &nodes)
+
+        static std::string to_dot(const vector<Node *> &nodes)
         {
             std::stringstream ss;
             ss << "digraph{" << std::endl;
-            
+
             for (auto &node : nodes)
             {
                 for (Node *c : node->children)
@@ -131,6 +140,5 @@ namespace ssp4cpp::common::graph
             ss << "}" << std::endl;
             return ss.str();
         }
-
     };
 }

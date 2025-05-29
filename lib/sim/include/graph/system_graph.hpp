@@ -2,7 +2,6 @@
 
 #include "connection.hpp"
 #include "ssp_ext.hpp"
-#include "ssp_ext.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -18,9 +17,9 @@ namespace ssp4cpp::sim::graph
 
     using Node = common::graph::Node;
 
-    map<string, Node*> get_new_models(map<string, Fmu*> &fmu_map)
+    map<string, Model*> get_new_models(map<string, Fmu*> &fmu_map)
     {
-        map<string, Node*> models;
+        map<string, Model*> models;
         for (auto &[str, fmu] : fmu_map)
         {
             models[str] = new Model(str, fmu);
@@ -28,52 +27,71 @@ namespace ssp4cpp::sim::graph
         return models;
     }
 
+    map<string, Connector*> get_new_connectors(ssp4cpp::Ssp &ssp)
+    {
+        map<string, Connector*> items;     
+        if (ssp.ssd.System.Elements.has_value())
+        {
+            auto connectors = ssp1::ext::elements::get_connectors(
+                ssp.ssd.System.Elements.value(),
+                {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
+
+            for (auto &[index, connector, component] : connectors)
+            {
+                auto c = new Connector(component->name.value(), connector);
+                items[c->name] = c ;
+            }
+        }
+        return items;
+    }
+    
+    map<string, Connection*> get_new_connections(ssp4cpp::Ssp &ssp)
+    {
+        map<string, Connection*> items;     
+        for (auto &connection : ssp.ssd.System.Connections.value().Connections)
+        {
+            auto c = new Connection(&connection);
+            items[c->name] = c;
+        }
+        return items;
+    }
+
     vector<Node*> create_system_graph(Ssp &ssp, map<string, Fmu*> &fmu_map)
     {
         auto models = get_new_models(fmu_map);
 
         auto fmu_connections = ssp1::ext::elements::get_fmu_connections(ssp.ssd);
+
         for (auto &[source, target] : fmu_connections)
         {
             log.debug("Connection: {} -> {}", source, target);
             models[source]->add_child(models[target]);
         }
 
-        return ssp4cpp::common::map_ns::map_to_value_vector_copy(models);
-
+        auto m = ssp4cpp::common::map_ns::map_to_value_vector_copy(models);
+        return Model::cast_to_parent_ptrs(m);
     }
 
-    vector<Node*> create_connection_graph(Ssp &ssp, map<string, Fmu*> &fmu_map)
+    vector<Model*> create_connection_graph(Ssp &ssp, map<string, Fmu*> &fmu_map)
     {
-        vector<Node*> nodes;
-        return nodes;
+        log.debug("[{}] init", __func__);
+        log.debug("[{}] Get models", __func__);
         auto models = get_new_models(fmu_map);
+        log.debug("[{}] Get connectors", __func__);
+        auto connectors = get_new_connectors(ssp);
+        log.debug("[{}] Get connections", __func__);
+        auto connections = get_new_connections(ssp);
+        
+        log.debug("[{}] Start linking", __func__);
+        for (auto &[name, connection] : connections)
+        {
+            log.debug("[{}] Linking {}", __func__ , connection->name);
 
-        // map<string, Node*> connectors;     
-        // if (ssp.ssd.System.Elements.has_value())
-        // {
-        //     auto connectors = ssp1::ext::elements::get_connectors(
-        //         ssp.ssd.System.Elements.value(),
-        //         {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
+        }
 
-        //     for (auto &[index, connector, component] : connectors)
-        //     {
-        //         auto name = component->name.value() + "." + connector->name;
-        //         connectors[name] = new Connector(connector->name, models[component->name.value()]);
+        vector<Model*> n;
+        return n;
 
-        //     }
-        // }
-
-
-        // for (auto connection : ssp.ssd.System.Connections.value().Connections)
-        // {
-        //     auto start = connection.startElement.value() + "." + connection.startConnector;
-        //     auto end = connection.endElement.value() + "." + connection.endConnector;
-
-        //     add_edge(connector_str_int_map[start], connector_str_int_map[end], g);
-        //     // cout << start << ": " << connector_str_int_map[start] << " -> " << end << ": " << connector_str_int_map[end] << endl;
-        // }
-        // return ssp4cpp::common::list::map_to_value_vector(models);
-
+        // all connectors that are not used are leaking memory, for small models this is okey - evaluate for larger models
     }
 }
