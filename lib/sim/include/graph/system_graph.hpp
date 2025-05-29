@@ -39,28 +39,30 @@ namespace ssp4cpp::sim::graph
             models[source]->add_child(models[target]);
         }
 
-        return ssp4cpp::common::list::map_to_value_vector(models);
+        return ssp4cpp::common::list::map_to_value_vector_copy(models);
 
     }
 
     vector<Node*> create_connection_graph(Ssp &ssp, map<string, Fmu*> &fmu_map)
     {
-        auto models = get_new_models(fmu_map);
+        vector<Node*> nodes;
+        return nodes;
+        // auto models = get_new_models(fmu_map);
 
-        map<string, Node*> connectors;     
-        if (ssp.ssd.System.Elements.has_value())
-        {
-            auto connectors = ssp1::ext::elements::get_connectors(
-                ssp.ssd.System.Elements.value(),
-                {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
+        // map<string, Node*> connectors;     
+        // if (ssp.ssd.System.Elements.has_value())
+        // {
+        //     auto connectors = ssp1::ext::elements::get_connectors(
+        //         ssp.ssd.System.Elements.value(),
+        //         {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
 
-            for (auto &[index, connector, component] : connectors)
-            {
-                auto name = component->name.value() + "." + connector->name;
-                connectors[name] = new Connector(connector->name, models[component->name.value()]);
+        //     for (auto &[index, connector, component] : connectors)
+        //     {
+        //         auto name = component->name.value() + "." + connector->name;
+        //         connectors[name] = new Connector(connector->name, models[component->name.value()]);
 
-            }
-        }
+        //     }
+        // }
 
 
         // for (auto connection : ssp.ssd.System.Connections.value().Connections)

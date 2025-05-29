@@ -47,7 +47,7 @@ namespace ssp4cpp::sim::graph
     class Connector : public ssp4cpp::common::graph::Node
     {
         // get/set function pointer
-        Model *model;
+        Node *model;
         std::string connector_type;
 
         Connector()

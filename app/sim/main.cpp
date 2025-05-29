@@ -35,7 +35,8 @@ public:
     common::Logger log = Logger("Simulator", LogLevel::debug);
 
     unique_ptr<Ssp> ssp;
-    map<string, Fmu*> fmu_map;
+    map<string, unique_ptr<Fmu>> fmu_map; // owner
+    map<string, Fmu*> fmu_map_ref;
 
     common::json::Json model_props;
 
@@ -53,9 +54,13 @@ public:
         log.debug("Extra properties:\n{}\n", json::to_string(model_props));
 
         fmu_map = ssp4cpp::ssp::ext::create_fmu_map(*ssp);
+        for (auto &[key, value] : fmu_map)
+        {
+            fmu_map_ref[key] = value.get();
+        }
 
         // system graph
-        system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map);
+        system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map_ref);
         log.info("System graph DOT \n{}", graph::Node::to_dot(system_graph));
 
         strong_system_graph = graph::strongly_connected_components(system_graph);
@@ -74,11 +79,7 @@ public:
 
     ~Simulator()
     {
-        // delete manual file resources
-        for (auto &[key, fmu] : fmu_map)
-        {
-            delete fmu;
-        }
+        // unique_ptr will automatically clean up FMUs and SSP
         // when this is destroyed the application will end, no need to free memory resources
     }
 
