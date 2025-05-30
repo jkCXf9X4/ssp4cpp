@@ -117,4 +117,33 @@ namespace ssp4cpp::sim::graph
             return start_com + "." + start_con + "->" +  end_com + "." + end_con;
         }
     };
+
+    // intra model connections
+    class ModelConnection : public SimNode
+    {
+    public:
+        uint64_t delay = 0;
+
+        string component;
+
+        string start_connector;
+        string end_connector;
+
+        ModelConnection() {}
+
+        ModelConnection(string component, string start_component, string end_component)
+        {
+            this->component = component;
+            this->start_connector = start_component;
+            this->end_connector = end_component;
+            
+            this->name = Connection::create_name(component, start_connector, end_connector);
+        }
+
+        static std::string create_name(string &component, string &start_con, string &end_con)
+        {
+            return component + "." + start_con + "->" +  component + "." + end_con;
+        }
+    };
+
 }
