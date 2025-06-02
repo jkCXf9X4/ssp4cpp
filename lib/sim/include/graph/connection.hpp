@@ -52,6 +52,7 @@ namespace ssp4cpp::sim::graph
     public:
         string component_name;
         string connector_name;
+        uint64_t time = 0;
 
         ssp4cpp::ssp1::ssd::Connector *connector;
 
@@ -84,13 +85,13 @@ namespace ssp4cpp::sim::graph
         {
             return component_name + "." + connector_name;
         }
-
     };
 
     class Connection : public SimNode
     {
     public:
         uint64_t delay = 0;
+        uint64_t time = 0;
 
         string start_component;
         string start_connector;
@@ -108,42 +109,88 @@ namespace ssp4cpp::sim::graph
             start_connector = connection->startConnector;
             end_component = connection->endElement.value();
             end_connector = connection->endConnector;
-            
+
             this->name = Connection::create_name(start_component, start_connector, end_component, end_connector);
         }
 
         static std::string create_name(string &start_com, string &start_con, string &end_com, string &end_con)
         {
-            return start_com + "." + start_con + "->" +  end_com + "." + end_con;
+            return start_com + "." + start_con + "->" + end_com + "." + end_con;
+        }
+
+        std::string get_source_connector_name()
+        {
+            return Connector::create_name(start_component, start_connector);
+        }
+
+        std::string get_target_connector_name()
+        {
+            return Connector::create_name(end_component, end_connector);
         }
     };
+
 
     // intra model connections
-    class ModelConnection : public SimNode
+    class ModelVariable : public SimNode
     {
     public:
-        uint64_t delay = 0;
-
         string component;
+        string variable_name;
 
-        string start_connector;
-        string end_connector;
+        ModelVariable() {}
 
-        ModelConnection() {}
-
-        ModelConnection(string component, string start_component, string end_component)
+        ModelVariable(string component, string variable_name)
         {
             this->component = component;
-            this->start_connector = start_component;
-            this->end_connector = end_component;
-            
-            this->name = Connection::create_name(component, start_connector, end_connector);
+            this->variable_name = variable_name;
+
+            this->name = Connector::create_name(component, variable_name);
         }
 
-        static std::string create_name(string &component, string &start_con, string &end_con)
+        std::string get_connector_name()
         {
-            return component + "." + start_con + "->" +  component + "." + end_con;
+            return Connector::create_name(component, variable_name);
         }
     };
+
+    // // intra model connections
+    // class DependencyConnection : public SimNode
+    // {
+    // public:
+    //     uint64_t delay = 0;
+    //     uint64_t time = 0;
+
+    //     string component;
+
+    //     string start_connector;
+    //     string end_connector;
+
+    //     DependencyConnection() {}
+
+    //     DependencyConnection(string component, string start_connector, string end_connector)
+    //     {
+    //         this->component = component;
+    //         this->start_connector = start_connector;
+    //         this->end_connector = end_connector;
+
+    //         this->name = DependencyConnection::create_name(component, start_connector, end_connector);
+    //     }
+
+    //     static std::string create_name(string &component, string &start_con, string &end_con)
+    //     {
+    //         return component + "(" + start_con + "->" + end_con + ")";
+    //     }
+
+    //     std::string get_source_connector_name()
+    //     {
+    //         return Connector::create_name(component, start_connector);
+    //     }
+
+    //     std::string get_target_connector_name()
+    //     {
+    //         return Connector::create_name(component, end_connector);
+    //     }
+
+    // };
 
 }

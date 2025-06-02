@@ -161,3 +161,9 @@ digraph Test1 {
     m3 -> m4           [label="d = 0.002"];
     m4 -> m5           [label="d = 0.002"];
 }
+
+# Connections
+
+One to many is ok
+many to one is not reasonable
+Should therefore be ok to store connection delay in target connector
