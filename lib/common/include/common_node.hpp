@@ -1,5 +1,7 @@
 #pragma once
 
+#include "common_string.hpp"
+
 #include <vector>
 #include <algorithm>
 #include <map>
@@ -54,12 +56,17 @@ namespace ssp4cpp::common::graph
 
         bool has_child()
         {
-            return children.empty() != true;
+            return children.empty() == false;
         }
 
         bool has_parent()
         {
-            return parents.empty() != true;
+            return parents.empty() == false;
+        }
+
+        bool is_orphan()
+        {
+            return has_child() == false && has_parent() == false;
         }
 
         int nr_children()
@@ -82,6 +89,13 @@ namespace ssp4cpp::common::graph
 
             return os;
         }
+
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
+        }
+
+
 
         /** Return every node reachable through either child- or parent-links. */
         std::vector<Node *> all_nodes() const
@@ -111,16 +125,25 @@ namespace ssp4cpp::common::graph
             return result;
         }
 
-        std::string to_str()
-        {
-            return common::str::stream_to_str(*this);
-        }
 
         template <typename T>
         static std::vector<Node *> cast_to_parent_ptrs(const std::vector<T *> &node)
         {
             std::vector<graph::Node *> node_ptrs(node.begin(), node.end());
             return node_ptrs;
+        }
+
+        static std::vector<Node *> get_ancestors(const std::vector<Node *> &nodes)
+        {
+            vector<Node*> out;
+            for(auto &n: nodes)
+            {
+                if (n->has_parent() == false)
+                {
+                    out.push_back(n);
+                }
+            }
+            return out;
         }
 
         std::string to_dot() const

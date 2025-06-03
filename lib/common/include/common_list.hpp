@@ -6,6 +6,7 @@
 namespace ssp4cpp::common::list
 {
     using namespace std;
+    
     template <typename T, typename S>
     bool is_in_list(T value, S list)
     {

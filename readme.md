@@ -33,7 +33,7 @@ cmake --build build && ./build/app/sim/sim_app
 
 ```
 
-
+run tests
 ```
 cmake --build build && ./build/tests/test_1
 
@@ -42,9 +42,3 @@ cmake --build build && ./build/tests/test_1
 # Credits
 
 Heavily inspired by FMI4cpp https://github.com/NTNU-IHB/FMI4cpp, credit where credit is due
-
-
-create venv
-
-python3 -m venv .venv
-source ./.venv/bin/activate

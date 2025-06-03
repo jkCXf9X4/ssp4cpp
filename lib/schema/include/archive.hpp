@@ -2,6 +2,7 @@
 
 #include "zip.hpp"
 #include "common_log.hpp"
+
 #include <filesystem>
 #include <string>
 
@@ -30,9 +31,8 @@ namespace ssp4cpp
         Archive &operator=(const Archive &) = delete;
         Archive &operator=(Archive &&other) = delete;
 
-        Archive(Logger log, const path &file, const std::string &tmp_prefix)
-            : log(log),
-              original_file(file)
+        Archive(const path &file, const std::string &tmp_prefix)
+            : original_file(file)
         {
 
             log.info("Importing archive: {}", file.string());

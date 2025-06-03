@@ -7,6 +7,7 @@
 #include <chrono>
 #include <filesystem>
 #include <stdexcept>
+#include <mutex>
 
 
 namespace ssp4cpp::common
@@ -29,6 +30,8 @@ namespace ssp4cpp::common
     public:
         static inline bool enabled = false;
         static inline LogLevel static_level = LogLevel::debug;
+        static inline std::mutex print_mutex;
+        
         std::string name;
         LogLevel level;
 
@@ -93,6 +96,11 @@ namespace ssp4cpp::common
             log<LogLevel::fatal>(s, std::forward<Args>(args)...);
         }
 
+        void new_line()
+        {
+            std::cout << std::endl;
+        }
+
         template <LogLevel Level, typename... Args>
         void log(std::format_string<Args...> s, Args &&...args)
         {
@@ -100,8 +108,10 @@ namespace ssp4cpp::common
             {
                 const auto time = std::chrono::system_clock::now();
                 auto str = std::format(s, std::forward<Args>(args)...);
-
-                std::cout << std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str) << std::endl ;
+                {
+                    std::unique_lock<std::mutex> lock(Logger::print_mutex);
+                    std::cout << std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str) << std::endl ;
+                }
             }
         }
 

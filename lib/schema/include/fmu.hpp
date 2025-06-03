@@ -23,9 +23,9 @@ namespace ssp4cpp
     public:
         fmi2::md::fmi2ModelDescription md;
 
-        Fmu(const path &file)
-            : Archive(Logger("Fmu", LogLevel::debug) , file, "fmi_")
+        Fmu(const path &file) : Archive(file, "fmi_")
         {
+            log = Logger("Fmu", LogLevel::debug);
             md = parse_model_description((dir / "modelDescription.xml").string());
         }
 

@@ -28,9 +28,9 @@ namespace ssp4cpp
     public:
         ssp1::ssd::SystemStructureDescription ssd;
 
-        Ssp(const path &file)
-            : Archive(Logger("Ssp", LogLevel::debug), file, "ssp_")
+        Ssp(const path &file) : Archive(file, "ssp_")
         {
+            log = Logger("Ssp", LogLevel::debug);
             ssd = parse_system_structure((dir / "SystemStructure.ssd").string());
             log.info("SSP Imported");
         }

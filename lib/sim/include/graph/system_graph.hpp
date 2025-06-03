@@ -1,4 +1,5 @@
 #include "common_map.hpp"
+#include "common_list.hpp"
 
 #include "connection.hpp"
 #include "ssp_ext.hpp"
@@ -85,33 +86,23 @@ namespace ssp4cpp::sim::graph
         return items;
     }
 
-    // vector<fmi2::ext::dependency::VariableDependencyCoupling> get_dependency_connections(map<string, Fmu *> &fmu_map)
-    // {
-    //     log.ext_trace("[{}] init", __func__);
-    //     vector<fmi2::ext::dependency::VariableDependencyCoupling> items;
-
-    //     for (auto [name, fmu] : fmu_map)
-    //     {
-    //         // std::cout << fmu.md.modelName << endl;
-    //         auto outputs = fmu->md.ModelStructure.Outputs;
-    //         if (outputs.has_value())
-    //         {
-
-    //             auto dependencies = ssp4cpp::fmi2::ext::dependency::get_dependencies_variables(
-    //                 outputs.value().Unknowns,
-    //                 fmu->md.ModelVariables,
-    //                 ssp4cpp::fmi2::md::DependenciesKind::dependent);
-
-    //             for (auto &dep : dependencies)
-    //             {
-    //                 items.push_back(dep);
-    //             }
-    //         }
-    //     }
-
-    //     log.ext_trace("[{}] exit, Total dependency connections created: {}", __func__, items.size());
-    //     return items;
-    // }
+    vector<Node *> remove_dangling(vector<Node *> nodes)
+    {
+        vector<Node *> out;
+        for (auto &n : nodes)
+        {
+            if (n->is_orphan())
+            {
+                log.ext_trace("[{}] Deleting {}", __func__, n->name);
+                delete n;
+            }
+            else
+            {
+                out.push_back(n);
+            }
+        }
+        return out;
+    }
 
     vector<Node *> create_system_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
     {
@@ -122,14 +113,17 @@ namespace ssp4cpp::sim::graph
 
         for (auto &[source, target] : fmu_connections)
         {
+
             log.debug("[{}] Connecting: {} -> {}", __func__, source, target);
             models[source]->add_child(models[target]);
         }
+        vector<Node *> output;
+        for (auto &[_, model] : models)
+            output.push_back(model);
+        auto o = remove_dangling(output);
 
-        auto m = ssp4cpp::common::map_ns::map_to_value_vector_copy(models);
-        auto n = Model::cast_to_parent_ptrs(m);
         log.ext_trace("[{}] exit", __func__);
-        return n;
+        return o;
     }
 
     vector<Node *> create_connection_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
@@ -156,17 +150,23 @@ namespace ssp4cpp::sim::graph
             target_connector->add_child(target_model);
         }
 
-        auto m = ssp4cpp::common::map_ns::map_to_value_vector_copy(models);
-        auto n = Model::cast_to_parent_ptrs(m);
+        vector<Node *> output;
+        for (auto &[_, model] : models)
+            output.push_back(model);
+        for (auto &[_, connector] : connectors)
+            output.push_back(connector);
+        for (auto &[_, connection] : connections)
+            output.push_back(connection);
+        auto o = remove_dangling(output);
+
         log.ext_trace("[{}] exit", __func__);
-        return n;
+        return o;
 
         // all connectors that are not used are leaking memory, for small models this is okey - evaluate for larger models
     }
 
     vector<Node *> create_feedthrough_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
     {
-
         log.ext_trace("[{}] init", __func__);
         auto models = get_new_models(fmu_map);
         auto connectors = get_new_connectors(ssp);
@@ -174,7 +174,7 @@ namespace ssp4cpp::sim::graph
 
         auto variables = get_new_model_variables(fmu_map);
 
-        log.debug("[{}] Start Connecting", __func__);
+        log.debug("[{}] Connecting fmus", __func__);
         for (auto &[name, c] : connections)
         {
             log.debug("[{}] Connecting {}", __func__, c->name);
@@ -186,9 +186,12 @@ namespace ssp4cpp::sim::graph
             c->add_child(target_connector);
         }
 
+        log.new_line();
 
         for (auto [fmu_name, fmu] : fmu_map)
         {
+            log.debug("[{}] Connecting internal dependencies, FMU:{}", __func__, fmu_name);
+
             auto outputs = fmu->md.ModelStructure.Outputs;
             if (outputs.has_value())
             {
@@ -202,34 +205,49 @@ namespace ssp4cpp::sim::graph
                 {
                     auto source_id = Connector::create_name(fmu_name, source->name);
                     auto target_id = Connector::create_name(fmu_name, target->name);
-                    SimNode* source_node;
-                    SimNode* target_node;
+                    SimNode *source_node;
+                    SimNode *target_node;
 
                     // The connections can be from connectors or variables, maybe...
                     if (connectors.contains(source_id))
                     {
                         source_node = connectors[source_id];
+                        log.debug("[{}] Source C {}", __func__, connectors[source_id]->name);
                     }
                     else
                     {
                         source_node = variables[source_id];
+                        log.debug("[{}] Source V {}", __func__, variables[source_id]->name);
                     }
 
                     if (connectors.contains(target_id))
                     {
                         target_node = connectors[target_id];
+                        log.debug("[{}] Target C {}", __func__, connectors[target_id]->name);
                     }
                     else
                     {
                         target_node = variables[target_id];
+                        log.debug("[{}] Target V {}", __func__, variables[target_id]->name);
                     }
+                    log.debug("[{}] Connecting {} -> {}", __func__, source_node->name, target_node->name);
                     source_node->add_child(target_node);
                 }
             }
         }
-        auto m = ssp4cpp::common::map_ns::map_to_value_vector_copy(models);
-        auto n = Model::cast_to_parent_ptrs(m);
+
+        vector<Node *> output;
+        for (auto &[_, model] : models)
+            output.push_back(model);
+        for (auto &[_, connector] : connectors)
+            output.push_back(connector);
+        for (auto &[_, connection] : connections)
+            output.push_back(connection);
+        for (auto &[_, variable] : variables)
+            output.push_back(variable);
+        auto o = remove_dangling(output);
+
         log.ext_trace("[{}] exit", __func__);
-        return n;
+        return o;
     }
 }

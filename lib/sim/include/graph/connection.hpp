@@ -127,8 +127,20 @@ namespace ssp4cpp::sim::graph
         {
             return Connector::create_name(end_component, end_connector);
         }
-    };
 
+        friend ostream &operator<<(ostream &os, const Connection &obj)
+        {
+            os << "Connection { \n"
+               << "name: " << obj.name << endl
+               << "start_component: " << obj.start_component << endl
+               << "start_connector: " << obj.start_connector << endl
+               << "end_component: " << obj.end_component << endl
+               << "end_connector: " << obj.end_connector << endl
+               << " }" << endl;
+
+            return os;
+        }
+    };
 
     // intra model connections
     class ModelVariable : public SimNode
@@ -150,6 +162,17 @@ namespace ssp4cpp::sim::graph
         std::string get_connector_name()
         {
             return Connector::create_name(component, variable_name);
+        }
+
+        friend ostream &operator<<(ostream &os, const ModelVariable &obj)
+        {
+            os << "ModelVariable { \n"
+               << "name: " << obj.name << endl
+               << "component: " << obj.component << endl
+               << "variable_name: " << obj.variable_name << endl
+               << " }" << endl;
+
+            return os;
         }
     };
 
