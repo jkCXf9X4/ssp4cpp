@@ -16,7 +16,7 @@ namespace ssp4cpp::sim::graph
 
     inline auto log = common::Logger("sim::graph", common::LogLevel::ext_trace);
 
-    using Node = common::graph::Node;
+    using SimNode = sim::graph::SimNode;
 
     map<string, Model *> get_new_models(map<string, Fmu *> &fmu_map)
     {
@@ -86,9 +86,9 @@ namespace ssp4cpp::sim::graph
         return items;
     }
 
-    vector<Node *> remove_dangling(vector<Node *> nodes)
+    vector<SimNode *> remove_dangling(vector<SimNode *> nodes)
     {
-        vector<Node *> out;
+        vector<SimNode *> out;
         for (auto &n : nodes)
         {
             if (n->is_orphan())
@@ -104,7 +104,7 @@ namespace ssp4cpp::sim::graph
         return out;
     }
 
-    vector<Node *> create_system_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
+    vector<SimNode *> create_system_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
     {
         log.ext_trace("[{}] init", __func__);
         auto models = get_new_models(fmu_map);
@@ -117,7 +117,7 @@ namespace ssp4cpp::sim::graph
             log.debug("[{}] Connecting: {} -> {}", __func__, source, target);
             models[source]->add_child(models[target]);
         }
-        vector<Node *> output;
+        vector<SimNode *> output;
         for (auto &[_, model] : models)
             output.push_back(model);
         auto o = remove_dangling(output);
@@ -126,7 +126,7 @@ namespace ssp4cpp::sim::graph
         return o;
     }
 
-    vector<Node *> create_connection_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
+    vector<SimNode *> create_connection_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
     {
         log.ext_trace("[{}] init", __func__);
         auto models = get_new_models(fmu_map);
@@ -150,7 +150,7 @@ namespace ssp4cpp::sim::graph
             target_connector->add_child(target_model);
         }
 
-        vector<Node *> output;
+        vector<SimNode *> output;
         for (auto &[_, model] : models)
             output.push_back(model);
         for (auto &[_, connector] : connectors)
@@ -165,7 +165,7 @@ namespace ssp4cpp::sim::graph
         // all connectors that are not used are leaking memory, for small models this is okey - evaluate for larger models
     }
 
-    vector<Node *> create_feedthrough_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
+    vector<SimNode *> create_feedthrough_graph(Ssp &ssp, map<string, Fmu *> &fmu_map)
     {
         log.ext_trace("[{}] init", __func__);
         auto models = get_new_models(fmu_map);
@@ -236,7 +236,7 @@ namespace ssp4cpp::sim::graph
             }
         }
 
-        vector<Node *> output;
+        vector<SimNode *> output;
         for (auto &[_, model] : models)
             output.push_back(model);
         for (auto &[_, connector] : connectors)

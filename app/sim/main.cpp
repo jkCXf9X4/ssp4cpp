@@ -8,6 +8,11 @@
 #include "common_json.hpp"
 #include "common_node.hpp"
 #include "common_map.hpp"
+#include "common_thread_pool.hpp"
+#include "common_time.hpp"
+#include <unordered_set>
+
+
 #include "tarjan.hpp"
 
 #include "SSP1_SystemStructureDescription_Ext.hpp"
@@ -30,6 +35,8 @@ using namespace ssp4cpp;
 using namespace common::io;
 using namespace common;
 
+using SimNode = sim::graph::SimNode;
+
 class Simulator
 {
 public:
@@ -42,8 +49,8 @@ public:
     common::json::Json model_props;
 
     // system_graph: Simple graph only showing the connections between fmu's
-    vector<common::graph::Node *> system_graph;
-    vector<vector<common::graph::Node *>> strong_system_graph;
+    vector<SimNode *> system_graph;
+    vector<SimNode *> connection_graph;
 
     Simulator(const string &ssp_path,
               const string &props_path)
@@ -59,16 +66,16 @@ public:
 
         // system graph
         system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map_ref);
-        auto connection_graph = ssp4cpp::sim::graph::create_connection_graph(*ssp, fmu_map_ref);
+        connection_graph = ssp4cpp::sim::graph::create_connection_graph(*ssp, fmu_map_ref);
         auto feedthrough_graph = ssp4cpp::sim::graph::create_feedthrough_graph(*ssp, fmu_map_ref);
 
-        strong_system_graph = graph::strongly_connected_components(system_graph);
-        auto strong_connection_graph = graph::strongly_connected_components(connection_graph);
-        auto strong_feedthrough_graph = graph::strongly_connected_components(feedthrough_graph);
+        auto strong_system_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(system_graph));
+        auto strong_connection_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(connection_graph));
+        auto strong_feedthrough_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(feedthrough_graph));
 
-        log.info("system_graph DOT \n{}", graph::Node::to_dot(system_graph));
-        log.info("connection_graph DOT \n{}", graph::Node::to_dot(connection_graph));
-        log.info("feedthrough_graph DOT \n{}", graph::Node::to_dot(feedthrough_graph));
+        log.info("system_graph DOT \n{}", SimNode::to_dot(system_graph));
+        log.info("connection_graph DOT \n{}", SimNode::to_dot(connection_graph));
+        log.info("feedthrough_graph DOT \n{}", SimNode::to_dot(feedthrough_graph));
 
         log.info("{}", graph::ssc_to_string(strong_system_graph));
         log.info("{}", graph::ssc_to_string(strong_connection_graph));
@@ -82,45 +89,71 @@ public:
         // when this is destroyed the application will end, no need to free memory resources
     }
 
+    /**
+     * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
+     */
+    void invoke_graph(uint64_t timestep)
+    {
+        // track which nodes have been invoked
+        std::unordered_set<SimNode*> invoked;
+        // start from ancestor nodes (no parents)
+        auto ready = graph::Node::get_ancestors(connection_graph);
+
+        while (!ready.empty()) {
+            std::vector<SimNode*> next;
+            for (auto node : ready) {
+                node->invoke(timestep);
+                
+                invoked.insert(node);
+                // enqueue children whose all parents are invoked
+                for (auto *child : node->children) {
+                    if (invoked.count(child)) continue;
+                    bool all_parents_invoked = true;
+                    for (auto *p : child->parents) {
+                        if (!invoked.count(p)) {
+                            all_parents_invoked = false;
+                            break;
+                        }
+                    }
+                    if (all_parents_invoked) {
+                        next.push_back(child);
+                    }
+                }
+            }
+            ready.swap(next);
+        }
+    }
+
     void execute()
     {
-        log.info("Executing simulation...");
+        
+        log.info("[{}] Starting simulation...", __func__);
+        ThreadPool pool(5);
 
-        for (auto node : system_graph)
+        uint64_t time = 0;
+        uint64_t end_time = 10 * time::nanoseconds_per_seconds;
+        uint64_t timestep = 1 * time::milliseconds_per_seconds;
+
+        // simulation time loop: invoke graph each timestep
+        while (time < end_time)
         {
-            log.debug("Executing node: {}", node->name);
+            invoke_graph(time);
+            time += timestep;
         }
-
-        log.info("Simulation execution complete.");
+        
+        log.info("[{}] Simulation completed", __func__);
     }
 };
 
 int main()
 {
     auto log = Logger("main", LogLevel::debug);
+    log.info("[{}] enter", __func__);
 
     auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
-
     sim.execute();
-
-    // initilize all
-
-    // execute graph
-    /*
-    execute fmus in order for each timestep
-    - this wont work with the timestamp approach. new data will not be available
-
-    before fmu execution
-    getData -> setVariable
-
-    execute fmu
-
-    After each fmu execution
-    getVariable ->  setData
-
-
-    */
-
-    std::cout << "Parsing complete\n";
+    
+    
+    log.info("[{}] exit", __func__);
     return 0;
 }

@@ -11,14 +11,22 @@ namespace ssp4cpp::sim::graph
 {
     class SimNode : public ssp4cpp::common::graph::Node
     {
+        
+    public:
+        uint64_t time = 0;
+        uint64_t delay = 0;
+        /** Invoke this node for the given timestep. Override in derived classes. */
+        virtual void invoke(uint64_t timestep)
+        {
+            // default no-op
+        }
+
     };
 
     class Model : public SimNode
     {
     private:
         ssp4cpp::Fmu *fmu;
-        uint64_t time = 0;
-        uint64_t delay = 0;
 
     public:
         Model() {}
@@ -41,10 +49,6 @@ namespace ssp4cpp::sim::graph
 
             return os;
         }
-
-        void invoke(uint64_t timestep)
-        {
-        }
     };
 
     class Connector : public SimNode
@@ -52,7 +56,6 @@ namespace ssp4cpp::sim::graph
     public:
         string component_name;
         string connector_name;
-        uint64_t time = 0;
 
         ssp4cpp::ssp1::ssd::Connector *connector;
 
@@ -90,8 +93,6 @@ namespace ssp4cpp::sim::graph
     class Connection : public SimNode
     {
     public:
-        uint64_t delay = 0;
-        uint64_t time = 0;
 
         string start_component;
         string start_connector;
@@ -175,45 +176,5 @@ namespace ssp4cpp::sim::graph
             return os;
         }
     };
-
-    // // intra model connections
-    // class DependencyConnection : public SimNode
-    // {
-    // public:
-    //     uint64_t delay = 0;
-    //     uint64_t time = 0;
-
-    //     string component;
-
-    //     string start_connector;
-    //     string end_connector;
-
-    //     DependencyConnection() {}
-
-    //     DependencyConnection(string component, string start_connector, string end_connector)
-    //     {
-    //         this->component = component;
-    //         this->start_connector = start_connector;
-    //         this->end_connector = end_connector;
-
-    //         this->name = DependencyConnection::create_name(component, start_connector, end_connector);
-    //     }
-
-    //     static std::string create_name(string &component, string &start_con, string &end_con)
-    //     {
-    //         return component + "(" + start_con + "->" + end_con + ")";
-    //     }
-
-    //     std::string get_source_connector_name()
-    //     {
-    //         return Connector::create_name(component, start_connector);
-    //     }
-
-    //     std::string get_target_connector_name()
-    //     {
-    //         return Connector::create_name(component, end_connector);
-    //     }
-
-    // };
 
 }

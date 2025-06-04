@@ -31,7 +31,8 @@ namespace ssp4cpp::common::graph
 
         void add_child(Node *node)
         {
-            if (!contains_child(node)) {
+            if (!contains_child(node))
+            {
                 children.push_back(node);
                 node->add_parent(this);
             }
@@ -39,7 +40,8 @@ namespace ssp4cpp::common::graph
 
         void add_parent(Node *node)
         {
-            if (!contains_parent(node)) {
+            if (!contains_parent(node))
+            {
                 parents.push_back(node);
             }
         }
@@ -95,8 +97,6 @@ namespace ssp4cpp::common::graph
             return common::str::stream_to_str(*this);
         }
 
-
-
         /** Return every node reachable through either child- or parent-links. */
         std::vector<Node *> all_nodes() const
         {
@@ -125,7 +125,6 @@ namespace ssp4cpp::common::graph
             return result;
         }
 
-
         template <typename T>
         static std::vector<Node *> cast_to_parent_ptrs(const std::vector<T *> &node)
         {
@@ -133,10 +132,11 @@ namespace ssp4cpp::common::graph
             return node_ptrs;
         }
 
-        static std::vector<Node *> get_ancestors(const std::vector<Node *> &nodes)
+        template <typename T>
+        static std::vector<T *> get_ancestors(const std::vector<T *> &nodes)
         {
-            vector<Node*> out;
-            for(auto &n: nodes)
+            vector<T *> out;
+            for (auto &n : nodes)
             {
                 if (n->has_parent() == false)
                 {
@@ -152,14 +152,15 @@ namespace ssp4cpp::common::graph
             return Node::to_dot(nodes);
         }
 
-        static std::string to_dot(const vector<Node *> &nodes)
+        template <typename T>
+        static std::string to_dot(const vector<T *> &nodes)
         {
             std::stringstream ss;
             ss << "digraph{" << std::endl;
 
             for (auto &node : nodes)
             {
-                for (Node *c : node->children)
+                for (T *c : node->children)
                 {
                     ss << '"' << node->name << "\" -> \"" << c->name << "\"\n";
                 }
