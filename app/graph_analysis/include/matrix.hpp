@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <numeric>
 
-#include "common_list.hpp"
+#include "common_vector.hpp"
 
 namespace ssp4cpp::dsm
 {

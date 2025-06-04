@@ -2,7 +2,7 @@
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 
 #include "common_string.hpp"
-#include "common_list.hpp"
+#include "common_vector.hpp"
 
 #include <vector>
 #include <tuple>
