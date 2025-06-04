@@ -1,5 +1,5 @@
 
-#include "connection.hpp"
+#include "simnode.hpp"
 
 #include <vector>
 #include <map>
@@ -26,7 +26,7 @@ namespace ssp4cpp::sim::graph
         return result;
     }
 
-    
+
 
 
 }

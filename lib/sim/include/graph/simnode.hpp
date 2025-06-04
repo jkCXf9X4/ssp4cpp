@@ -1,8 +1,9 @@
 #pragma once
 
-#include "fmu.hpp"
 #include "common_node.hpp"
 #include "common_string.hpp"
+
+#include "fmu.hpp"
 
 #include <string>
 #include <vector>
@@ -11,7 +12,7 @@ namespace ssp4cpp::sim::graph
 {
     class SimNode : public ssp4cpp::common::graph::Node
     {
-        
+
     public:
         uint64_t time = 0;
         uint64_t delay = 0;
@@ -20,7 +21,6 @@ namespace ssp4cpp::sim::graph
         {
             // default no-op
         }
-
     };
 
     class Model : public SimNode
@@ -93,7 +93,6 @@ namespace ssp4cpp::sim::graph
     class Connection : public SimNode
     {
     public:
-
         string start_component;
         string start_connector;
         string end_component;

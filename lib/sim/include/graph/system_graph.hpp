@@ -1,7 +1,7 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
-#include "connection.hpp"
+#include "simnode.hpp"
 #include "ssp_ext.hpp"
 
 #include <vector>

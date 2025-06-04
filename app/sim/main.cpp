@@ -18,7 +18,7 @@
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 #include "FMI2_modelDescription_Ext.hpp"
 
-#include "connection.hpp"
+#include "simnode.hpp"
 #include "system_graph.hpp"
 
 #include <iostream>
