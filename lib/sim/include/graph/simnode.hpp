@@ -20,7 +20,6 @@ namespace ssp4cpp::sim::graph
         uint64_t delay = 0;
         common::Logger log = common::Logger("SimNode", common::LogLevel::ext_trace);
 
-
         SimNode() : Node() {}
 
         SimNode(const std::string &name) : ssp4cpp::common::graph::Node(name) {}
@@ -28,13 +27,15 @@ namespace ssp4cpp::sim::graph
         void init() {}
 
         /** Invoke this node for the given timestep. Override in derived classes. */
-        void invoke(uint64_t timestep) {}
+        void invoke(uint64_t timestep)
+        {
+            log.trace("[{}] SimNode {} ", __func__, timestep);
+        }
     };
 
     class Model : public SimNode
     {
     public:
-
         ssp4cpp::Fmu *fmu;
         unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
 
@@ -65,6 +66,7 @@ namespace ssp4cpp::sim::graph
 
         void invoke(uint64_t timestep)
         {
+            log.trace("[{}] Model {} ", __func__, timestep);
             if (model->step(timestep))
             {
                 log.error("Error! step() returned with status: {}", std::to_string((int)model->last_status()));
@@ -88,8 +90,8 @@ namespace ssp4cpp::sim::graph
     public:
         string component_name;
         string connector_name;
-        Model* model_node;
 
+        Model *model_node;
         ssp4cpp::ssp1::ssd::Connector *connector;
 
         Connector()
@@ -97,10 +99,10 @@ namespace ssp4cpp::sim::graph
         }
 
         Connector(
-            Model* model,
+            Model *model,
             ssp4cpp::ssp1::ssd::Connector *connector)
         {
-            this->component_name = component_name;
+            this->component_name = model->name;
             this->connector_name = connector->name;
             this->connector = connector;
 

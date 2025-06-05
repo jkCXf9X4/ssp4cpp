@@ -159,7 +159,8 @@ int main()
     auto log = Logger("main", LogLevel::debug);
     log.info("[{}] enter", __func__);
 
-    auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
+    // auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
+    auto sim = Simulator("./resources/delay_sys.ssp", "./resources/model_props.json");
     sim.execute();
     
     
