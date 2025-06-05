@@ -84,7 +84,7 @@ public:
         // when this is destroyed the application will end, no need to free memory resources
     }
 
-    auto invoke(SimNode * node, uint64_t timestep)
+    void invoke(SimNode * node, uint64_t timestep)
     {
         for (auto c_ : node->children)
         {
@@ -139,7 +139,7 @@ public:
         uint64_t end_time = 10 * time::nanoseconds_per_seconds;
         uint64_t timestep = 1 * time::milliseconds_per_seconds;
 
-        auto start_nodes = graph::Node::get_ancestors(connection_graph);
+        auto start_nodes = system_graph.get_start_nodes();
         assert(start_nodes.size() == 1);
         auto start_node = start_nodes[0];
 

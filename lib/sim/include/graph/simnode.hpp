@@ -18,6 +18,8 @@ namespace ssp4cpp::sim::graph
     public:
         uint64_t time = 0;
         uint64_t delay = 0;
+        common::Logger log = common::Logger("SimNode", common::LogLevel::ext_trace);
+
 
         SimNode() : Node() {}
 

@@ -58,6 +58,12 @@ namespace ssp4cpp::sim::graph
             log.info("{}", common::graph::ssc_to_string(strong_system_graph));
         }
 
+        vector<SimNode*> get_start_nodes()
+        {
+            auto start_nodes = common::graph::Node::get_ancestors(analysis_graph);
+            return start_nodes; 
+        }
+
         vector<SimNode *> create_system_graph()
         {
             log.ext_trace("[{}] init", __func__);
@@ -67,7 +73,6 @@ namespace ssp4cpp::sim::graph
 
             for (auto &[source, target] : fmu_connections)
             {
-
                 log.debug("[{}] Connecting: {} -> {}", __func__, source, target);
                 models[source]->add_child(models[target]);
             }

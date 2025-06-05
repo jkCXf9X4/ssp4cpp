@@ -75,7 +75,7 @@ TEST_CASE("Node shallow_copy and deep_copy", "[Node]") {
     REQUIRE(deep->children[0]->name == "B");
 
     REQUIRE(&a != deep);
-    
+
     delete deep->children[0];
     delete deep;
 }
@@ -84,5 +84,5 @@ TEST_CASE("Node to_dot output", "[Node]") {
     Node a("A"), b("B");
     a.add_child(&b);
     std::string dot = a.to_dot();
-    REQUIRE(dot.find("A -> B") != std::string::npos);
+    REQUIRE(dot.find("A\" -> \"B") != std::string::npos);
 }

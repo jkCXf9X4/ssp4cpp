@@ -108,7 +108,7 @@ namespace ssp4cpp::common
             {
                 const auto time = std::chrono::system_clock::now();
                 auto str = std::format(s, std::forward<Args>(args)...);
-                auto out = std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str)
+                auto out = std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str);
 
                 {
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);
@@ -133,7 +133,7 @@ namespace ssp4cpp::common
             {
                 const auto time = std::chrono::system_clock::now();
                 auto str = std::format(s, std::forward<Args>(args)...);
-                auto out = std::format("[{}][{}] {}", log_level_to_str(Level), time, str)
+                auto out = std::format("[{}][{}] {}", log_level_to_str(Level), time, str);
 
                 {
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);

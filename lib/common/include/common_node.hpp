@@ -211,7 +211,7 @@ namespace ssp4cpp::common::graph
 
             for (auto &node : nodes)
             {
-                for (T *c : node->children)
+                for (auto &c : node->children)
                 {
                     ss << '\"' << node->name << "\" -> \"" << c->name << "\"\n";
                 }
