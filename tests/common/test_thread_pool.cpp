@@ -1,5 +1,4 @@
 
-#define CATCH_CONFIG_MAIN
 #include <common_thread_pool.hpp>
 
 #include <atomic>
