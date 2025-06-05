@@ -7,6 +7,7 @@
 #include <map>
 #include <list>
 #include <unordered_set>
+#include <unordered_map>
 #include <stack>
 
 namespace ssp4cpp::common::graph
@@ -19,21 +20,31 @@ namespace ssp4cpp::common::graph
         std::vector<Node *> children = {};
         std::vector<Node *> parents = {};
 
-        Node()
+        /* === Constructors =================================================== */
+
+        Node() : name("") {}
+
+        explicit Node(std::string name) : name(std::move(name)) {}
+
+        /**
+         * Copy constructor (shallow): duplicates the Node object itself while
+         * keeping *all* child/parent pointers identical to the original.
+         */
+        Node(const Node &other)
+            : name(other.name),
+              children(other.children),
+              parents(other.parents)
         {
-            this->name = "";
         }
 
-        Node(std::string name)
-        {
-            this->name = name;
-        }
+        /* === Relationship management ======================================= */
 
         void add_child(Node *node)
         {
             if (!contains_child(node))
             {
                 children.push_back(node);
+                // keep bidirectional consistency
                 node->add_parent(this);
             }
         }
@@ -43,59 +54,88 @@ namespace ssp4cpp::common::graph
             if (!contains_parent(node))
             {
                 parents.push_back(node);
+                // keep bidirectional consistency
+                node->add_child(this);
             }
         }
 
-        bool contains_child(Node *node)
+        void remove_child(Node *node)
+        {
+            auto it = std::find(children.begin(), children.end(), node);
+            if (it != children.end())
+            {
+                children.erase(it);
+                node->remove_parent(this);
+            }
+        }
+
+        void remove_parent(Node *node)
+        {
+            auto it = std::find(parents.begin(), parents.end(), node);
+            if (it != parents.end())
+            {
+                parents.erase(it);
+                node->remove_child(this);
+            }
+        }
+
+        void replace_child(Node *from, Node *to)
+        {
+            if (this->contains_child(from))
+            {
+                remove_child(from);
+                add_child(to);
+            }
+        }
+
+        void replace_parent(Node *from, Node *to)
+        {
+            if (this->contains_parent(from))
+            {
+                remove_parent(from);
+                add_parent(to);
+            }
+        }
+
+        // replaces any matching child and parent
+        void replace(Node *from, Node *to)
+        {
+            replace_child(from, to);
+            replace_parent(from, to);
+        }
+
+        bool contains_child(Node *node) const
         {
             return std::find(children.begin(), children.end(), node) != children.end();
         }
 
-        bool contains_parent(Node *node)
+        bool contains_parent(Node *node) const
         {
             return std::find(parents.begin(), parents.end(), node) != parents.end();
         }
 
-        bool has_child()
-        {
-            return children.empty() == false;
-        }
+        bool has_child() const { return !children.empty(); }
 
-        bool has_parent()
-        {
-            return parents.empty() == false;
-        }
+        bool has_parent() const { return !parents.empty(); }
 
-        bool is_orphan()
-        {
-            return has_child() == false && has_parent() == false;
-        }
+        bool is_orphan() const { return !has_child() && !has_parent(); }
 
-        int nr_children()
-        {
-            return children.size();
-        }
+        int nr_children() const { return static_cast<int>(children.size()); }
 
-        int nr_parents()
-        {
-            return parents.size();
-        }
+        int nr_parents() const { return static_cast<int>(parents.size()); }
 
-        friend ostream &operator<<(ostream &os, const Node &obj)
+        friend std::ostream &operator<<(std::ostream &os, const Node &obj)
         {
             os << "Node { \n"
-               << "name: " << obj.name << endl
-               << "children: " << obj.children.size() << endl
-               << "parents: " << obj.parents.size() << endl
-               << " }" << endl;
+               << "name: " << obj.name << std::endl
+               << "children: " << obj.children.size() << std::endl
+               << "parents: " << obj.parents.size() << std::endl
+               << " }" << std::endl;
 
             return os;
         }
 
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
+        std::string to_string() const { return common::str::stream_to_str(*this); }
 
         /** Return every node reachable through either child- or parent-links. */
         std::vector<Node *> all_nodes() const
@@ -125,6 +165,16 @@ namespace ssp4cpp::common::graph
             return result;
         }
 
+        // All nodes that lack parents
+        std::vector<Node *> get_ancestors()
+        {
+            auto all_nodes = this->all_nodes();
+            auto ancestors = Node::get_ancestors(all_nodes);
+            return std::move(ancestors);
+        }
+
+        /* === Generic helpers ================================================= */
+
         template <typename T>
         static std::vector<Node *> cast_to_parent_ptrs(const std::vector<T *> &node)
         {
@@ -132,13 +182,14 @@ namespace ssp4cpp::common::graph
             return node_ptrs;
         }
 
+        // All nodes that lack parents
         template <typename T>
         static std::vector<T *> get_ancestors(const std::vector<T *> &nodes)
         {
-            vector<T *> out;
+            std::vector<T *> out;
             for (auto &n : nodes)
             {
-                if (n->has_parent() == false)
+                if (!n->has_parent())
                 {
                     out.push_back(n);
                 }
@@ -153,7 +204,7 @@ namespace ssp4cpp::common::graph
         }
 
         template <typename T>
-        static std::string to_dot(const vector<T *> &nodes)
+        static std::string to_dot(const std::vector<T *> &nodes)
         {
             std::stringstream ss;
             ss << "digraph{" << std::endl;
@@ -162,11 +213,45 @@ namespace ssp4cpp::common::graph
             {
                 for (T *c : node->children)
                 {
-                    ss << '"' << node->name << "\" -> \"" << c->name << "\"\n";
+                    ss << '\"' << node->name << "\" -> \"" << c->name << "\"\n";
                 }
             }
             ss << "}" << std::endl;
             return ss.str();
         }
+
+        /* === Copy helpers ==================================================== */
+
+        /** Create a shallow copy of *this. */
+        Node *shallow_copy() const { return new Node(*this); }
+
+        /** Recursively duplicates the entire graph rooted at *this*. */
+        Node *deep_copy() const
+        {
+            std::unordered_map<const Node *, Node *> map;
+
+            auto nodes = this->all_nodes();
+
+            for (auto &n: nodes)
+            {
+                Node *clone = n->shallow_copy();
+                map[n] = clone;
+            }
+
+            for (auto &[_, new_node]: map)
+            {
+                for (auto [replace_old_node, replace_new_node]: map)
+                {
+                    new_node->replace(const_cast<Node*>(replace_old_node), replace_new_node);
+                }
+            }
+
+            return map[this];
+        }
+
+        /** Static convenience wrappers */
+        static Node *shallow_copy(const Node *root) { return root ? new Node(*root) : nullptr; }
+        static Node *deep_copy(const Node *root) { return root ? root->deep_copy() : nullptr; }
+
     };
 }

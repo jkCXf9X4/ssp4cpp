@@ -5,6 +5,8 @@
 
 #include "fmu.hpp"
 
+#include <fmi4cpp/fmi4cpp.hpp>
+
 #include <string>
 #include <vector>
 
@@ -16,28 +18,55 @@ namespace ssp4cpp::sim::graph
     public:
         uint64_t time = 0;
         uint64_t delay = 0;
+
+        SimNode() : Node() {}
+
+        SimNode(const std::string &name) : ssp4cpp::common::graph::Node(name) {}
+
+        void init() {}
+
         /** Invoke this node for the given timestep. Override in derived classes. */
-        virtual void invoke(uint64_t timestep)
-        {
-            // default no-op
-        }
+        void invoke(uint64_t timestep) {}
     };
 
     class Model : public SimNode
     {
-    private:
-        ssp4cpp::Fmu *fmu;
-
     public:
+
+        ssp4cpp::Fmu *fmu;
+        unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
+
+        unique_ptr<fmi4cpp::fmi2::cs_slave> model;
+
         Model() {}
 
         Model(std::string name, ssp4cpp::Fmu *fmu) : SimNode(name)
         {
             this->fmu = fmu;
+
+            auto fmu_t = fmi4cpp::fmi2::fmu(fmu->original_file);
+            cs_fmu = fmu_t.as_cs_fmu();
         }
 
         ~Model()
         {
+        }
+
+        void init()
+        {
+            model = cs_fmu->new_instance();
+
+            model->setup_experiment();
+            model->enter_initialization_mode();
+            model->exit_initialization_mode();
+        }
+
+        void invoke(uint64_t timestep)
+        {
+            if (model->step(timestep))
+            {
+                log.error("Error! step() returned with status: {}", std::to_string((int)model->last_status()));
+            }
         }
 
         friend ostream &operator<<(ostream &os, const Model &obj)
@@ -51,11 +80,13 @@ namespace ssp4cpp::sim::graph
         }
     };
 
+    // template class to enable constexpression invoke
     class Connector : public SimNode
     {
     public:
         string component_name;
         string connector_name;
+        Model* model_node;
 
         ssp4cpp::ssp1::ssd::Connector *connector;
 
@@ -64,7 +95,7 @@ namespace ssp4cpp::sim::graph
         }
 
         Connector(
-            string component_name,
+            Model* model,
             ssp4cpp::ssp1::ssd::Connector *connector)
         {
             this->component_name = component_name;

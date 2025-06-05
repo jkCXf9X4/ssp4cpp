@@ -43,14 +43,10 @@ public:
     common::Logger log = Logger("Simulator", LogLevel::debug);
 
     unique_ptr<Ssp> ssp;
-    map<string, unique_ptr<Fmu>> fmu_map; // owner
-    map<string, Fmu*> fmu_map_ref;
-
     common::json::Json model_props;
 
     // system_graph: Simple graph only showing the connections between fmu's
-    vector<SimNode *> system_graph;
-    vector<SimNode *> connection_graph;
+    sim::graph::SystemGraph system_graph;
 
     Simulator(const string &ssp_path,
               const string &props_path)
@@ -61,25 +57,24 @@ public:
         model_props = json::parse_json_file(props_path);
         log.debug("Extra properties:\n{}\n", json::to_string(model_props));
 
-        fmu_map = ssp4cpp::ssp::ext::create_fmu_map(*ssp);
-        fmu_map_ref = map_ns::map_unique_to_ref(fmu_map);
+        system_graph = sim::graph::SystemGraph(ssp.get());
 
-        // system graph
-        system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map_ref);
-        connection_graph = ssp4cpp::sim::graph::create_connection_graph(*ssp, fmu_map_ref);
-        auto feedthrough_graph = ssp4cpp::sim::graph::create_feedthrough_graph(*ssp, fmu_map_ref);
+        // // system graph
+        // system_graph = ssp4cpp::sim::graph::create_system_graph(*ssp, fmu_map_ref);
+        // connection_graph = ssp4cpp::sim::graph::create_connection_graph(*ssp, fmu_map_ref);
+        // auto feedthrough_graph = ssp4cpp::sim::graph::create_feedthrough_graph(*ssp, fmu_map_ref);
 
-        auto strong_system_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(system_graph));
-        auto strong_connection_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(connection_graph));
-        auto strong_feedthrough_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(feedthrough_graph));
+        // auto strong_system_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(system_graph));
+        // auto strong_connection_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(connection_graph));
+        // // auto strong_feedthrough_graph = graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(feedthrough_graph));
 
-        log.info("system_graph DOT \n{}", SimNode::to_dot(system_graph));
-        log.info("connection_graph DOT \n{}", SimNode::to_dot(connection_graph));
-        log.info("feedthrough_graph DOT \n{}", SimNode::to_dot(feedthrough_graph));
+        // log.info("system_graph DOT \n{}", SimNode::to_dot(system_graph));
+        // log.info("connection_graph DOT \n{}", SimNode::to_dot(connection_graph));
+        // // log.info("feedthrough_graph DOT \n{}", SimNode::to_dot(feedthrough_graph));
 
-        log.info("{}", graph::ssc_to_string(strong_system_graph));
-        log.info("{}", graph::ssc_to_string(strong_connection_graph));
-        log.info("{}", graph::ssc_to_string(strong_feedthrough_graph));
+        // log.info("{}", graph::ssc_to_string(strong_system_graph));
+        // log.info("{}", graph::ssc_to_string(strong_connection_graph));
+        // // log.info("{}", graph::ssc_to_string(strong_feedthrough_graph));
 
     }
 
@@ -89,40 +84,50 @@ public:
         // when this is destroyed the application will end, no need to free memory resources
     }
 
-    /**
-     * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
-     */
-    void invoke_graph(uint64_t timestep)
+    auto invoke(SimNode * node, uint64_t timestep)
     {
-        // track which nodes have been invoked
-        std::unordered_set<SimNode*> invoked;
-        // start from ancestor nodes (no parents)
-        auto ready = graph::Node::get_ancestors(connection_graph);
-
-        while (!ready.empty()) {
-            std::vector<SimNode*> next;
-            for (auto node : ready) {
-                node->invoke(timestep);
-                
-                invoked.insert(node);
-                // enqueue children whose all parents are invoked
-                for (auto *child : node->children) {
-                    if (invoked.count(child)) continue;
-                    bool all_parents_invoked = true;
-                    for (auto *p : child->parents) {
-                        if (!invoked.count(p)) {
-                            all_parents_invoked = false;
-                            break;
-                        }
-                    }
-                    if (all_parents_invoked) {
-                        next.push_back(child);
-                    }
-                }
-            }
-            ready.swap(next);
+        for (auto c_ : node->children)
+        {
+            auto c = (SimNode*)c_;
+            c->invoke(timestep);
+            invoke(c, timestep);
         }
     }
+
+    // /**
+    //  * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
+    //  */
+    // void invoke_graph(uint64_t timestep)
+    // {
+    //     // track which nodes have been invoked
+    //     std::unordered_set<SimNode*> invoked;
+    //     // start from ancestor nodes (no parents)
+    //     auto ready = graph::Node::get_ancestors(connection_graph);
+
+    //     while (!ready.empty()) {
+    //         std::vector<SimNode*> next;
+    //         for (auto node : ready) {
+    //             node->invoke(timestep);
+                
+    //             invoked.insert(node);
+    //             // enqueue children whose all parents are invoked
+    //             for (auto *child : node->children) {
+    //                 if (invoked.count(child)) continue;
+    //                 bool all_parents_invoked = true;
+    //                 for (auto *p : child->parents) {
+    //                     if (!invoked.count(p)) {
+    //                         all_parents_invoked = false;
+    //                         break;
+    //                     }
+    //                 }
+    //                 if (all_parents_invoked) {
+    //                     next.push_back(child);
+    //                 }
+    //             }
+    //         }
+    //         ready.swap(next);
+    //     }
+    // }
 
     void execute()
     {
@@ -134,10 +139,14 @@ public:
         uint64_t end_time = 10 * time::nanoseconds_per_seconds;
         uint64_t timestep = 1 * time::milliseconds_per_seconds;
 
+        auto start_nodes = graph::Node::get_ancestors(connection_graph);
+        assert(start_nodes.size() == 1);
+        auto start_node = start_nodes[0];
+
         // simulation time loop: invoke graph each timestep
         while (time < end_time)
         {
-            invoke_graph(time);
+            invoke(start_node, timestep);
             time += timestep;
         }
         

@@ -9,7 +9,6 @@
 #include <stdexcept>
 #include <mutex>
 
-
 namespace ssp4cpp::common
 {
 
@@ -31,11 +30,12 @@ namespace ssp4cpp::common
         static inline bool enabled = false;
         static inline LogLevel static_level = LogLevel::debug;
         static inline std::mutex print_mutex;
-        
+
         std::string name;
         LogLevel level;
 
-        Logger(){
+        Logger()
+        {
             Logger::enabled = true;
             level = LogLevel::debug;
             name = "null";
@@ -108,9 +108,18 @@ namespace ssp4cpp::common
             {
                 const auto time = std::chrono::system_clock::now();
                 auto str = std::format(s, std::forward<Args>(args)...);
+                auto out = std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str)
+
                 {
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);
-                    std::cout << std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str) << std::endl ;
+                    if constexpr (Level < LogLevel::error)
+                    {
+                        std::cout << out << std::endl;
+                    }
+                    else
+                    {
+                        std::cerr << out << std::endl;
+                    }
                 }
             }
         }
@@ -122,10 +131,21 @@ namespace ssp4cpp::common
         {
             if (Level >= Logger::static_level)
             {
-                const auto time = std::chrono::system_clock::now();    
+                const auto time = std::chrono::system_clock::now();
                 auto str = std::format(s, std::forward<Args>(args)...);
-                
-                std::cout << std::format("[{}][{}] {}", log_level_to_str(Level), time, str) << std::endl ;
+                auto out = std::format("[{}][{}] {}", log_level_to_str(Level), time, str)
+
+                {
+                    std::unique_lock<std::mutex> lock(Logger::print_mutex);
+                    if constexpr (Level < LogLevel::error)
+                    {
+                        std::cout << out << std::endl;
+                    }
+                    else
+                    {
+                        std::cerr << out << std::endl;
+                    }
+                }
             }
         }
 
@@ -172,7 +192,6 @@ namespace ssp4cpp::common
             else
                 return LogLevel::info;
         }
-
     };
 
 }
