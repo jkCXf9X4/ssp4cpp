@@ -1,3 +1,5 @@
+#pragma once
+
 #include "common_map.hpp"
 #include "common_vector.hpp"
 

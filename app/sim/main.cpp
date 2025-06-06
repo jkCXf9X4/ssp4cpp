@@ -136,8 +136,8 @@ public:
         ThreadPool pool(5);
 
         uint64_t time = 0;
-        uint64_t end_time = 10 * time::nanoseconds_per_seconds;
-        uint64_t timestep = 1 * time::milliseconds_per_seconds;
+        uint64_t end_time = 10 * time::nanoseconds_per_second;
+        uint64_t timestep = 1 * time::milliseconds_per_second;
 
         auto start_nodes = system_graph.get_start_nodes();
         assert(start_nodes.size() == 1);

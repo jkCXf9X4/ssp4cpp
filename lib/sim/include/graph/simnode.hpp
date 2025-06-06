@@ -16,7 +16,9 @@ namespace ssp4cpp::sim::graph
     {
 
     public:
-        uint64_t time = 0;
+        uint64_t start_time = 0;
+        uint64_t end_time = 0;
+        uint64_t delayed_time = 0;
         uint64_t delay = 0;
         common::Logger log = common::Logger("SimNode", common::LogLevel::ext_trace);
 
@@ -27,9 +29,14 @@ namespace ssp4cpp::sim::graph
         void init() {}
 
         /** Invoke this node for the given timestep. Override in derived classes. */
-        void invoke(uint64_t timestep)
+        virtual uint64_t invoke(uint64_t timestep)
         {
-            log.trace("[{}] SimNode {} ", __func__, timestep);
+            start_time = end_time;
+            end_time = start_time + timestep;
+            delayed_time = end_time - delay;
+
+            log.trace("[{}] SimNode start_time: {} end_time: {}, delayed_time {}", __func__, start_time, end_time, delayed_time);
+            return delayed_time;
         }
     };
 
@@ -64,13 +71,15 @@ namespace ssp4cpp::sim::graph
             model->exit_initialization_mode();
         }
 
-        void invoke(uint64_t timestep)
+        uint64_t invoke(uint64_t timestep) override
         {
+
             log.trace("[{}] Model {} ", __func__, timestep);
             if (model->step(timestep))
             {
                 log.error("Error! step() returned with status: {}", std::to_string((int)model->last_status()));
             }
+            return SimNode::invoke(timestep);
         }
 
         friend ostream &operator<<(ostream &os, const Model &obj)
@@ -107,6 +116,14 @@ namespace ssp4cpp::sim::graph
             this->connector = connector;
 
             this->name = Connector::create_name(component_name, connector_name);
+        }
+
+        uint64_t invoke(uint64_t timestep) override
+        {
+
+            log.trace("[{}] Connector {} ", __func__, timestep);
+
+            return SimNode::invoke(timestep);
         }
 
         friend ostream &operator<<(ostream &os, const Connector &obj)

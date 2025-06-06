@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <initializer_list>
@@ -15,7 +14,7 @@ namespace ssp4cpp::common::types
     template <typename T>
     constexpr bool is_optional_impl<std::optional<T>> = true;
     template <>
-    constexpr bool is_optional_impl<std::nullopt_t> = true;
+    inline constexpr bool is_optional_impl<std::nullopt_t> = true;
 
     template <typename T>
     constexpr bool is_optional_v = is_optional_impl<std::decay_t<T>>;
