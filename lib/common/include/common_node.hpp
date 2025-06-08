@@ -232,17 +232,17 @@ namespace ssp4cpp::common::graph
 
             auto nodes = this->all_nodes();
 
-            for (auto &n: nodes)
+            for (auto &n : nodes)
             {
                 Node *clone = n->shallow_copy();
                 map[n] = clone;
             }
 
-            for (auto &[_, new_node]: map)
+            for (auto &[_, new_node] : map)
             {
-                for (auto [replace_old_node, replace_new_node]: map)
+                for (auto [replace_old_node, replace_new_node] : map)
                 {
-                    new_node->replace(const_cast<Node*>(replace_old_node), replace_new_node);
+                    new_node->replace(const_cast<Node *>(replace_old_node), replace_new_node);
                 }
             }
 
@@ -253,5 +253,48 @@ namespace ssp4cpp::common::graph
         static Node *shallow_copy(const Node *root) { return root ? new Node(*root) : nullptr; }
         static Node *deep_copy(const Node *root) { return root ? root->deep_copy() : nullptr; }
 
+        // Recursive iterator for Node and all descendants (pre-order traversal)
+        class recursive_iterator
+        {
+            std::vector<Node *> stack;
+
+        public:
+            using iterator_category = std::forward_iterator_tag;
+            using value_type = Node *;
+            using difference_type = std::ptrdiff_t;
+            using pointer = Node **;
+            using reference = Node *&;
+
+            recursive_iterator(Node *root)
+            {
+                if (root)
+                    stack.push_back(root);
+            }
+
+            Node *operator*() const
+            {
+                return stack.back();
+            }
+
+            recursive_iterator &operator++()
+            {
+                Node *current = stack.back();
+                stack.pop_back();
+                // Push children in reverse order so leftmost is on top
+                for (auto it : current->children)
+                {
+                    stack.push_back(*it);
+                }
+                return *this;
+            }
+
+            bool operator!=(const recursive_iterator &other) const
+            {
+                return stack != other.stack;
+            }
+        };
+
+        recursive_iterator begin() { return recursive_iterator(this); }
+        recursive_iterator end() { return recursive_iterator(nullptr); }
     };
 }

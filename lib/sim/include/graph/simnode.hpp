@@ -20,13 +20,19 @@ namespace ssp4cpp::sim::graph
         uint64_t end_time = 0;
         uint64_t delayed_time = 0;
         uint64_t delay = 0;
+
+        bool init = false;
+
         common::Logger log = common::Logger("SimNode", common::LogLevel::ext_trace);
 
         SimNode() : Node() {}
 
         SimNode(const std::string &name) : ssp4cpp::common::graph::Node(name) {}
 
-        void init() {}
+        virtual void init()
+        {
+
+        }
 
         /** Invoke this node for the given timestep. Override in derived classes. */
         virtual uint64_t invoke(uint64_t timestep)
@@ -45,7 +51,6 @@ namespace ssp4cpp::sim::graph
     public:
         ssp4cpp::Fmu *fmu;
         unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
-
         unique_ptr<fmi4cpp::fmi2::cs_slave> model;
 
         Model() {}
@@ -64,6 +69,8 @@ namespace ssp4cpp::sim::graph
 
         void init()
         {
+            log.trace("[{}] Model init ", __func__);
+
             model = cs_fmu->new_instance();
 
             model->setup_experiment();
@@ -75,10 +82,10 @@ namespace ssp4cpp::sim::graph
         {
 
             log.trace("[{}] Model {} ", __func__, timestep);
-            if (model->step(timestep))
-            {
-                log.error("Error! step() returned with status: {}", std::to_string((int)model->last_status()));
-            }
+            // if (model->step(timestep))
+            // {
+            //     log.error("Error! step() returned with status: {}", std::to_string((int)model->last_status()));
+            // }
             return SimNode::invoke(timestep);
         }
 
