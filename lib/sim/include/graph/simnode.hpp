@@ -12,6 +12,9 @@
 
 namespace ssp4cpp::sim::graph
 {
+    /**
+     * @brief Base class for all simulation nodes.
+     */
     class SimNode : public ssp4cpp::common::graph::Node
     {
 
@@ -29,6 +32,7 @@ namespace ssp4cpp::sim::graph
 
         SimNode(const std::string &name) : ssp4cpp::common::graph::Node(name) {}
 
+        /** @brief Initialise the node before simulation starts. */
         virtual void init()
         {
 
@@ -46,6 +50,9 @@ namespace ssp4cpp::sim::graph
         }
     };
 
+    /**
+     * @brief Simulation node wrapping an FMU instance.
+     */
     class Model : public SimNode
     {
     public:
@@ -101,6 +108,9 @@ namespace ssp4cpp::sim::graph
     };
 
     // template class to enable constexpression invoke
+    /**
+     * @brief Node representing an external connector of an FMU.
+     */
     class Connector : public SimNode
     {
     public:
@@ -143,12 +153,16 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
+        /** @brief Helper to create a unique connector identifier. */
         static std::string create_name(string component_name, string connector_name)
         {
             return component_name + "." + connector_name;
         }
     };
 
+    /**
+     * @brief Node representing a connection between components.
+     */
     class Connection : public SimNode
     {
     public:
@@ -172,16 +186,19 @@ namespace ssp4cpp::sim::graph
             this->name = Connection::create_name(start_component, start_connector, end_component, end_connector);
         }
 
+        /** @brief Helper to create a connection identifier string. */
         static std::string create_name(string &start_com, string &start_con, string &end_com, string &end_con)
         {
             return start_com + "." + start_con + "->" + end_com + "." + end_con;
         }
 
+        /** @brief Get id string of the source connector. */
         std::string get_source_connector_name()
         {
             return Connector::create_name(start_component, start_connector);
         }
 
+        /** @brief Get id string of the target connector. */
         std::string get_target_connector_name()
         {
             return Connector::create_name(end_component, end_connector);
@@ -202,6 +219,9 @@ namespace ssp4cpp::sim::graph
     };
 
     // intra model connections
+    /**
+     * @brief Node representing a variable inside an FMU.
+     */
     class ModelVariable : public SimNode
     {
     public:
@@ -218,6 +238,7 @@ namespace ssp4cpp::sim::graph
             this->name = Connector::create_name(component, variable_name);
         }
 
+        /** @brief Return the generated identifier for this variable. */
         std::string get_connector_name()
         {
             return Connector::create_name(component, variable_name);

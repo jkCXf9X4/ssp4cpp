@@ -18,11 +18,17 @@ namespace ssp4cpp
 
     using namespace common;
 
+    /**
+     * @brief Represents an FMU archive and its parsed model description.
+     */
     class Fmu : public Archive
     {
     public:
         fmi2::md::fmi2ModelDescription md;
 
+        /**
+         * @brief Construct an FMU from a file path.
+         */
         Fmu(const path &file) : Archive(file, "fmi_")
         {
             log = Logger("Fmu", LogLevel::debug);
@@ -40,12 +46,14 @@ namespace ssp4cpp
             return os;
         }
 
+        /** @brief Convert to string for debugging purposes. */
         std::string to_string()
         {
             return common::str::stream_to_str(*this);
         }
 
     private:
+        /** @brief Parse the modelDescription.xml inside the FMU. */
         static fmi2::md::fmi2ModelDescription parse_model_description(const string &fileName);
     };
 

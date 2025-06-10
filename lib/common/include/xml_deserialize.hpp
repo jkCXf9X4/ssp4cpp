@@ -107,6 +107,9 @@ namespace ssp4cpp::common::xml
         }
     }
 
+    /**
+     * @brief Generic parser for XML attributes or child nodes into C++ objects.
+     */
     template <typename T, typename = std::enable_if<!is_vector_v<T> && !is_optional_v<T>>>
     void parse_xml(const xml_node &node, T &obj, const string &name)
     {
@@ -133,6 +136,9 @@ namespace ssp4cpp::common::xml
         }
     }
 
+    /**
+     * @brief Parse an optional XML attribute or child element.
+     */
     template <typename T, typename = std::enable_if<is_optional_v<T>>>
     void parse_xml(const xml_node &node, optional<T> &obj, const string &name)
     {
@@ -167,6 +173,9 @@ namespace ssp4cpp::common::xml
         parse_xml(node, *obj, name);
     }
 
+    /**
+     * @brief Parse repeated child nodes into a std::vector.
+     */
     template <typename T, typename = std::enable_if<is_vector_v<T>>>
     void parse_xml(const xml_node &node, vector<T> &obj, const string &name)
     {

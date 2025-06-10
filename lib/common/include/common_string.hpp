@@ -16,6 +16,10 @@ namespace ssp4cpp::common::str
 {
     using namespace interfaces;
 
+    /**
+     * @brief Convert various primitive types and custom objects implementing
+     *        IWritable to their string representation.
+     */
     template <typename T>
     std::string to_str(const T &obj)
     {
@@ -43,6 +47,9 @@ namespace ssp4cpp::common::str
         }
     }
 
+    /**
+     * @brief Convert a map to a multi-line string listing key/value pairs.
+     */
     template <typename T, typename U>
     std::string to_str(const std::map<T, U> &obj)
     {
@@ -56,12 +63,18 @@ namespace ssp4cpp::common::str
         return ss.str();
     }
 
+    /**
+     * @brief Convert an optional value to string, returning "null" when empty.
+     */
     template <typename T>
     std::string to_str(const std::optional<T> &obj)
     {
         return obj ? to_str(obj.value()) : "null";
     }
 
+    /**
+     * @brief Convert a vector of values to a newline separated list inside braces.
+     */
     template <typename T>
     std::string to_str(const std::vector<T> &obj)
     {
@@ -74,6 +87,9 @@ namespace ssp4cpp::common::str
         return result;
     }
 
+    /**
+     * @brief Use operator<< to convert an object to string via a stringstream.
+     */
     template <typename T>
     std::string stream_to_str(const T &obj)
     {
@@ -82,6 +98,9 @@ namespace ssp4cpp::common::str
         return ss.str();
     }
 
+    /**
+     * @brief Parse a string into the requested type.
+     */
     template <typename T>
     T from_str(const std::string &str)
     {
@@ -117,6 +136,9 @@ namespace ssp4cpp::common::str
         }
     }
 
+    /**
+     * @brief Split a delimited string and convert each token to type T.
+     */
     template <typename T>
     std::vector<T> from_strs(const std::string &str, const char del)
     {
@@ -134,6 +156,9 @@ namespace ssp4cpp::common::str
         return list;
     }
 
+    /**
+     * @brief Convenience overload using space as delimiter.
+     */
     template <typename T>
     std::vector<T> from_strs(const std::string &str)
     {

@@ -14,6 +14,9 @@ namespace ssp4cpp::ssp::ext
     using namespace std;
     inline auto log = common::Logger("ssp.ext", common::LogLevel::debug);
 
+    /**
+     * @brief Retrieve the FMU resource names from the given SSP.
+     */
     vector<string> get_fmu_names(ssp4cpp::Ssp &ssp)
     {
         auto names = vector<string>();
@@ -27,6 +30,9 @@ namespace ssp4cpp::ssp::ext
         return names;
     }
 
+    /**
+     * @brief Create a map of FMU names to loaded Fmu objects.
+     */
     map<string, unique_ptr<Fmu>> create_fmu_map(ssp4cpp::Ssp &ssp)
     {
         auto items = map<string, unique_ptr<Fmu>>();

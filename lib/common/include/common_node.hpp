@@ -13,6 +13,9 @@
 namespace ssp4cpp::common::graph
 {
 
+    /**
+     * @brief Basic bidirectional graph node used throughout the project.
+     */
     class Node
     {
     public:
@@ -137,7 +140,10 @@ namespace ssp4cpp::common::graph
 
         std::string to_string() const { return common::str::stream_to_str(*this); }
 
-        /** Return every node reachable through either child- or parent-links. */
+        /**
+         * @brief Return every node reachable through either child or parent
+         *        links starting from this node.
+         */
         std::vector<Node *> all_nodes() const
         {
             std::vector<Node *> result;
@@ -223,9 +229,17 @@ namespace ssp4cpp::common::graph
         /* === Copy helpers ==================================================== */
 
         /** Create a shallow copy of *this. */
+        /**
+         * @brief Create a shallow copy of this node.
+         *
+         * Only the node itself is duplicated, child and parent pointers
+         * still reference the same nodes as the original.
+         */
         Node *shallow_copy() const { return new Node(*this); }
 
-        /** Recursively duplicates the entire graph rooted at *this*. */
+        /**
+         * @brief Recursively duplicate the entire graph rooted at this node.
+         */
         Node *deep_copy() const
         {
             std::unordered_map<const Node *, Node *> map;
@@ -253,7 +267,9 @@ namespace ssp4cpp::common::graph
         static Node *shallow_copy(const Node *root) { return root ? new Node(*root) : nullptr; }
         static Node *deep_copy(const Node *root) { return root ? root->deep_copy() : nullptr; }
 
-        // Recursive iterator for Node and all descendants (pre-order traversal)
+        /**
+         * @brief Recursive iterator for Node and all descendants (pre-order traversal).
+         */
         class recursive_iterator
         {
             std::vector<Node *> stack;
@@ -294,7 +310,9 @@ namespace ssp4cpp::common::graph
             }
         };
 
+        /** @brief Iterator to the first node in a recursive traversal. */
         recursive_iterator begin() { return recursive_iterator(this); }
+        /** @brief End iterator for recursive traversal. */
         recursive_iterator end() { return recursive_iterator(nullptr); }
     };
 }

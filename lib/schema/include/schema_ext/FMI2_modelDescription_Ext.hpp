@@ -22,7 +22,7 @@ namespace ssp4cpp::fmi2::ext
     namespace model_variables
     {
         inline auto log = common::Logger("fmi2.ext.model_variables", common::LogLevel::debug);
-
+        /** @brief Retrieve a variable by index from the model variables list. */
         fmi2ScalarVariable* get_variable(ModelVariables &mv, int index);
     }
 
@@ -36,14 +36,19 @@ namespace ssp4cpp::fmi2::ext
     
     
         // Unknowns
+        /** @brief Get variable dependencies for an Unknown by index. */
         vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u);
     
+        /** @brief Get variable dependencies for an Unknown filtered by kind. */
         vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u, DependenciesKind kind);
     
+        /** @brief Resolve variable dependencies for a single Unknown. */
         vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv);
     
+        /** @brief Resolve variable dependencies filtered by kind. */
         vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind);
     
+        /** @brief Resolve dependencies for multiple Unknowns filtered by kind. */
         vector<VariableDependencyCoupling> get_dependencies_variables(vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind);
     }
 

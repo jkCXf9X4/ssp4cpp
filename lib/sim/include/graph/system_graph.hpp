@@ -20,6 +20,9 @@ namespace ssp4cpp::sim::graph
 
     using SimNode = sim::graph::SimNode;
 
+    /**
+     * @brief Builder utility for different graph representations derived from an SSP.
+     */
     class SystemGraph
     {
     public:
@@ -47,23 +50,27 @@ namespace ssp4cpp::sim::graph
             // create execution graph
         }
         
+        /** @brief Dump the analysis graph as Graphviz dot. */
         void print_dot()
         {
             log.info("analysis_graph DOT: \n{}", SimNode::to_dot(analysis_graph));
         }
 
+        /** @brief Print the Tarjan strongly connected components of the analysis graph. */
         void print_tarjan()
         {
             auto strong_system_graph = common::graph::strongly_connected_components(SimNode::cast_to_parent_ptrs(analysis_graph));
             log.info("{}", common::graph::ssc_to_string(strong_system_graph));
         }
 
+        /** @brief Get nodes without parents to start a traversal. */
         vector<SimNode*> get_start_nodes()
         {
             auto start_nodes = common::graph::Node::get_ancestors(analysis_graph);
             return start_nodes; 
         }
 
+        /** @brief Build a simplified system graph of FMU interconnections. */
         vector<SimNode *> create_system_graph()
         {
             log.ext_trace("[{}] init", __func__);
@@ -85,6 +92,7 @@ namespace ssp4cpp::sim::graph
             return o;
         }
 
+        /** @brief Build a graph containing models, connectors and connections. */
         vector<SimNode *> create_analysis_graph()
         {
             log.ext_trace("[{}] init", __func__);
@@ -122,6 +130,7 @@ namespace ssp4cpp::sim::graph
             return o;
         }
 
+        /** @brief Build a detailed feedthrough graph including internal dependencies. */
         vector<SimNode *> create_feedthrough_graph()
         {
             log.ext_trace("[{}] init", __func__);

@@ -20,6 +20,9 @@ namespace ssp4cpp::sim::graph
 
     using SimNode = sim::graph::SimNode;
 
+    /**
+     * @brief Instantiate Model nodes for each FMU.
+     */
     map<string, Model *> get_new_models(map<string, Fmu *> &fmu_map)
     {
         log.ext_trace("[{}] init", __func__);
@@ -35,6 +38,9 @@ namespace ssp4cpp::sim::graph
         return models;
     }
 
+    /**
+     * @brief Create Connector nodes from the SSP description.
+     */
     map<string, Connector *> get_new_connectors(ssp4cpp::Ssp &ssp, map<string, Model *> models)
     {
         log.ext_trace("[{}] init", __func__);
@@ -56,6 +62,9 @@ namespace ssp4cpp::sim::graph
         return items;
     }
 
+    /**
+     * @brief Create Connection nodes from the SSP description.
+     */
     map<string, Connection *> get_new_connections(ssp4cpp::Ssp &ssp)
     {
         log.ext_trace("[{}] init", __func__);
@@ -70,6 +79,9 @@ namespace ssp4cpp::sim::graph
         return items;
     }
 
+    /**
+     * @brief Create nodes representing model variables for each FMU.
+     */
     map<string, ModelVariable *> get_new_model_variables(map<string, Fmu *> &fmu_map)
     {
         log.ext_trace("[{}] init", __func__);
@@ -88,6 +100,9 @@ namespace ssp4cpp::sim::graph
         return items;
     }
 
+    /**
+     * @brief Delete and remove nodes that have no connections.
+     */
     vector<SimNode *> remove_dangling(vector<SimNode *> nodes)
     {
         vector<SimNode *> out;

@@ -13,6 +13,9 @@ namespace ssp4cpp
 {
     using namespace common;
 
+    /**
+     * @brief Base class for archives extracted to a temporary directory.
+     */
     class Archive
     {
     public:
@@ -31,6 +34,9 @@ namespace ssp4cpp
         Archive &operator=(const Archive &) = delete;
         Archive &operator=(Archive &&other) = delete;
 
+        /**
+         * @brief Extract a file or directory to a working location.
+         */
         Archive(const path &file, const std::string &tmp_prefix)
             : original_file(file)
         {
@@ -53,6 +59,7 @@ namespace ssp4cpp
             }
         }
 
+        /** @brief Clean up any temporary directory used by the archive. */
         virtual ~Archive()
         {
             log.debug("Destructor called for archive {}", original_file.string());
