@@ -1,6 +1,6 @@
 #pragma once
 
-#include "simnode.hpp"
+#include "node_base.hpp"
 
 #include <vector>
 #include <map>

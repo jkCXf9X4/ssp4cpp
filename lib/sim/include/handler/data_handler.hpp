@@ -12,11 +12,12 @@
 #include <map>
 #include <stdexcept>
 
-namespace ssp4cpp::sim::data
+
+// Data in this case means data passed around between models as input/output
+namespace ssp4cpp::sim::handler
 {
 
-
-
+    
     class Data
     {
     private:
@@ -89,7 +90,7 @@ namespace ssp4cpp::sim::data
         }
     };
 
-    class DataManager
+    class DataHandler
     {
     public:
         /*
@@ -108,9 +109,9 @@ namespace ssp4cpp::sim::data
         uint64_t reference_counter;
         std::vector<RingBuffer> buffers;
 
-        DataManager() = delete;
+        DataHandler() = delete;
 
-        DataManager(size_t buffer_size)
+        DataHandler(size_t buffer_size)
         {
             reference_counter = 0;
             this->buffer_size = buffer_size;

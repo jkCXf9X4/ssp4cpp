@@ -1,32 +1,31 @@
 #include "ssp.hpp"
 #include "fmu.hpp"
-#include "ssp_ext.hpp"
+// #include "ssp_ext.hpp"
 #include "common_io.hpp"
 #include "common_log.hpp"
-#include "common_string.hpp"
-#include "common_node.hpp"
-#include "common_json.hpp"
-#include "common_node.hpp"
+// #include "common_string.hpp"
+// #include "common_node.hpp"
+// #include "common_json.hpp"
+// #include "common_node.hpp"
 #include "common_map.hpp"
-#include "common_thread_pool.hpp"
-#include "common_time.hpp"
-#include <unordered_set>
+// #include "common_thread_pool.hpp"
+// #include "common_time.hpp"
+// #include <unordered_set>
 
-#include "tarjan.hpp"
 
-#include "SSP1_SystemStructureDescription_Ext.hpp"
-#include "FMI2_modelDescription_Ext.hpp"
+// #include "SSP1_SystemStructureDescription_Ext.hpp"
+// #include "FMI2_modelDescription_Ext.hpp"
 
 #include "simulation.hpp"
 
-#include <iostream>
-#include <fstream>
-#include <cassert>
+// #include <iostream>
+// #include <fstream>
+// #include <cassert>
 #include <vector>
-#include <algorithm>
+// #include <algorithm>
 #include <map>
-#include <set>
-#include <list>
+// #include <set>
+// #include <list>
 
 using namespace std;
 using namespace ssp4cpp;
@@ -43,7 +42,7 @@ namespace ssp4cpp::sim
 
         unique_ptr<Ssp> ssp;
         std::map<std::string, std::unique_ptr<ssp4cpp::Fmu>> fmus;
-        std::map<std::string, ssp4cpp::Fmu *> fmus_ref;
+        std::map<std::string, ssp4cpp::Fmu *> fmus_ref; // Non owning
 
         common::json::Json model_props;
 
@@ -68,6 +67,7 @@ namespace ssp4cpp::sim
             log.debug("[{}] Extra properties:\n{}\n", __func__, json::to_string(model_props));
 
             sim = Simulation(*ssp, fmus_ref);
+            sim.execute();
         }
 
         ~Simulator()
