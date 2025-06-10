@@ -281,9 +281,9 @@ namespace ssp4cpp::common::graph
                 Node *current = stack.back();
                 stack.pop_back();
                 // Push children in reverse order so leftmost is on top
-                for (auto it : current->children)
+                for (auto child : current->children)
                 {
-                    stack.push_back(*it);
+                    stack.push_back(child);
                 }
                 return *this;
             }
