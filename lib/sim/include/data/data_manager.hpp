@@ -15,6 +15,8 @@
 namespace ssp4cpp::sim::data
 {
 
+
+
     class Data
     {
     private:
@@ -61,7 +63,6 @@ namespace ssp4cpp::sim::data
 
         void push(void *obj, u_int64_t time)
         {
-
             auto d = Data(obj_size);
 
             d.setData(obj);
@@ -90,7 +91,10 @@ namespace ssp4cpp::sim::data
 
     class DataManager
     {
+    public:
         /*
+        Contains multiple managers for a type
+
         All timestamps will be for when the data was created
 
         Time A -> execution of model -> time B
@@ -98,13 +102,13 @@ namespace ssp4cpp::sim::data
 
         getData will use 'time A'
         This to ensure that only valid data is used
-
-
         */
-        size_t buffer_size = 10; // default
+        size_t buffer_size; // default
 
         uint64_t reference_counter;
         std::vector<RingBuffer> buffers;
+
+        DataManager() = delete;
 
         DataManager(size_t buffer_size)
         {

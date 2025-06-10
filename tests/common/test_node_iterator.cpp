@@ -10,13 +10,31 @@ TEST_CASE("Node iterator traverses node and direct children", "[Node][iterator]"
     a.add_child(&b);
     a.add_child(&c);
     std::vector<std::string> names;
-    for (auto it = a.begin(); it != a.end(); ++it) {
-        names.push_back((*it)->name);
+    for (auto node : a) {
+        names.push_back(node->name);
     }
     REQUIRE(names.size() == 3);
-    REQUIRE(names[0] == "A");
-    REQUIRE(names[1] == "B");
-    REQUIRE(names[2] == "C");
+
+    std::vector<std::string> expected = {"A", "B", "C"};
+    REQUIRE(names == expected);
+
+}
+
+TEST_CASE("Node pointer iterator traverses node", "[Node][iterator]") {
+    auto a = new Node("A");
+    auto b = new Node("B");
+    auto c = new Node("C");
+    a->add_child(b);
+    a->add_child(c);
+    std::vector<std::string> names;
+    for (auto node : *a) {
+        names.push_back(node->name);
+    }
+    REQUIRE(names.size() == 3);
+
+    std::vector<std::string> expected = {"A", "B", "C"};
+    REQUIRE(names == expected);
+
 }
 
 TEST_CASE("Node recursive_iterator traverses all descendants in pre-order", "[Node][recursive_iterator]") {
@@ -32,16 +50,10 @@ TEST_CASE("Node recursive_iterator traverses all descendants in pre-order", "[No
     // |    |
     // D    E
     std::vector<std::string> rec_names;
-    for (auto it = a.begin(); it != a.end(); ++it) {
-        rec_names.push_back((*it)->name);
+
+    for (auto node : a) {
+        rec_names.push_back(node->name);
     }
-    // begin()/end() is not recursive, should be [A, B, C]
-    REQUIRE(rec_names.size() == 3);
-    // Now test recursive traversal
-    rec_names.clear();
-    for (auto it = a.recursive_iterator(&a); it != a.recursive_iterator(nullptr); ++it) {
-        rec_names.push_back((*it)->name);
-    }
-    std::vector<std::string> expected = {"A", "B", "D", "C", "E"};
+    std::vector<std::string> expected = {"A", "B", "C", "D", "E"};
     REQUIRE(rec_names == expected);
 }

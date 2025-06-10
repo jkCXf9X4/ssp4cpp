@@ -15,6 +15,8 @@ namespace ssp4cpp::common::graph
 
     class Node
     {
+        common::Logger log = common::Logger("Node", common::LogLevel::ext_trace);
+
     public:
         std::string name;
         std::vector<Node *> children = {};
@@ -220,6 +222,25 @@ namespace ssp4cpp::common::graph
             return ss.str();
         }
 
+        template <typename T>
+        static vector<T *> pop_orphans(vector<T *> nodes)
+        {
+            vector<T *> out;
+            for (auto &n : nodes)
+            {
+                if (n->is_orphan())
+                {
+                    log.ext_trace("[{}] Deleting {}", __func__, n->name);
+                    delete n;
+                }
+                else
+                {
+                    out.push_back(n);
+                }
+            }
+            return out;
+        }
+
         /* === Copy helpers ==================================================== */
 
         /** Create a shallow copy of *this. */
@@ -256,7 +277,7 @@ namespace ssp4cpp::common::graph
         // Recursive iterator for Node and all descendants (pre-order traversal)
         class recursive_iterator
         {
-            std::vector<Node *> stack;
+            std::list<Node *> stack;
 
         public:
             using iterator_category = std::forward_iterator_tag;
@@ -265,25 +286,28 @@ namespace ssp4cpp::common::graph
             using pointer = Node **;
             using reference = Node *&;
 
+            // set first element
             recursive_iterator(Node *root)
             {
                 if (root)
                     stack.push_back(root);
             }
 
+            // access current element
             Node *operator*() const
             {
-                return stack.back();
+                return stack.front();
             }
 
             recursive_iterator &operator++()
             {
-                Node *current = stack.back();
-                stack.pop_back();
-                // Push children in reverse order so leftmost is on top
-                for (auto it : current->children)
+                Node *current = stack.front();
+                stack.pop_front();
+
+                // Add the children of the removed item
+                for (auto child : current->children)
                 {
-                    stack.push_back(*it);
+                    stack.push_back(child);
                 }
                 return *this;
             }

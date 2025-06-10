@@ -14,17 +14,18 @@ namespace ssp4cpp::ssp::ext
     using namespace std;
     inline auto log = common::Logger("ssp.ext", common::LogLevel::debug);
 
-    vector<string> get_fmu_names(ssp4cpp::Ssp &ssp)
+    map<string,string> get_resources(ssp4cpp::Ssp &ssp)
     {
-        auto names = vector<string>();
+        auto resources = map<string,string>();
 
         for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
         {
             auto name = resource->name.value_or("null");
-            names.push_back(name);
-            log.debug("Resource {}", name);
+            log.debug("Resource {} : {}", name, resource->source);
+
+            resources[name] = resource->source
         }
-        return names;
+        return resources;
     }
 
     map<string, unique_ptr<Fmu>> create_fmu_map(ssp4cpp::Ssp &ssp)

@@ -6,22 +6,16 @@ The direction of the graph is
 
 A -> B : A is the parent of B, B is the child of A
 
+Analysis graph
+
+setup a representation that assist with analyzing the system
+
 input connector -> fmu -> output connectors 
 
 output connectors -> input connector
 
-this would enable switching the "fmu" to the internal dependencies later
 
 
+Sim graph 
 
-# System graph
-
-There is a overview graph showing only the connections between the FMUs
-
-# Detailed graph
-
-There is also a detailed graph showing all connectors
-
-# Direct feedthough graph
-
-A very detailed graph including detailing the dependency connections thru the FMUs
+model -> model
