@@ -11,69 +11,43 @@
 #include <deque>
 #include <map>
 #include <stdexcept>
-
+#include <iostream>
 
 // Data in this case means data passed around between models as input/output
 namespace ssp4cpp::sim::handler
 {
+    using namespace std;
 
-    
     class Data
     {
     private:
-        size_t size;
+        size_t size = 0;
 
     public:
-        void *data;
-        u_int64_t timestamp;
+        void *data = nullptr;
+        u_int64_t timestamp = 0;
 
-        Data() : size(0), data(nullptr), timestamp(0) {}
+        Data() {}
 
         Data(size_t size)
         {
             this->size = size;
             data = malloc(size);
-            timestamp = 0;
-        }
-
-        Data(u_int64_t timestamp, void* data, size_t size) : Data(size)
-        {
-            this->timestamp = timestamp;
-            setData(data);
-        }
-
-        // Delete copy constructor and copy assignment to prevent double free
-        Data(const Data&) = delete;
-        Data& operator=(const Data&) = delete;
-        // Move constructor
-        Data(Data&& other) noexcept : size(other.size), data(other.data), timestamp(other.timestamp) {
-            other.data = nullptr;
-            other.size = 0;
-            other.timestamp = 0;
-        }
-
-        // Move assignment
-        Data& operator=(Data&& other) noexcept {
-            if (this != &other) {
-                free(data);
-                data = other.data;
-                size = other.size;
-                timestamp = other.timestamp;
-                other.data = nullptr;
-                other.size = 0;
-                other.timestamp = 0;
-            }
-            return *this;
         }
 
         ~Data()
         {
-            free(data);
+            if (data)
+            {
+                free(data);
+                data = nullptr;
+            }
         }
 
-        void setData(void *obj)
+        void setData(void *obj, u_int64_t time)
         {
             std::memcpy(data, obj, size);
+            timestamp = time;
         }
     };
 
@@ -85,7 +59,7 @@ namespace ssp4cpp::sim::handler
         // Remove when the ring buffer is done
         size_t buffer_size;
         size_t obj_size;
-        std::deque<Data> buffer = {};
+        std::deque<unique_ptr<Data>> buffer = {};
 
     public:
         RingBuffer(size_t buffer_size, size_t obj_size)
@@ -96,20 +70,13 @@ namespace ssp4cpp::sim::handler
             buffer.resize(buffer_size);
         }
 
-        // no move or copy
-        RingBuffer(const RingBuffer&) = delete;
-        RingBuffer& operator=(const RingBuffer&) = delete;
-        RingBuffer(RingBuffer&& other) = delete;
-        RingBuffer& operator=(RingBuffer&& other) = delete;
-
-
         void push(void *obj, u_int64_t time)
         {
-            // Data d(obj_size);
-            // d.setData(obj);
-            // d.timestamp = time;
+            auto d = make_unique<Data>(obj_size);
+            d->setData(obj, time);
 
-            buffer.push_front(Data(time, obj, obj_size));
+            buffer.push_front(std::move(d));
+
             while (buffer.size() > buffer_size)
             {
                 buffer.pop_back();
@@ -119,11 +86,11 @@ namespace ssp4cpp::sim::handler
         void *get_valid(u_int64_t time)
         {
             // Return the first item where the timestamp is made prior to the time
-            for (auto& n : buffer)
+            for (auto &n : buffer)
             {
-                if (n.timestamp <= time)
+                if (n && n->data != nullptr && n->timestamp <= time)
                 {
-                    return n.data;
+                    return n->data;
                 }
             }
             return nullptr;
@@ -144,12 +111,12 @@ namespace ssp4cpp::sim::handler
         getData will use 'time A'
         This to ensure that only valid data is used
         */
-        size_t buffer_size; // default
+        size_t buffer_size;
 
         uint64_t reference_counter;
-        std::list<RingBuffer> buffers;
+        std::vector<unique_ptr<RingBuffer>> buffers;
 
-        DataHandler() = delete;
+        DataHandler() {}
 
         DataHandler(size_t buffer_size)
         {
@@ -160,8 +127,9 @@ namespace ssp4cpp::sim::handler
         // Return the reference to the data
         u_int64_t initData(size_t obj_size)
         {
-            auto buffer = RingBuffer(buffer_size, obj_size);
-            buffers.push_back(buffer);
+            auto buffer = make_unique<RingBuffer>(buffer_size, obj_size);
+            buffers.push_back(std::move(buffer));
+
             auto pos = reference_counter;
             reference_counter++;
             return pos;
@@ -169,12 +137,12 @@ namespace ssp4cpp::sim::handler
 
         void setData(u_int64_t time, u_int64_t reference, void *data)
         {
-            buffers[reference].push(data, time);
+            buffers[reference]->push(data, time);
         }
 
         void *getData(u_int64_t time, u_int64_t reference)
         {
-            return buffers[reference].get_valid(time);
+            return buffers[reference]->get_valid(time);
         }
     };
 }
