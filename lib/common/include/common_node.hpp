@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common_string.hpp"
+#include "common_log.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -15,7 +16,7 @@ namespace ssp4cpp::common::graph
 
     class Node
     {
-        common::Logger log = common::Logger("Node", common::LogLevel::ext_trace);
+        Logger log = Logger("Node", LogLevel::ext_trace);
 
     public:
         std::string name;
@@ -223,14 +224,14 @@ namespace ssp4cpp::common::graph
         }
 
         template <typename T>
-        static vector<T *> pop_orphans(vector<T *> nodes)
+        static std::vector<T *> pop_orphans(std::vector<T *> nodes)
         {
-            vector<T *> out;
+            std::vector<T *> out;
             for (auto &n : nodes)
             {
                 if (n->is_orphan())
                 {
-                    log.ext_trace("[{}] Deleting {}", __func__, n->name);
+                    // log.ext_trace("[{}] Deleting {}", __func__, n->name);
                     delete n;
                 }
                 else

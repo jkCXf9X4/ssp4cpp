@@ -70,12 +70,9 @@ namespace ssp4cpp::sim::graph
             map<string, unique_ptr<ModelNode>> models;
             for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resources(ssp))
             {
-                auto fmu = fmu_handler->fmus[ssp_resource_name];
-
+                auto fmu = (fmu_handler->fmus[ssp_resource_name]).get();
                 auto m = make_unique<ModelNode>(ssp_resource_name, local_resource_name, fmu);
-
                 log.trace("[{}] New Model: {}", __func__, m->name);
-
                 models[m->name] = std::move(m);
             }
             log.ext_trace("[{}] exit", __func__);
@@ -86,8 +83,8 @@ namespace ssp4cpp::sim::graph
         std::unique_ptr<ConnectorNode> create_connector(std::string component_name,
                                                         std::string connector_name)
         {
-            auto fmu = fmu_handler->fmus[component_name];
-            auto var = fmu->md.get_variable_by_name(connector_name);
+            auto fmu = fmu_handler->fmus[component_name].get();
+            auto var = fmu->model_description->get_variable_by_name(connector_name);
 
             if (var.is_boolean())
             {
@@ -171,14 +168,14 @@ namespace ssp4cpp::sim::graph
             return std::move(items);
         }
 
-        Graph build()
+        unique_ptr<Graph> build()
         {
             log.ext_trace("[{}] init", __func__);
             auto models = create_models(*ssp);
             auto connectors = create_connectors(*ssp);
             auto connections = create_connections(*ssp);
 
-            auto fmu_connections = ssp1::ext::elements::get_fmu_connections(*ssp.ssd);
+            auto fmu_connections = ssp1::ext::elements::get_fmu_connections(ssp->ssd);
 
             log.debug("[{}] Connecting FMUs", __func__);
             for (auto &[source, target] : fmu_connections)
@@ -215,7 +212,7 @@ namespace ssp4cpp::sim::graph
             // see below
 
             log.ext_trace("[{}] exit", __func__);
-            return Graph(std::move(models), std::move(connectors), std::move(connections));
+            return make_unique<Graph>(std::move(models), std::move(connectors), std::move(connections));
         }
     };
 

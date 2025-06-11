@@ -5,7 +5,7 @@
 #include "common_log.hpp"
 // #include "common_string.hpp"
 // #include "common_node.hpp"
-// #include "common_json.hpp"
+#include "common_json.hpp"
 // #include "common_node.hpp"
 #include "common_map.hpp"
 // #include "common_thread_pool.hpp"
@@ -66,7 +66,7 @@ namespace ssp4cpp::sim
             model_props = json::parse_json_file(props_path);
             log.debug("[{}] Extra properties:\n{}\n", __func__, json::to_string(model_props));
 
-            sim = Simulation(*ssp, fmus_ref);
+            sim = Simulation(ssp.get(), fmus_ref);
             sim.execute();
         }
 

@@ -27,10 +27,13 @@ namespace ssp4cpp::sim::handler
         void *data;
         u_int64_t timestamp;
 
+        Data() : size(0), data(nullptr), timestamp(0) {}
+
         Data(size_t size)
         {
             this->size = size;
             data = malloc(size);
+            timestamp = 0;
         }
         ~Data()
         {
@@ -69,7 +72,7 @@ namespace ssp4cpp::sim::handler
             d.setData(obj);
             d.timestamp = time;
 
-            buffer.push_front(d);
+            buffer.push_front(std::move(d));
             while (buffer.size() > buffer_size)
             {
                 buffer.pop_back();

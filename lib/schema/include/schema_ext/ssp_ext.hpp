@@ -23,7 +23,7 @@ namespace ssp4cpp::ssp::ext
             auto name = resource->name.value_or("null");
             log.debug("Resource {} : {}", name, resource->source);
 
-            resources[name] = resource->source
+            resources[name] = resource->source;
         }
         return resources;
     }

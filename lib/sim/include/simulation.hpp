@@ -3,11 +3,13 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
+#include "common_thread_pool.hpp"
+
 #include "graph_builder.hpp"
 
 #include "data_handler.hpp"
 #include "fmu_handler.hpp"
-#include "connection_handler.hpp"
+
 
 #include "ssp_ext.hpp"
 
@@ -30,7 +32,6 @@ namespace ssp4cpp::sim
 
         unique_ptr<handler::DataHandler> data_handler;
         unique_ptr<handler::FmuHandler> fmu_handler;
-        unique_ptr<handler::ConnectionHandler> connection_handler;
 
         Simulation() {}
 
@@ -39,11 +40,13 @@ namespace ssp4cpp::sim
             data_handler = make_unique<handler::DataHandler>(10);
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
 
-            graph = GraphBuilder()
+            graph = graph::GraphBuilder()
                         .set_ssp(ssp)
                         .set_fmu_handler(fmu_handler.get())
                         .set_data_handler(data_handler.get())
                         .build();
+
+            fmu_handler->init();
 
             // make analysis
             // - analyze model feedthrough
@@ -55,15 +58,42 @@ namespace ssp4cpp::sim
             // simplify graph if possible
         }
 
-        void invoke(sim_graph::Model *node, uint64_t timestep)
+        void invoke(graph::ModelNode *node, uint64_t timestep)
         {
             for (auto c_ : node->children)
             {
-                auto c = (SimNode *)c_;
+                auto c = (graph::ModelNode*)c_;
                 c->invoke(timestep);
                 invoke(c, timestep);
             }
         }
+
+
+
+        void execute()
+        {
+
+            log.info("[{}] Starting simulation...", __func__);
+            ThreadPool pool(5);
+
+            uint64_t time = 0;
+            uint64_t end_time = 10 * time::nanoseconds_per_second;
+            uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
+
+            auto start_nodes = graph->get_start_nodes();
+            assert(start_nodes.size() == 1);
+            auto start_node = start_nodes[0];
+
+            // simulation time loop: invoke graph each timestep
+            while (time < end_time)
+            {
+                invoke(start_node, timestep);
+                time += timestep;
+            }
+
+            log.info("[{}] Simulation completed", __func__);
+        }
+    };
 
         // /**
         //  * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
@@ -99,36 +129,5 @@ namespace ssp4cpp::sim
         //         ready.swap(next);
         //     }
         // }
-
-        void execute()
-        {
-
-            log.info("[{}] Starting simulation...", __func__);
-            ThreadPool pool(5);
-
-            uint64_t time = 0;
-            uint64_t end_time = 10 * time::nanoseconds_per_second;
-            uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
-
-            auto start_nodes = system_graph.get_start_nodes();
-            assert(start_nodes.size() == 1);
-            auto start_node = start_nodes[0];
-
-            for (auto node : *start_node)
-            {
-                auto n = (SimNode *)node;
-                n->init();
-            }
-
-            // simulation time loop: invoke graph each timestep
-            while (time < end_time)
-            {
-                invoke(start_node, timestep);
-                time += timestep;
-            }
-
-            log.info("[{}] Simulation completed", __func__);
-        }
-    };
 
 }

@@ -59,7 +59,7 @@ namespace ssp4cpp::sim::graph
         {
             for (auto &[_, c] : input_connectors)
             {
-                c->write_to_model(time)
+                c->write_to_model(time);
             }
         }
 
@@ -67,7 +67,7 @@ namespace ssp4cpp::sim::graph
         {
             for (auto &[_, c] : output_connectors)
             {
-                c->read_from_model(time)
+                c->read_from_model(time);
             }
         }
 
@@ -81,7 +81,7 @@ namespace ssp4cpp::sim::graph
             }
         }
         
-        void invoke(uint64_t timestep)
+        uint64_t invoke(uint64_t timestep)
         {
             start_time = end_time;
             end_time = start_time + timestep;

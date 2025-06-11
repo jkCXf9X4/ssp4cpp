@@ -1,19 +1,20 @@
 #include <catch.hpp>
-#include "data/data_manager.hpp"
+#include "data_handler.hpp"
+
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include <cstdint>
 #include <cstring>
 
-using namespace ssp4cpp::sim::data;
+using namespace ssp4cpp::sim::handler;
 
 struct TestStruct {
     int a;
     double b;
 };
 
-TEST_CASE("DataManager basic set/get", "[DataManager]") {
-    DataManager mgr(5);
+TEST_CASE("DataHandler basic set/get", "[DataHandler]") {
+    DataHandler mgr(5);
     size_t obj_size = sizeof(TestStruct);
     u_int64_t ref = mgr.initData(obj_size);
 
@@ -37,8 +38,8 @@ TEST_CASE("DataManager basic set/get", "[DataManager]") {
     REQUIRE_THAT(res1->b, Catch::Matchers::WithinAbs(2.71, 0.1));
 }
 
-TEST_CASE("DataManager returns nullptr for no valid data", "[DataManager]") {
-    DataManager mgr(3);
+TEST_CASE("DataHandler returns nullptr for no valid data", "[DataHandler]") {
+    DataHandler mgr(3);
     size_t obj_size = sizeof(TestStruct);
     u_int64_t ref = mgr.initData(obj_size);
 
@@ -51,8 +52,8 @@ TEST_CASE("DataManager returns nullptr for no valid data", "[DataManager]") {
     REQUIRE(data == nullptr);
 }
 
-TEST_CASE("DataManager buffer size limit", "[DataManager]") {
-    DataManager mgr(2);
+TEST_CASE("DataHandler buffer size limit", "[DataHandler]") {
+    DataHandler mgr(2);
     size_t obj_size = sizeof(TestStruct);
     u_int64_t ref = mgr.initData(obj_size);
 

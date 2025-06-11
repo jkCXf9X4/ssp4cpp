@@ -28,20 +28,18 @@
 // #include <set>
 // #include <list>
 
+using namespace ssp4cpp;
+using namespace ssp4cpp::common;
 
-namespace ssp4cpp
+int main()
 {
-    using namespace common;
-    int main()
-    {
-        auto log = Logger("main", LogLevel::debug);
-        log.info("[{}] enter", __func__);
+    auto log = Logger("main", LogLevel::debug);
+    log.info("[{}] enter", __func__);
 
-        // auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
-        auto sim = sim::Simulator("./resources/delay_sys.ssp", "./resources/model_props.json");
-        // sim.execute();
+    // auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
+    auto sim = sim::Simulator("./resources/delay_sys.ssp", "./resources/model_props.json");
+    // sim.execute();
 
-        log.info("[{}] exit", __func__);
-        return 0;
-    }
+    log.info("[{}] exit", __func__);
+    return 0;
 }
