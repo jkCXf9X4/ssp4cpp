@@ -35,6 +35,37 @@ namespace ssp4cpp::sim::handler
             data = malloc(size);
             timestamp = 0;
         }
+
+        Data(u_int64_t timestamp, void* data, size_t size) : Data(size)
+        {
+            this->timestamp = timestamp;
+            setData(data);
+        }
+
+        // Delete copy constructor and copy assignment to prevent double free
+        Data(const Data&) = delete;
+        Data& operator=(const Data&) = delete;
+        // Move constructor
+        Data(Data&& other) noexcept : size(other.size), data(other.data), timestamp(other.timestamp) {
+            other.data = nullptr;
+            other.size = 0;
+            other.timestamp = 0;
+        }
+
+        // Move assignment
+        Data& operator=(Data&& other) noexcept {
+            if (this != &other) {
+                free(data);
+                data = other.data;
+                size = other.size;
+                timestamp = other.timestamp;
+                other.data = nullptr;
+                other.size = 0;
+                other.timestamp = 0;
+            }
+            return *this;
+        }
+
         ~Data()
         {
             free(data);
@@ -65,14 +96,20 @@ namespace ssp4cpp::sim::handler
             buffer.resize(buffer_size);
         }
 
+        // no move or copy
+        RingBuffer(const RingBuffer&) = delete;
+        RingBuffer& operator=(const RingBuffer&) = delete;
+        RingBuffer(RingBuffer&& other) = delete;
+        RingBuffer& operator=(RingBuffer&& other) = delete;
+
+
         void push(void *obj, u_int64_t time)
         {
-            auto d = Data(obj_size);
+            // Data d(obj_size);
+            // d.setData(obj);
+            // d.timestamp = time;
 
-            d.setData(obj);
-            d.timestamp = time;
-
-            buffer.push_front(std::move(d));
+            buffer.push_front(Data(time, obj, obj_size));
             while (buffer.size() > buffer_size)
             {
                 buffer.pop_back();
@@ -82,7 +119,7 @@ namespace ssp4cpp::sim::handler
         void *get_valid(u_int64_t time)
         {
             // Return the first item where the timestamp is made prior to the time
-            for (Data n : buffer)
+            for (auto& n : buffer)
             {
                 if (n.timestamp <= time)
                 {
@@ -110,7 +147,7 @@ namespace ssp4cpp::sim::handler
         size_t buffer_size; // default
 
         uint64_t reference_counter;
-        std::vector<RingBuffer> buffers;
+        std::list<RingBuffer> buffers;
 
         DataHandler() = delete;
 
