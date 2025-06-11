@@ -28,11 +28,10 @@
 // #include <set>
 // #include <list>
 
-using namespace common;
 
 namespace ssp4cpp
 {
-
+    using namespace common;
     int main()
     {
         auto log = Logger("main", LogLevel::debug);

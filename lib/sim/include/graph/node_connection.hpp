@@ -17,7 +17,7 @@
 namespace ssp4cpp::sim::graph
 {
  
-    class Connection : public NodeBase
+    class ConnectionNode : public NodeBase
     {
     public:
         string start_component;
@@ -25,9 +25,9 @@ namespace ssp4cpp::sim::graph
         string end_component;
         string end_connector;
 
-        Connection() {}
+        ConnectionNode() {}
 
-        Connection(ssp4cpp::ssp1::ssd::Connection *connection)
+        ConnectionNode(ssp4cpp::ssp1::ssd::Connection *connection)
         {
             start_component = connection->startElement.value();
             start_connector = connection->startConnector;
@@ -39,7 +39,7 @@ namespace ssp4cpp::sim::graph
 
         void update_name()
         {
-            this->name = Connection::create_name(start_component, start_connector, end_component, end_connector);
+            this->name = ConnectionNode::create_name(start_component, start_connector, end_component, end_connector);
         }
 
         static std::string create_name(string &start_com, string &start_con, string &end_com, string &end_con)
@@ -49,15 +49,15 @@ namespace ssp4cpp::sim::graph
 
         std::string get_source_connector_name()
         {
-            return Connector::create_name(start_component, start_connector);
+            return ConnectorNode::create_name(start_component, start_connector);
         }
 
         std::string get_target_connector_name()
         {
-            return Connector::create_name(end_component, end_connector);
+            return ConnectorNode::create_name(end_component, end_connector);
         }
 
-        friend ostream &operator<<(ostream &os, const Connection &obj)
+        friend ostream &operator<<(ostream &os, const ConnectionNode &obj)
         {
             os << "Connection { \n"
                << "name: " << obj.name << endl

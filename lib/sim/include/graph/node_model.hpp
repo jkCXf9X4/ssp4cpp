@@ -8,6 +8,8 @@
 #include "node_base.hpp"
 #include "node_connector.hpp"
 
+#include "fmu_handler.hpp"
+
 #include "fmu.hpp"
 #include <fmi4cpp/fmi4cpp.hpp>
 
@@ -17,23 +19,33 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class Model : public NodeBase
+    class ModelNode : public NodeBase
     {
     public:
+        common::Logger log = common::Logger("graph::Model", common::LogLevel::ext_trace);
+
         string fmu_name;
 
-        map<string, Connector *> input_connector;
-        map<string, Connector *> output_connector;
+        map<string, ConnectorNode *> input_connectors;
+        map<string, ConnectorNode *> output_connectors;
 
-        Model() {}
+        uint64_t start_time = 0;
+        uint64_t end_time = 0;
+        uint64_t delayed_time = 0;
+        uint64_t delay = 0;
 
-        Model(std::string name, std::string fmu_name)
+        handler::FmuInfo *fmu;
+
+        ModelNode() {}
+
+        ModelNode(std::string name, std::string fmu_name, handler::FmuInfo *fmu)
         {
+            this->fmu = fmu;
             this->name = name;
             this->fmu_name = fmu_name;
         }
 
-        friend ostream &operator<<(ostream &os, const Model &obj)
+        friend ostream &operator<<(ostream &os, const ModelNode &obj)
         {
             os << "Model { \n"
                << "Name: " << obj.name << endl
@@ -42,69 +54,47 @@ namespace ssp4cpp::sim::graph
 
             return os;
         }
+
+        void set_input(uint64_t time)
+        {
+            for (auto &[_, c] : input_connectors)
+            {
+                c->write_to_model(time)
+            }
+        }
+
+        void get_output(uint64_t time)
+        {
+            for (auto &[_, c] : output_connectors)
+            {
+                c->read_from_model(time)
+            }
+        }
+
+        void take_step(uint64_t timestep)
+        {
+            auto step_double = (double)timestep / ssp4cpp::common::time::nanoseconds_per_second;
+            log.trace("[{}] Model {} ", __func__, step_double);
+            if (fmu->model->step(step_double) == false)
+            {
+                log.error("Error! step() returned with status: {}", std::to_string((int)fmu->model->last_status()));
+            }
+        }
+        
+        void invoke(uint64_t timestep)
+        {
+            start_time = end_time;
+            end_time = start_time + timestep;
+            delayed_time = end_time - delay;
+            log.trace("[{}] SimNode start_time: {} end_time: {}, delayed_time {}", __func__, start_time, end_time, delayed_time);
+            
+            set_input(start_time);
+
+            take_step(timestep);
+
+            get_output(delayed_time);
+
+            return delayed_time;
+        }
     };
-
-
-    // public:
-    //     uint64_t start_time = 0;
-    //     uint64_t end_time = 0;
-    //     uint64_t delayed_time = 0;
-    //     uint64_t delay = 0;
-
-    //     bool is_init = false;
-
-    //     fmi4cpp::fmi2::cs_slave *model;
-
-    //     common::Logger log = common::Logger("sim_graph::Model", common::LogLevel::ext_trace);
-
-    //     Model() : Node() {}
-
-    //     Model(const std::string &name, fmi4cpp::fmi2::cs_slave *model) : ssp4cpp::common::graph::Node(name)
-    //     {
-    //         this->model = model;
-    //     }
-
-    //     void add_incoming_connection()
-    //     {
-    //         //TODO
-    //     }
-
-    //     uint64_t invoke(uint64_t timestep)
-    //     {
-    //         fetch_incoming_data();
-
-    //         auto out_time = take_step(timestep);
-
-    //         store_result();
-    //     }
-
-    //     void fetch_incoming_data()
-    //     {
-    //         //TODO
-    //     }
-
-    //     void store_result()
-    //     {
-    //         //TODO
-    //     }
-
-    //     uint64_t take_step(uint64_t timestep)
-    //     {
-    //         // calculate step times
-    //         start_time = end_time;
-    //         end_time = start_time + timestep;
-    //         delayed_time = end_time - delay;
-    //         log.trace("[{}] SimNode start_time: {} end_time: {}, delayed_time {}", __func__, start_time, end_time, delayed_time);
-
-    //         // take step
-    //         auto step_double = (double)timestep / ssp4cpp::common::time::nanoseconds_per_second;
-    //         log.trace("[{}] Model {} ", __func__, step_double);
-    //         if (model->step(step_double) == false)
-    //         {
-    //             log.error("Error! step() returned with status: {}", std::to_string((int)model->last_status()));
-    //         }
-
-    //         return delayed_time;
-    //     }
-
 }

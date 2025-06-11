@@ -17,15 +17,15 @@
 namespace ssp4cpp::sim::graph
 {
     // intra model connections
-    class ModelVariable : public NodeBase
+    class ModelVariableNode : public NodeBase
     {
     public:
         string component;
         string variable_name;
 
-        ModelVariable() {}
+        ModelVariableNode() {}
 
-        ModelVariable(string component, string variable_name)
+        ModelVariableNode(string component, string variable_name)
         {
             this->component = component;
             this->variable_name = variable_name;
@@ -34,15 +34,15 @@ namespace ssp4cpp::sim::graph
 
         void update_name()
         {
-            this->name = Connector::create_name(component, variable_name);
+            this->name = ConnectorNode::create_name(component, variable_name);
         }
 
         std::string get_connector_name()
         {
-            return Connector::create_name(component, variable_name);
+            return ConnectorNode::create_name(component, variable_name);
         }
 
-        friend ostream &operator<<(ostream &os, const ModelVariable &obj)
+        friend ostream &operator<<(ostream &os, const ModelVariableNode &obj)
         {
             os << "ModelVariable { \n"
                << "name: " << obj.name << endl

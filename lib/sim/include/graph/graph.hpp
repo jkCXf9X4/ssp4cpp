@@ -27,17 +27,17 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::ext_trace);
 
-        map<string, unique_ptr<Model>> models;
-        map<string, unique_ptr<Connector>> connectors;
-        map<string, unique_ptr<Connection>> connections;
+        map<string, unique_ptr<ModelNode>> models;
+        map<string, unique_ptr<ConnectorNode>> connectors;
+        map<string, unique_ptr<ConnectionNode>> connections;
 
-        vector<Model *> nodes;
+        vector<ModelNode *> nodes;
 
         Graph() = default;
 
-        Graph(map<string, unique_ptr<Model>> models_,
-                      map<string, unique_ptr<Connector>> connectors_,
-                      map<string, unique_ptr<Connection>> connections_)
+        Graph(map<string, unique_ptr<ModelNode>> models_,
+                      map<string, unique_ptr<ConnectorNode>> connectors_,
+                      map<string, unique_ptr<ConnectionNode>> connections_)
             : models(std::move(models_)),
               connectors(std::move(connectors_)),
               connections(std::move(connections_))
@@ -47,7 +47,7 @@ namespace ssp4cpp::sim::graph
             nodes = common::map_ns::map_to_value_vector_copy(m);
         }
 
-        vector<Model *> get_start_nodes()
+        vector<ModelNode *> get_start_nodes()
         {
             auto start_nodes = common::graph::Node::get_ancestors(nodes);
             return start_nodes;

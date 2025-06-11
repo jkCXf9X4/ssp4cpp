@@ -7,7 +7,7 @@
 
 #include "data_handler.hpp"
 #include "fmu_handler.hpp"
-#include "variable_handler.hpp"
+#include "connection_handler.hpp"
 
 #include "ssp_ext.hpp"
 
@@ -30,18 +30,21 @@ namespace ssp4cpp::sim
 
         unique_ptr<handler::DataHandler> data_handler;
         unique_ptr<handler::FmuHandler> fmu_handler;
-        unique_ptr<handler::VariableHandler> variable_handler;
+        unique_ptr<handler::ConnectionHandler> connection_handler;
 
         Simulation() {}
 
-        Simulation(ssp4cpp::Ssp* ssp, std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
+        Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
         {
             data_handler = make_unique<handler::DataHandler>(10);
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
-            variable_handler = make_unique<handler::VariableHandler>();
 
-            graph = GraphBuilder().set_ssp(ssp) .build()
-            
+            graph = GraphBuilder()
+                        .set_ssp(ssp)
+                        .set_fmu_handler(fmu_handler.get())
+                        .set_data_handler(data_handler.get())
+                        .build();
+
             // make analysis
             // - analyze model feedthrough
 
