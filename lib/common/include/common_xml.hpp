@@ -13,6 +13,9 @@
 
 namespace ssp4cpp::common::xml
 {
+    /**
+     * @brief Helper container implementing IXmlNodeList for simple types.
+     */
     template <typename T>
     class XmlNodeList : public ssp4cpp::common::interfaces::IXmlNodeList
     {

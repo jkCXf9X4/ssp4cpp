@@ -28,6 +28,9 @@ namespace ssp4cpp::ssp::ext
         return resources;
     }
 
+    /**
+     * @brief Create a map of FMU names to loaded Fmu objects.
+     */
     map<string, unique_ptr<Fmu>> create_fmu_map(ssp4cpp::Ssp &ssp)
     {
         auto items = map<string, unique_ptr<Fmu>>();

@@ -5,6 +5,9 @@
 
 
 
+/**
+ * @brief Time related utility constants.
+ */
 namespace ssp4cpp::common::time
 {
     uint64_t constexpr milliseconds_per_second  = 1000;

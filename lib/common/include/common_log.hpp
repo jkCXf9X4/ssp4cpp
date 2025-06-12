@@ -12,18 +12,28 @@
 namespace ssp4cpp::common
 {
 
+    /**
+     * @brief Severity levels used by the ::Logger class.
+     */
     enum class LogLevel : int
     {
-        ext_trace,
-        trace,
-        debug,
-        info,
-        success,
-        warning,
-        error,
-        fatal
+        ext_trace,  /**< Extremely verbose trace messages */
+        trace,      /**< Verbose tracing information */
+        debug,      /**< Debug information */
+        info,       /**< General information */
+        success,    /**< Successful operations */
+        warning,    /**< Warnings */
+        error,      /**< Error conditions */
+        fatal       /**< Fatal errors */
     };
 
+    /**
+     * @brief Simple logger implementation used throughout the library.
+     *
+     * The logger provides several convenience functions for different
+     * log levels. Each function ultimately forwards to the templated
+     * log() method which handles formatting and output.
+     */
     class Logger
     {
     public:
@@ -101,6 +111,14 @@ namespace ssp4cpp::common
             std::cout << std::endl;
         }
 
+        /**
+         * @brief Generic logging function invoked by the level specific helpers.
+         *
+         * @tparam Level   Compile time log level.
+         * @tparam Args    Argument pack for std::format.
+         * @param s        Format string.
+         * @param args     Arguments to format into the message.
+         */
         template <LogLevel Level, typename... Args>
         void log(std::format_string<Args...> s, Args &&...args)
         {
@@ -124,8 +142,12 @@ namespace ssp4cpp::common
             }
         }
 
-        // static variant of log
-        // avoid if possible
+        /**
+         * @brief Static helper for logging without an instance.
+         *
+         * Prefer using an instance of ::Logger when possible. The behaviour is
+         * the same as log() but uses the static log level for filtering.
+         */
         template <LogLevel Level, typename... Args>
         static void slog(std::format_string<Args...> s, Args &&...args)
         {
@@ -150,6 +172,10 @@ namespace ssp4cpp::common
         }
 
     private:
+        /**
+         * @brief Convert a LogLevel to its human readable string
+         *        representation.
+         */
         static std::string log_level_to_str(LogLevel level)
         {
             switch (level)
@@ -173,6 +199,9 @@ namespace ssp4cpp::common
             }
         }
 
+        /**
+         * @brief Parse a string representation of a log level.
+         */
         static LogLevel str_to_log_level(std::string string)
         {
             if (string == "trace")

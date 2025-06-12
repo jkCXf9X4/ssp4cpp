@@ -16,6 +16,9 @@
 namespace ssp4cpp::common
 {
 
+    /**
+     * @brief Simple thread pool for executing queued tasks.
+     */
     class ThreadPool
     {
     private:
@@ -43,6 +46,9 @@ namespace ssp4cpp::common
         }
 
     private:
+        /**
+         * @brief Function executed by each worker thread to process tasks.
+         */
         void worker_thread()
         {
             while (true)
@@ -69,6 +75,13 @@ namespace ssp4cpp::common
         }
 
     public:
+        /**
+         * @brief Queue a new task for execution.
+         *
+         * @tparam F   Callable type.
+         * @tparam Args Argument types to forward to the callable.
+         * @return Future representing the result of the task.
+         */
         template <class F, class... Args>
         auto enqueue(F &&f, Args &&...args)
         {
@@ -91,6 +104,9 @@ namespace ssp4cpp::common
             return res;
         }
 
+        /**
+         * @brief Stop all worker threads and wait for completion.
+         */
         ~ThreadPool()
         {
             log.debug("[{}] Destroying threadpool", __func__);

@@ -23,11 +23,17 @@ namespace ssp4cpp
 {
     using namespace common;
 
+    /**
+     * @brief Represents an SSP archive and its parsed SystemStructureDescription.
+     */
     class Ssp : public Archive
     {
     public:
         ssp1::ssd::SystemStructureDescription ssd;
 
+        /**
+         * @brief Construct an Ssp from a file path.
+         */
         Ssp(const path &file) : Archive(file, "ssp_")
         {
             log = Logger("Ssp", LogLevel::debug);
@@ -53,12 +59,14 @@ namespace ssp4cpp
             return os;
         }
 
+        /** @brief Convert to string for debugging purposes. */
         std::string to_string()
         {
             return common::str::stream_to_str(*this);
         }
 
     private:
+        /** @brief Parse the SystemStructure.ssd inside the archive. */
         static ssp1::ssd::SystemStructureDescription parse_system_structure(const string &fileName);
     };
 
