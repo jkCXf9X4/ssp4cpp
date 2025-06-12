@@ -1,44 +1,44 @@
 # SSP4CPP
 
-Simple library for parsing System Structure and Parameterization (SSP) files
+SSP4CPP is a small C++23 library for reading and analyzing System Structure and Parameterization (SSP) archives. The project provides code for loading `.ssp` files, parsing their `ssd` contents and building internal graphs that can be used for simulation or further analysis.
 
-https://ssp-standard.org
+The implementation is work in progress and currently supports a subset of the SSP 1.0 specification.
 
-Features:
- - Open zip to temporary directory
- - load ssd file and parse content to internal structure
+See the [SSP standard](https://ssp-standard.org) for more information about the file format.
 
+## Features
+- Extracts SSP archives to a temporary directory
+- Parses `SystemStructure.ssd` into C++ objects
+- Example applications for graph analysis and basic simulation
 
-## Note
+## Getting started
+1. Clone the repository and initialise submodules
+   ```bash
+   git submodule update --init --recursive
+   ```
+2. Configure the build using the provided CMake preset (requires [vcpkg](https://github.com/microsoft/vcpkg))
+   ```bash
+   cmake --preset=vcpkg
+   ```
+3. Build the project
+   ```bash
+   cmake --build build
+   ```
 
-SSP version 1.0: Not everything is implemented, mainly some basics for start of testing
-
-Tested on:
- - Ubuntu 22.
-
-
-# Build
-
-Uses vcpkg for dependencies
-
+## Running examples
+After building you can run the example applications:
+```bash
+./build/app/graph_analysis/ssp4cpp_graph
+./build/app/sim/sim_app
 ```
-git submodule init && git submodule update
 
-cmake --preset=vcpkg
-
-cmake --build build
-
-cmake --build build && ./build/app/graph_analysis/ssp4cpp_graph
-cmake --build build && ./build/app/sim/sim_app
-
-```
-
-run tests
-```
+## Running tests
+```bash
 cmake --build build && ./build/tests/test_1
-
 ```
 
-# Credits
+## License
+This project is released under the MIT license. See [LICENCE](LICENCE) for details.
 
-Heavily inspired by FMI4cpp https://github.com/NTNU-IHB/FMI4cpp, credit where credit is due
+## Credits
+The project is heavily inspired by [FMI4cpp](https://github.com/NTNU-IHB/FMI4cpp). Credit where credit is due.
