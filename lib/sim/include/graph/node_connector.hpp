@@ -41,7 +41,7 @@ namespace ssp4cpp::sim::graph
                       handler::DataHandler *data_handler,
                       size_t data_size)
         {
-            this->component_name = connector_name;
+            this->component_name = component_name;
             this->connector_name = connector_name;
             update_name();
 
@@ -52,6 +52,11 @@ namespace ssp4cpp::sim::graph
             value_reference = md->get_variable_by_name(this->connector_name).value_reference;
 
             this->data_size = data_size;
+        }
+
+        virtual ~ConnectorNode()
+        {
+            log.ext_trace("[{}] Destroying ConnectorNode", __func__);
         }
 
         // only execute on outputs

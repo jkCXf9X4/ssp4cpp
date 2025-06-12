@@ -37,6 +37,11 @@ namespace ssp4cpp::sim::graph
             update_name();
         }
 
+        ~ConnectionNode()
+        {
+            log.ext_trace("[{}] Destroying ConnectionNode", __func__);
+        }
+
         void update_name()
         {
             this->name = ConnectionNode::create_name(start_component, start_connector, end_component, end_connector);

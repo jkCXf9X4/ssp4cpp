@@ -45,6 +45,11 @@ namespace ssp4cpp::sim::graph
             this->fmu_name = fmu_name;
         }
 
+        ~ModelNode()
+        {
+            log.ext_trace("[{}] Destroying ModelNode", __func__);
+        }
+
         friend ostream &operator<<(ostream &os, const ModelNode &obj)
         {
             os << "Model { \n"

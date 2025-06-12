@@ -32,6 +32,11 @@ namespace ssp4cpp::sim::graph
             update_name();
         }
 
+        ~ModelVariableNode()
+        {
+            log.ext_trace("[{}] Destroying ModelVariableNode", __func__);
+        }
+
         void update_name()
         {
             this->name = ConnectorNode::create_name(component, variable_name);
