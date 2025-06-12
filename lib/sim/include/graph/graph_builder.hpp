@@ -34,7 +34,6 @@ namespace ssp4cpp::sim::graph
         ssp4cpp::Ssp *ssp;
         handler::FmuHandler *fmu_handler;
         handler::DataHandler *data_handler;
-        // handler::ConnectionHandler *connection_handler;
 
         GraphBuilder()
         {
@@ -58,11 +57,6 @@ namespace ssp4cpp::sim::graph
             return *this;
         }
 
-        // GraphBuilder &set_connection_handler(handler::ConnectionHandler *connection_handler)
-        // {
-        //     this->connection_handler = connection_handler;
-        //     return this;
-        // }
 
         map<string, unique_ptr<ModelNode>> create_models(ssp4cpp::Ssp &ssp)
         {
@@ -218,29 +212,6 @@ namespace ssp4cpp::sim::graph
 
 }
 
-// vector<AnalysisNode *> create_feedthrough_graph(ssp4cpp::Ssp &ssp, map<string, Fmu *> &fmu_map)
-// {
-//     log.ext_trace("[{}] init", __func__);
-//     auto models = get_new_models(*ssp);
-//     auto connectors = get_new_connectors(*ssp);
-//     auto connections = get_new_connections(*ssp);
-
-//     auto variables = get_new_model_variables(fmu_map);
-
-//     log.debug("[{}] Connecting fmus", __func__);
-//     for (auto &[name, c] : connections)
-//     {
-//         log.debug("[{}] Connecting {}", __func__, c->name);
-
-//         auto source_connector = connectors[c->get_source_connector_name()];
-//         auto target_connector = connectors[c->get_target_connector_name()];
-
-//         source_connector->add_child(c);
-//         c->add_child(target_connector);
-//     }
-
-//     log.new_line();
-
 //     for (auto [fmu_name, fmu] : fmu_map)
 //     {
 //         log.debug("[{}] Connecting internal dependencies, FMU:{}", __func__, fmu_name);
@@ -289,17 +260,3 @@ namespace ssp4cpp::sim::graph
 //         }
 //     }
 
-//     vector<SimNode *> output;
-//     for (auto &[_, model] : models)
-//         output.push_back(model);
-//     for (auto &[_, connector] : connectors)
-//         output.push_back(connector);
-//     for (auto &[_, connection] : connections)
-//         output.push_back(connection);
-//     for (auto &[_, variable] : variables)
-//         output.push_back(variable);
-//     auto o = remove_dangling(output);
-
-//     log.ext_trace("[{}] exit", __func__);
-//     return o;
-// }

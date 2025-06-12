@@ -65,6 +65,7 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Init", __func__);
             for (auto &[_, c] : input_connectors)
             {
+                //TODO: get som connection delay...
                 c->write_to_model(time);
             }
         }

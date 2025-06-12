@@ -5,9 +5,7 @@ vcpkg_installed
 
 build.log
 .venv/
-
-# xml_parser/generated/*
-
+results
 
 
 # PYTHON

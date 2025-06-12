@@ -17,6 +17,108 @@
 
 namespace ssp4cpp::sim::graph
 {
+
+    enum class ConnectorType
+    {
+        BOOL,
+        INT,
+        REAL,
+        STRING,
+        ENUM
+    };
+
+    // class ModelInterface
+    // {
+    //     virtual void read(uint64_t time){}
+    //     virtual void write(uint64_t time){}
+
+
+    //     // read value from model and store in data manager
+    //     void read_from_model(uint64_t time) override
+    //     {
+    //         int out_int;
+    //         this->fmu->model->read_boolean(value_reference, out_int);
+    //         bool out = (bool)out_int;
+    //         data_handler->setData(time, data_reference, (void *)&out);
+    //     }
+
+    //     // retrieve from data manager and input into model
+    //     void write_to_model(uint64_t time) override
+    //     {
+    //         void *data = data_handler->getData(time, data_reference);
+    //         if (data)
+    //         {
+    //             this->fmu->model->write_boolean(value_reference, *(int *)data);
+    //         }
+    //     }
+    // };
+
+    class IntConnectorNode : public ConnectorNode
+    {
+    public:
+        using ConnectorNode::ConnectorNode; // forwards the base ctor
+        // read value from model and store in data manager
+        void read_from_model(uint64_t time) override
+        {
+            int out;
+            this->fmu->model->read_integer(value_reference, out);
+            data_handler->setData(time, data_reference, (void *)&out);
+        }
+        void write_to_model(uint64_t time) override
+        {
+            void *data = data_handler->getData(time, data_reference);
+            if (data)
+            {
+                this->fmu->model->write_integer(value_reference, *(int *)data);
+            }
+        }
+    };
+
+    class DoubleConnectorNode : public ConnectorNode
+    {
+    public:
+        using ConnectorNode::ConnectorNode; // forwards the base ctor
+        // read value from model and store in data manager
+        void read_from_model(uint64_t time) override
+        {
+            double out;
+            this->fmu->model->read_real(value_reference, out);
+            data_handler->setData(time, data_reference, (void *)&out);
+        }
+        void write_to_model(uint64_t time) override
+        {
+            void *data = data_handler->getData(time, data_reference);
+            if (data)
+            {
+                this->fmu->model->write_real(value_reference, *(double *)data);
+            }
+        }
+    };
+
+    class StringConnectorNode : public ConnectorNode
+    {
+    public:
+        using ConnectorNode::ConnectorNode; // forwards the base ctor
+        // read value from model and store in data manager
+        void read_from_model(uint64_t time) override
+        {
+            char *out_char;
+            log.error("[{}] Reading string not implemented", __func__);
+            // this->fmu->model->read_string(value_reference, out_char);
+            std::string out(out_char);
+            data_handler->setData(time, data_reference, (void *)&out);
+        }
+        void write_to_model(uint64_t time) override
+        {
+            void *data = data_handler->getData(time, data_reference);
+            if (data)
+            {
+                this->fmu->model->write_string(value_reference, ((std::string *)data)->c_str());
+            }
+        }
+    }
+
+
     // template class to enable constexpression invoke
     class ConnectorNode : public NodeBase
     {
