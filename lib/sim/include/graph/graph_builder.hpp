@@ -57,7 +57,6 @@ namespace ssp4cpp::sim::graph
             return *this;
         }
 
-
         map<string, unique_ptr<ModelNode>> create_models(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
@@ -77,32 +76,33 @@ namespace ssp4cpp::sim::graph
         std::unique_ptr<ConnectorNode> create_connector(std::string component_name,
                                                         std::string connector_name)
         {
+            using namespace handler;
+
             auto fmu = fmu_handler->fmus[component_name].get();
             auto var = fmu->model_description->get_variable_by_name(connector_name);
 
             if (var.is_boolean())
             {
                 return std::make_unique<BoolConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, sizeof(bool));
+                    component_name, connector_name, fmu, data_handler, DataType::BOOL);
             }
             else if (var.is_integer() || var.is_enumeration())
             {
                 return std::make_unique<IntConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, sizeof(int));
+                    component_name, connector_name, fmu, data_handler, DataType::INT);
             }
             else if (var.is_real())
             {
                 return std::make_unique<DoubleConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, sizeof(double));
+                    component_name, connector_name, fmu, data_handler, DataType::REAL);
             }
             else if (var.is_string())
             {
                 return std::make_unique<StringConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, sizeof(std::string));
+                    component_name, connector_name, fmu, data_handler, DataType::STRING);
             }
             else
             {
-
                 throw runtime_error("Unknown type");
             }
         }
@@ -259,4 +259,3 @@ namespace ssp4cpp::sim::graph
 //             }
 //         }
 //     }
-

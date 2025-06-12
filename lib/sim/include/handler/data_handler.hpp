@@ -18,88 +18,120 @@ namespace ssp4cpp::sim::handler
 {
     using namespace std;
 
-    /**
-     * @brief Simple wrapper owning a memory block with an associated timestamp.
-     */
-    class Data
+    enum class DataType
     {
-    private:
-        size_t size = 0;
-
-    public:
-        void *data = nullptr;
-        u_int64_t timestamp = 0;
-
-        Data() {}
-
-        Data(size_t size)
-        {
-            this->size = size;
-            data = malloc(size);
-        }
-
-        ~Data()
-        {
-            if (data)
-            {
-                free(data);
-                data = nullptr;
-            }
-        }
-
-        void setData(void *obj, u_int64_t time)
-        {
-            std::memcpy(data, obj, size);
-            timestamp = time;
-        }
+        BOOL,
+        INT,
+        REAL,
+        STRING,
+        ENUM,
+        UNKNOWN
     };
 
     /**
+     * @brief  Return the in-memory size (in bytes) of a single value
+     *         represented by the given DataType.
+     */
+    constexpr std::size_t get_data_type_size(DataType t)
+    {
+        switch (t)
+        {
+        case DataType::BOOL:
+            return sizeof(bool); // typically 1
+        case DataType::INT:
+            return sizeof(int); // typically 4
+        case DataType::REAL:
+            return sizeof(double); // typically 8
+        case DataType::ENUM:
+            return sizeof(int); // stored like an int
+        case DataType::STRING:
+            return sizeof(std::string);
+        case DataType::UNKNOWN:
+            return 0;
+        }
+        // If the enum gains a new value and the switch isn’t updated,
+        // this keeps the compiler happy in -Wall/-Wswitch-enums builds.
+        throw std::invalid_argument("Unknown DataType");
+    }
+
+    /**
      * @brief Very small ring buffer implementation used for time stamped data.
+     * When full it will continuously overwrite the oldest data
      */
     class RingBuffer
     {
+        DataType type = DataType::UNKNOWN;
+        std::unique_ptr<std::byte[]> data; // raw storage
+        std::unique_ptr<uint64_t[]> timestamps;
 
-        // cheating, this is not a ringbuffer yet...
-        // allocation operation for each new data added
-        // Remove when the ring buffer is done
-        size_t buffer_size;
         size_t obj_size;
-        std::deque<unique_ptr<Data>> buffer = {};
+
+        size_t capacity; /* total usable slots                 */
+        size_t head;     /* next position to write             */
+        size_t size;     /* current number of elements stored  */
 
     public:
         /** Construct a ring buffer with capacity for @p buffer_size elements. */
-        RingBuffer(size_t buffer_size, size_t obj_size)
+        RingBuffer(size_t capacity, size_t obj_size, DataType type)
         {
-            this->buffer_size = buffer_size;
-            this->obj_size = obj_size;
+            if (capacity == 0)
+            {
+                throw runtime_error("[RingBuffer] buffer_size != 0");
+            }
+            this->capacity = capacity;
+            this->type = type;
+            if (type != DataType::UNKNOWN)
+            {
+                this->obj_size = get_data_type_size(type);
+            }
+            else
+            {
+                this->obj_size = obj_size;
+            }
 
-            buffer.resize(buffer_size);
+            data = std::make_unique<std::byte[]>(obj_size * capacity);
+            timestamps = std::make_unique<uint64_t[]>(sizeof(uint64_t) * capacity);
+
+            if (!data || !timestamps)
+                throw runtime_error("Failed to allocate Data");
+
+            head = size = 0;
         }
 
-        /** Insert a copy of the given object at timestamp @p time. */
-        void push(void *obj, u_int64_t time)
+        bool is_empty()
         {
-            auto d = make_unique<Data>(obj_size);
-            d->setData(obj, time);
+            return size == 0;
+        }
 
-            buffer.push_front(std::move(d));
+        bool is_full()
+        {
+            return size == capacity;
+        }
 
-            while (buffer.size() > buffer_size)
+        // Add new, if full it will overwrite the oldest data
+        int push(void *obj, uint64_t time)
+        {
+            if (!is_full()) [[unlikely]]
             {
-                buffer.pop_back();
+                size++;
             }
+
+            std::memcpy(data.get() + head * obj_size, obj, obj_size);
+            timestamps[head] = time;
+
+            head = (head + 1) % capacity;
+            return 0;
         }
 
         /** Retrieve the most recent element with timestamp not newer than @p time. */
-        void *get_valid(u_int64_t time)
+        void *get_valid(uint64_t time)
         {
-            // Return the first item where the timestamp is made prior to the time
-            for (auto &n : buffer)
+            for (std::size_t k = 0; k < size; ++k)
             {
-                if (n && n->data != nullptr && n->timestamp <= time)
+                std::size_t idx = (head + capacity - 1 - k) % capacity; // newest → oldest
+                if (timestamps[idx] <= time)
                 {
-                    return n->data;
+                    return static_cast<void *>(data.get() + idx * obj_size);
                 }
             }
             return nullptr;
@@ -134,10 +166,22 @@ namespace ssp4cpp::sim::handler
         }
 
         // Return the reference to the data
-        /** Allocate a new buffer for objects of size @p obj_size and return its reference id. */
-        u_int64_t initData(size_t obj_size)
+        /** Allocate a new buffer for objects of type @p type */
+        uint64_t initData(DataType type)
         {
-            auto buffer = make_unique<RingBuffer>(buffer_size, obj_size);
+            // size not needed for known types
+            auto buffer = make_unique<RingBuffer>(buffer_size, -1, type);
+            buffers.push_back(std::move(buffer));
+
+            auto pos = reference_counter;
+            reference_counter++;
+            return pos;
+        }
+
+        /** Allocate a new buffer for objects of size @p obj_size and return its reference id. */
+        uint64_t initData(size_t size)
+        {
+            auto buffer = make_unique<RingBuffer>(buffer_size, size, DataType::UNKNOWN);
             buffers.push_back(std::move(buffer));
 
             auto pos = reference_counter;
@@ -146,13 +190,13 @@ namespace ssp4cpp::sim::handler
         }
 
         /** Push a new sample into the buffer identified by @p reference. */
-        void setData(u_int64_t time, u_int64_t reference, void *data)
+        void setData(uint64_t time, uint64_t reference, void *data)
         {
             buffers[reference]->push(data, time);
         }
 
         /** Retrieve the latest valid sample from a buffer. */
-        void *getData(u_int64_t time, u_int64_t reference)
+        void *getData(uint64_t time, uint64_t reference)
         {
             return buffers[reference]->get_valid(time);
         }
