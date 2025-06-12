@@ -4,6 +4,7 @@
 #include "common_map.hpp"
 #include "common_string.hpp"
 #include "common_time.hpp"
+#include "common_log.hpp"
 
 #include "node_base.hpp"
 #include "node_connector.hpp"
@@ -20,6 +21,7 @@ namespace ssp4cpp::sim::graph
     class ConnectionNode : public NodeBase
     {
     public:
+        common::Logger log = common::Logger("ConnectionNode", common::LogLevel::ext_trace);
         string start_component;
         string start_connector;
         string end_component;

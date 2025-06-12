@@ -68,16 +68,17 @@ namespace ssp4cpp::sim::handler
             for (auto &[_, fmu] : this->fmus)
             {
                 fmu->model = fmu->cs_fmu->new_instance();
-
+                
                 fmu->model->setup_experiment();
                 fmu->model->enter_initialization_mode();
                 fmu->model->exit_initialization_mode();
                 // Set up data managers for different types
-
+                
                 // apply parameter sets
-
+                
                 // set start values?
             }
+            log.trace("[{}] Model init completed", __func__);
         }
     };
 

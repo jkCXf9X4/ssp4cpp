@@ -4,6 +4,7 @@
 #include "common_map.hpp"
 #include "common_string.hpp"
 #include "common_time.hpp"
+#include "common_log.hpp"
 
 #include "node_base.hpp"
 #include "fmu_handler.hpp"
@@ -20,6 +21,8 @@ namespace ssp4cpp::sim::graph
     class ConnectorNode : public NodeBase
     {
     public:
+        common::Logger log = common::Logger("ConnectorNode", common::LogLevel::ext_trace);
+
         string component_name;
         string connector_name;
 
@@ -87,7 +90,7 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        // 
+        //
         virtual void read_from_model(uint64_t time) {}
 
         virtual void write_to_model(uint64_t time) {}
@@ -111,7 +114,10 @@ namespace ssp4cpp::sim::graph
         void write_to_model(uint64_t time) override
         {
             void *data = data_handler->getData(time, data_reference);
-            this->fmu->model->write_boolean(value_reference, *(int *)data);
+            if (data)
+            {
+                this->fmu->model->write_boolean(value_reference, *(int *)data);
+            }
         }
     };
 
@@ -129,7 +135,10 @@ namespace ssp4cpp::sim::graph
         void write_to_model(uint64_t time) override
         {
             void *data = data_handler->getData(time, data_reference);
-            this->fmu->model->write_integer(value_reference, *(int *)data);
+            if (data)
+            {
+                this->fmu->model->write_integer(value_reference, *(int *)data);
+            }
         }
     };
 
@@ -147,7 +156,10 @@ namespace ssp4cpp::sim::graph
         void write_to_model(uint64_t time) override
         {
             void *data = data_handler->getData(time, data_reference);
-            this->fmu->model->write_real(value_reference, *(double *)data);
+            if (data)
+            {
+                this->fmu->model->write_real(value_reference, *(double *)data);
+            }
         }
     };
 
@@ -167,7 +179,10 @@ namespace ssp4cpp::sim::graph
         void write_to_model(uint64_t time) override
         {
             void *data = data_handler->getData(time, data_reference);
-            this->fmu->model->write_string(value_reference, ((std::string *)data)->c_str());
+            if (data)
+            {
+                this->fmu->model->write_string(value_reference, ((std::string *)data)->c_str());
+            }
         }
     };
 

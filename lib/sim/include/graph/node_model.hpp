@@ -22,7 +22,7 @@ namespace ssp4cpp::sim::graph
     class ModelNode : public NodeBase
     {
     public:
-        common::Logger log = common::Logger("graph::Model", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("ModelNode", common::LogLevel::ext_trace);
 
         string fmu_name;
 
@@ -62,22 +62,25 @@ namespace ssp4cpp::sim::graph
 
         void set_input(uint64_t time)
         {
+            log.ext_trace("[{}] Init", __func__);
             for (auto &[_, c] : input_connectors)
             {
                 c->write_to_model(time);
             }
         }
-
+        
         void get_output(uint64_t time)
         {
+            log.ext_trace("[{}] Init", __func__);
             for (auto &[_, c] : output_connectors)
             {
                 c->read_from_model(time);
             }
         }
-
+        
         void take_step(uint64_t timestep)
         {
+            log.ext_trace("[{}] Init", __func__);
             auto step_double = (double)timestep / ssp4cpp::common::time::nanoseconds_per_second;
             log.trace("[{}] Model {} ", __func__, step_double);
             if (fmu->model->step(step_double) == false)
@@ -88,6 +91,8 @@ namespace ssp4cpp::sim::graph
         
         uint64_t invoke(uint64_t timestep)
         {
+            log.ext_trace("[{}] Init", __func__);
+
             start_time = end_time;
             end_time = start_time + timestep;
             delayed_time = end_time - delay;

@@ -4,6 +4,7 @@
 #include "common_map.hpp"
 #include "common_string.hpp"
 #include "common_time.hpp"
+#include "common_log.hpp"
 
 #include "node_base.hpp"
 #include "node_connector.hpp"
@@ -20,6 +21,7 @@ namespace ssp4cpp::sim::graph
     class ModelVariableNode : public NodeBase
     {
     public:
+        common::Logger log = common::Logger("ModelVariableNode", common::LogLevel::ext_trace);
         string component;
         string variable_name;
 

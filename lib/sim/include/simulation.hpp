@@ -75,15 +75,16 @@ namespace ssp4cpp::sim
 
             log.info("[{}] Starting simulation...", __func__);
             ThreadPool pool(5);
-
+            
             uint64_t time = 0;
             uint64_t end_time = 10 * time::nanoseconds_per_second;
             uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
-
+            
             auto start_nodes = graph->get_start_nodes();
             assert(start_nodes.size() == 1);
             auto start_node = start_nodes[0];
-
+            
+            log.info("[{}] Start node: {}", __func__, start_node->to_string());
             // simulation time loop: invoke graph each timestep
             while (time < end_time)
             {
