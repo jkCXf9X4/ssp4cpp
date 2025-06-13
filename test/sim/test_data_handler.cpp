@@ -20,7 +20,7 @@ TEST_CASE("DataHandler handles BOOL type", "[DataHandler][BOOL]")
 {
     common::Logger log = common::Logger("TestDataHandler", common::LogLevel::ext_trace);
     log.ext_trace("[{}] init", __func__);
-    DataHandler mgr(3, "outputs/test_bool.csv");
+    DataHandler mgr(3, "test_output/test_bool.csv");
     uint64_t ref = mgr.initData(DataType::BOOL);
 
     bool v1 = true;
@@ -43,7 +43,7 @@ TEST_CASE("DataHandler handles BOOL type", "[DataHandler][BOOL]")
 
 TEST_CASE("DataHandler handles INT type", "[DataHandler][INT]")
 {
-    DataHandler mgr(3, "outputs/test_int.csv");
+    DataHandler mgr(3, "test_output/test_int.csv");
     uint64_t ref = mgr.initData(DataType::INT);
 
     int v1 = 42;
@@ -62,7 +62,7 @@ TEST_CASE("DataHandler handles INT type", "[DataHandler][INT]")
 
 TEST_CASE("DataHandler handles REAL type", "[DataHandler][REAL]")
 {
-    DataHandler mgr(3, "outputs/test_real.csv");
+    DataHandler mgr(3, "test_output/test_real.csv");
     uint64_t ref = mgr.initData(DataType::REAL);
 
     double v1 = 3.14;
@@ -81,7 +81,7 @@ TEST_CASE("DataHandler handles REAL type", "[DataHandler][REAL]")
 
 TEST_CASE("DataHandler handles STRING type", "[DataHandler][STRING]")
 {
-    DataHandler mgr(3, "outputs/test_string.csv");
+    DataHandler mgr(3, "test_output/test_string.csv");
     uint64_t ref = mgr.initData(DataType::STRING);
 
     std::string v1 = "foo";
@@ -100,7 +100,7 @@ TEST_CASE("DataHandler handles STRING type", "[DataHandler][STRING]")
 
 TEST_CASE("DataHandler handles ENUM type", "[DataHandler][ENUM]")
 {
-    DataHandler mgr(3, "outputs/test_enum.csv");
+    DataHandler mgr(3, "test_output/test_enum.csv");
     uint64_t ref = mgr.initData(DataType::ENUM);
 
     int v1 = 1; // enums stored as int
@@ -126,7 +126,7 @@ struct TestStruct
 
 TEST_CASE("DataHandler basic set/get", "[DataHandler]")
 {
-    DataHandler mgr(5, "outputs/test1.csv");
+    DataHandler mgr(5, "test_output/test1.csv");
     size_t obj_size = sizeof(TestStruct);
     u_int64_t ref = mgr.initData(obj_size);
 
@@ -152,7 +152,7 @@ TEST_CASE("DataHandler basic set/get", "[DataHandler]")
 
 TEST_CASE("DataHandler returns nullptr for no valid data", "[DataHandler]")
 {
-    DataHandler mgr(3, "outputs/test2.csv");
+    DataHandler mgr(3, "test_output/test2.csv");
     size_t obj_size = sizeof(TestStruct);
     u_int64_t ref = mgr.initData(obj_size);
 
@@ -167,7 +167,7 @@ TEST_CASE("DataHandler returns nullptr for no valid data", "[DataHandler]")
 
 TEST_CASE("DataHandler buffer size limit", "[DataHandler]")
 {
-    DataHandler mgr(2, "outputs/test3.csv");
+    DataHandler mgr(2, "test_output/test3.csv");
     size_t obj_size = sizeof(TestStruct);
     u_int64_t ref = mgr.initData(obj_size);
 
