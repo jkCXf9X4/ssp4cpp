@@ -28,16 +28,16 @@ namespace ssp4cpp::sim
     public:
         common::Logger log = common::Logger("sim::Simulation", common::LogLevel::ext_trace);
 
-        unique_ptr<graph::Graph> graph;
-
         unique_ptr<handler::DataHandler> data_handler;
         unique_ptr<handler::FmuHandler> fmu_handler;
+        
+        unique_ptr<graph::Graph> graph;
 
         Simulation() {}
 
         Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
         {
-            data_handler = make_unique<handler::DataHandler>(10);
+            data_handler = make_unique<handler::DataHandler>(10, "raw_data.txt");
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
 
             graph = graph::GraphBuilder()
