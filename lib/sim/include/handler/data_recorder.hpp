@@ -18,13 +18,13 @@ namespace ssp4cpp::sim::handler
     struct BufferTracker
     {
         uint64_t timestamp = 0;
-        DataBuffer *buffer;
+        shared_ptr<DataBuffer> buffer;
     };
 
     class DataRecorder
     {
     public:
-        common::Logger log = common::Logger("DataRecorder", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("DataRecorder", common::LogLevel::debug);
 
         std::ofstream file;
         std::thread worker;
@@ -43,7 +43,7 @@ namespace ssp4cpp::sim::handler
 
             worker = std::thread([this]()
                                  { loop(); });
-            usleep(100); // wait for thred to start
+            usleep(100); // wait for thread to start
         }
 
         DataRecorder(const DataRecorder&) = delete;
@@ -53,7 +53,10 @@ namespace ssp4cpp::sim::handler
         {
             log.ext_trace("[{}] init", __func__);
             running = false;
+            
+            usleep(10); // give all treads the chance to return to waiting
             event.notify_all();
+
             if (worker.joinable())
             {
                 worker.join();
@@ -65,7 +68,7 @@ namespace ssp4cpp::sim::handler
             log.ext_trace("[{}] completed", __func__);
         }
 
-        void register_buffer(DataBuffer *buffer)
+        void register_buffer(shared_ptr<DataBuffer> buffer)
         {
             log.ext_trace("[{}] Init", __func__);
             buffers.emplace_back(BufferTracker{0, buffer});
@@ -94,16 +97,10 @@ namespace ssp4cpp::sim::handler
 
         void loop()
         {
-            while (true)
+            while (running)
             {
                 std::unique_lock<std::mutex> lock(event_mutex);
                 event.wait(lock);
-                if (!running)
-                {
-                    // make sure that the buffers are not evaluated
-                    // there is no guarantee that the pointers are still valid
-                    return;
-                }
 
                 log.ext_trace("[{}] Looking for new content to write to file", __func__);
                 
@@ -114,7 +111,6 @@ namespace ssp4cpp::sim::handler
                     uint64_t max_time = tracker.timestamp;
                     for (std::size_t i = 0; i < buffer->size; ++i)
                     {
-                        log.ext_trace("[{}] i:{}", __func__, i);
                         int pos;
                         auto ts = buffer->get_time(i, pos);
                         if (ts > tracker.timestamp)

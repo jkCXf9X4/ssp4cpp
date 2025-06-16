@@ -22,7 +22,7 @@ namespace ssp4cpp::sim::handler
 {
     using namespace std;
 
-    using RegisterBufferCallback = std::function<void(DataBuffer *)>;
+    using RegisterBufferCallback = std::function<void(shared_ptr<DataBuffer>)>;
     using DataAddedCallback = std::function<void()>;
 
     class DataHandler
@@ -40,12 +40,12 @@ namespace ssp4cpp::sim::handler
         This to ensure that only valid data is used
         */
 
-        common::Logger log = common::Logger("DataHandler", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("DataHandler", common::LogLevel::debug);
 
         size_t buffer_size;
         uint64_t reference_counter;
 
-        std::vector<unique_ptr<DataBuffer>> buffers;
+        std::vector<shared_ptr<DataBuffer>> buffers;
 
         RegisterBufferCallback register_callback = nullptr;
         DataAddedCallback new_data_callback = nullptr;
@@ -70,10 +70,10 @@ namespace ssp4cpp::sim::handler
         uint64_t initData(DataType type, std::string name)
         {
             log.ext_trace("[{}] type init ", __func__);
-            auto db = make_unique<DataBuffer>(buffer_size, type, reference_counter, name);
+            auto db = make_shared<DataBuffer>(buffer_size, type, reference_counter, name);
             if (register_callback)
             {
-                register_callback(db.get());
+                register_callback(db);
             }
 
             buffers.emplace_back(std::move(db));

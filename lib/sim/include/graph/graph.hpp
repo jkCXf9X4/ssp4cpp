@@ -59,6 +59,12 @@ namespace ssp4cpp::sim::graph
 
             auto strong_system_graph = common::graph::strongly_connected_components(NodeBase::cast_to_parent_ptrs(nodes));
             log.info("{}", common::graph::ssc_to_string(strong_system_graph));
+
+            log.info("Start nodes:");
+            for (auto &model : get_start_nodes())
+            {
+                log.info("Model: {}", model->to_string());
+            }
         }
     };
 

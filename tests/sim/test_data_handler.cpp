@@ -18,7 +18,7 @@ using namespace ssp4cpp::sim::handler;
 
 TEST_CASE("DataHandler handles BOOL type", "[DataHandler][BOOL]")
 {
-    common::Logger log = common::Logger("TestDataHandler", common::LogLevel::ext_trace);
+    common::Logger log = common::Logger("Test::DataHandler", common::LogLevel::debug);
     log.ext_trace("[{}] init", __func__);
     DataHandler mgr(3);
     uint64_t ref = mgr.initData(DataType::BOOL, "");
@@ -66,7 +66,7 @@ TEST_CASE("DataHandler handles REAL type", "[DataHandler][REAL]")
     DataHandler mgr(3);
     uint64_t ref = mgr.initData(DataType::REAL, "");
 
-    double v1 = 3.14;
+    double v1 = 3.14; 
     double v2 = 2.71;
     mgr.setData(100, ref, &v1);
     mgr.setData(200, ref, &v2);

@@ -67,6 +67,8 @@ namespace ssp4cpp::sim
             log.debug("[{}] Extra properties:\n{}\n", __func__, json::to_string(model_props));
 
             sim = Simulation(ssp.get(), fmus_ref);
+            sim.init();
+
             sim.execute();
         }
 

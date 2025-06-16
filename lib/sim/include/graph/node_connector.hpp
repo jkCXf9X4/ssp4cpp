@@ -164,6 +164,7 @@ namespace ssp4cpp::sim::graph
         {
             double out;
             this->fmu->model->read_real(value_reference, out);
+            log.debug("Reading {}", out);
             data_handler->setData(time, data_reference, (void *)&out);
         }
         void write_to_model(uint64_t time) override
@@ -171,6 +172,7 @@ namespace ssp4cpp::sim::graph
             void *data = data_handler->getData(time, data_reference);
             if (data)
             {
+                log.debug("Writing {}", *(double *)data);
                 this->fmu->model->write_real(value_reference, *(double *)data);
             }
         }

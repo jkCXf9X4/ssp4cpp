@@ -32,13 +32,16 @@ namespace ssp4cpp::sim
         unique_ptr<handler::FmuHandler> fmu_handler;
         unique_ptr<handler::DataRecorder> recorder;
 
+        ssp4cpp::Ssp *ssp;
+        std::map<std::string, ssp4cpp::Fmu *> str_fmu;
+
         unique_ptr<graph::Graph> graph;
 
-        Simulation() {
-
+        Simulation()
+        {
         }
 
-        Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
+        Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> str_fmu)
         {
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
             recorder = make_unique<handler::DataRecorder>("/temp/raw_data.txt");
@@ -46,11 +49,19 @@ namespace ssp4cpp::sim
                                                              recorder->get_register_buffer_callback(),
                                                              recorder->get_update_callback());
 
+            this->ssp = ssp;
+            this->str_fmu = str_fmu;
+        }
+
+        void init()
+        {
             graph = graph::GraphBuilder()
                         .set_ssp(ssp)
                         .set_fmu_handler(fmu_handler.get())
                         .set_data_handler(data_handler.get())
                         .build();
+
+            graph->print_analysis();
 
             fmu_handler->init();
 
@@ -66,10 +77,10 @@ namespace ssp4cpp::sim
 
         void invoke(graph::ModelNode *node, uint64_t timestep)
         {
+            node->invoke(timestep);
             for (auto c_ : node->children)
             {
                 auto c = (graph::ModelNode *)c_;
-                c->invoke(timestep);
                 invoke(c, timestep);
             }
         }
@@ -82,7 +93,8 @@ namespace ssp4cpp::sim
 
             uint64_t time = 0;
             uint64_t end_time = 10 * time::nanoseconds_per_second;
-            uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
+            // uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
+            uint64_t timestep = 1 * time::nanoseconds_per_second;
 
             auto start_nodes = graph->get_start_nodes();
             assert(start_nodes.size() == 1);

@@ -78,14 +78,14 @@ TEST_CASE("DataRecorder can register buffers", "[DataRecorder]")
     remove_if_existing(test_filename);
 
     DataRecorder recorder(test_filename);
-    TestDataBuffer buffer(DataType::INT);
+    auto buffer = make_shared<TestDataBuffer>(DataType::INT);
 
     // Register the buffer
-    recorder.register_buffer(&buffer);
+    recorder.register_buffer(buffer);
 
     // Check if the buffer was registered by checking the internal buffers vector
     REQUIRE(recorder.buffers.size() == 1);
-    REQUIRE(recorder.buffers[0].buffer == &buffer);
+    REQUIRE(recorder.buffers[0].buffer == buffer);
 
     // Clean up the test file
     std::filesystem::remove(test_filename);
@@ -97,27 +97,27 @@ TEST_CASE("DataRecorder callbacks work correctly", "[DataRecorder]")
     remove_if_existing(test_filename);
 
     DataRecorder recorder(test_filename);
-    TestDataBuffer buffer(DataType::INT);
+    auto buffer = make_shared<TestDataBuffer>(DataType::INT);
 
     // Get callbacks
     auto register_callback = recorder.get_register_buffer_callback();
     auto update_callback = recorder.get_update_callback();
 
     // Use callbacks
-    register_callback(&buffer);
+    register_callback(buffer);
 
     // Check if buffer was registered
     REQUIRE(recorder.buffers.size() == 1);
-    REQUIRE(recorder.buffers[0].buffer == &buffer);
+    REQUIRE(recorder.buffers[0].buffer == buffer);
 
     int a = 5;
     int b = 10;
     int c = 20;
-    buffer.push(&a, 100);
+    buffer->push(&a, 100);
     update_callback();
-    buffer.push(&b, 120);
+    buffer->push(&b, 120);
     update_callback();
-    buffer.push(&c, 150);
+    buffer->push(&c, 150);
 
     update_callback();
 
@@ -129,7 +129,7 @@ TEST_CASE("DataRecorder record function writes data to file", "[DataRecorder]")
     std::string test_filename = "tests/references/test_recorder_data.csv";
     remove_if_existing(test_filename);
 
-    DataRecorder recorder(test_filename);
+    DataRecorder recorder(test_filename); 
 
     // Test with different data types
     SECTION("BOOL data type")
@@ -194,6 +194,7 @@ TEST_CASE("DataRecorder update mechanism", "[DataRecorder]")
 
     // Call update and make sure it doesn't crash
     recorder.update();
+    usleep(500);
 
     // Clean up the test file
     std::filesystem::remove(test_filename);

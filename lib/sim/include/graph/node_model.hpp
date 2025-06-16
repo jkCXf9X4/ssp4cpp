@@ -65,7 +65,7 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Init", __func__);
             for (auto &[_, c] : input_connectors)
             {
-                //TODO: get som connection delay...
+                //TODO: get some connection delay...
                 c->write_to_model(time);
             }
         }
@@ -92,7 +92,7 @@ namespace ssp4cpp::sim::graph
         
         uint64_t invoke(uint64_t timestep)
         {
-            log.ext_trace("[{}] Init", __func__);
+            log.ext_trace("[{}] Init {}", __func__, this->name.c_str());
 
             start_time = end_time;
             end_time = start_time + timestep;

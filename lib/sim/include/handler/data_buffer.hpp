@@ -32,7 +32,7 @@ namespace ssp4cpp::sim::handler
      */
     class DataBuffer
     {
-        common::Logger log = common::Logger("DataBuffer", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("DataBuffer", common::LogLevel::debug);
 
     public:
         DataType type = DataType::UNKNOWN;
