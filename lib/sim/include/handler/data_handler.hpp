@@ -22,6 +22,9 @@ namespace ssp4cpp::sim::handler
 {
     using namespace std;
 
+    using RegisterBufferCallback = std::function<void(DataBuffer *)>;
+    using DataAddedCallback = std::function<void()>;
+
     class DataHandler
     {
     public:
@@ -36,49 +39,45 @@ namespace ssp4cpp::sim::handler
         getData will use 'time A'
         This to ensure that only valid data is used
         */
+
         common::Logger log = common::Logger("DataHandler", common::LogLevel::ext_trace);
 
         size_t buffer_size;
         uint64_t reference_counter;
 
-        std::condition_variable event;
-        unique_ptr<DataRecorder> recorder;
         std::vector<unique_ptr<DataBuffer>> buffers;
+
+        RegisterBufferCallback register_callback = nullptr;
+        DataAddedCallback new_data_callback = nullptr;
 
         DataHandler() = delete;
 
-        DataHandler(size_t buffer_size, const std::string &filename)
+        DataHandler(size_t buffer_size)
         {
             log.ext_trace("[{}] Constructor", __func__);
             reference_counter = 0;
             this->buffer_size = buffer_size;
-            
-            recorder = make_unique<DataRecorder>(&event, filename);
+        }
+
+        DataHandler(size_t buffer_size, RegisterBufferCallback register_callback, DataAddedCallback new_data_callback) : DataHandler(buffer_size)
+        {
+            this->register_callback = register_callback;
+            this->new_data_callback = new_data_callback;
         }
 
         // Return the reference to the data
         /** Allocate a new buffer for objects of type @p type */
-        uint64_t initData(DataType type)
+        uint64_t initData(DataType type, std::string name)
         {
             log.ext_trace("[{}] type init ", __func__);
-            return initData(make_unique<DataBuffer>(buffer_size, 0, type));
-        }
+            auto db = make_unique<DataBuffer>(buffer_size, type, reference_counter, name);
+            if (register_callback)
+            {
+                register_callback(db.get());
+            }
 
-        /** Allocate a new buffer for objects of size @p obj_size and return its reference id. */
-        uint64_t initData(size_t size)
-        {
-            log.ext_trace("[{}] size init ", __func__);
-            return initData(make_unique<DataBuffer>(buffer_size, size, DataType::UNKNOWN));
-        }
-
-        uint64_t initData(std::unique_ptr<ssp4cpp::sim::handler::DataBuffer> &&buffer)
-        {
-            buffers.emplace_back(std::move(buffer));
-            auto ref = reference_counter++;
-
-            recorder->register_buffer(buffer.get(), ref);
-
-            return ref;
+            buffers.emplace_back(std::move(db));
+            return reference_counter++;
         }
 
         /** Push a new sample into the buffer identified by @p reference. */
@@ -86,7 +85,10 @@ namespace ssp4cpp::sim::handler
         {
             log.ext_trace("[{}] init", __func__);
             buffers[reference]->push(data, time);
-            event.notify_all();
+            if (new_data_callback) [[likely]]
+            {
+                new_data_callback();
+            }
         }
 
         /** Retrieve the latest valid sample from a buffer. */

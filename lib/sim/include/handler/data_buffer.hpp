@@ -36,6 +36,9 @@ namespace ssp4cpp::sim::handler
 
     public:
         DataType type = DataType::UNKNOWN;
+        uint64_t data_reference = 0;
+        std::string name = "";
+
         std::unique_ptr<std::byte[]> data; // raw storage
         std::unique_ptr<uint64_t[]> timestamps;
 
@@ -49,7 +52,7 @@ namespace ssp4cpp::sim::handler
         size_t capacity; /* total usable slots                 */
         size_t size;     /* current number of elements stored  */
         /** Construct a ring buffer with capacity for @p buffer_size elements. */
-        DataBuffer(size_t capacity, size_t obj_size, DataType type)
+        DataBuffer(size_t capacity, DataType type, uint64_t data_reference, std::string name)
         {
             log.ext_trace("[{}] Constructor {}", __func__, (int)type);
             if (capacity == 0)
@@ -58,19 +61,14 @@ namespace ssp4cpp::sim::handler
             }
             this->capacity = capacity;
             this->type = type;
-            if (type == DataType::UNKNOWN)
-            {
-                this->obj_size = obj_size;
-            }
-            else
-            {
-                this->obj_size = get_data_type_size(type);
-            }
-
+            this->data_reference = data_reference;
+            this->name = name;
+   
+            this->obj_size = get_data_type_size(type);
+            
             log.ext_trace("[{}] Allocating data, obj_size: {}, capacity: {}", __func__, this->obj_size, capacity);
             data = std::make_unique<std::byte[]>(this->obj_size * capacity);
             timestamps = std::make_unique<uint64_t[]>(capacity);
-            // log.ext_trace("[{}] Allocating complete", __func__);
 
             if (!data || !timestamps)
                 throw runtime_error("Failed to allocate Data");
@@ -114,6 +112,7 @@ namespace ssp4cpp::sim::handler
             else [[unlikely]]
             {
                 // TODO: add some check for overflow
+                // double check that null terminator is included
                 strcpy((char *)data_ptr(head), (char *)obj);
             }
 

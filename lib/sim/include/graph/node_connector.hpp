@@ -78,7 +78,7 @@ namespace ssp4cpp::sim::graph
         uint64_t create_data_storage()
         {
             // add check if already called, potential memory leak
-            data_reference = data_handler->initData(type);
+            data_reference = data_handler->initData(type, this->name);
             return data_reference;
         }
 
