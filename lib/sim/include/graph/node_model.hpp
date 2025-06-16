@@ -86,8 +86,15 @@ namespace ssp4cpp::sim::graph
             log.trace("[{}] Model {} ", __func__, step_double);
             if (fmu->model->step(step_double) == false)
             {
-                log.error("Error! step() returned with status: {}", std::to_string((int)fmu->model->last_status()));
+                int status = (int)fmu->model->last_status();
+                log.error("Error! step() returned with status: {}", std::to_string(status));
+                if (status == 3)
+                {
+                    throw runtime_error("Execution failed");
+                }
             }
+            log.debug("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
+
         }
         
         uint64_t invoke(uint64_t timestep)
