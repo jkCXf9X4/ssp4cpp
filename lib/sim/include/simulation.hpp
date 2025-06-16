@@ -11,6 +11,8 @@
 #include "data_recorder.hpp"
 #include "fmu_handler.hpp"
 
+#include "csv_converter.hpp"
+
 #include "ssp_ext.hpp"
 
 #include <vector>
@@ -37,6 +39,8 @@ namespace ssp4cpp::sim
 
         unique_ptr<graph::Graph> graph;
 
+        std::string temp_file = "temp/raw_data.txt";
+
         Simulation()
         {
         }
@@ -44,7 +48,7 @@ namespace ssp4cpp::sim
         Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> str_fmu)
         {
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
-            recorder = make_unique<handler::DataRecorder>("temp/raw_data.txt");
+            recorder = make_unique<handler::DataRecorder>(temp_file);
             data_handler = make_unique<handler::DataHandler>(10,
                                                              recorder->get_register_buffer_callback(),
                                                              recorder->get_update_callback());
@@ -112,6 +116,8 @@ namespace ssp4cpp::sim
             }
 
             recorder->update(); // flush the last updates to file
+
+            convert_to_csv(temp_file, "temp/output.csv");
 
             log.info("[{}] Simulation completed", __func__);
         }
