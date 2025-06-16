@@ -9,6 +9,7 @@
 #include "node_base.hpp"
 #include "fmu_handler.hpp"
 #include "data_handler.hpp"
+#include "data_type.hpp"
 
 #include "fmu.hpp"
 #include <fmi4cpp/fmi4cpp.hpp>
@@ -112,6 +113,8 @@ namespace ssp4cpp::sim::graph
         using ConnectorNode::ConnectorNode; // forwards the base ctor
 
         // read value from model and store in data manager
+        // There is a unnecessary copy here
+        // discuss in fmi meeting
         void read_from_model(uint64_t time) override
         {
             int out_int;
@@ -119,7 +122,7 @@ namespace ssp4cpp::sim::graph
             bool out = (bool)out_int;
             data_handler->setData(time, data_reference, (void *)&out);
         }
-
+        
         // retrieve from data manager and input into model
         void write_to_model(uint64_t time) override
         {
@@ -180,18 +183,17 @@ namespace ssp4cpp::sim::graph
         // read value from model and store in data manager
         void read_from_model(uint64_t time) override
         {
-            char *out_char;
-            log.error("[{}] Reading string not implemented", __func__);
-            // this->fmu->model->read_string(value_reference, out_char);
-            std::string out(out_char);
-            data_handler->setData(time, data_reference, (void *)&out);
+            const char* str;
+            // log.error("[{}] Reading string not implemented", __func__);
+            this->fmu->model->read_string(value_reference, str);
+            data_handler->setData(time, data_reference, (void *)str);
         }
         void write_to_model(uint64_t time) override
         {
             void *data = data_handler->getData(time, data_reference);
             if (data)
             {
-                this->fmu->model->write_string(value_reference, ((std::string *)data)->c_str());
+                this->fmu->model->write_string(value_reference, (char*)data);
             }
         }
     };

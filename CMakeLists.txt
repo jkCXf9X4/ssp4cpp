@@ -24,5 +24,5 @@ add_subdirectory(lib/schema)
 add_subdirectory(lib/sim)
 
 add_subdirectory(app/sim)
-add_subdirectory(test)
+add_subdirectory(tests)
 

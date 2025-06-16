@@ -2,7 +2,7 @@
     
 file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 
-# message(ALL_SRC sim ="${ALL_SRC}")
+message(ALL_SRC sim ="Test1 ${ALL_SRC}")
 
 add_executable(test_1 ${ALL_SRC})
 

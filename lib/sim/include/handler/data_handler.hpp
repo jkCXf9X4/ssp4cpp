@@ -39,8 +39,8 @@ namespace ssp4cpp::sim::handler
         common::Logger log = common::Logger("DataHandler", common::LogLevel::ext_trace);
 
         size_t buffer_size;
-
         uint64_t reference_counter;
+
         std::condition_variable event;
         unique_ptr<DataRecorder> recorder;
         std::vector<unique_ptr<DataBuffer>> buffers;

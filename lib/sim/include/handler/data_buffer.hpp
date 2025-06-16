@@ -66,6 +66,7 @@ namespace ssp4cpp::sim::handler
             {
                 this->obj_size = get_data_type_size(type);
             }
+
             log.ext_trace("[{}] Allocating data, obj_size: {}, capacity: {}", __func__, this->obj_size, capacity);
             data = std::make_unique<std::byte[]>(this->obj_size * capacity);
             timestamps = std::make_unique<uint64_t[]>(capacity);
@@ -96,7 +97,8 @@ namespace ssp4cpp::sim::handler
         int push(void *obj, uint64_t time)
         {
             log.ext_trace("[{}] init", __func__);
-            if (is_full())
+    
+            if (is_full()) [[likely]]
             {
                 tail = (tail + 1) % capacity;
             }
@@ -105,7 +107,16 @@ namespace ssp4cpp::sim::handler
                 size++;
             }
 
-            std::memcpy(data_ptr(head), obj, obj_size);
+            if (type != DataType::STRING) [[likely]]
+            {
+                std::memcpy(data_ptr(head), obj, obj_size);
+            }
+            else [[unlikely]]
+            {
+                // TODO: add some check for overflow
+                strcpy((char *)data_ptr(head), (char *)obj);
+            }
+
             timestamps[head] = time;
 
             head = (head + 1) % capacity;

@@ -35,7 +35,7 @@ namespace ssp4cpp::sim::handler
         case DataType::ENUM:
             return sizeof(int); // stored like an int
         case DataType::STRING:
-            return sizeof(std::string);
+            return 250; // max size of string
         case DataType::UNKNOWN:
             return 0;
         }

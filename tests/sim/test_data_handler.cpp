@@ -36,6 +36,7 @@ TEST_CASE("DataHandler handles BOOL type", "[DataHandler][BOOL]")
     
     log.ext_trace("[{}] get data 2", __func__);
     void *data2 = mgr.getData(250, ref);
+    log.ext_trace("[{}] get data 2 after", __func__);
     REQUIRE(data2 != nullptr);
     REQUIRE(*static_cast<bool *>(data2) == false);
     log.ext_trace("[{}] complete", __func__);
