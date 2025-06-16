@@ -6,6 +6,7 @@ vcpkg_installed
 build.log
 .venv/
 results
+temp
 
 
 # PYTHON

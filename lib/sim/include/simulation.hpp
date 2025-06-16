@@ -41,7 +41,7 @@ namespace ssp4cpp::sim
         Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
         {
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
-            recorder = make_unique<handler::DataRecorder>("raw_data.txt");
+            recorder = make_unique<handler::DataRecorder>("/temp/raw_data.txt");
             data_handler = make_unique<handler::DataHandler>(10,
                                                              recorder->get_register_buffer_callback(),
                                                              recorder->get_update_callback());
