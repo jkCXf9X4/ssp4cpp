@@ -60,7 +60,7 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        void set_input(uint64_t time)
+        void retrieve_and_set_input(uint64_t time)
         {
             log.ext_trace("[{}] Init", __func__);
             for (auto &[_, c] : input_connectors)
@@ -70,7 +70,7 @@ namespace ssp4cpp::sim::graph
             }
         }
         
-        void get_output(uint64_t time)
+        void store_output(uint64_t time)
         {
             log.ext_trace("[{}] Init", __func__);
             for (auto &[_, c] : output_connectors)
@@ -94,23 +94,25 @@ namespace ssp4cpp::sim::graph
                 }
             }
             log.debug("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
-
         }
         
-        uint64_t invoke(uint64_t timestep)
+        uint64_t invoke(uint64_t time)
         {
             log.ext_trace("[{}] Init {}", __func__, this->name.c_str());
 
             start_time = end_time;
-            end_time = start_time + timestep;
+            end_time = time;
+            auto timestep = end_time - start_time;
             delayed_time = end_time - delay;
-            log.trace("[{}] SimNode start_time: {} end_time: {}, delayed_time {}", __func__, start_time, end_time, delayed_time);
             
-            set_input(start_time);
+            log.trace("[{}] SimNode start_time: {} timestep: {} end_time: {}, delayed_time {}", __func__, start_time, timestep, end_time, delayed_time);
+            
+            retrieve_and_set_input(start_time);
 
             take_step(timestep);
+            // this should return the new endtime if we have early return
 
-            get_output(delayed_time);
+            store_output(delayed_time);
 
             return delayed_time;
         }

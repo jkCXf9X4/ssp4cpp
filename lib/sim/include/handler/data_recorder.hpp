@@ -53,7 +53,7 @@ namespace ssp4cpp::sim::handler
         {
             log.ext_trace("[{}] init", __func__);
             running = false;
-            
+
             usleep(10); // give all treads the chance to return to waiting
             event.notify_all();
 
@@ -72,6 +72,7 @@ namespace ssp4cpp::sim::handler
         {
             log.ext_trace("[{}] Init", __func__);
             buffers.emplace_back(BufferTracker{0, buffer});
+            file << "REGISTER," << buffer->name.c_str() << "," <<  buffer->data_reference << std::endl;
         }
 
         auto get_register_buffer_callback()

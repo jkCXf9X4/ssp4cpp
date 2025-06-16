@@ -44,7 +44,7 @@ namespace ssp4cpp::sim
         Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> str_fmu)
         {
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
-            recorder = make_unique<handler::DataRecorder>("/temp/raw_data.txt");
+            recorder = make_unique<handler::DataRecorder>("temp/raw_data.txt");
             data_handler = make_unique<handler::DataHandler>(10,
                                                              recorder->get_register_buffer_callback(),
                                                              recorder->get_update_callback());
@@ -75,13 +75,14 @@ namespace ssp4cpp::sim
             // simplify graph if possible
         }
 
-        void invoke(graph::ModelNode *node, uint64_t timestep)
+        // need to think hard aout the time...
+        void invoke(graph::ModelNode *node, uint64_t time)
         {
-            node->invoke(timestep);
+            auto new_time  = node->invoke(time);
             for (auto c_ : node->children)
             {
                 auto c = (graph::ModelNode *)c_;
-                invoke(c, timestep);
+                invoke(c, new_time);
             }
         }
 
@@ -92,9 +93,9 @@ namespace ssp4cpp::sim
             ThreadPool pool(5);
 
             uint64_t time = 0;
-            uint64_t end_time = 10 * time::nanoseconds_per_second;
+            uint64_t end_time = 3 * time::nanoseconds_per_second;
             // uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
-            uint64_t timestep = 1 * time::nanoseconds_per_second;
+            uint64_t timestep = 0.4 * time::nanoseconds_per_second;
 
             auto start_nodes = graph->get_start_nodes();
             assert(start_nodes.size() == 1);
@@ -104,8 +105,10 @@ namespace ssp4cpp::sim
             // simulation time loop: invoke graph each timestep
             while (time < end_time)
             {
-                invoke(start_node, timestep);
-                time += timestep;
+                time += timestep; 
+
+                log.info("[{}] NEW TIME {}", __func__, time);
+                invoke(start_node, time);
             }
 
             recorder->update(); // flush the last updates to file
