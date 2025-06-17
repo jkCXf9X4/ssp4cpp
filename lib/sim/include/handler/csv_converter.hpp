@@ -16,7 +16,7 @@ namespace ssp4cpp::sim
 
     void convert_to_csv(std::string temp_file, std::string output_file)
     {
-        auto log = common::Logger("convert_to_csv", common::LogLevel::debug);
+        auto log = common::Logger("convert_to_csv", common::LogLevel::trace);
         std::ifstream in(temp_file);
         if (!in)
         {
@@ -25,13 +25,16 @@ namespace ssp4cpp::sim
         }
 
         log.trace("1. Build memory map");
-
+        
         std::unordered_map<int, std::string> ref_to_name;
         std::map<long long, std::unordered_map<int, std::string>> rows; // time -> {ref -> data}
+        
 
         std::string line;
+        int nr_data = 0;
         while (std::getline(in, line))
         {
+            log.ext_trace("New line: {}", line);
             if (line.empty())
                 continue;
 
@@ -61,9 +64,11 @@ namespace ssp4cpp::sim
 
                 const int ref = std::stoi(ref_str);
                 rows[time][ref] = data;
+                nr_data++;
             }
         }
         in.close();
+        log.debug("{[]} nr of datapoints added - {}", __func__, nr_data);
 
         log.trace("2. Prepare ordered list of references for header");
         std::vector<int> ordered_refs;

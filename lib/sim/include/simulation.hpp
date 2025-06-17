@@ -20,6 +20,7 @@
 #include <map>
 #include <set>
 #include <list>
+#include <chrono>
 
 namespace ssp4cpp::sim
 {
@@ -49,7 +50,7 @@ namespace ssp4cpp::sim
         {
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
             recorder = make_unique<handler::DataRecorder>(temp_file);
-            data_handler = make_unique<handler::DataHandler>(10,
+            data_handler = make_unique<handler::DataHandler>(30,
                                                              recorder->get_register_buffer_callback(),
                                                              recorder->get_update_callback());
 
@@ -82,7 +83,7 @@ namespace ssp4cpp::sim
         // need to think hard aout the time...
         void invoke(graph::ModelNode *node, uint64_t time)
         {
-            auto new_time  = node->invoke(time);
+            auto new_time = node->invoke(time);
             for (auto c_ : node->children)
             {
                 auto c = (graph::ModelNode *)c_;
@@ -97,29 +98,31 @@ namespace ssp4cpp::sim
             ThreadPool pool(5);
 
             uint64_t time = 0;
-            uint64_t end_time = 3 * time::nanoseconds_per_second;
-            // uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
-            uint64_t timestep = 0.001 * time::nanoseconds_per_second;
+            uint64_t end_time = 2 * time::nanoseconds_per_second;
+            uint64_t timestep = 0.1 * time::nanoseconds_per_second;
 
             auto start_nodes = graph->get_start_nodes();
             assert(start_nodes.size() == 1);
             auto start_node = start_nodes[0];
 
-            log.debug("[{}] Start node: {}", __func__, start_node->to_string());
+            auto start = std::chrono::high_resolution_clock::now();
             // simulation time loop: invoke graph each timestep
             while (time < end_time)
             {
-                time += timestep; 
+                time += timestep;
 
                 log.ext_trace("[{}] NEW TIME {}", __func__, time);
                 invoke(start_node, time);
             }
-
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = duration_cast<std::chrono::microseconds>(stop - start);
+            log.info("[{}] Simulation completed, {}", __func__, duration.count());
+            
             recorder->update(); // flush the last updates to file
-
+            sleep(1);        // give the buffer time to flush to file
+            
+            log.info("[{}] Saving output", __func__);
             convert_to_csv(temp_file, "temp/output.csv");
-
-            log.info("[{}] Simulation completed", __func__);
         }
     };
 

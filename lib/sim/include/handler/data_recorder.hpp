@@ -24,7 +24,7 @@ namespace ssp4cpp::sim::handler
     class DataRecorder
     {
     public:
-        common::Logger log = common::Logger("DataRecorder", common::LogLevel::debug);
+        common::Logger log = common::Logger("DataRecorder", common::LogLevel::ext_trace);
 
         std::ofstream file;
         std::thread worker;
@@ -46,7 +46,7 @@ namespace ssp4cpp::sim::handler
             usleep(100); // wait for thread to start
         }
 
-        DataRecorder(const DataRecorder&) = delete;
+        DataRecorder(const DataRecorder &) = delete;
         DataRecorder &operator=(const DataRecorder &) = delete;
 
         ~DataRecorder()
@@ -72,7 +72,7 @@ namespace ssp4cpp::sim::handler
         {
             log.ext_trace("[{}] Init", __func__);
             buffers.emplace_back(BufferTracker{0, buffer});
-            file << "REGISTER," << buffer->name.c_str() << "," <<  buffer->data_reference << std::endl;
+            file << "REGISTER," << buffer->name.c_str() << "," << buffer->data_reference << std::endl;
         }
 
         auto get_register_buffer_callback()
@@ -104,7 +104,7 @@ namespace ssp4cpp::sim::handler
                 event.wait(lock);
 
                 log.ext_trace("[{}] Looking for new content to write to file", __func__);
-                
+
                 for (auto &tracker : buffers)
                 {
                     log.ext_trace("[{}] Evaluating {}", __func__, tracker.buffer->name);
@@ -126,6 +126,7 @@ namespace ssp4cpp::sim::handler
                     }
                     tracker.timestamp = max_time;
                 }
+                file.flush();
             }
         }
 
@@ -134,15 +135,15 @@ namespace ssp4cpp::sim::handler
             log.ext_trace("[{}] init", __func__);
             switch (type)
             {
+            case DataType::REAL:
+                file << time << "," << reference << "," << *(double *)data << "\n";
+                break;
             case DataType::BOOL:
                 file << time << "," << reference << "," << (*(bool *)data ? 1 : 0) << "\n";
                 break;
             case DataType::INT:
             case DataType::ENUM:
                 file << time << "," << reference << "," << *(int *)data << "\n";
-                break;
-            case DataType::REAL:
-                file << time << "," << reference << "," << *(double *)data << "\n";
                 break;
             case DataType::STRING:
                 file << time << "," << reference << "," << *(std::string *)data << "\n";
@@ -151,7 +152,6 @@ namespace ssp4cpp::sim::handler
                 file << time << "," << reference << ",<bin>\n";
                 break;
             }
-            file.flush();
         }
     };
 }
