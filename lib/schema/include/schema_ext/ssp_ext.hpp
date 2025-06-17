@@ -12,7 +12,7 @@
 namespace ssp4cpp::ssp::ext
 {
     using namespace std;
-    inline auto log = common::Logger("ssp.ext", common::LogLevel::debug);
+    inline auto log = common::Logger("ssp.ext", common::LogLevel::info);
 
     map<string,string> get_resources(ssp4cpp::Ssp &ssp)
     {
@@ -21,7 +21,7 @@ namespace ssp4cpp::ssp::ext
         for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
         {
             auto name = resource->name.value_or("null");
-            log.debug("Resource {} : {}", name, resource->source);
+            log.trace("Resource {} : {}", name, resource->source);
 
             resources[name] = resource->source;
         }
@@ -38,16 +38,16 @@ namespace ssp4cpp::ssp::ext
         for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
         {
             auto name = resource->name.value_or("null");
-            log.debug("Resource {}", name);
+            log.trace("Resource {}", name);
 
             auto fmu = make_unique<ssp4cpp::Fmu>(ssp.dir / resource->source);
             items[name] = std::move(fmu);
         }
 
-        log.debug("FMUs");
+        log.trace("FMUs");
         for (auto &[name, fmu] : items)
         {
-            log.debug("{} : {}", name, fmu->to_string());
+            log.trace("{} : {}", name, fmu->to_string());
         }
         return items;
     }

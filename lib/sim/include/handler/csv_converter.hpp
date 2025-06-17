@@ -2,6 +2,7 @@
 #pragma once
 
 #include "common_log.hpp"
+#include "common_time.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -15,7 +16,7 @@ namespace ssp4cpp::sim
 
     void convert_to_csv(std::string temp_file, std::string output_file)
     {
-        auto log = common::Logger("convert_to_csv", common::LogLevel::ext_trace);
+        auto log = common::Logger("convert_to_csv", common::LogLevel::debug);
         std::ifstream in(temp_file);
         if (!in)
         {
@@ -23,7 +24,7 @@ namespace ssp4cpp::sim
             return;
         }
 
-        log.debug("1. Build memory map");
+        log.trace("1. Build memory map");
 
         std::unordered_map<int, std::string> ref_to_name;
         std::map<long long, std::unordered_map<int, std::string>> rows; // time -> {ref -> data}
@@ -41,7 +42,7 @@ namespace ssp4cpp::sim
             if (first == "REGISTER")
             {
                 // REGISTER,signal_name,ref"
-                log.debug("Process new registration");
+                log.ext_trace("Process new registration");
 
                 std::string full_name, ref_str;
                 std::getline(ss, full_name, ',');
@@ -51,7 +52,7 @@ namespace ssp4cpp::sim
             else
             {
                 // time,ref,data
-                log.debug("New data row");
+                log.ext_trace("New data row");
 
                 const long long time = std::stoll(first);
                 std::string ref_str, data;
@@ -64,7 +65,7 @@ namespace ssp4cpp::sim
         }
         in.close();
 
-        log.debug("2. Prepare ordered list of references for header");
+        log.trace("2. Prepare ordered list of references for header");
         std::vector<int> ordered_refs;
         ordered_refs.reserve(ref_to_name.size());
         for (const auto &p : ref_to_name)
@@ -73,7 +74,7 @@ namespace ssp4cpp::sim
         }
         std::sort(ordered_refs.begin(), ordered_refs.end());
 
-        log.debug("3. Write CSV");
+        log.trace("3. Write CSV");
         std::ofstream out(output_file);
         if (!out)
         {
@@ -81,16 +82,17 @@ namespace ssp4cpp::sim
             return;
         }
 
-        log.debug("Print header");
+        log.ext_trace("Print header");
         out << "time";
         for (int ref : ordered_refs)
             out << ',' << ref_to_name[ref];
         out << '\n';
 
-        log.debug("Write data rows");
+        log.ext_trace("Write data rows");
         for (const auto &[time, refmap] : rows)
         {
-            out << time;
+            double time_double = (double)time / common::time::nanoseconds_per_second;
+            out << time_double;
             for (int ref : ordered_refs)
             {
                 out << ',';

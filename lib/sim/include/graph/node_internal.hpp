@@ -21,7 +21,7 @@ namespace ssp4cpp::sim::graph
     class ModelVariableNode : public NodeBase
     {
     public:
-        common::Logger log = common::Logger("ModelVariableNode", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("ModelVariableNode", common::LogLevel::debug);
         string component;
         string variable_name;
 

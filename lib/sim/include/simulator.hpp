@@ -38,7 +38,7 @@ namespace ssp4cpp::sim
     class Simulator
     {
     public:
-        common::Logger log = Logger("Simulator", LogLevel::debug);
+        common::Logger log = Logger("Simulator", LogLevel::info);
 
         unique_ptr<Ssp> ssp;
         std::map<std::string, std::unique_ptr<ssp4cpp::Fmu>> fmus;

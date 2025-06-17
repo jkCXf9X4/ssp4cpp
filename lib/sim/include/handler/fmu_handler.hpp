@@ -50,7 +50,7 @@ namespace ssp4cpp::sim::handler
     class FmuHandler
     {
     public:
-        common::Logger log = common::Logger("sim::FmuHandler", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("sim::FmuHandler", common::LogLevel::debug);
 
         map<string, unique_ptr<FmuInfo>> fmus;
 

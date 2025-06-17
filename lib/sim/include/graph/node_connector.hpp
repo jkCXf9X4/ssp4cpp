@@ -32,7 +32,7 @@ namespace ssp4cpp::sim::graph
     class ConnectorNode : public NodeBase
     {
     public:
-        common::Logger log = common::Logger("ConnectorNode", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("ConnectorNode", common::LogLevel::debug);
 
         string component_name;
         string connector_name;
@@ -164,7 +164,7 @@ namespace ssp4cpp::sim::graph
         {
             double out;
             this->fmu->model->read_real(value_reference, out);
-            log.debug("Reading {}", out);
+            log.ext_trace("Reading {}", out);
             data_handler->setData(time, data_reference, (void *)&out);
         }
         void write_to_model(uint64_t time) override
@@ -172,7 +172,7 @@ namespace ssp4cpp::sim::graph
             void *data = data_handler->getData(time, data_reference);
             if (data)
             {
-                log.debug("Writing {}", *(double *)data);
+                log.ext_trace("Writing {}", *(double *)data);
                 this->fmu->model->write_real(value_reference, *(double *)data);
             }
         }

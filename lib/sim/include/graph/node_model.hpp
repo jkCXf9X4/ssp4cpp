@@ -22,7 +22,7 @@ namespace ssp4cpp::sim::graph
     class ModelNode : public NodeBase
     {
     public:
-        common::Logger log = common::Logger("ModelNode", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("ModelNode", common::LogLevel::info);
 
         string fmu_name;
 
@@ -81,7 +81,6 @@ namespace ssp4cpp::sim::graph
         
         void take_step(uint64_t timestep)
         {
-            log.ext_trace("[{}] Init", __func__);
             auto step_double = (double)timestep / ssp4cpp::common::time::nanoseconds_per_second;
             log.trace("[{}] Model {} ", __func__, step_double);
             if (fmu->model->step(step_double) == false)
@@ -93,19 +92,18 @@ namespace ssp4cpp::sim::graph
                     throw runtime_error("Execution failed");
                 }
             }
-            log.debug("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
+            log.trace("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
         }
         
         uint64_t invoke(uint64_t time)
         {
-            log.ext_trace("[{}] Init {}", __func__, this->name.c_str());
-
             start_time = end_time;
             end_time = time;
             auto timestep = end_time - start_time;
             delayed_time = end_time - delay;
             
-            log.trace("[{}] SimNode start_time: {} timestep: {} end_time: {}, delayed_time {}", __func__, start_time, timestep, end_time, delayed_time);
+            log.trace("[{}] {} start_time: {} timestep: {} end_time: {}, delayed_time {}", 
+                __func__, this->name.c_str(), start_time, timestep, end_time, delayed_time);
             
             retrieve_and_set_input(start_time);
 

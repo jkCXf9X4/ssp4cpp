@@ -19,7 +19,7 @@ namespace ssp4cpp
     class Archive
     {
     public:
-        Logger log;
+        Logger log = Logger("Archive", LogLevel::info);
         bool using_tmp_dir = false;
         path original_file;
         path dir;
@@ -41,7 +41,7 @@ namespace ssp4cpp
             : original_file(file)
         {
 
-            log.info("Importing archive: {}", file.string());
+            log.debug("Importing archive: {}", file.string());
 
             if (is_regular_file(file))
             {
@@ -62,7 +62,7 @@ namespace ssp4cpp
         /** @brief Clean up any temporary directory used by the archive. */
         virtual ~Archive()
         {
-            log.debug("Destructor called for archive {}", original_file.string());
+            log.ext_trace("Destructor called for archive {}", original_file.string());
             if (using_tmp_dir)
             {
                 remove_all(dir);

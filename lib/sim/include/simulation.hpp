@@ -28,7 +28,7 @@ namespace ssp4cpp::sim
     class Simulation
     {
     public:
-        common::Logger log = common::Logger("sim::Simulation", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("sim::Simulation", common::LogLevel::debug);
 
         unique_ptr<handler::DataHandler> data_handler;
         unique_ptr<handler::FmuHandler> fmu_handler;
@@ -99,19 +99,19 @@ namespace ssp4cpp::sim
             uint64_t time = 0;
             uint64_t end_time = 3 * time::nanoseconds_per_second;
             // uint64_t timestep = 100 * time::nanoseconds_per_millisecond;
-            uint64_t timestep = 0.4 * time::nanoseconds_per_second;
+            uint64_t timestep = 0.001 * time::nanoseconds_per_second;
 
             auto start_nodes = graph->get_start_nodes();
             assert(start_nodes.size() == 1);
             auto start_node = start_nodes[0];
 
-            log.info("[{}] Start node: {}", __func__, start_node->to_string());
+            log.debug("[{}] Start node: {}", __func__, start_node->to_string());
             // simulation time loop: invoke graph each timestep
             while (time < end_time)
             {
                 time += timestep; 
 
-                log.info("[{}] NEW TIME {}", __func__, time);
+                log.ext_trace("[{}] NEW TIME {}", __func__, time);
                 invoke(start_node, time);
             }
 

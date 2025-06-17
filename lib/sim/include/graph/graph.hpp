@@ -25,7 +25,7 @@ namespace ssp4cpp::sim::graph
     class Graph
     {
     public:
-        common::Logger log = common::Logger("Graph", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("Graph", common::LogLevel::debug);
 
         map<string, unique_ptr<ModelNode>> models;
         map<string, unique_ptr<ConnectorNode>> connectors;

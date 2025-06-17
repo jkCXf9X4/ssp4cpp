@@ -21,7 +21,7 @@ namespace ssp4cpp::sim::graph
     class ConnectionNode : public NodeBase
     {
     public:
-        common::Logger log = common::Logger("ConnectionNode", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("ConnectionNode", common::LogLevel::debug);
         string start_component;
         string start_connector;
         string end_component;

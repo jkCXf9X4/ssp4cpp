@@ -29,7 +29,7 @@ namespace ssp4cpp::sim::graph
     class GraphBuilder
     {
     public:
-        static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::ext_trace);
+        static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::info);
 
         ssp4cpp::Ssp *ssp;
         handler::FmuHandler *fmu_handler;

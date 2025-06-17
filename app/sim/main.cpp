@@ -34,12 +34,12 @@ using namespace ssp4cpp::common;
 int main()
 {
     auto log = Logger("main", LogLevel::debug);
-    log.info("[{}] enter", __func__);
+    log.ext_trace("[{}] enter", __func__);
 
     // auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
     auto sim = sim::Simulator("./resources/delay_sys.ssp", "./resources/model_props.json");
     // sim.execute();
 
-    log.info("[{}] exit", __func__);
+    log.ext_trace("[{}] exit", __func__);
     return 0;
 }
