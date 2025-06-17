@@ -17,6 +17,76 @@ using namespace ssp4cpp::common::xml;
 
 namespace ssp4cpp::fmi2::md
 {
+
+    class Status : public IEnum
+    {
+    public:
+        enum Value : int
+        {
+            ok,
+            warning,
+            discard,
+            error,
+            fatal,
+            unknown
+        };
+
+        Status() = default;
+        constexpr Status(Value value) : value(value) {}
+        operator Value () const {return value;}
+
+        std::string to_string() const override
+        {
+            switch (value)
+            {
+            case Value::ok:
+                return "ok";
+            case Value::warning:
+                return "warning";
+            case Value::discard:
+                return "discard";
+            case Value::error:
+                return "error";
+            case Value::fatal:
+                return "fatal";
+            default:
+                return "unknown";
+            }
+        }
+
+        void from_string(const std::string &str) override
+        {
+            if (str == "ok")
+            {
+                value = Value::ok;
+            }
+            else if (str == "warning")
+            {
+                value = Value::warning;
+            }
+            else if (str == "discard")
+            {
+                value = Value::discard;
+            }
+            else if (str == "error")
+            {
+                value = Value::error;
+            }
+            else if (str == "fatal")
+            {
+                value = Value::fatal;
+            }
+            else
+            {
+                value = Value::unknown;
+            }
+        }
+
+    private:
+        Value value;
+    };
+
+
     class Causality : public IEnum
     {
     public:
@@ -382,6 +452,74 @@ namespace ssp4cpp::fmi2::md
             else
             {
                 value = Value::logEvents;
+            }
+        }
+
+    private:
+        Value value;
+    };
+
+    class Type : public IEnum
+    {
+    public:
+        enum Value : int
+        {
+            real,
+            integer,
+            boolean,
+            string,
+            enumeration,
+            unknown
+        };
+
+        Type() = default;
+        constexpr Type(Value value) : value(value) {}
+        operator Value () const {return value;}
+
+        std::string to_string() const override
+        {
+            switch (value)
+            {
+            case Value::real:
+                return "real";
+            case Value::integer:
+                return "integer";
+            case Value::boolean:
+                return "boolean";
+            case Value::string:
+                return "string";
+            case Value::enumeration:
+                return "enumeration";
+            default:
+                return "unknown";
+            }
+        }
+
+        void from_string(const std::string &str) override
+        {
+            if (str == "real")
+            {
+                value = Value::real;
+            }
+            else if (str == "integer")
+            {
+                value = Value::integer;
+            }
+            else if (str == "boolean")
+            {
+                value = Value::boolean;
+            }
+            else if (str == "string")
+            {
+                value = Value::string;
+            }
+            else if (str == "enumeration")
+            {
+                value = Value::enumeration;
+            }
+            else
+            {
+                value = Value::unknown;
             }
         }
 
