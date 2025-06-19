@@ -28,10 +28,6 @@ namespace ssp4cpp::sim::graph
 
         Connectors connectors;
 
-        uint64_t start_time = 0;
-        uint64_t end_time = 0;
-        uint64_t delayed_time = 0;
-        uint64_t delay = 0;
 
         handler::FmuInfo *fmu;
 

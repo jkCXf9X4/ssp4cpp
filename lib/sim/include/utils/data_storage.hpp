@@ -7,6 +7,7 @@
 
 #include "node_base.hpp"
 #include "node_connector.hpp"
+#include "data_type.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -19,23 +20,23 @@
 namespace ssp4cpp::sim::utils
 {
     // data centric storage
-    template<typename T>
+    template <typename T>
     class DataStorage
     {
-    public:
         common::Logger log = common::Logger("Data", common::LogLevel::ext_trace);
 
-        uint64_t time;
-        vector<std::string> names;
-        vector<int> sizes;
         map<std::string, int> index_name_map;
-        
+
         // the data landing area enables easy access when exporting results
         unique_ptr<std::byte[]> data;
-        vector<int> positions;    // data position relative to landing area 0, 4,...
-        
+        vector<int> positions;    // data position relative to start, 0, 4,...
         vector<void *> locations; // absolute location in memory
-        vector<handler::DataType> types;
+        vector<utils::DataType> types;
+
+    public:
+        uint64_t time;
+        vector<std::string> names;
+        vector<pair<utils::DataType, void *>> type_data;
 
         int pos = 0;
         int index = 0;
@@ -46,12 +47,11 @@ namespace ssp4cpp::sim::utils
         {
             names.push_back(item.name);
             positions.push_back(pos);
-            types.push_back(item.type)
-            sizes.push_back(handler::get_data_type_size(item.type));
-            
+            types.push_back(item.type);
+
             index_name_map[item.name] = index;
 
-            pos += sizes.back();
+            pos += utils::get_data_type_size(item.type);
             index += 1;
         }
 
@@ -65,30 +65,25 @@ namespace ssp4cpp::sim::utils
 
         void allocate()
         {
+            locations.clear();
             data = std::make_unique<std::byte[]>(pos);
-    
-            for (auto pos : positions)
+
+            for (auto p : positions)
             {
-                locations.push_back(data.get() + pos);
+                locations.push_back(data.get() + p);
             }
-        }
 
-        vector<std::string> get_names()
-        {
-            return names;
-        }
-
-        auto get_data()
-        {
-            vector<pair<handler::DataType, void*>> output;
             int i = 0;
-            for (auto &location :locations)
+            for (auto &l : locations)
             {
-                output.push_back(make_pair(types[i], location));
+                type_data.push_back(make_pair(types[i], l));
+                i += 1;
             }
-            return output;
         }
 
-
-    };   
+        int index_by_name(std::string name)
+        {
+            return index_name_map[name];
+        }
+    };
 }

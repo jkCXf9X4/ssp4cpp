@@ -22,6 +22,9 @@ namespace ssp4cpp::sim::graph
 
     public:
         uint64_t delay = 0;
+        uint64_t start_time = 0;
+        uint64_t end_time = 0;
+        uint64_t delayed_time = 0;
 
         common::Logger log = common::Logger("NodeBase", common::LogLevel::debug);
 
