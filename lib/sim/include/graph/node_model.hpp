@@ -26,8 +26,7 @@ namespace ssp4cpp::sim::graph
 
         string fmu_name;
 
-        map<string, ConnectorNode *> input_connectors;
-        map<string, ConnectorNode *> output_connectors;
+        Connectors connectors;
 
         uint64_t start_time = 0;
         uint64_t end_time = 0;
@@ -63,20 +62,13 @@ namespace ssp4cpp::sim::graph
         void retrieve_and_set_input(uint64_t time)
         {
             log.ext_trace("[{}] Init", __func__);
-            for (auto &[_, c] : input_connectors)
-            {
-                //TODO: get some connection delay...
-                c->write_to_model(time);
-            }
+
+            connectors.write_to_model(time);
         }
         
         void store_output(uint64_t time)
         {
-            log.ext_trace("[{}] Init", __func__);
-            for (auto &[_, c] : output_connectors)
-            {
-                c->read_from_model(time);
-            }
+            connectors.read_from_model(time);
         }
         
         void take_step(uint64_t timestep)

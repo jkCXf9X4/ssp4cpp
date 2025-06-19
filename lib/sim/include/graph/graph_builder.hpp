@@ -11,6 +11,8 @@
 #include "node_connector.hpp"
 #include "node_internal.hpp"
 
+#include "misc.hpp"
+
 #include "graph.hpp"
 
 #include "fmu.hpp"
@@ -80,31 +82,10 @@ namespace ssp4cpp::sim::graph
 
             auto fmu = fmu_handler->fmus[component_name].get();
             auto var = fmu->model_description->get_variable_by_name(connector_name);
+            auto type = utils::get_variable_type(var);
 
-            if (var.is_boolean())
-            {
-                return std::make_unique<BoolConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, DataType::BOOL);
-            }
-            else if (var.is_integer() || var.is_enumeration())
-            {
-                return std::make_unique<IntConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, DataType::INT);
-            }
-            else if (var.is_real())
-            {
-                return std::make_unique<DoubleConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, DataType::REAL);
-            }
-            else if (var.is_string())
-            {
-                return std::make_unique<StringConnectorNode>(
-                    component_name, connector_name, fmu, data_handler, DataType::STRING);
-            }
-            else
-            {
-                throw runtime_error("Unknown type");
-            }
+            return std::make_unique<ConnectorNode>(
+                component_name, connector_name, fmu, data_handler, type);
         }
 
         map<string, unique_ptr<ConnectorNode>> create_connectors(ssp4cpp::Ssp &ssp)
@@ -121,6 +102,7 @@ namespace ssp4cpp::sim::graph
                 {
                     auto component_name = component->name.value();
                     auto connector_name = connector->name;
+
                     auto c = create_connector(component_name, connector_name);
                     log.trace("[{}] New Connector: {}", __func__, c->name);
                     items[c->name] = std::move(c);
@@ -192,8 +174,8 @@ namespace ssp4cpp::sim::graph
                 auto source_connector = connectors[source_connector_name].get();
                 auto target_connector = connectors[target_connector_name].get();
 
-                source_model->output_connectors[source_connector_name] = source_connector;
-                target_model->input_connectors[target_connector_name] = target_connector;
+                source_model->connectors.output_connectors[source_connector_name] = source_connector;
+                target_model->connectors.input_connectors[target_connector_name] = target_connector;
 
                 source_connector->add_child(c.get());
                 c->add_child(target_connector);

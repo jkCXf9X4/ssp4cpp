@@ -38,6 +38,8 @@ namespace ssp4cpp::sim::handler
 
         getData will use 'time A'
         This to ensure that only valid data is used
+
+        TODO: should also switch to data_storage
         */
 
         common::Logger log = common::Logger("DataHandler", common::LogLevel::debug);
@@ -46,9 +48,6 @@ namespace ssp4cpp::sim::handler
         uint64_t reference_counter;
 
         std::vector<shared_ptr<DataBuffer>> buffers;
-
-        RegisterBufferCallback register_callback = nullptr;
-        DataAddedCallback new_data_callback = nullptr;
 
         DataHandler() = delete;
 
@@ -59,22 +58,12 @@ namespace ssp4cpp::sim::handler
             this->buffer_size = buffer_size;
         }
 
-        DataHandler(size_t buffer_size, RegisterBufferCallback register_callback, DataAddedCallback new_data_callback) : DataHandler(buffer_size)
-        {
-            this->register_callback = register_callback;
-            this->new_data_callback = new_data_callback;
-        }
-
         // Return the reference to the data
         /** Allocate a new buffer for objects of type @p type */
         uint64_t initData(DataType type, std::string name)
         {
             log.ext_trace("[{}] type init ", __func__);
             auto db = make_shared<DataBuffer>(buffer_size, type, reference_counter, name);
-            if (register_callback)
-            {
-                register_callback(db);
-            }
 
             buffers.emplace_back(std::move(db));
             return reference_counter++;
@@ -85,10 +74,6 @@ namespace ssp4cpp::sim::handler
         {
             log.ext_trace("[{}] init", __func__);
             buffers[reference]->push(data, time);
-            if (new_data_callback) [[likely]]
-            {
-                new_data_callback();
-            }
         }
 
         /** Retrieve the latest valid sample from a buffer. */

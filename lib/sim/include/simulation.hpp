@@ -50,9 +50,7 @@ namespace ssp4cpp::sim
         {
             fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
             recorder = make_unique<handler::DataRecorder>(temp_file);
-            data_handler = make_unique<handler::DataHandler>(30,
-                                                             recorder->get_register_buffer_callback(),
-                                                             recorder->get_update_callback());
+            data_handler = make_unique<handler::DataHandler>(30);
 
             this->ssp = ssp;
             this->str_fmu = str_fmu;

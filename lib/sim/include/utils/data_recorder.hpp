@@ -13,13 +13,13 @@
 #include <mutex>
 #include <condition_variable>
 
-namespace ssp4cpp::sim::handler
+namespace ssp4cpp::sim::utils
 {
-    struct BufferTracker
-    {
-        uint64_t timestamp = 0;
-        shared_ptr<DataBuffer> buffer;
-    };
+    // struct BufferTracker
+    // {
+    //     uint64_t timestamp = 0;
+    //     shared_ptr<DataBuffer> buffer;
+    // };
 
     class DataRecorder
     {
@@ -33,7 +33,8 @@ namespace ssp4cpp::sim::handler
         std::mutex event_mutex;
         std::condition_variable event;
 
-        std::vector<BufferTracker> buffers;
+        std::vector<std::string> names;
+        std::vector<pair<DataType, void *>> data;
 
         DataRecorder(const std::string &filename)
             : file(filename, std::ios::out)
@@ -68,32 +69,19 @@ namespace ssp4cpp::sim::handler
             log.ext_trace("[{}] completed", __func__);
         }
 
-        void register_buffer(shared_ptr<DataBuffer> buffer)
+        void print_headers()
         {
-            log.ext_trace("[{}] Init", __func__);
-            buffers.emplace_back(BufferTracker{0, buffer});
-            file << "REGISTER," << buffer->name.c_str() << "," << buffer->data_reference << std::endl;
+            file << "time";
+            for (int name : names)
+                file << ',' << name;
+            file << '\n';
         }
 
-        auto get_register_buffer_callback()
-        {
-            return [this](auto &&...args)
-            {
-                register_buffer(std::forward<decltype(args)>(args)...);
-            };
-        }
+        void print_data(u)
 
         void update()
         {
             event.notify_all();
-        }
-
-        auto get_update_callback()
-        {
-            return [this]()
-            {
-                update();
-            };
         }
 
         void loop()
@@ -135,17 +123,17 @@ namespace ssp4cpp::sim::handler
             log.ext_trace("[{}] init", __func__);
             switch (type)
             {
-            case DataType::REAL:
+            case DataType::real:
                 file << time << "," << reference << "," << *(double *)data << "\n";
                 break;
-            case DataType::BOOL:
+            case DataType::boolean:
                 file << time << "," << reference << "," << (*(bool *)data ? 1 : 0) << "\n";
                 break;
-            case DataType::INT:
-            case DataType::ENUM:
+            case DataType::integer:
+            case DataType::enumeration:
                 file << time << "," << reference << "," << *(int *)data << "\n";
                 break;
-            case DataType::STRING:
+            case DataType::string:
                 file << time << "," << reference << "," << *(std::string *)data << "\n";
                 break;
             default:

@@ -35,7 +35,7 @@ namespace ssp4cpp::sim::handler
         common::Logger log = common::Logger("DataBuffer", common::LogLevel::debug);
 
     public:
-        DataType type = DataType::UNKNOWN;
+        DataType type = DataType::unknown;
         uint64_t data_reference = 0;
         std::string name = "";
 
@@ -105,7 +105,7 @@ namespace ssp4cpp::sim::handler
                 size++;
             }
 
-            if (type != DataType::STRING) [[likely]]
+            if (type != DataType::string) [[likely]]
             {
                 std::memcpy(data_ptr(head), obj, obj_size);
             }

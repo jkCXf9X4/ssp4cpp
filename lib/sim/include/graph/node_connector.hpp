@@ -10,6 +10,9 @@
 #include "fmu_handler.hpp"
 #include "data_handler.hpp"
 #include "data_type.hpp"
+#include "data_type.hpp"
+#include "model_utils.hpp"
+#include "data_storage.hpp"
 
 #include "fmu.hpp"
 #include <fmi4cpp/fmi4cpp.hpp>
@@ -20,13 +23,60 @@
 namespace ssp4cpp::sim::graph
 {
 
+    // This class can be optimized allot
+    class Connectors
+    {
+    public:
+        map<string, ConnectorNode *> input_connectors;
+        map<string, ConnectorNode *> output_connectors;
 
-    // class ModelInterface
-    // {
-    //     virtual void read(uint64_t time){}
-    //     virtual void write(uint64_t time){}
-    // };
+        utils::DataStorage<ConnectorNode> input_data;
+        utils::DataStorage<ConnectorNode> output_data;
 
+        Connectors() {}
+
+        void allocate()
+        {
+            for (auto [_, con]: input_connectors)
+            {
+                input_data.add(*con);
+            }
+            for (auto [_, con]: output_connectors)
+            {
+                output_data.add(*con);
+            }
+            input_data.allocate();
+            output_data.allocate();
+        }
+
+        void write_to_model(uint64_t time)
+        {
+            int index = 0;
+            for (auto &[_, c] : input_connectors)
+            {
+                void *data = c->data_handler->getData(time, c->data_reference);
+
+                utils::write_to_model_(c->type, *c->fmu->model, c->value_reference, data);
+                // storage for export
+                memcpy(input_data.locations[index], data, input_data.sizes[index]);
+                index += 1;
+            }
+        }
+
+        void read_from_model(uint64_t time)
+        {
+            int pos = 0;
+            for (auto &[_, c] : output_connectors)
+            {
+                auto d = output_data.locations[pos];
+                utils::read_from_model_(c->type, *c->fmu->model, c->value_reference, d);
+
+                c->data_handler->setData(time, c->data_reference, d);
+                pos += 1;
+            }
+        }
+
+    };
 
     // template class to enable constexpression invoke
     class ConnectorNode : public NodeBase
@@ -99,104 +149,6 @@ namespace ssp4cpp::sim::graph
                << " }" << endl;
 
             return os;
-        }
-
-        //
-        virtual void read_from_model(uint64_t time) {}
-
-        virtual void write_to_model(uint64_t time) {}
-    };
-
-    class BoolConnectorNode : public ConnectorNode
-    {
-    public:
-        using ConnectorNode::ConnectorNode; // forwards the base ctor
-
-        // read value from model and store in data manager
-        // There is a unnecessary copy here
-        // discuss in fmi meeting
-        void read_from_model(uint64_t time) override
-        {
-            int out_int;
-            this->fmu->model->read_boolean(value_reference, out_int);
-            bool out = (bool)out_int;
-            data_handler->setData(time, data_reference, (void *)&out);
-        }
-        
-        // retrieve from data manager and input into model
-        void write_to_model(uint64_t time) override
-        {
-            void *data = data_handler->getData(time, data_reference);
-            if (data)
-            {
-                this->fmu->model->write_boolean(value_reference, *(int *)data);
-            }
-        }
-    };
-
-    class IntConnectorNode : public ConnectorNode
-    {
-    public:
-        using ConnectorNode::ConnectorNode; // forwards the base ctor
-        // read value from model and store in data manager
-        void read_from_model(uint64_t time) override
-        {
-            int out;
-            this->fmu->model->read_integer(value_reference, out);
-            data_handler->setData(time, data_reference, (void *)&out);
-        }
-        void write_to_model(uint64_t time) override
-        {
-            void *data = data_handler->getData(time, data_reference);
-            if (data)
-            {
-                this->fmu->model->write_integer(value_reference, *(int *)data);
-            }
-        }
-    };
-
-    class DoubleConnectorNode : public ConnectorNode
-    {
-    public:
-        using ConnectorNode::ConnectorNode; // forwards the base ctor
-        // read value from model and store in data manager
-        void read_from_model(uint64_t time) override
-        {
-            double out;
-            this->fmu->model->read_real(value_reference, out);
-            log.ext_trace("Reading {}", out);
-            data_handler->setData(time, data_reference, (void *)&out);
-        }
-        void write_to_model(uint64_t time) override
-        {
-            void *data = data_handler->getData(time, data_reference);
-            if (data)
-            {
-                log.ext_trace("Writing {}", *(double *)data);
-                this->fmu->model->write_real(value_reference, *(double *)data);
-            }
-        }
-    };
-
-    class StringConnectorNode : public ConnectorNode
-    {
-    public:
-        using ConnectorNode::ConnectorNode; // forwards the base ctor
-        // read value from model and store in data manager
-        void read_from_model(uint64_t time) override
-        {
-            const char* str;
-            // log.error("[{}] Reading string not implemented", __func__);
-            this->fmu->model->read_string(value_reference, str);
-            data_handler->setData(time, data_reference, (void *)str);
-        }
-        void write_to_model(uint64_t time) override
-        {
-            void *data = data_handler->getData(time, data_reference);
-            if (data)
-            {
-                this->fmu->model->write_string(value_reference, (char*)data);
-            }
         }
     };
 
