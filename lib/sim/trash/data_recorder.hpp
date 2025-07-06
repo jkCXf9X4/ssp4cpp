@@ -1,8 +1,11 @@
 #pragma once
 
-#include "data_buffer.hpp"
-#include "data_type.hpp"
 #include "common_log.hpp"
+
+
+#include "data_storage.hpp"
+#include "data_buffer.hpp"
+
 
 #include <fstream>
 #include <mutex>
@@ -72,12 +75,10 @@ namespace ssp4cpp::sim::utils
         void print_headers()
         {
             file << "time";
-            for (int name : names)
+            for (const auto& name : names)
                 file << ',' << name;
             file << '\n';
         }
-
-        void print_data(u)
 
         void update()
         {
@@ -93,27 +94,27 @@ namespace ssp4cpp::sim::utils
 
                 log.ext_trace("[{}] Looking for new content to write to file", __func__);
 
-                for (auto &tracker : buffers)
-                {
-                    log.ext_trace("[{}] Evaluating {}", __func__, tracker.buffer->name);
-                    auto buffer = tracker.buffer;
-                    uint64_t max_time = tracker.timestamp;
-                    for (std::size_t i = 0; i < buffer->size; ++i)
-                    {
-                        int pos;
-                        auto ts = buffer->get_time(i, pos);
-                        if (ts > tracker.timestamp)
-                        {
-                            log.ext_trace("[{}] Writing t: {} to file", __func__, ts);
-                            record(ts, buffer->data_reference, buffer->type, buffer->data_ptr(pos));
-                            if (ts > max_time)
-                            {
-                                max_time = ts;
-                            }
-                        }
-                    }
-                    tracker.timestamp = max_time;
-                }
+                // for (auto &tracker : buffers)
+                // {
+                //     log.ext_trace("[{}] Evaluating {}", __func__, tracker.buffer->name);
+                //     auto buffer = tracker.buffer;
+                //     uint64_t max_time = tracker.timestamp;
+                //     for (std::size_t i = 0; i < buffer->size; ++i)
+                //     {
+                //         int pos;
+                //         auto ts = buffer->get_time(i, pos);
+                //         if (ts > tracker.timestamp)
+                //         {
+                //             log.ext_trace("[{}] Writing t: {} to file", __func__, ts);
+                //             record(ts, buffer->data_reference, buffer->type, buffer->data_ptr(pos));
+                //             if (ts > max_time)
+                //             {
+                //                 max_time = ts;
+                //             }
+                //         }
+                //     }
+                //     tracker.timestamp = max_time;
+                // }
                 file.flush();
             }
         }

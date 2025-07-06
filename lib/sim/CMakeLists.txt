@@ -10,6 +10,7 @@ target_include_directories(sim
     ${CMAKE_CURRENT_LIST_DIR}/include
     ${CMAKE_CURRENT_LIST_DIR}/include/graph
     ${CMAKE_CURRENT_LIST_DIR}/include/handler
+    ${CMAKE_CURRENT_LIST_DIR}/include/utils
 
   PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include_private  

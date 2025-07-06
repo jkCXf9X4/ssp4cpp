@@ -5,7 +5,7 @@
 #include "common_string.hpp"
 #include "common_log.hpp"
 
-#include "data_type.hpp"
+#include "FMI2_Enums.hpp"
 #include "data_buffer.hpp"
 #include "data_recorder.hpp"
 
@@ -16,6 +16,8 @@
 #include <map>
 #include <stdexcept>
 #include <iostream>
+
+// no central handler atm, evaluate if this is needed
 
 // Data in this case means data passed around between models as input/output
 namespace ssp4cpp::sim::handler

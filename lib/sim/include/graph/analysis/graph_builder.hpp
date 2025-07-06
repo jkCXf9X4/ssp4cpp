@@ -3,7 +3,6 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
-#include "data_handler.hpp"
 #include "fmu_handler.hpp"
 
 #include "node_connection.hpp"
@@ -11,9 +10,7 @@
 #include "node_connector.hpp"
 #include "node_internal.hpp"
 
-#include "misc.hpp"
-
-#include "graph.hpp"
+#include "analysis_graph.hpp"
 
 #include "fmu.hpp"
 #include "ssp_ext.hpp"
@@ -24,7 +21,7 @@
 #include <set>
 #include <list>
 
-namespace ssp4cpp::sim::graph
+namespace ssp4cpp::sim::analysis::graph
 {
     using namespace std;
 
@@ -34,29 +31,12 @@ namespace ssp4cpp::sim::graph
         static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::info);
 
         ssp4cpp::Ssp *ssp;
-        handler::FmuHandler *fmu_handler;
-        handler::DataHandler *data_handler;
+        handler::FmuHandler *fmu_handler
 
-        GraphBuilder()
-        {
-        }
-
-        GraphBuilder &set_ssp(ssp4cpp::Ssp *ssp)
+        GraphBuilder(ssp4cpp::Ssp *ssp, handler::FmuHandler *fmu_handler)
         {
             this->ssp = ssp;
-            return *this;
-        }
-
-        GraphBuilder &set_fmu_handler(handler::FmuHandler *fmu_handler)
-        {
             this->fmu_handler = fmu_handler;
-            return *this;
-        }
-
-        GraphBuilder &set_data_handler(handler::DataHandler *data_handler)
-        {
-            this->data_handler = data_handler;
-            return *this;
         }
 
         map<string, unique_ptr<ModelNode>> create_models(ssp4cpp::Ssp &ssp)
@@ -65,8 +45,7 @@ namespace ssp4cpp::sim::graph
             map<string, unique_ptr<ModelNode>> models;
             for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resources(ssp))
             {
-                auto fmu = (fmu_handler->fmus[ssp_resource_name]).get();
-                auto m = make_unique<ModelNode>(ssp_resource_name, local_resource_name, fmu);
+                auto m = make_unique<ModelNode>(ssp_resource_name, local_resource_name);
                 log.trace("[{}] New Model: {}", __func__, m->name);
                 models[m->name] = std::move(m);
             }
@@ -81,11 +60,15 @@ namespace ssp4cpp::sim::graph
             using namespace handler;
 
             auto fmu = fmu_handler->fmus[component_name].get();
-            auto var = fmu->model_description->get_variable_by_name(connector_name);
+
+            auto md = fmu->model_description;
+            auto var = md->get_variable_by_name(connector_name);
+
+            auto value_reference = var.value_reference;
             auto type = utils::get_variable_type(var);
 
             return std::make_unique<ConnectorNode>(
-                component_name, connector_name, fmu, data_handler, type);
+                component_name, connector_name, value_reference, type);
         }
 
         map<string, unique_ptr<ConnectorNode>> create_connectors(ssp4cpp::Ssp &ssp)

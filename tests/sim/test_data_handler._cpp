@@ -2,7 +2,7 @@
 #include <catch.hpp>
 #include "common_log.hpp"
 
-#include "data_handler.hpp"
+#include "handler/data_handler.hpp"
 
 
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
@@ -21,7 +21,7 @@ TEST_CASE("DataHandler handles BOOL type", "[DataHandler][BOOL]")
     common::Logger log = common::Logger("Test::DataHandler", common::LogLevel::debug);
     log.ext_trace("[{}] init", __func__);
     DataHandler mgr(3);
-    uint64_t ref = mgr.initData(DataType::BOOL, "");
+    uint64_t ref = mgr.initData(DataType::Boolean, "");
 
     bool v1 = true;
     bool v2 = false;
@@ -45,7 +45,7 @@ TEST_CASE("DataHandler handles BOOL type", "[DataHandler][BOOL]")
 TEST_CASE("DataHandler handles INT type", "[DataHandler][INT]")
 {
     DataHandler mgr(3);
-    uint64_t ref = mgr.initData(DataType::INT, "");
+    uint64_t ref = mgr.initData(DataType::Integer, "");
 
     int v1 = 42;
     int v2 = -7;
@@ -64,7 +64,7 @@ TEST_CASE("DataHandler handles INT type", "[DataHandler][INT]")
 TEST_CASE("DataHandler handles REAL type", "[DataHandler][REAL]")
 {
     DataHandler mgr(3);
-    uint64_t ref = mgr.initData(DataType::REAL, "");
+    uint64_t ref = mgr.initData(DataType::Real, "");
 
     double v1 = 3.14; 
     double v2 = 2.71;
@@ -83,7 +83,7 @@ TEST_CASE("DataHandler handles REAL type", "[DataHandler][REAL]")
 TEST_CASE("DataHandler handles STRING type", "[DataHandler][STRING]")
 {
     DataHandler mgr(3);
-    uint64_t ref = mgr.initData(DataType::STRING, "");
+    uint64_t ref = mgr.initData(DataType::String, "");
 
     const char* v1 = "foo";
     const char* v2 = "bar";
@@ -102,7 +102,7 @@ TEST_CASE("DataHandler handles STRING type", "[DataHandler][STRING]")
 TEST_CASE("DataHandler handles ENUM type", "[DataHandler][ENUM]")
 {
     DataHandler mgr(3);
-    uint64_t ref = mgr.initData(DataType::ENUM, "");
+    uint64_t ref = mgr.initData(DataType::Enumeration, "");
 
     int v1 = 1; // enums stored as int
     int v2 = 2;

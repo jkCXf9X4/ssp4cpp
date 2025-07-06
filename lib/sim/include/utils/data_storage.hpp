@@ -5,45 +5,52 @@
 #include "common_string.hpp"
 #include "common_time.hpp"
 
-#include "node_base.hpp"
-#include "node_connector.hpp"
 #include "data_type.hpp"
-
-#include "fmu_handler.hpp"
-
-#include "fmu.hpp"
-#include <fmi4cpp/fmi4cpp.hpp>
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace ssp4cpp::sim::utils
 {
     // data centric storage
+    // the data landing area enables easy access when exporting results
+    // store multiple time versions of the data
+
     template <typename T>
     class DataStorage
     {
-        common::Logger log = common::Logger("Data", common::LogLevel::ext_trace);
+    public:
+        common::Logger log = common::Logger("DataStorage", common::LogLevel::ext_trace);
 
+        // all data
+        unique_ptr<std::byte[]> data;
+
+        // these are the same for each timestamp area
+        vector<int> positions; // data position relative to start, 0, 4,...
+        vector<DataType> types;
+        vector<std::string> names;
+
+        // for retrieval of index from name
         map<std::string, int> index_name_map;
 
-        // the data landing area enables easy access when exporting results
-        unique_ptr<std::byte[]> data;
-        vector<int> positions;    // data position relative to start, 0, 4,...
-        vector<void *> locations; // absolute location in memory
-        vector<utils::DataType> types;
-
-    public:
-        uint64_t time;
-        vector<std::string> names;
+        vector<uint64_t> timestamps;
+        // located by <area id, variable index>
+        vector<vector<void *>> locations; // absolute location in memory
         vector<pair<utils::DataType, void *>> type_data;
 
         int pos = 0;
         int index = 0;
+        int areas = 1;
 
         DataStorage() {}
 
-        void add(T &item)
+        DataStorage(int areas)
+        {
+            this->areas = areas;
+        }
+
+        uint64_t add(T &item)
         {
             names.push_back(item.name);
             positions.push_back(pos);
@@ -53,29 +60,32 @@ namespace ssp4cpp::sim::utils
 
             pos += utils::get_data_type_size(item.type);
             index += 1;
+
+            return index - 1;
         }
 
         void allocate()
         {
             locations.clear();
-            data = std::make_unique<std::byte[]>(pos);
+            data = std::make_unique<std::byte[]>(pos * areas);
 
-            for (auto p : positions)
+            timestamps.resize(areas);
+            locations.resize(areas);
+            
+            for (int i = 0; i < areas; i++)
             {
-                locations.push_back(data.get() + p);
-            }
+                locations[i].reserve(positions.size());
 
-            int i = 0;
-            for (auto &l : locations)
-            {
-                type_data.push_back(make_pair(types[i], l));
-                i += 1;
+                for (auto p : positions)
+                {
+                    locations[i].push_back(&data[i * pos + p]);
+                }
             }
         }
 
-        int index_by_name(std::string name)
-        {
-            return index_name_map[name];
-        }
+        // int index_by_name(std::string name)
+        // {
+        //     return index_name_map[name];
+        // }
     };
 }

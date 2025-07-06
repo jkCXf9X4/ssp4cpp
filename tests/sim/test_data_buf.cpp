@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include "data_buffer.hpp"
+#include "handler/data_buffer.hpp"
 
 #include <cstdint>
 #include <cstring>
@@ -8,7 +8,7 @@
 using namespace ssp4cpp::sim::handler;
 
 TEST_CASE("DataBuffer basic push and get", "[DataBuffer]") {
-    DataBuffer buf(3, DataType::INT, 0, "");
+    DataBuffer buf(3, DataType::Integer, 0, "");
     int v1 = 10, v2 = 20, v3 = 30, v4 = 40;
     buf.push(&v1, 100);
     buf.push(&v2, 200);
@@ -27,7 +27,7 @@ TEST_CASE("DataBuffer basic push and get", "[DataBuffer]") {
 }
 
 TEST_CASE("DataBuffer get_valid returns correct element", "[DataBuffer]") {
-    DataBuffer buf(3, DataType::INT, 0, "");
+    DataBuffer buf(3, DataType::Integer, 0, "");
     int v1 = 1, v2 = 2, v3 = 3;
     buf.push(&v1, 100);
     buf.push(&v2, 200);
@@ -47,7 +47,7 @@ TEST_CASE("DataBuffer get_valid returns correct element", "[DataBuffer]") {
 }
 
 TEST_CASE("DataBuffer handles string type", "[DataBuffer][STRING]") {
-    DataBuffer buf(2, DataType::STRING, 0, "");
+    DataBuffer buf(2, DataType::String, 0, "");
     const char* s1 = "hello";
     const char* s2 = "world";
     buf.push((void*)s1, 100);
@@ -65,7 +65,7 @@ TEST_CASE("DataBuffer handles string type", "[DataBuffer][STRING]") {
 }
 
 TEST_CASE("DataBuffer is_empty and is_full", "[DataBuffer]") {
-    DataBuffer buf(2, DataType::INT, 0, "");
+    DataBuffer buf(2, DataType::Integer, 0, "");
     int v = 1;
     REQUIRE(buf.is_empty());
     buf.push(&v, 1);

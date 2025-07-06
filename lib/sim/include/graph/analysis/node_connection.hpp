@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-namespace ssp4cpp::sim::graph
+namespace ssp4cpp::sim::analysis::graph
 {
  
     class ConnectionNode : public NodeBase

@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 
-namespace ssp4cpp::sim::graph
+namespace ssp4cpp::sim::utils
 {
     class NodeBase : public ssp4cpp::common::graph::Node
     {

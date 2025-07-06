@@ -6,7 +6,9 @@
 #include "common_time.hpp"
 
 #include "node_base.hpp"
-#include "node_connector.hpp"
+
+#include "data_buffer.hpp
+#include "data_storage.hpp
 
 #include "fmu_handler.hpp"
 
@@ -19,37 +21,34 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class ModelNode : public NodeBase
+    class SimModelNode : public NodeBase
     {
     public:
-        common::Logger log = common::Logger("ModelNode", common::LogLevel::info);
+        common::Logger log = common::Logger("SimModelNode", common::LogLevel::info);
 
         string fmu_name;
 
-        Connectors connectors;
-
-
         handler::FmuInfo *fmu;
 
-        ModelNode() {}
+        
 
-        ModelNode(std::string name, std::string fmu_name, handler::FmuInfo *fmu)
+        SimModelNode() {}
+
+        SimModelNode(std::string name, handler::FmuInfo *fmu)
         {
             this->fmu = fmu;
             this->name = name;
-            this->fmu_name = fmu_name;
         }
 
-        ~ModelNode()
+        ~SimModelNode()
         {
-            log.ext_trace("[{}] Destroying ModelNode", __func__);
+            log.ext_trace("[{}] Destroying SimModelNode", __func__);
         }
 
-        friend ostream &operator<<(ostream &os, const ModelNode &obj)
+        friend ostream &operator<<(ostream &os, const SimModelNode &obj)
         {
-            os << "Model { \n"
+            os << "SimModelNode { \n"
                << "Name: " << obj.name << endl
-               << "Fmu: " << obj.fmu_name << endl
                << " }" << endl;
 
             return os;

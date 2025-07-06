@@ -8,6 +8,7 @@
 
 #include "SSP1_SystemStructureDescription.hpp"
 
+#include "node_base.hpp"
 #include "node_connection.hpp"
 #include "node_model.hpp"
 #include "node_connector.hpp"
@@ -19,10 +20,10 @@
 #include <string>
 #include <vector>
 
-namespace ssp4cpp::sim::graph
+namespace ssp4cpp::sim::analysis::graph
 {
 
-    class Graph
+    class AnalysisGraph
     {
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::debug);
@@ -33,9 +34,9 @@ namespace ssp4cpp::sim::graph
 
         vector<ModelNode *> nodes;
 
-        Graph() = default;
+        AnalysisGraph() = default;
 
-        Graph(map<string, unique_ptr<ModelNode>> models_,
+        AnalysisGraph(map<string, unique_ptr<ModelNode>> models_,
                       map<string, unique_ptr<ConnectorNode>> connectors_,
                       map<string, unique_ptr<ConnectionNode>> connections_)
             : models(std::move(models_)),
@@ -55,9 +56,9 @@ namespace ssp4cpp::sim::graph
 
         void print_analysis()
         {
-            log.info("analysis_graph DOT: \n{}", NodeBase::to_dot(nodes));
+            log.info("analysis_graph DOT: \n{}", utils::NodeBase::to_dot(nodes));
 
-            auto strong_system_graph = common::graph::strongly_connected_components(NodeBase::cast_to_parent_ptrs(nodes));
+            auto strong_system_graph = common::graph::strongly_connected_components(utils::NodeBase::cast_to_parent_ptrs(nodes));
             log.info("{}", common::graph::ssc_to_string(strong_system_graph));
 
             log.info("Start nodes:");

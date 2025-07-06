@@ -31,14 +31,12 @@ namespace ssp4cpp::sim
     public:
         common::Logger log = common::Logger("sim::Simulation", common::LogLevel::debug);
 
-        unique_ptr<handler::DataHandler> data_handler;
         unique_ptr<handler::FmuHandler> fmu_handler;
-        unique_ptr<handler::DataRecorder> recorder;
 
         ssp4cpp::Ssp *ssp;
         std::map<std::string, ssp4cpp::Fmu *> str_fmu;
 
-        unique_ptr<graph::Graph> graph;
+        // unique_ptr<analysis::graph::AnalysisGraph > analysis_graph;
 
         std::string temp_file = "temp/raw_data.txt";
 
@@ -58,13 +56,11 @@ namespace ssp4cpp::sim
 
         void init()
         {
-            graph = graph::GraphBuilder()
-                        .set_ssp(ssp)
-                        .set_fmu_handler(fmu_handler.get())
-                        .set_data_handler(data_handler.get())
-                        .build();
+            auto analysis_graph = graph::GraphBuilder(ssp, fmu_handler.get()).build();
+            analysis_graph->print_analysis();
 
-            graph->print_analysis();
+            
+
 
             fmu_handler->init();
 
