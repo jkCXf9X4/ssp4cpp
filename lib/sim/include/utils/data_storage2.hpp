@@ -21,9 +21,9 @@ namespace ssp4cpp::sim::utils
 {
     // data centric storage
     template <typename T>
-    class DataStorage
+    class DataStorage2
     {
-        common::Logger log = common::Logger("Data", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("DataStorage2", common::LogLevel::ext_trace);
 
         map<std::string, int> index_name_map;
 

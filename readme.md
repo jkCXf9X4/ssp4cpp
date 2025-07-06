@@ -26,9 +26,8 @@ See the [SSP standard](https://ssp-standard.org) for more information about the 
    ```
 
 ## Running examples
-After building you can run the example applications:
+After building you can run the simulation engine:
 ```bash
-./build/app/graph_analysis/ssp4cpp_graph
 ./build/app/sim/sim_app
 ```
 
