@@ -3,6 +3,8 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
+#include "ssp_ext.hpp"
+
 #include "fmu_handler.hpp"
 
 #include "node_connection.hpp"
@@ -11,9 +13,6 @@
 #include "node_internal.hpp"
 
 #include "analysis_graph.hpp"
-
-#include "fmu.hpp"
-#include "ssp_ext.hpp"
 
 #include <vector>
 #include <algorithm>

@@ -5,32 +5,35 @@
 #include "common_string.hpp"
 #include "common_time.hpp"
 
-#include "node_base.hpp"
-
 #include "data_buffer.hpp
 #include "data_storage.hpp
 
 #include "fmu_handler.hpp"
 
-#include "fmu.hpp"
-#include <fmi4cpp/fmi4cpp.hpp>
-
 #include <string>
 #include <vector>
+#include <functional>
 
 namespace ssp4cpp::sim::graph
 {
 
-    class SimModelNode : public NodeBase
+    class SimModelNode : public ssp4cpp::common::graph::Node
     {
+        uint64_t delay = 0;
+        uint64_t start_time = 0;
+        uint64_t end_time = 0;
+        uint64_t delayed_time = 0;
+
     public:
         common::Logger log = common::Logger("SimModelNode", common::LogLevel::info);
 
-        string fmu_name;
-
         handler::FmuInfo *fmu;
 
+        utils::DataStorage input_area;
+        utils::RingStorage input_area;
         
+        vector<function<void()>> inputs;
+        vector<function<void()>> outputs;
 
         SimModelNode() {}
 
@@ -54,17 +57,13 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        void retrieve_and_set_input(uint64_t time)
+        void pre(uint64_t time)
         {
             log.ext_trace("[{}] Init", __func__);
+            // fetch all data to enable running the model
 
-            connectors.write_to_model(time);
         }
-        
-        void store_output(uint64_t time)
-        {
-            connectors.read_from_model(time);
-        }
+
         
         void take_step(uint64_t timestep)
         {
@@ -81,6 +80,14 @@ namespace ssp4cpp::sim::graph
             }
             log.trace("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
         }
+
+
+        void post(uint64_t time)
+        {
+            log.ext_trace("[{}] Init", __func__);
+            // store the resulting data from the model
+
+        }
         
         uint64_t invoke(uint64_t time)
         {
@@ -92,12 +99,12 @@ namespace ssp4cpp::sim::graph
             log.trace("[{}] {} start_time: {} timestep: {} end_time: {}, delayed_time {}", 
                 __func__, this->name.c_str(), start_time, timestep, end_time, delayed_time);
             
-            retrieve_and_set_input(start_time);
+            pre(start_time);
 
             take_step(timestep);
             // this should return the new endtime if we have early return
 
-            store_output(delayed_time);
+            post(delayed_time);
 
             return delayed_time;
         }

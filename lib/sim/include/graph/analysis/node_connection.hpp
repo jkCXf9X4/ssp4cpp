@@ -6,20 +6,18 @@
 #include "common_time.hpp"
 #include "common_log.hpp"
 
-#include "node_base.hpp"
 #include "node_connector.hpp"
-
-#include "fmu.hpp"
-#include <fmi4cpp/fmi4cpp.hpp>
 
 #include <string>
 #include <vector>
 
 namespace ssp4cpp::sim::analysis::graph
 {
- 
-    class ConnectionNode : public NodeBase
+
+    class ConnectionNode : public ssp4cpp::common::graph::Node
     {
+        uint64_t delay = 0;
+
     public:
         common::Logger log = common::Logger("ConnectionNode", common::LogLevel::debug);
         string start_component;

@@ -6,16 +6,9 @@
 #include "common_time.hpp"
 #include "tarjan.hpp"
 
-#include "SSP1_SystemStructureDescription.hpp"
-
-#include "node_base.hpp"
 #include "node_connection.hpp"
 #include "node_model.hpp"
 #include "node_connector.hpp"
-
-#include "fmu.hpp"
-
-#include <fmi4cpp/fmi4cpp.hpp>
 
 #include <string>
 #include <vector>

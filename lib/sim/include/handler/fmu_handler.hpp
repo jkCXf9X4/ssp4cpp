@@ -4,7 +4,6 @@
 #include "common_vector.hpp"
 
 #include "fmu.hpp"
-
 #include <fmi4cpp/fmi4cpp.hpp>
 
 #include <vector>

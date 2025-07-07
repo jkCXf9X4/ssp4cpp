@@ -5,15 +5,9 @@
 
 #include "fmu_handler.hpp"
 
-#include "node_connection.hpp"
-#include "node_model.hpp"
-#include "node_connector.hpp"
-#include "node_internal.hpp"
-
 #include "analysis_graph.hpp"
 
-#include "fmu.hpp"
-#include "ssp_ext.hpp"
+#include "sim_model.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -25,156 +19,138 @@ namespace ssp4cpp::sim::graph
 {
     using namespace std;
 
-    // // This class can be optimized allot
-    // class Connectors
-    // {
-    // public:
+#pragma once
 
-    //     utils::DataStorage input_data(1);
-    //     utils::DataStorage output_data(15);
+#include "common_node.hpp"
+#include "common_map.hpp"
+#include "common_string.hpp"
+#include "common_time.hpp"
+#include "tarjan.hpp"
 
-    //     Connectors() {}
+#include "node_connection.hpp"
+#include "node_model.hpp"
+#include "node_connector.hpp"
 
-    //     void allocate()
-    //     {
-    //         for (auto [_, con]: input_connectors)
-    //         {
-    //             input_data.add(*con);
-    //         }
-    //         for (auto [_, con]: output_connectors)
-    //         {
-    //             output_data.add(*con);
-    //         }
-    //         input_data.allocate();
-    //         output_data.allocate();
-    //     }
+#include <string>
+#include <vector>
 
-    //     void write_to_model(uint64_t time)
-    //     {
-    //         int index = 0;
-    //         for (auto &[_, c] : input_connectors)
-    //         {
-    //             void *data = c->data_handler->getData(time, c->data_reference);
-
-    //             utils::write_to_model_(c->type, *c->fmu->model, c->value_reference, data);
-    //             // storage for export
-    //             memcpy(input_data.locations[index], data, input_data.sizes[index]);
-    //             index += 1;
-    //         }
-    //     }
-
-    //     void read_from_model(uint64_t time)
-    //     {
-    //         int pos = 0;
-    //         for (auto &[_, c] : output_connectors)
-    //         {
-    //             auto d = output_data.locations[pos];
-    //             utils::read_from_model_(c->type, *c->fmu->model, c->value_reference, d);
-
-    //             c->data_handler->setData(time, c->data_reference, d);
-    //             pos += 1;
-    //         }
-    //     }
-
-    // };
-    using AnalysisGraph = analysis::graph::AnalysisGraph;
-
-    class SimGraphBuilder
+    namespace ssp4cpp::sim::analysis::graph
     {
-    public:
-        static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::info);
 
-        
-        handler::FmuHandler *fmu_handler;
-
-
-        SimGraphBuilder(handler::FmuHandler *fmu_handler, AnalysisGraph &ag)
+        class Graph
         {
-            this->fmu_handler = fmu_handler;
-        }
+        public:
+            common::Logger log = common::Logger("Graph", common::LogLevel::debug);
 
-        map<string, unique_ptr<ModelNode>> create_models(ssp4cpp::Ssp &ssp)
-        {
-            log.ext_trace("[{}] init", __func__);
-            map<string, unique_ptr<ModelNode>> models;
-            for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resources(ssp))
+            map<string, unique_ptr<SimModelNode>> models;
+
+            vector<SimModelNode *> nodes;
+
+            Graph() = default;
+
+            Graph(map<string, unique_ptr<SimModelNode>> models_)
+                : models(std::move(models_))
+
             {
-                auto fmu = (fmu_handler->fmus[ssp_resource_name]).get();
-                auto m = make_unique<ModelNode>(ssp_resource_name, local_resource_name, fmu);
-                log.trace("[{}] New Model: {}", __func__, m->name);
-                models[m->name] = std::move(m);
+                auto m = map_ns::map_unique_to_ref(models);
+                nodes = common::map_ns::map_to_value_vector_copy(m);
             }
-            log.ext_trace("[{}] exit", __func__);
-            return std::move(models);
-        }
 
-
-        unique_ptr<Graph> build()
-        {
-            log.ext_trace("[{}] init", __func__);
-            auto models = create_models(*ssp);
-
-            auto fmu_connections = ssp1::ext::elements::get_fmu_connections(ssp->ssd);
-
-            log.debug("[{}] Connecting FMUs", __func__);
-            for (auto &[source, target] : fmu_connections)
+            vector<SimModelNode *> get_start_nodes()
             {
-                log.debug("[{}] Connecting: {} -> {}", __func__, source, target);
+                auto start_nodes = common::graph::Node::get_ancestors(nodes);
+                return start_nodes;
+            }
+        };
+
+        // // This class can be optimized allot
+        // class Connectors
+        // {
+        // public:
+
+        //     utils::DataStorage input_data(1);
+        //     utils::DataStorage output_data(15);
+
+        //     Connectors() {}
+
+        //     void allocate()
+        //     {
+        //         for (auto [_, con]: input_connectors)
+        //         {
+        //             input_data.add(*con);
+        //         }
+        //         for (auto [_, con]: output_connectors)
+        //         {
+        //             output_data.add(*con);
+        //         }
+        //         input_data.allocate();
+        //         output_data.allocate();
+        //     }
+
+        //     void write_to_model(uint64_t time)
+        //     {
+        //         int index = 0;
+        //         for (auto &[_, c] : input_connectors)
+        //         {
+        //             void *data = c->data_handler->getData(time, c->data_reference);
+
+        //             utils::write_to_model_(c->type, *c->fmu->model, c->value_reference, data);
+        //             // storage for export
+        //             memcpy(input_data.locations[index], data, input_data.sizes[index]);
+        //             index += 1;
+        //         }
+        //     }
+
+        //     void read_from_model(uint64_t time)
+        //     {
+        //         int pos = 0;
+        //         for (auto &[_, c] : output_connectors)
+        //         {
+        //             auto d = output_data.locations[pos];
+        //             utils::read_from_model_(c->type, *c->fmu->model, c->value_reference, d);
+
+        //             c->data_handler->setData(time, c->data_reference, d);
+        //             pos += 1;
+        //         }
+        //     }
+
+        // };
+        using AnalysisGraph = analysis::graph::AnalysisGraph;
+
+        class SimGraphBuilder
+        {
+        public:
+            static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::info);
+
+            handler::FmuHandler *fmu_handler;
+            AnalysisGraph *analysis_graph;
+
+            SimGraphBuilder(handler::FmuHandler *fmu_handler, AnalysisGraph *ag)
+            {
+                this->fmu_handler = fmu_handler;
+                this->analysis_graph = ag;
+            }
+
+            unique_ptr<Graph> build()
+            {
+                log.ext_trace("[{}] init", __func__);
+
+                              map<string, unique_ptr<SimModelNode>> models;
+                for (auto &[ssp_resource_name, model] : analysis_graph->models)
+                {
+                    auto fmu = (fmu_handler->fmus[ssp_resource_name]).get();
+
+                    auto m = make_unique<SimModelNode>(ssp_resource_name, fmu);
+                    log.trace("[{}] New Model: {}", __func__, m->name);
+                    models[m->name] = std::move(m);
+                }
+
                 models[source]->add_child(models[target].get());
+
+
+                log.ext_trace("[{}] exit", __func__);
+                return make_unique<Graph>(std::move(models));
             }
+        };
 
-
-            log.ext_trace("[{}] exit", __func__);
-            return make_unique<Graph>(std::move(models), std::move(connectors), std::move(connections));
-        }
-    };
-
-}
-
-//     for (auto [fmu_name, fmu] : fmu_map)
-//     {
-//         log.debug("[{}] Connecting internal dependencies, FMU:{}", __func__, fmu_name);
-
-//         auto outputs = fmu->md.ModelStructure.Outputs;
-//         if (outputs.has_value())
-//         {
-
-//             auto dependencies = ssp4cpp::fmi2::ext::dependency::get_dependencies_variables(
-//                 outputs.value().Unknowns,
-//                 fmu->md.ModelVariables,
-//                 ssp4cpp::fmi2::md::DependenciesKind::dependent);
-
-//             for (auto &[source, target, kind] : dependencies)
-//             {
-//                 auto source_id = Connector::create_name(fmu_name, source->name);
-//                 auto target_id = Connector::create_name(fmu_name, target->name);
-//                 SimNode *source_node;
-//                 SimNode *target_node;
-
-//                 // The connections can be from connectors or variables, maybe...
-//                 if (connectors.contains(source_id))
-//                 {
-//                     source_node = connectors[source_id];
-//                     log.debug("[{}] Source C {}", __func__, connectors[source_id]->name);
-//                 }
-//                 else
-//                 {
-//                     source_node = variables[source_id];
-//                     log.debug("[{}] Source V {}", __func__, variables[source_id]->name);
-//                 }
-
-//                 if (connectors.contains(target_id))
-//                 {
-//                     target_node = connectors[target_id];
-//                     log.debug("[{}] Target C {}", __func__, connectors[target_id]->name);
-//                 }
-//                 else
-//                 {
-//                     target_node = variables[target_id];
-//                     log.debug("[{}] Target V {}", __func__, variables[target_id]->name);
-//                 }
-//                 log.debug("[{}] Connecting {} -> {}", __func__, source_node->name, target_node->name);
-//                 source_node->add_child(target_node);
-//             }
-//         }
-//     }
+    }
