@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
+#include <cstddef>
 
 namespace ssp4cpp::sim::utils
 {
@@ -17,31 +19,28 @@ namespace ssp4cpp::sim::utils
     // the data landing area enables easy access when exporting results
     // store multiple time versions of the data
 
-    template <typename T>
     class DataStorage
     {
     public:
         common::Logger log = common::Logger("DataStorage", common::LogLevel::ext_trace);
 
         // all data
-        unique_ptr<std::byte[]> data;
+        std::unique_ptr<std::byte[]> data;
 
         // these are the same for each timestamp area
-        vector<int> positions; // data position relative to start, 0, 4,...
-        vector<DataType> types;
-        vector<std::string> names;
+        std::vector<std::size_t> positions; // data position relative to start, 0, 4,...
+        std::vector<utils::DataType> types;
+        std::vector<std::string> names;
 
         // for retrieval of index from name
-        map<std::string, int> index_name_map;
+        std::map<std::string, std::size_t> index_name_map;
 
-        vector<uint64_t> timestamps;
-        // located by <area id, variable index>
-        vector<vector<void *>> locations; // absolute location in memory
-        vector<pair<utils::DataType, void *>> type_data;
+        std::vector<std::uint64_t> timestamps;
+        std::vector<std::vector<std::byte *>> locations; // absolute location in memory
 
-        int pos = 0;
-        int index = 0;
-        int areas = 1;
+        std::size_t pos = 0;
+        std::size_t index = 0;
+        std::size_t areas = 1;
 
         DataStorage() {}
 
@@ -50,15 +49,15 @@ namespace ssp4cpp::sim::utils
             this->areas = areas;
         }
 
-        uint64_t add(T &item)
+        uint64_t add(std::string name, utils::DataType type)
         {
-            names.push_back(item.name);
+            names.push_back(name);
             positions.push_back(pos);
-            types.push_back(item.type);
+            types.push_back(type);
 
-            index_name_map[item.name] = index;
+            index_name_map[name] = index;
 
-            pos += utils::get_data_type_size(item.type);
+            pos += utils::get_data_type_size(type);
             index += 1;
 
             return index - 1;
@@ -71,7 +70,7 @@ namespace ssp4cpp::sim::utils
 
             timestamps.resize(areas);
             locations.resize(areas);
-            
+
             for (int i = 0; i < areas; i++)
             {
                 locations[i].reserve(positions.size());
@@ -82,6 +81,12 @@ namespace ssp4cpp::sim::utils
                 }
             }
         }
+
+        inline std::byte *get_locaction(std::size_t area, std::size_t index) noexcept
+        {
+            return locations[area][index];
+        }
+
 
         // int index_by_name(std::string name)
         // {

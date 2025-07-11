@@ -34,7 +34,7 @@ namespace ssp4cpp::sim::graph
 #include <string>
 #include <vector>
 
-    namespace ssp4cpp::sim::analysis::graph
+    namespace ssp4cpp::sim::graph
     {
 
         class Graph

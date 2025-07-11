@@ -6,14 +6,16 @@
 #include "common_thread_pool.hpp"
 
 #include "graph_builder.hpp"
+#include "sim_graph_builder.hpp"
 
-#include "data_handler.hpp"
 #include "data_recorder.hpp"
 #include "fmu_handler.hpp"
 
 #include "csv_converter.hpp"
 
 #include "ssp_ext.hpp"
+#include "ssp.hpp"
+#include "fmu.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -31,12 +33,13 @@ namespace ssp4cpp::sim
     public:
         common::Logger log = common::Logger("sim::Simulation", common::LogLevel::debug);
 
-        unique_ptr<handler::FmuHandler> fmu_handler;
+        std::unique_ptr<handler::FmuHandler> fmu_handler;
+        std::unique_ptr<utils::DataRecorder> recorder;
+        
+        std::unique_ptr<graph::Graph> sim_graph;
 
         ssp4cpp::Ssp *ssp;
-        std::map<std::string, ssp4cpp::Fmu *> str_fmu;
-
-        // unique_ptr<analysis::graph::AnalysisGraph > analysis_graph;
+        std::map<std::string, ssp4cpp::Fmu *> fmus;
 
         std::string temp_file = "temp/raw_data.txt";
 
@@ -44,23 +47,21 @@ namespace ssp4cpp::sim
         {
         }
 
-        Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> str_fmu)
+        Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> fmus)
         {
-            fmu_handler = make_unique<handler::FmuHandler>(str_fmu);
-            recorder = make_unique<handler::DataRecorder>(temp_file);
-            data_handler = make_unique<handler::DataHandler>(30);
+            fmu_handler = make_unique<handler::FmuHandler>(fmus);
+            recorder = make_unique<utils::DataRecorder>(temp_file);
 
             this->ssp = ssp;
-            this->str_fmu = str_fmu;
+            this->fmus = fmus;
         }
 
         void init()
         {
-            auto analysis_graph = graph::GraphBuilder(ssp, fmu_handler.get()).build();
+            auto analysis_graph = analysis::graph::GraphBuilder(ssp, fmu_handler.get()).build();
             analysis_graph->print_analysis();
 
-            
-
+            sim_graph = graph::SimGraphBuilder(fmu_handler.get(), analysis_graph).build();
 
             fmu_handler->init();
 
@@ -75,12 +76,12 @@ namespace ssp4cpp::sim
         }
 
         // need to think hard aout the time...
-        void invoke(graph::ModelNode *node, uint64_t time)
+        void invoke(graph::SimModelNode *node, uint64_t time)
         {
             auto new_time = node->invoke(time);
             for (auto c_ : node->children)
             {
-                auto c = (graph::ModelNode *)c_;
+                auto c = (graph::SimModelNode *)c_;
                 invoke(c, new_time);
             }
         }
@@ -95,7 +96,7 @@ namespace ssp4cpp::sim
             uint64_t end_time = 2 * time::nanoseconds_per_second;
             uint64_t timestep = 0.1 * time::nanoseconds_per_second;
 
-            auto start_nodes = graph->get_start_nodes();
+            auto start_nodes = sim_graph->get_start_nodes();
             assert(start_nodes.size() == 1);
             auto start_node = start_nodes[0];
 
