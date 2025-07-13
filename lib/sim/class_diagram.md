@@ -1,10 +1,24 @@
-```mermaid
+
 classDiagram
     
-    class Fmu {
+    class ssp4cpp_Fmu {
     }
-    class Ssp {
+    class ssp4cpp_Ssp {
     }
+    
+    class FmuInfo {
+        ssp4cpp_Fmu fmu
+        fmi4cpp fmi4cpp_fmu
+    }
+    FmuInfo  --* ssp4cpp_Fmu
+
+    class SspInfo {
+        ssp4cpp_Ssp ssp
+        vector~FmuInfo~ fmus
+    }
+    SspInfo  --* ssp4cpp_Ssp
+    SspInfo  --* FmuInfo
+
     class ConnectionNode {
     }
     class ConnectorNode {
@@ -12,51 +26,24 @@ classDiagram
     class ModelNode {
     }
     class AnalysisGraph {
-        +connectors
-        +connections
-        +models : vector<ModelNode>
+        vector~ConnectionNode~ connectors 
+        vector~ConnectorNode~ connections 
+        vector~ModelNode~ models 
+        +AnalysisGraph(connectors, connections, models)
+    
     }
-    class GraphBuilder {
-        +ssp
-        +fmu_handler
-        +build() unique_ptr
+    AnalysisGraph  --* ConnectorNode
+    AnalysisGraph  --* ConnectionNode
+    AnalysisGraph  --* ModelNode
+
+    class AnalysisGraphBuilder {
+        SspInfo ssp
+        +AnalysisGraphBuilder(SspInfo)
+        +build() : 
     }
-    class SimModelNode {
-        +fmu
-        +inputs
-        +outputs
-        
-        fib and override input and output
-        record input and output
-        +invoke(time) uint64_t
-    }
-    class Graph {
-        +models : vector<SimModelNode> 
-    }
-    class SimGraphBuilder {
-        +fmu_handler
-        +analysis_graph
-        +build() unique_ptr
-    }
-    class FmuInfo {
-        +fmu
-        +fmi4cpp_fmu : Fmu
-    }
-    class FmuHandler {
-        +fmus : vector<FmuInfo>
-    }
-    class Simulation {
-        +fmu_handler
-        +recorder
-        +sim_graph : Graph
-        +ssp
-        +execute()
-    }
-    class Simulator {
-        +ssp
-        +sim
-        +execute()
-    }
+    AnalysisGraphBuilder ..> AnalysisGraph : creates
+    AnalysisGraphBuilder  --* SspInfo
+
     class RingStorage {
         +push() int
         +get_valid_area(time) int64_t
@@ -73,34 +60,54 @@ classDiagram
         +record(time, reference, type, data)
     }
 
-    Simulator "1" *-- "1" Simulation
-    Simulator "1" *-- "1" Ssp
+    class SimModelNode {
+        FmuInfo fmu
+        DataStorage inputs
+        RingStorage outputs
+        
+        fib and override input and output
+        record input and output
+        +invoke(time) uint64_t
+    }
+    SimModelNode  --* FmuInfo
+    SimModelNode  --* RingStorage
+    SimModelNode  --* DataStorage
 
-    Simulation "1" *-- "1" FmuHandler
-    Simulation ..> DataRecorder : creates
-    Simulation o-- Ssp
-    Simulation o-- Fmu
+    class Graph {
+        vector~SimModelNode~ models 
+    }
+    Graph  --* SimModelNode
 
-    FmuHandler "1" *-- "many" FmuInfo
-    FmuInfo o-- Fmu
+    class SimGraphBuilder {
+        +build() Graph
+    }
+    SspInfo  --> SimGraphBuilder : «input» 
 
-    GraphBuilder ..> AnalysisGraph : creates
-    GraphBuilder ..> ModelNode : creates
-    GraphBuilder ..> ConnectorNode : creates
-    GraphBuilder ..> ConnectionNode : creates
-    GraphBuilder o-- Ssp
-    GraphBuilder o-- FmuHandler
+    SimGraphBuilder  --> AnalysisGraphBuilder : uses
+    SimGraphBuilder  --* AnalysisGraph
+    SimGraphBuilder  --* SimModelNode
+    SimGraphBuilder ..> Graph : creates
 
-    AnalysisGraph "1" *-- "many" ModelNode
-    AnalysisGraph "1" *-- "many" ConnectorNode
-    AnalysisGraph "1" *-- "many" ConnectionNode
+    class Simulation {
+        SspInfo ssp : creates/own
+        DataRecorder recorder : creates/own
+        Graph sim_graph : creates/own
+        +execute()
+    }
+    ssp4cpp_Ssp --> Simulation : «input»  
 
-    SimGraphBuilder ..> SimModelNode : creates
-    SimGraphBuilder o-- FmuHandler
-    SimGraphBuilder o-- AnalysisGraph
+    Simulation  --* SspInfo
+    Simulation  --* DataRecorder
+    Simulation --* SimGraphBuilder : uses
+    Simulation  --* Graph
 
-    SimModelNode o-- FmuInfo
-    SimModelNode "1" *-- "1" RingStorage
+    class Simulator {
+        path ssp_path :  «input»  
+        ssp4cpp_Ssp ssp : creates/own
+        Simulation sim : creates/own
+        +execute()
+    }
 
-    RingStorage "1" *-- "1" DataStorage
-```
+    Simulator --* Simulation
+    Simulator --* ssp4cpp_Ssp
+
