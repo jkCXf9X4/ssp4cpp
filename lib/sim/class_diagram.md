@@ -16,15 +16,10 @@ classDiagram
         ssp4cpp_Ssp ssp
         vector~FmuInfo~ fmus
     }
-    SspInfo  --* ssp4cpp_Ssp
+    
     SspInfo  --* FmuInfo
 
-    class ConnectionNode {
-    }
-    class ConnectorNode {
-    }
-    class ModelNode {
-    }
+
     class AnalysisGraph {
         vector~ConnectionNode~ connectors 
         vector~ConnectorNode~ connections 
@@ -32,17 +27,14 @@ classDiagram
         +AnalysisGraph(connectors, connections, models)
     
     }
-    AnalysisGraph  --* ConnectorNode
-    AnalysisGraph  --* ConnectionNode
-    AnalysisGraph  --* ModelNode
+
 
     class AnalysisGraphBuilder {
-        SspInfo ssp
-        +AnalysisGraphBuilder(SspInfo)
-        +build() : 
+        +build()  AnalysisGraph
     }
     AnalysisGraphBuilder ..> AnalysisGraph : creates
-    AnalysisGraphBuilder  --* SspInfo
+    SspInfo  --> AnalysisGraphBuilder : «input» 
+
 
     class RingStorage {
         +push() int
@@ -72,6 +64,7 @@ classDiagram
     SimModelNode  --* FmuInfo
     SimModelNode  --* RingStorage
     SimModelNode  --* DataStorage
+    SimModelNode --* DataRecorder
 
     class Graph {
         vector~SimModelNode~ models 
@@ -79,35 +72,32 @@ classDiagram
     Graph  --* SimModelNode
 
     class SimGraphBuilder {
-        +build() Graph
+        +build() : Graph
     }
-    SspInfo  --> SimGraphBuilder : «input» 
 
-    SimGraphBuilder  --> AnalysisGraphBuilder : uses
-    SimGraphBuilder  --* AnalysisGraph
-    SimGraphBuilder  --* SimModelNode
+
+    AnalysisGraph   -->  SimGraphBuilder : «input» 
     SimGraphBuilder ..> Graph : creates
 
     class Simulation {
-        SspInfo ssp : creates/own
-        DataRecorder recorder : creates/own
-        Graph sim_graph : creates/own
         +execute()
     }
     ssp4cpp_Ssp --> Simulation : «input»  
 
-    Simulation  --* SspInfo
-    Simulation  --* DataRecorder
+    Simulation --* SspInfo : creates
+    Simulation --* AnalysisGraphBuilder : uses 
     Simulation --* SimGraphBuilder : uses
-    Simulation  --* Graph
+    Simulation --* Graph : uses
 
     class Simulator {
-        path ssp_path :  «input»  
-        ssp4cpp_Ssp ssp : creates/own
-        Simulation sim : creates/own
         +execute()
     }
 
-    Simulator --* Simulation
-    Simulator --* ssp4cpp_Ssp
+    Simulator --* Simulation 
+    Simulator --* ssp4cpp_Ssp : creates
 
+    class cli_interface {
+        path ssp_path 
+    }
+
+    cli_interface --> Simulator : «input» 
