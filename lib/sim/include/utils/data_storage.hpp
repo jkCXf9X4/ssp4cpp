@@ -28,7 +28,7 @@ namespace ssp4cpp::sim::utils
         std::unique_ptr<std::byte[]> data;
 
         // these are the same for each timestamp area
-        std::vector<std::size_t> positions; // data position relative to start, 0, 4,...
+        std::vector<std::size_t> positions; // data position relative to start; 0, 4,...
         std::vector<utils::DataType> types;
         std::vector<std::string> names;
 
@@ -39,7 +39,7 @@ namespace ssp4cpp::sim::utils
         std::vector<std::vector<std::byte *>> locations; // absolute location in memory
 
         std::size_t pos = 0;
-        std::size_t index = 0;
+        std::size_t index = -1;
         std::size_t areas = 1;
 
         DataStorage() {}
@@ -51,6 +51,8 @@ namespace ssp4cpp::sim::utils
 
         uint64_t add(std::string name, utils::DataType type)
         {
+            index += 1;
+
             names.push_back(name);
             positions.push_back(pos);
             types.push_back(type);
@@ -58,9 +60,8 @@ namespace ssp4cpp::sim::utils
             index_name_map[name] = index;
 
             pos += utils::get_data_type_size(type);
-            index += 1;
 
-            return index - 1;
+            return index;
         }
 
         void allocate()

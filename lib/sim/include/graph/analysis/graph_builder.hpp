@@ -30,7 +30,7 @@ namespace ssp4cpp::sim::analysis::graph
         static inline auto log = common::Logger("analysis::graph::GraphBuilder", common::LogLevel::info);
 
         ssp4cpp::Ssp *ssp;
-        handler::FmuHandler *fmu_handler
+        handler::FmuHandler *fmu_handler;
 
         GraphBuilder(ssp4cpp::Ssp *ssp, handler::FmuHandler *fmu_handler)
         {
@@ -44,7 +44,9 @@ namespace ssp4cpp::sim::analysis::graph
             map<string, unique_ptr<ModelNode>> models;
             for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resources(ssp))
             {
-                auto m = make_unique<ModelNode>(ssp_resource_name, local_resource_name);
+                auto fmu = fmu_handler->fmus[ssp_resource_name].get();
+                auto m = make_unique<ModelNode>(ssp_resource_name, local_resource_name, fmu);
+
                 log.trace("[{}] New Model: {}", __func__, m->name);
                 models[m->name] = std::move(m);
             }
@@ -126,7 +128,7 @@ namespace ssp4cpp::sim::analysis::graph
             return std::move(items);
         }
 
-        unique_ptr<Graph> build()
+        unique_ptr<AnalysisGraph> build()
         {
             log.ext_trace("[{}] init", __func__);
             auto models = create_models(*ssp);
@@ -156,21 +158,18 @@ namespace ssp4cpp::sim::analysis::graph
                 auto source_connector = connectors[source_connector_name].get();
                 auto target_connector = connectors[target_connector_name].get();
 
-                source_model->connectors.output_connectors[source_connector_name] = source_connector;
-                target_model->connectors.input_connectors[target_connector_name] = target_connector;
+                source_model->output_connectors[source_connector_name] = source_connector;
+                target_model->input_connectors[target_connector_name] = target_connector;
 
                 source_connector->add_child(c.get());
                 c->add_child(target_connector);
-
-                auto ref = source_connector->create_data_storage();
-                target_connector->data_reference = ref;
             }
 
             // possible to add internal connections as well
             // see below
 
             log.ext_trace("[{}] exit", __func__);
-            return make_unique<Graph>(std::move(models), std::move(connectors), std::move(connections));
+            return make_unique<AnalysisGraph>(std::move(models), std::move(connectors), std::move(connections));
         }
     };
 

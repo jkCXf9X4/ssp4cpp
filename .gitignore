@@ -8,6 +8,9 @@ build.log
 results
 temp
 
+CMakeFiles
+CMakeCache.txt
+
 
 # PYTHON
 

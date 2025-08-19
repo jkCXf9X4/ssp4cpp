@@ -36,7 +36,7 @@ namespace ssp4cpp::sim::analysis::graph
         ConnectorNode(std::string component_name,
                       std::string connector_name,
                       uint64_t value_reference,
-                      handler::DataType type)
+                      sim::utils::DataType type)
         {
             this->component_name = component_name;
             this->connector_name = connector_name;

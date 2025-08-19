@@ -41,9 +41,9 @@ namespace ssp4cpp::sim::utils
     }
 
     inline constexpr void read_from_model_(DataType t,
-                                          fmi4cpp::fmi2::cs_slave &model,
-                                          uint64_t value_reference,
-                                          void *out)
+                                           fmi4cpp::fmi2::cs_slave &model,
+                                           uint64_t value_reference,
+                                           void *out)
     {
         switch (t)
         {
@@ -67,9 +67,9 @@ namespace ssp4cpp::sim::utils
     }
 
     inline constexpr void write_to_model_(DataType t,
-                                         fmi4cpp::fmi2::cs_slave &model,
-                                         uint64_t &value_reference,
-                                         void *data)
+                                          fmi4cpp::fmi2::cs_slave &model,
+                                          uint64_t &value_reference,
+                                          void *data)
     {
         switch (t)
         {
@@ -92,7 +92,7 @@ namespace ssp4cpp::sim::utils
         throw std::invalid_argument("Unknown DataType");
     }
 
-        DataType get_variable_type(fmi4cpp::fmi2::scalar_variable var)
+    inline DataType get_variable_type(fmi4cpp::fmi2::scalar_variable var)
     {
         if (var.is_boolean())
         {

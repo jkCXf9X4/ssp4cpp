@@ -22,6 +22,7 @@ namespace ssp4cpp::sim::analysis::graph
         common::Logger log = common::Logger("ModelNode", common::LogLevel::info);
 
         string fmu_name;
+        handler::FmuInfo *fmu;
 
         map<string, ConnectorNode *> input_connectors;
         map<string, ConnectorNode *> output_connectors;

@@ -49,9 +49,9 @@ namespace ssp4cpp::sim::analysis::graph
 
         void print_analysis()
         {
-            log.info("analysis_graph DOT: \n{}", utils::NodeBase::to_dot(nodes));
+            log.info("analysis_graph DOT: \n{}", common::graph::Node::to_dot(nodes));
 
-            auto strong_system_graph = common::graph::strongly_connected_components(utils::NodeBase::cast_to_parent_ptrs(nodes));
+            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
             log.info("{}", common::graph::ssc_to_string(strong_system_graph));
 
             log.info("Start nodes:");

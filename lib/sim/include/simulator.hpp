@@ -41,13 +41,13 @@ namespace ssp4cpp::sim
         common::Logger log = Logger("Simulator", LogLevel::info);
 
         unique_ptr<Ssp> ssp;
-        std::map<std::string, std::unique_ptr<ssp4cpp::Fmu>> fmus;
+        std::map<std::string, std::unique_ptr<Fmu>> fmus;
         std::map<std::string, ssp4cpp::Fmu *> fmus_ref; // Non owning
 
         common::json::Json model_props;
 
         // system_graph: Simple graph only showing the connections between fmu's
-        Simulation sim;
+        unique_ptr<Simulation> sim;
 
         Simulator(const string &ssp_path,
                   const string &props_path)
@@ -66,10 +66,10 @@ namespace ssp4cpp::sim
             model_props = json::parse_json_file(props_path);
             log.debug("[{}] Extra properties:\n{}\n", __func__, json::to_string(model_props));
 
-            sim = Simulation(ssp.get(), fmus_ref);
-            sim.init();
+            sim = make_unique<Simulation>(ssp.get(), fmus_ref);
+            sim->init();
 
-            sim.execute();
+            sim->execute();
         }
 
         ~Simulator()

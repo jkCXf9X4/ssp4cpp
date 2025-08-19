@@ -5,8 +5,8 @@
 #include "common_string.hpp"
 #include "common_time.hpp"
 
-#include "data_buffer.hpp
-#include "data_storage.hpp
+#include "data_ring_storage.hpp"
+#include "data_storage.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -17,7 +17,7 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class SimModelNode : public ssp4cpp::common::graph::Node
+    class SimModelNode : public common::graph::Node
     {
         uint64_t delay = 0;
         uint64_t start_time = 0;
@@ -29,13 +29,11 @@ namespace ssp4cpp::sim::graph
 
         handler::FmuInfo *fmu;
 
-        utils::DataStorage input_area;
-        utils::RingStorage input_area;
+        unique_ptr<utils::DataStorage> input_area;
+        unique_ptr<utils::RingStorage> output_area;
         
         vector<function<void()>> inputs;
         vector<function<void()>> outputs;
-
-        SimModelNode() {}
 
         SimModelNode(std::string name, handler::FmuInfo *fmu)
         {
@@ -67,7 +65,7 @@ namespace ssp4cpp::sim::graph
         
         void take_step(uint64_t timestep)
         {
-            auto step_double = (double)timestep / ssp4cpp::common::time::nanoseconds_per_second;
+            auto step_double = (double)timestep / common::time::nanoseconds_per_second;
             log.trace("[{}] Model {} ", __func__, step_double);
             if (fmu->model->step(step_double) == false)
             {

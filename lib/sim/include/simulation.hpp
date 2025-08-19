@@ -8,10 +8,9 @@
 #include "graph_builder.hpp"
 #include "sim_graph_builder.hpp"
 
-#include "data_recorder.hpp"
 #include "fmu_handler.hpp"
 
-#include "csv_converter.hpp"
+// #include "csv_converter.hpp"
 
 #include "ssp_ext.hpp"
 #include "ssp.hpp"
@@ -34,23 +33,20 @@ namespace ssp4cpp::sim
         common::Logger log = common::Logger("sim::Simulation", common::LogLevel::debug);
 
         std::unique_ptr<handler::FmuHandler> fmu_handler;
-        std::unique_ptr<utils::DataRecorder> recorder;
+        // std::unique_ptr<utils::DataRecorder> recorder;
         
         std::unique_ptr<graph::Graph> sim_graph;
 
-        ssp4cpp::Ssp *ssp;
-        std::map<std::string, ssp4cpp::Fmu *> fmus;
+        Ssp *ssp;
+        std::map<std::string, Fmu *> fmus;
 
         std::string temp_file = "temp/raw_data.txt";
 
-        Simulation()
-        {
-        }
 
-        Simulation(ssp4cpp::Ssp *ssp, std::map<std::string, ssp4cpp::Fmu *> fmus)
+        Simulation(Ssp *ssp, std::map<std::string, Fmu *> fmus)
         {
             fmu_handler = make_unique<handler::FmuHandler>(fmus);
-            recorder = make_unique<utils::DataRecorder>(temp_file);
+            // recorder = make_unique<utils::DataRecorder>(temp_file);
 
             this->ssp = ssp;
             this->fmus = fmus;
@@ -61,21 +57,14 @@ namespace ssp4cpp::sim
             auto analysis_graph = analysis::graph::GraphBuilder(ssp, fmu_handler.get()).build();
             analysis_graph->print_analysis();
 
-            sim_graph = graph::SimGraphBuilder(fmu_handler.get(), analysis_graph).build();
+            sim_graph = graph::SimGraphBuilder(analysis_graph.get()).build();
+
+            sim_graph->print_info();
 
             fmu_handler->init();
-
-            // make analysis
-            // - analyze model feedthrough
-
-            // create sim graph
-            // - add existing models
-            // - add existing connections
-
-            // simplify graph if possible
         }
 
-        // need to think hard aout the time...
+        // need to think hard about the time...
         void invoke(graph::SimModelNode *node, uint64_t time)
         {
             auto new_time = node->invoke(time);
@@ -113,11 +102,10 @@ namespace ssp4cpp::sim
             auto duration = duration_cast<std::chrono::microseconds>(stop - start);
             log.info("[{}] Simulation completed, {}", __func__, duration.count());
             
-            recorder->update(); // flush the last updates to file
-            sleep(1);        // give the buffer time to flush to file
+            // sleep(1);        // give the buffer time to flush to file
             
             log.info("[{}] Saving output", __func__);
-            convert_to_csv(temp_file, "temp/output.csv");
+            // convert_to_csv(temp_file, "temp/output.csv");
         }
     };
 
