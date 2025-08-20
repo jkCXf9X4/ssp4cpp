@@ -52,16 +52,16 @@ TEST_CASE("RingStorage get_item")
     auto index = storage.add("test", DataType::integer);
     storage.allocate();
 
-    storage.push(100);
-    auto item = (int32_t*)storage.get_item(index);
+    auto area = storage.push(100);
+    auto item = (int32_t*)storage.get_item(area, index);
     *item = 1;
 
-    auto area = storage.push(200);
+    area = storage.push(200);
     item = (int32_t*)storage.get_item(area, index);
     *item = 2;
 
-    storage.push(300);
-    item = (int32_t*)storage.get_item(index);
+    area = storage.push(300);
+    item = (int32_t*)storage.get_item(area, index);
     *item = 3;
 
     REQUIRE( *(int32_t*)storage.get_valid_item(100, index) == 1);

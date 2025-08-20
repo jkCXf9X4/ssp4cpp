@@ -7,10 +7,10 @@
 
 #include "fmu_handler.hpp"
 
-#include "node_connection.hpp"
-#include "node_model.hpp"
-#include "node_connector.hpp"
-#include "node_internal.hpp"
+#include "analysis_connection.hpp"
+#include "analysis_model.hpp"
+#include "analysis_connector.hpp"
+#include "analysis_internal.hpp"
 
 #include "analysis_graph.hpp"
 
@@ -24,28 +24,28 @@ namespace ssp4cpp::sim::analysis::graph
 {
     using namespace std;
 
-    class GraphBuilder
+    class AnalysisGraphBuilder
     {
     public:
-        static inline auto log = common::Logger("analysis::graph::GraphBuilder", common::LogLevel::info);
+        static inline auto log = common::Logger("analysis::graph::AnalysisGraphBuilder", common::LogLevel::info);
 
         ssp4cpp::Ssp *ssp;
         handler::FmuHandler *fmu_handler;
 
-        GraphBuilder(ssp4cpp::Ssp *ssp, handler::FmuHandler *fmu_handler)
+        AnalysisGraphBuilder(ssp4cpp::Ssp *ssp, handler::FmuHandler *fmu_handler)
         {
             this->ssp = ssp;
             this->fmu_handler = fmu_handler;
         }
 
-        map<string, unique_ptr<ModelNode>> create_models(ssp4cpp::Ssp &ssp)
+        map<string, unique_ptr<AnalysisModel>> create_models(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
-            map<string, unique_ptr<ModelNode>> models;
+            map<string, unique_ptr<AnalysisModel>> models;
             for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resources(ssp))
             {
                 auto fmu = fmu_handler->fmus[ssp_resource_name].get();
-                auto m = make_unique<ModelNode>(ssp_resource_name, local_resource_name, fmu);
+                auto m = make_unique<AnalysisModel>(ssp_resource_name, local_resource_name, fmu);
 
                 log.trace("[{}] New Model: {}", __func__, m->name);
                 models[m->name] = std::move(m);
@@ -55,7 +55,7 @@ namespace ssp4cpp::sim::analysis::graph
         }
 
         // Helper: create_variable with explicit type and context
-        std::unique_ptr<ConnectorNode> create_connector(std::string component_name,
+        std::unique_ptr<AnalysisConnector> create_connector(std::string component_name,
                                                         std::string connector_name)
         {
             using namespace handler;
@@ -68,14 +68,14 @@ namespace ssp4cpp::sim::analysis::graph
             auto value_reference = var.value_reference;
             auto type = utils::get_variable_type(var);
 
-            return std::make_unique<ConnectorNode>(
+            return std::make_unique<AnalysisConnector>(
                 component_name, connector_name, value_reference, type);
         }
 
-        map<string, unique_ptr<ConnectorNode>> create_connectors(ssp4cpp::Ssp &ssp)
+        map<string, unique_ptr<AnalysisConnector>> create_connectors(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
-            map<string, unique_ptr<ConnectorNode>> items;
+            map<string, unique_ptr<AnalysisConnector>> items;
             if (ssp.ssd.System.Elements.has_value())
             {
                 auto connectors = ssp1::ext::elements::get_connectors(
@@ -96,13 +96,13 @@ namespace ssp4cpp::sim::analysis::graph
             return std::move(items);
         }
 
-        map<string, unique_ptr<ConnectionNode>> create_connections(ssp4cpp::Ssp &ssp)
+        map<string, unique_ptr<AnalysisConnection>> create_connections(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
-            map<string, unique_ptr<ConnectionNode>> items;
+            map<string, unique_ptr<AnalysisConnection>> items;
             for (auto &connection : ssp.ssd.System.Connections.value().Connections)
             {
-                auto c = make_unique<ConnectionNode>(&connection);
+                auto c = make_unique<AnalysisConnection>(&connection);
                 log.trace("[{}] New Connection: {}", __func__, c->name);
                 items[c->name] = std::move(c);
             }
@@ -110,15 +110,15 @@ namespace ssp4cpp::sim::analysis::graph
             return std::move(items);
         }
 
-        map<string, unique_ptr<ModelVariableNode>> create_model_variables(map<string, ssp4cpp::Fmu *> &fmu_map)
+        map<string, unique_ptr<AnalysisModelVariable>> create_model_variables(map<string, ssp4cpp::Fmu *> &fmu_map)
         {
             log.warning("[{}] init, deprecated", __func__);
-            map<string, unique_ptr<ModelVariableNode>> items;
+            map<string, unique_ptr<AnalysisModelVariable>> items;
             for (auto [name, fmu] : fmu_map)
             {
                 for (auto &variable : fmu->md.ModelVariables.ScalarVariable)
                 {
-                    auto mv = make_unique<ModelVariableNode>(name, variable.name);
+                    auto mv = make_unique<AnalysisModelVariable>(name, variable.name);
                     log.trace("[{}] New ModelVariable: {}", __func__, mv->name);
                     items[mv->name] = std::move(mv);
                 }
@@ -145,24 +145,32 @@ namespace ssp4cpp::sim::analysis::graph
             }
 
             log.debug("[{}] Connecting connectors", __func__);
-            for (auto &[name, c] : connections)
+            for (auto &[name, connection] : connections)
             {
-                log.debug("[{}] Connecting {}", __func__, c->name);
+                log.debug("[{}] Connecting {}", __func__, connection->name);
 
-                auto source_model = models[c->start_component].get();
-                auto target_model = models[c->end_component].get();
+                auto source_model = models[connection->source_component_name].get();
+                auto target_model = models[connection->target_component_name].get();
 
-                auto source_connector_name = c->get_source_connector_name();
-                auto target_connector_name = c->get_target_connector_name();
+                auto source_connector_name = connection->get_source_connector_name();
+                auto target_connector_name = connection->get_target_connector_name();
 
                 auto source_connector = connectors[source_connector_name].get();
                 auto target_connector = connectors[target_connector_name].get();
+                
+                source_connector->model = source_model;
+                target_connector->model = target_model;
+
+                connection->source_connector = source_connector;
+                connection->source_model = source_model;
+                connection->target_connector = target_connector;
+                connection->target_model = target_model;
 
                 source_model->output_connectors[source_connector_name] = source_connector;
                 target_model->input_connectors[target_connector_name] = target_connector;
 
-                source_connector->add_child(c.get());
-                c->add_child(target_connector);
+                source_connector->add_child(connection.get());
+                connection->add_child(target_connector);
             }
 
             // possible to add internal connections as well

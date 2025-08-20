@@ -12,7 +12,7 @@ using namespace ssp4cpp::sim::utils;
 
 TEST_CASE("DataStorage2 basic allocation", "[DataStorage2]")
 {
-    DataStorage storage;
+    DataStorage storage(1);
 
     storage.add("var1", DataType::integer);
     storage.add("var2", DataType::real);

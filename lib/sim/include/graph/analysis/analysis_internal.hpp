@@ -6,7 +6,7 @@
 #include "common_time.hpp"
 #include "common_log.hpp"
 
-#include "node_connector.hpp"
+#include "analysis_connector.hpp"
 
 #include <string>
 #include <vector>
@@ -14,42 +14,42 @@
 namespace ssp4cpp::sim::analysis::graph
 {
     // intra model connections
-    class ModelVariableNode : public ssp4cpp::common::graph::Node
+    class AnalysisModelVariable : public ssp4cpp::common::graph::Node
     {
         uint64_t delay = 0;
 
     public:
-        common::Logger log = common::Logger("ModelVariableNode", common::LogLevel::debug);
+        common::Logger log = common::Logger("AnalysisModelVariable", common::LogLevel::debug);
         string component;
         string variable_name;
 
-        ModelVariableNode() {}
+        AnalysisModelVariable() {}
 
-        ModelVariableNode(string component, string variable_name)
+        AnalysisModelVariable(string component, string variable_name)
         {
             this->component = component;
             this->variable_name = variable_name;
             update_name();
         }
 
-        ~ModelVariableNode()
+        ~AnalysisModelVariable()
         {
-            log.ext_trace("[{}] Destroying ModelVariableNode", __func__);
+            log.ext_trace("[{}] Destroying AnalysisModelVariable", __func__);
         }
 
         void update_name()
         {
-            this->name = ConnectorNode::create_name(component, variable_name);
+            this->name = AnalysisConnector::create_name(component, variable_name);
         }
 
         std::string get_connector_name()
         {
-            return ConnectorNode::create_name(component, variable_name);
+            return AnalysisConnector::create_name(component, variable_name);
         }
 
-        friend ostream &operator<<(ostream &os, const ModelVariableNode &obj)
+        friend ostream &operator<<(ostream &os, const AnalysisModelVariable &obj)
         {
-            os << "ModelVariable { \n"
+            os << "AnalysisModelVariable { \n"
                << "name: " << obj.name << endl
                << "component: " << obj.component << endl
                << "variable_name: " << obj.variable_name << endl

@@ -6,9 +6,9 @@
 #include "common_time.hpp"
 #include "tarjan.hpp"
 
-#include "node_connection.hpp"
-#include "node_model.hpp"
-#include "node_connector.hpp"
+#include "analysis_connection.hpp"
+#include "analysis_model.hpp"
+#include "analysis_connector.hpp"
 
 #include <string>
 #include <vector>
@@ -19,19 +19,19 @@ namespace ssp4cpp::sim::analysis::graph
     class AnalysisGraph
     {
     public:
-        common::Logger log = common::Logger("Graph", common::LogLevel::debug);
+        common::Logger log = common::Logger("AnalysisGraph", common::LogLevel::debug);
 
-        map<string, unique_ptr<ModelNode>> models;
-        map<string, unique_ptr<ConnectorNode>> connectors;
-        map<string, unique_ptr<ConnectionNode>> connections;
+        map<string, unique_ptr<AnalysisModel>> models;
+        map<string, unique_ptr<AnalysisConnector>> connectors;
+        map<string, unique_ptr<AnalysisConnection>> connections;
 
-        vector<ModelNode *> nodes;
+        vector<AnalysisModel *> nodes;
 
         AnalysisGraph() = default;
 
-        AnalysisGraph(map<string, unique_ptr<ModelNode>> models_,
-                      map<string, unique_ptr<ConnectorNode>> connectors_,
-                      map<string, unique_ptr<ConnectionNode>> connections_)
+        AnalysisGraph(map<string, unique_ptr<AnalysisModel>> models_,
+                      map<string, unique_ptr<AnalysisConnector>> connectors_,
+                      map<string, unique_ptr<AnalysisConnection>> connections_)
             : models(std::move(models_)),
               connectors(std::move(connectors_)),
               connections(std::move(connections_))
@@ -41,7 +41,7 @@ namespace ssp4cpp::sim::analysis::graph
             nodes = common::map_ns::map_to_value_vector_copy(m);
         }
 
-        vector<ModelNode *> get_start_nodes()
+        vector<AnalysisModel *> get_start_nodes()
         {
             auto start_nodes = common::graph::Node::get_ancestors(nodes);
             return start_nodes;
@@ -49,7 +49,7 @@ namespace ssp4cpp::sim::analysis::graph
 
         void print_analysis()
         {
-            log.info("analysis_graph DOT: \n{}", common::graph::Node::to_dot(nodes));
+            log.info("AnalysisGraph DOT: \n{}", common::graph::Node::to_dot(nodes));
 
             auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
             log.info("{}", common::graph::ssc_to_string(strong_system_graph));

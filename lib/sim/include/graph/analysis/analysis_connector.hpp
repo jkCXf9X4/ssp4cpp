@@ -7,6 +7,8 @@
 #include "common_log.hpp"
 
 #include "data_type.hpp"
+// #include "analysis_model.hpp"
+
 
 #include <string>
 #include <vector>
@@ -14,13 +16,15 @@
 namespace ssp4cpp::sim::analysis::graph
 {
 
+    class AnalysisModel;
+    
     // template class to enable constexpression invoke
-    class ConnectorNode : public ssp4cpp::common::graph::Node
+    class AnalysisConnector : public ssp4cpp::common::graph::Node
     {
         uint64_t delay = 0;
 
     public:
-        common::Logger log = common::Logger("ConnectorNode", common::LogLevel::debug);
+        common::Logger log = common::Logger("AnalysisConnector", common::LogLevel::debug);
 
         string component_name;
         string connector_name;
@@ -29,11 +33,13 @@ namespace ssp4cpp::sim::analysis::graph
 
         utils::DataType type;
 
-        ConnectorNode()
+        AnalysisModel * model;
+
+        AnalysisConnector()
         {
         }
 
-        ConnectorNode(std::string component_name,
+        AnalysisConnector(std::string component_name,
                       std::string connector_name,
                       uint64_t value_reference,
                       sim::utils::DataType type)
@@ -46,14 +52,14 @@ namespace ssp4cpp::sim::analysis::graph
             this->type = type;
         }
 
-        virtual ~ConnectorNode()
+        virtual ~AnalysisConnector()
         {
-            log.ext_trace("[{}] Destroying ConnectorNode", __func__);
+            log.ext_trace("[{}] Destroying AnalysisConnector", __func__);
         }
 
         void update_name()
         {
-            this->name = ConnectorNode::create_name(component_name, connector_name);
+            this->name = AnalysisConnector::create_name(component_name, connector_name);
         }
 
         static std::string create_name(string component_name, string connector_name)
@@ -61,7 +67,7 @@ namespace ssp4cpp::sim::analysis::graph
             return component_name + "." + connector_name;
         }
 
-        friend ostream &operator<<(ostream &os, const ConnectorNode &obj)
+        friend ostream &operator<<(ostream &os, const AnalysisConnector &obj)
         {
             os << "Connector { \n"
                << "name: " << obj.name << endl

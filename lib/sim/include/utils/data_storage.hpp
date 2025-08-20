@@ -31,18 +31,19 @@ namespace ssp4cpp::sim::utils
         std::vector<std::size_t> positions; // data position relative to start; 0, 4,...
         std::vector<utils::DataType> types;
         std::vector<std::string> names;
+        std::vector<size_t> sizes;
 
         // for retrieval of index from name
         std::map<std::string, std::size_t> index_name_map;
 
         std::vector<std::uint64_t> timestamps;
         std::vector<std::vector<std::byte *>> locations; // absolute location in memory
+        std::vector<bool> new_data_flags;
 
         std::size_t pos = 0;
         std::size_t index = -1;
         std::size_t areas = 1;
-
-        DataStorage() {}
+        bool allocated = false;
 
         DataStorage(int areas)
         {
@@ -56,10 +57,13 @@ namespace ssp4cpp::sim::utils
             names.push_back(name);
             positions.push_back(pos);
             types.push_back(type);
+            new_data_flags.push_back(false);
 
             index_name_map[name] = index;
 
-            pos += utils::get_data_type_size(type);
+            auto size = utils::get_data_type_size(type);
+            pos += size;
+            sizes.push_back(size);
 
             return index;
         }
@@ -81,17 +85,37 @@ namespace ssp4cpp::sim::utils
                     locations[i].push_back(&data[i * pos + p]);
                 }
             }
+            allocated = true;
         }
 
-        inline std::byte *get_locaction(std::size_t area, std::size_t index) noexcept
+        inline std::byte *get_item(std::size_t area, std::size_t index) noexcept
         {
-            return locations[area][index];
+            if (allocated) [[likely]]
+            {
+                return locations[area][index];
+            }
+            return nullptr;
         }
 
+        inline void set_time(std::size_t area, uint64_t time) noexcept
+        {
+            if (allocated) [[likely]]
+            {
+                timestamps[area] = time;
+            }
+        }
 
-        // int index_by_name(std::string name)
-        // {
-        //     return index_name_map[name];
-        // }
+        inline void flag_new_data(std::size_t area)
+        {
+            if (allocated) [[likely]]
+            {
+                new_data_flags[area] = true;
+            }
+        }
+
+        int index_by_name(std::string name)
+        {
+            return index_name_map[name];
+        }
     };
 }

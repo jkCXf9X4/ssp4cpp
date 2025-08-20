@@ -5,7 +5,7 @@
 
 #include "common_thread_pool.hpp"
 
-#include "graph_builder.hpp"
+#include "analysis_graph_builder.hpp"
 #include "sim_graph_builder.hpp"
 
 #include "fmu_handler.hpp"
@@ -54,10 +54,10 @@ namespace ssp4cpp::sim
 
         void init()
         {
-            auto analysis_graph = analysis::graph::GraphBuilder(ssp, fmu_handler.get()).build();
+            auto analysis_graph = analysis::graph::AnalysisGraphBuilder(ssp, fmu_handler.get()).build();
             analysis_graph->print_analysis();
 
-            sim_graph = graph::SimGraphBuilder(analysis_graph.get()).build();
+            sim_graph = graph::GraphBuilder(analysis_graph.get()).build();
 
             sim_graph->print_info();
 
@@ -65,12 +65,12 @@ namespace ssp4cpp::sim
         }
 
         // need to think hard about the time...
-        void invoke(graph::SimModelNode *node, uint64_t time)
+        void invoke(graph::Model *node, uint64_t time)
         {
             auto new_time = node->invoke(time);
             for (auto c_ : node->children)
             {
-                auto c = (graph::SimModelNode *)c_;
+                auto c = (graph::Model *)c_;
                 invoke(c, new_time);
             }
         }
