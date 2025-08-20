@@ -6,7 +6,7 @@
 #include "common_thread_pool.hpp"
 
 #include "analysis_graph_builder.hpp"
-#include "sim_graph_builder.hpp"
+#include "graph_builder.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -55,11 +55,10 @@ namespace ssp4cpp::sim
         void init()
         {
             auto analysis_graph = analysis::graph::AnalysisGraphBuilder(ssp, fmu_handler.get()).build();
-            analysis_graph->print_analysis();
-
+            log.info("{}", analysis_graph->to_string());
+            
             sim_graph = graph::GraphBuilder(analysis_graph.get()).build();
-
-            sim_graph->print_info();
+            log.info("{}", sim_graph->to_string());
 
             fmu_handler->init();
         }
@@ -91,6 +90,7 @@ namespace ssp4cpp::sim
 
             auto start = std::chrono::high_resolution_clock::now();
             // simulation time loop: invoke graph each timestep
+
             while (time < end_time)
             {
                 time += timestep;
@@ -98,6 +98,7 @@ namespace ssp4cpp::sim
                 log.ext_trace("[{}] NEW TIME {}", __func__, time);
                 invoke(start_node, time);
             }
+            
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = duration_cast<std::chrono::microseconds>(stop - start);
             log.info("[{}] Simulation completed, {}", __func__, duration.count());

@@ -41,24 +41,32 @@ namespace ssp4cpp::sim::analysis::graph
             nodes = common::map_ns::map_to_value_vector_copy(m);
         }
 
-        vector<AnalysisModel *> get_start_nodes()
+        vector<AnalysisModel *> get_start_nodes() const
         {
             auto start_nodes = common::graph::Node::get_ancestors(nodes);
             return start_nodes;
         }
 
-        void print_analysis()
+        friend std::ostream &operator<<(std::ostream &os, const AnalysisGraph &obj)
         {
-            log.info("AnalysisGraph DOT: \n{}", common::graph::Node::to_dot(nodes));
-
-            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
-            log.info("{}", common::graph::ssc_to_string(strong_system_graph));
-
-            log.info("Start nodes:");
-            for (auto &model : get_start_nodes())
+            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(obj.nodes));
+            
+            os << "Simulation Graph DOT:\n" 
+            << common::graph::Node::to_dot(obj.nodes) << std::endl
+            << common::graph::ssc_to_string(strong_system_graph) << std::endl
+            << "Start nodes:" << std::endl;
+            
+            for (auto &model : obj.get_start_nodes())
             {
-                log.info("Model: {}", model->to_string());
+                os << "Model: " << *model << std::endl;
             }
+            return os;
+        }
+
+        /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
         }
     };
 

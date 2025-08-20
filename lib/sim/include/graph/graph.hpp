@@ -31,24 +31,40 @@ namespace ssp4cpp::sim::graph
             nodes = common::map_ns::map_to_value_vector_copy(m);
         }
 
-        vector<Model *> get_start_nodes()
+        vector<Model *> get_start_nodes() const
         {
             auto start_nodes = common::graph::Node::get_ancestors(nodes);
             return start_nodes;
         }
 
-        void print_info()
+        friend std::ostream &operator<<(std::ostream &os, const Graph &obj)
         {
-            log.info("simulation DOT: \n{}", common::graph::Node::to_dot(nodes));
+            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(obj.nodes));
+            
+            os << "Simulation Graph DOT:\n" 
+            << common::graph::Node::to_dot(obj.nodes) << std::endl
+            << common::graph::ssc_to_string(strong_system_graph) << std::endl;
 
-            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
-            log.info("{}", common::graph::ssc_to_string(strong_system_graph));
-
-            log.info("Start nodes:");
-            for (auto &model : get_start_nodes())
+            os << "Start nodes:" << std::endl;
+            for (auto &model : obj.get_start_nodes())
             {
-                log.info("Model: {}", model->to_string());
+                os << "Model: " << model->name << std::endl;
             }
+
+            os << "Storage areas:" << std::endl;
+            for (auto &[name, model] : obj.models)
+            {
+                os << "Model: " << name << std::endl
+                << " Input: " << *model->input_area << std:: endl
+                << " Output: " << *model->output_area << std::endl;
+            }
+            return os;
+        }
+
+        /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
         }
     };
 

@@ -44,6 +44,8 @@ TEST_CASE("RingStorage push")
 
     storage.push(400);
     REQUIRE(storage.access_counter == 4);
+
+    std::cout << storage << std::endl;
 }
 
 TEST_CASE("RingStorage get_item")

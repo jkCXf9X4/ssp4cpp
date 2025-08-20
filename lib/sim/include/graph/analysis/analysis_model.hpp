@@ -50,5 +50,11 @@ namespace ssp4cpp::sim::analysis::graph
 
             return os;
         }
+
+                        /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
+        }
     };
 }

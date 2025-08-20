@@ -35,6 +35,8 @@ TEST_CASE("DataStorage2 basic allocation", "[DataStorage2]")
 
     REQUIRE(storage.locations.size() == 1);
     REQUIRE(storage.locations[0].size() == 2);
+
+    std::cout << storage << std::endl;
 }
 
 TEST_CASE("DataStorage2 multiple areas", "[DataStorage2]")

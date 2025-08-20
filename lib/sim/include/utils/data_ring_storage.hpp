@@ -36,7 +36,7 @@ namespace ssp4cpp::sim::utils
 
         size_t capacity; /* total usable slots                 */
         size_t size;     /* current number of elements stored  */
-        uint64_t access_counter; // how many times has data been added
+        uint64_t access_counter; // how many times has new data been added
 
         RingStorage(size_t capacity)
         {
@@ -145,6 +145,25 @@ namespace ssp4cpp::sim::utils
         inline uint64_t get_pos_rev(int index)
         {
             return (head + capacity - 1 - index) % capacity;
+        }
+
+        friend ostream &operator<<(ostream &os, const RingStorage &obj)
+        {
+            os << "RingStorage \n{\n"
+               << "  capacity: " << obj.capacity
+               << ", size: " << obj.size
+               << ", head: " << obj.head
+               << ", tail: " << obj.tail
+               << ", access_counter: " << obj.access_counter << std::endl
+               << "  " << *obj.data << std::endl
+               << "}";
+            return os;
+        }
+
+                /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
         }
     };
 }

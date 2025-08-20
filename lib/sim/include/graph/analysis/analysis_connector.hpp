@@ -9,7 +9,6 @@
 #include "data_type.hpp"
 // #include "analysis_model.hpp"
 
-
 #include <string>
 #include <vector>
 
@@ -17,7 +16,7 @@ namespace ssp4cpp::sim::analysis::graph
 {
 
     class AnalysisModel;
-    
+
     // template class to enable constexpression invoke
     class AnalysisConnector : public ssp4cpp::common::graph::Node
     {
@@ -32,17 +31,18 @@ namespace ssp4cpp::sim::analysis::graph
         uint64_t value_reference;
 
         utils::DataType type;
+        std::size_t size;
 
-        AnalysisModel * model;
+        AnalysisModel *model;
 
         AnalysisConnector()
         {
         }
 
         AnalysisConnector(std::string component_name,
-                      std::string connector_name,
-                      uint64_t value_reference,
-                      sim::utils::DataType type)
+                          std::string connector_name,
+                          uint64_t value_reference,
+                          sim::utils::DataType type)
         {
             this->component_name = component_name;
             this->connector_name = connector_name;
@@ -50,6 +50,7 @@ namespace ssp4cpp::sim::analysis::graph
 
             this->value_reference = value_reference;
             this->type = type;
+            this->size = utils::get_data_type_size(type);
         }
 
         virtual ~AnalysisConnector()
@@ -76,6 +77,12 @@ namespace ssp4cpp::sim::analysis::graph
                << " }" << endl;
 
             return os;
+        }
+        
+        /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
         }
     };
 

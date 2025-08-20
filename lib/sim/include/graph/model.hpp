@@ -18,27 +18,62 @@ namespace ssp4cpp::sim::graph
     // forward declaration
     class Model;
 
-    struct InputInfo
+    struct ConnectorInfo
     {
         utils::DataType type;
         size_t size;
         std::string name; // for debug
 
-        utils::RingStorage *output_storage;
-        uint32_t output_index;
+        uint32_t index;
+        uint64_t value_ref;
 
-        uint32_t input_index;
-        uint64_t input_value_ref;
+        friend std::ostream &operator<<(std::ostream &os, const ConnectorInfo &obj)
+        {
+            os << "ConnectorInfo { "
+               << "name: " << obj.name
+               << ", type: " << obj.type
+               << ", size: " << obj.size
+               << ", index: " << obj.index
+               << ", value_ref: " << obj.value_ref
+               << " }";
+            return os;
+        }
+
+        /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
+        }
     };
 
-    struct OutputInfo
+    struct ConnectionInfo
     {
         utils::DataType type;
         size_t size;
-        std::string name;
 
-        uint32_t output_index;
-        uint64_t output_value_ref;
+        utils::RingStorage *source_storage;
+        utils::RingStorage *target_storage;
+        uint32_t source_index;
+        uint32_t target_index;
+
+        friend std::ostream &operator<<(std::ostream &os, const ConnectionInfo &obj)
+        {
+            os << "ConnectionInfo { "
+               << "type: " << obj.type
+               << ", size: " << obj.size
+               << ", source_storage: " << obj.source_storage
+               << ", target_storage: " << obj.target_storage
+               << ", source_index: " << obj.source_index
+               << ", target_index: " << obj.target_index
+               << " }";
+            return os;
+        }
+
+                /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
+        }
     };
 
     class Model : public common::graph::Node
@@ -56,8 +91,9 @@ namespace ssp4cpp::sim::graph
         unique_ptr<utils::RingStorage> input_area;
         unique_ptr<utils::RingStorage> output_area;
 
-        vector<InputInfo> inputs;
-        vector<OutputInfo> outputs;
+        std::map<std::string, ConnectorInfo> inputs;
+        std::map<std::string, ConnectorInfo> outputs;
+        vector<ConnectionInfo> connections;
 
         Model(std::string name, handler::FmuInfo *fmu)
         {
@@ -81,30 +117,36 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
+                /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
+        }
+
         // Retrieve inputs, and prepare the model
         void pre(uint64_t time)
         {
             log.ext_trace("[{}] Init", __func__);
 
             auto area = input_area->push(time);
-            for (auto &in : inputs)
+            // Fetch valid data to input area
+            for (auto &connection : connections)
             {
-                auto output_item = in.output_storage->get_valid_item(time, in.output_index);
-                
-                void* input_item;
-                if (true) // store the input data before use
+                auto output_item = connection.source_storage->get_valid_item(time, connection.source_index);
+                if (output_item)
                 {
-                    input_item = input_area->get_item(area, in.input_index);
-                    memcpy(input_item, output_item, in.size);
+                    auto input_item = input_area->get_item(area, connection.target_index);
+                    // fib input data
+                    memcpy(input_item, output_item, connection.size);
                 }
-                else // use the output data directly
-                {
-                    input_item = output_item;
-                }
-
-                utils::write_to_model_(in.type, *fmu->model, in.input_value_ref, input_item);
             }
             input_area->flag_new_data(area);
+
+            for (auto &[_, input] : inputs)
+            {
+                auto input_item = input_area->get_item(area, input.index);
+                utils::write_to_model_(input.type, *fmu->model, input.value_ref, input_item);
+            }
         }
 
         void take_step(uint64_t timestep)
@@ -128,11 +170,11 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Init", __func__);
 
             auto area = output_area->push(time);
-            for (auto out : outputs)
+            for (auto &[_, output] : outputs)
             {
-                auto item = output_area->get_item(area, out.output_index);
-
-                utils::read_from_model_(out.type, *fmu->model, out.output_value_ref, (void *)item);
+                auto item = output_area->get_item(area, output.index);
+                utils::read_from_model_(output.type, *fmu->model, output.value_ref, (void *)item);
+                // fib output data
             }
             output_area->flag_new_data(area);
         }
@@ -152,7 +194,7 @@ namespace ssp4cpp::sim::graph
             take_step(timestep);
             // this should return the new endtime if we have early return
 
-            // post(delayed_time);
+            post(delayed_time);
 
             return delayed_time;
         }

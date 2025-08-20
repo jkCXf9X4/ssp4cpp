@@ -40,9 +40,12 @@ namespace ssp4cpp::sim::utils
         std::vector<std::vector<std::byte *>> locations; // absolute location in memory
         std::vector<bool> new_data_flags;
 
-        std::size_t pos = 0;
-        std::size_t index = -1;
         std::size_t areas = 1;
+        std::size_t pos = 0;
+        std::size_t total_size = 0;
+        std::int32_t index = -1;
+        std::size_t items = 0;
+
         bool allocated = false;
 
         DataStorage(int areas)
@@ -50,9 +53,10 @@ namespace ssp4cpp::sim::utils
             this->areas = areas;
         }
 
-        uint64_t add(std::string name, utils::DataType type)
+        uint32_t add(std::string name, utils::DataType type)
         {
             index += 1;
+            items += 1;
 
             names.push_back(name);
             positions.push_back(pos);
@@ -71,7 +75,8 @@ namespace ssp4cpp::sim::utils
         void allocate()
         {
             locations.clear();
-            data = std::make_unique<std::byte[]>(pos * areas);
+            total_size = pos * areas;
+            data = std::make_unique<std::byte[]>(total_size);
 
             timestamps.resize(areas);
             locations.resize(areas);
@@ -116,6 +121,33 @@ namespace ssp4cpp::sim::utils
         int index_by_name(std::string name)
         {
             return index_name_map[name];
+        }
+
+        friend std::ostream &operator<<(std::ostream &os, const DataStorage &obj)
+        {
+            os << "DataStorage \n{\n"
+               << "  areas: " << obj.areas
+               << ", allocated: " << obj.allocated
+               << ", total_size: " << obj.total_size
+               << ", pos: " << obj.pos
+               << ", items: " << obj.items
+               << ", index: " << obj.index << std::endl;
+
+            for (int i = 0; i < obj.items; i++)
+            {
+                os << "  { position " << obj.positions[i]
+                   << ", name " << obj.names[i]
+                   << ", type " << obj.types[i]
+                   << ", size " << obj.sizes[i] << " }" << std::endl;
+            }
+            os << "}";
+            return os;
+        }
+
+        /** @brief Convert to string for debugging purposes. */
+        std::string to_string()
+        {
+            return common::str::stream_to_str(*this);
         }
     };
 }
