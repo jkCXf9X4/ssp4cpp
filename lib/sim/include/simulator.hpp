@@ -67,15 +67,22 @@ namespace ssp4cpp::sim
             log.debug("[{}] Extra properties:\n{}\n", __func__, json::to_string(model_props));
 
             sim = make_unique<Simulation>(ssp.get(), fmus_ref);
-            sim->init();
-
-            sim->execute();
         }
 
         ~Simulator()
         {
             // unique_ptr will automatically clean up FMUs and SSP
             // when this is destroyed the application will end, no need to free memory resources
+        }
+
+        void init()
+        {
+            sim->init();
+        }
+
+        void execute()
+        {
+            sim->execute();
         }
 
 

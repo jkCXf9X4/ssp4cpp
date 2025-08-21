@@ -38,7 +38,8 @@ int main()
 
     // auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
     auto sim = sim::Simulator("./resources/delay_sys.ssp", "./resources/model_props.json");
-    // sim.execute();
+    sim.init();
+    sim.execute();
 
     log.ext_trace("[{}] exit", __func__);
     return 0;

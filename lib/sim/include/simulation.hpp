@@ -9,6 +9,7 @@
 #include "graph_builder.hpp"
 
 #include "fmu_handler.hpp"
+#include "data_recorder.hpp"
 
 // #include "csv_converter.hpp"
 
@@ -33,7 +34,7 @@ namespace ssp4cpp::sim
         common::Logger log = common::Logger("sim::Simulation", common::LogLevel::debug);
 
         std::unique_ptr<handler::FmuHandler> fmu_handler;
-        // std::unique_ptr<utils::DataRecorder> recorder;
+        std::unique_ptr<utils::DataRecorder> recorder;
         
         std::unique_ptr<graph::Graph> sim_graph;
 
@@ -46,7 +47,7 @@ namespace ssp4cpp::sim
         Simulation(Ssp *ssp, std::map<std::string, Fmu *> fmus)
         {
             fmu_handler = make_unique<handler::FmuHandler>(fmus);
-            // recorder = make_unique<utils::DataRecorder>(temp_file);
+            recorder = make_unique<utils::DataRecorder>(temp_file);
 
             this->ssp = ssp;
             this->fmus = fmus;
@@ -57,7 +58,7 @@ namespace ssp4cpp::sim
             auto analysis_graph = analysis::graph::AnalysisGraphBuilder(ssp, fmu_handler.get()).build();
             log.info("{}", analysis_graph->to_string());
             
-            sim_graph = graph::GraphBuilder(analysis_graph.get()).build();
+            sim_graph = graph::GraphBuilder(analysis_graph.get(), recorder.get()).build();
             log.info("{}", sim_graph->to_string());
 
             fmu_handler->init();
@@ -67,6 +68,8 @@ namespace ssp4cpp::sim
         void invoke(graph::Model *node, uint64_t time)
         {
             auto new_time = node->invoke(time);
+            recorder->update();
+
             for (auto c_ : node->children)
             {
                 auto c = (graph::Model *)c_;
@@ -78,6 +81,8 @@ namespace ssp4cpp::sim
         {
 
             log.info("[{}] Starting simulation...", __func__);
+            recorder->start_recording();
+
             ThreadPool pool(5);
 
             uint64_t time = 0;
@@ -103,7 +108,7 @@ namespace ssp4cpp::sim
             auto duration = duration_cast<std::chrono::microseconds>(stop - start);
             log.info("[{}] Simulation completed.\n Duration: {}ns", __func__, duration.count());
             
-            // sleep(1);        // give the buffer time to flush to file
+            recorder->stop_recording();
             
             log.info("[{}] Saving output", __func__);
             // convert_to_csv(temp_file, "temp/output.csv");

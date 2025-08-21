@@ -13,14 +13,15 @@
 #include <stdexcept>
 #include <iostream>
 
-// Data in this case means data passed around between models as input/output
 namespace ssp4cpp::sim::utils
 {
     using namespace std;
-
+    
     /**
-     * @brief Very small ring buffer implementation used for timestamped data.
+     * @brief Small ring buffer implementation used for timestamped data.
      * When full it will continuously overwrite the oldest data
+     * The buffer is not designed to store all data of the simulation but will continuously overwrite old data
+     * 
      */
     class RingStorage
     {
@@ -38,7 +39,9 @@ namespace ssp4cpp::sim::utils
         size_t size;     /* current number of elements stored  */
         uint64_t access_counter; // how many times has new data been added
 
-        RingStorage(size_t capacity)
+        std::string name;
+
+        RingStorage(size_t capacity, std::string name) : name(name)
         {
             log.ext_trace("[{}] Constructor", __func__);
             if (capacity == 0)
@@ -48,7 +51,7 @@ namespace ssp4cpp::sim::utils
             this->capacity = capacity;
             head = tail = size = access_counter = 0;
 
-            data = make_unique<DataStorage>(capacity);
+            data = make_unique<DataStorage>(capacity, name);
         }
 
         uint64_t add(std::string name, utils::DataType type)
@@ -117,6 +120,12 @@ namespace ssp4cpp::sim::utils
 
             // increase head
             head = (head + 1) % capacity;
+
+            if(data->new_data_flags[head] == true)
+            {
+                log.warning("Potentially overwriting unsaved data in data storage, {}", name);
+            }
+
             access_counter += 1;
             return head;
         }
@@ -130,6 +139,7 @@ namespace ssp4cpp::sim::utils
                 int pos = get_pos_rev(i);
                 if (data->timestamps[pos] <= time)
                 {
+                    log.ext_trace("[{}] found valid area, {}", __func__, pos);
                     return pos;
                 }
             }
@@ -143,10 +153,10 @@ namespace ssp4cpp::sim::utils
         }
 
         /* Return element at logical position `index` counting backwards from
-        the head: index 0 == newest (just before head), 1 == next-newest, …   */
+        the head: index 0 == head, 1 == just before head, 2 == next-newest, …   */
         inline uint64_t get_pos_rev(int index)
         {
-            return (head + capacity - 1 - index) % capacity;
+            return (head + capacity - index) % capacity;
         }
 
         friend ostream &operator<<(ostream &os, const RingStorage &obj)

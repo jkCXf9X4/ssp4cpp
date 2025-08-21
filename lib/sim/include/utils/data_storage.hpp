@@ -15,9 +15,13 @@
 
 namespace ssp4cpp::sim::utils
 {
-    // data centric storage
-    // the data landing area enables easy access when exporting results
-    // store multiple time versions of the data
+    /*
+    * data centric storage
+    * the data storage area should enable:
+    * - easy access when exporting results 
+    * - altering data in and out from the model
+    * - store multiple time versions of the data to enable access backwards in time
+    */ 
 
     class DataStorage
     {
@@ -45,12 +49,19 @@ namespace ssp4cpp::sim::utils
         std::size_t total_size = 0;
         std::int32_t index = -1;
         std::size_t items = 0;
+        std::string name;
 
         bool allocated = false;
 
         DataStorage(int areas)
         {
             this->areas = areas;
+        }
+
+        DataStorage(int areas, std::string name)
+        {
+            this->areas = areas;
+            this->name = name;
         }
 
         uint32_t add(std::string name, utils::DataType type)

@@ -4,6 +4,7 @@
 #include "common_log.hpp"
 
 #include "analysis_graph.hpp"
+#include "data_recorder.hpp"
 
 #include "model.hpp"
 #include "graph.hpp"
@@ -20,10 +21,12 @@ namespace ssp4cpp::sim::graph
         static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::info);
 
         AnalysisGraph *analysis_graph;
+        utils::DataRecorder* recorder;
 
-        GraphBuilder(AnalysisGraph *ag)
+        GraphBuilder(AnalysisGraph *ag, utils::DataRecorder* recorder)
         {
             this->analysis_graph = ag;
+            this->recorder = recorder;
         }
 
         unique_ptr<Graph> build()
@@ -112,6 +115,8 @@ namespace ssp4cpp::sim::graph
             {
                 model->input_area->allocate();
                 model->output_area->allocate();
+                recorder->add_storage(model->input_area->data.get());
+                recorder->add_storage(model->output_area->data.get());
             }
 
             log.ext_trace("[{}] exit", __func__);

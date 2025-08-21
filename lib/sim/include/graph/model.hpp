@@ -99,8 +99,8 @@ namespace ssp4cpp::sim::graph
         {
             this->fmu = fmu;
             this->name = name;
-            input_area = make_unique<utils::RingStorage>(3);
-            output_area = make_unique<utils::RingStorage>(5);
+            input_area = make_unique<utils::RingStorage>(3, name +".input");
+            output_area = make_unique<utils::RingStorage>(5, name +".output");
         }
 
         ~Model()
