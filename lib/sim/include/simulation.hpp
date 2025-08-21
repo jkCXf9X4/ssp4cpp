@@ -41,7 +41,7 @@ namespace ssp4cpp::sim
         Ssp *ssp;
         std::map<std::string, Fmu *> fmus;
 
-        std::string temp_file = "temp/raw_data.txt";
+        std::string temp_file = "temp/output.csv";
 
 
         Simulation(Ssp *ssp, std::map<std::string, Fmu *> fmus)
@@ -62,12 +62,14 @@ namespace ssp4cpp::sim
             log.info("{}", sim_graph->to_string());
 
             fmu_handler->init();
+            recorder->init();
         }
 
         // need to think hard about the time...
         void invoke(graph::Model *node, uint64_t time)
         {
             auto new_time = node->invoke(time);
+
             recorder->update();
 
             for (auto c_ : node->children)
@@ -110,8 +112,7 @@ namespace ssp4cpp::sim
             
             recorder->stop_recording();
             
-            log.info("[{}] Saving output", __func__);
-            // convert_to_csv(temp_file, "temp/output.csv");
+            log.info("[{}] The End", __func__);
         }
     };
 

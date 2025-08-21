@@ -28,6 +28,8 @@ namespace ssp4cpp::sim::analysis::graph
         string component_name;
         string connector_name;
 
+        ssp4cpp::fmi2::md::Causality causality;
+
         uint64_t value_reference;
 
         utils::DataType type;
@@ -74,11 +76,12 @@ namespace ssp4cpp::sim::analysis::graph
                << "name: " << obj.name << endl
                << "vr: " << obj.value_reference << endl
                << "type: " << obj.type << endl
+               << "causality: " << obj.causality << endl
                << " }" << endl;
 
             return os;
         }
-        
+
         /** @brief Convert to string for debugging purposes. */
         std::string to_string()
         {

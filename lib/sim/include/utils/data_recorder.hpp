@@ -18,14 +18,18 @@ namespace ssp4cpp::sim::utils
     struct Tracker
     {
         DataStorage *storage;
+
+        std::size_t size = 0;
         std::size_t index = 0;
+        std::size_t row_pos = 0;
+
         uint64_t timestamp = 0;
     };
 
     class DataRecorder
     {
     public:
-        common::Logger log = common::Logger("DataRecorder", common::LogLevel::debug);
+        common::Logger log = common::Logger("DataRecorder", common::LogLevel::trace);
 
         std::ofstream file;
         std::thread worker;
@@ -36,6 +40,17 @@ namespace ssp4cpp::sim::utils
 
         std::vector<Tracker> trackers;
         std::size_t tracker_index = 0;
+
+        std::uint16_t head = 0;
+        std::size_t new_item_counter = 0;
+        const std::size_t rows = 20;
+
+        std::size_t row_size = 0;
+
+        std::map<std::uint64_t, std::uint64_t> row_time_map;
+        std::map<std::uint64_t, std::uint64_t> time_row_map;
+        std::unique_ptr<std::byte[]> data;
+        vector<vector<bool>> updated_tracker; // [row][tracker] bool to signify if the tracker is updated
 
         DataRecorder(const std::string &filename)
             : file(filename, std::ios::out)
@@ -53,19 +68,61 @@ namespace ssp4cpp::sim::utils
 
         void add_storage(DataStorage *storage)
         {
-            Tracker t;
-            t.storage = storage;
-            t.index = tracker_index;
-            trackers.push_back(t);
+            if (storage->items > 0)
+            {
+                Tracker t;
+                t.storage = storage;
+                t.size = storage->pos;
+                t.index = tracker_index;
+                t.row_pos = row_size;
+                trackers.push_back(t);
 
-            log.trace("[{}] Adding tracker, storage: {}", __func__, storage->name);
+                row_size += storage->pos;
 
-            tracker_index++;
+                log.trace("[{}] Adding tracker, storage: {}", __func__, storage->name);
+
+                tracker_index++;
+            }
+        }
+
+        inline void reset_update_status(std::size_t row)
+        {
+            for (auto &t : trackers)
+            {
+                updated_tracker[row][t.index] = false;
+            }
+        }
+
+        void print_headers()
+        {
+            file << "time";
+            for (const auto &tracker : trackers)
+            {
+                for (const auto &name : tracker.storage->names)
+                {
+                    file << ',' << name;
+                }
+            }
+            file << '\n';
+        }
+
+        void init()
+        {
+            data = std::make_unique<std::byte[]>(row_size * rows);
+
+            // ensure that all rows have the status of not updated at the start
+            updated_tracker.reserve(rows);
+            for (int r = 0; r < rows; r++)
+            {
+                updated_tracker[r].reserve(trackers.size());
+                reset_update_status(r);
+            }
+            print_headers();
         }
 
         void start_recording()
         {
-            log.trace("[{}] Starting recording", __func__ );
+            log.trace("[{}] Starting recording", __func__);
             running = true; // must be set before the start of the thread, otherwise it wont start
             worker = std::thread([this]()
                                  { loop(); });
@@ -74,33 +131,62 @@ namespace ssp4cpp::sim::utils
 
         void stop_recording()
         {
-            log.trace("[{}] Stop recording", __func__ );
+            log.trace("[{}] Stop recording", __func__);
             running = false; // to end the loop
 
             usleep(100); // wait for complete eventual current runs
             update();
-            
+
             if (worker.joinable())
             {
                 worker.join();
             }
+
+            // flush the rest of the memory to file
+            for (int i = 1; i <= rows; i++)
+            {
+                print_row((head +  i) % rows);
+            }
+
             if (file.is_open())
             {
                 file.close();
             }
         }
 
-        void print_headers()
+        inline byte *get_data_pos(std::size_t row, std::size_t offset)
         {
-            // file << "time";
-            // for (const auto &name : names)
-            //     file << ',' << name;
-            // file << '\n';
+            return data.get() + row * row_size + offset;
+        }
+
+        void print_row(uint16_t row)
+        {
+            log.trace("[{}] Init", __func__);
+            file << row_time_map[row];
+            for (const auto &tracker : trackers)
+            {
+                for (int item = 0; item < tracker.storage->items; ++item)
+                {
+                    log.ext_trace("[{}] Printing tracker: {}, item:{}", __func__, tracker.storage->name, item);
+
+                    auto pos = tracker.storage->positions[item];
+                    auto type = tracker.storage->types[item];
+                    file << ", ";
+                    if (updated_tracker[row][item])
+                    {
+                        output_string(type, get_data_pos(row, pos));
+                    }
+                }
+            }
+            file << '\n';
+            // reset the status after printing the row
+            reset_update_status(row);
+            file.flush();
         }
 
         void update()
         {
-            log.ext_trace("[{}] Notifying recording to update", __func__ );
+            log.ext_trace("[{}] Notifying recording to update", __func__);
             event.notify_all();
         }
 
@@ -117,50 +203,65 @@ namespace ssp4cpp::sim::utils
 
                 for (auto &tracker : trackers)
                 {
-                    log.ext_trace("[{}] Evaluating {}", __func__, tracker.storage->to_string());
-                    
+                    log.trace("[{}] Evaluating storage {} {}", __func__, tracker.storage->to_string(), tracker.storage->index);
+
                     auto storage = tracker.storage;
 
                     for (std::size_t area = 0; area < storage->areas; ++area)
                     {
                         if (storage->new_data_flags[area])
                         {
-                            for (std::size_t item = 0; item < storage->items; ++item)
-                            {
-                                int pos;
-                                log.ext_trace("[{}] Writing to file", __func__);
+                            log.trace("[{}] Found new data; area: {}", __func__, area);
 
-                                record(storage->timestamps[area], tracker.index, item, storage->types[item], storage->locations[area][item]);
+                            auto ts = storage->timestamps[area];
+                            if (time_row_map.count(ts) == 0)
+                            {
+                                if (new_item_counter > rows)
+                                {
+                                    print_row(head); // print before overwriting
+                                }
+
+                                head = (head + 1) % rows;
+                                new_item_counter++;
+
+                                row_time_map[head] = ts;
+                                time_row_map[ts] = head;
+
+                                log.trace("[{}] New row [{}] with time [{}]", __func__, head, ts);
                             }
+                            auto row = time_row_map[ts];
+
+                            updated_tracker[row][tracker.index] = true;
+                            log.trace("[{}] Copying data; row {}, size: {}", __func__, row, tracker.size);
+
+                            memcpy(get_data_pos(row, tracker.row_pos), storage->locations[area][0], tracker.size);
                             storage->new_data_flags[area] = false;
                         }
                     }
-
                 }
-                file.flush();
             }
         }
 
-        void record(uint64_t time, std::size_t tracker, uint64_t reference, DataType type, void *data)
+        void output_string(DataType type, void *data)
         {
             log.ext_trace("[{}] init", __func__);
             switch (type)
             {
             case DataType::real:
-                file << time << "," << tracker << "." << reference << "," << *(double *)data << "\n";
+                file << *(double *)data;
                 break;
             case DataType::boolean:
-                file << time << "," << tracker << "." << reference << "," << (*(bool *)data ? 1 : 0) << "\n";
+                file << (*(bool *)data ? 1 : 0);
                 break;
             case DataType::integer:
             case DataType::enumeration:
-                file << time << "," << tracker << "." << reference << "," << *(int *)data << "\n";
+                file << *(int *)data;
                 break;
             case DataType::string:
-                file << time << "," << tracker << "." << reference << "," << *(std::string *)data << "\n";
+                file << *(std::string *)data;
                 break;
             default:
-                file << time << "," << tracker << "." << reference << ",<bin>\n";
+                file << "<bin>";
                 break;
             }
         }

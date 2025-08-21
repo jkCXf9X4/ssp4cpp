@@ -56,7 +56,7 @@ namespace ssp4cpp::sim::analysis::graph
 
         // Helper: create_variable with explicit type and context
         std::unique_ptr<AnalysisConnector> create_connector(std::string component_name,
-                                                        std::string connector_name)
+                                                            std::string connector_name)
         {
             using namespace handler;
 
@@ -88,6 +88,8 @@ namespace ssp4cpp::sim::analysis::graph
                     auto connector_name = connector->name;
 
                     auto c = create_connector(component_name, connector_name);
+                    c->causality = connector->kind;
+
                     log.trace("[{}] New Connector: {}", __func__, c->name);
                     items[c->name] = std::move(c);
                 }
@@ -144,6 +146,23 @@ namespace ssp4cpp::sim::analysis::graph
                 models[source]->add_child(models[target].get());
             }
 
+            for (auto &[name, connector] : connectors)
+            {
+                auto model = models[connector->component_name].get();
+                if (connector->causality == ssp4cpp::fmi2::md::Causality::input)
+                {
+                    model->input_connectors[connector->name] = connector.get();
+                }
+                else if (connector->causality == ssp4cpp::fmi2::md::Causality::output)
+                {
+                    model->output_connectors[connector->name] = connector.get();
+                }
+                else
+                {
+                    log.error("[{}] Connector causality unknown", __func__);
+                }
+            }
+
             log.debug("[{}] Connecting connectors", __func__);
             for (auto &[name, connection] : connections)
             {
@@ -157,7 +176,7 @@ namespace ssp4cpp::sim::analysis::graph
 
                 auto source_connector = connectors[source_connector_name].get();
                 auto target_connector = connectors[target_connector_name].get();
-                
+
                 source_connector->model = source_model;
                 target_connector->model = target_model;
 
@@ -165,9 +184,6 @@ namespace ssp4cpp::sim::analysis::graph
                 connection->source_model = source_model;
                 connection->target_connector = target_connector;
                 connection->target_model = target_model;
-
-                source_model->output_connectors[source_connector_name] = source_connector;
-                target_model->input_connectors[target_connector_name] = target_connector;
 
                 source_connector->add_child(connection.get());
                 connection->add_child(target_connector);

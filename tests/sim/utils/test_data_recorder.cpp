@@ -58,3 +58,4 @@ TEST_CASE("DataRecorder initialization and cleanup", "[DataRecorder]")
     // Clean up the test file
     std::filesystem::remove(test_filename);
 }
+

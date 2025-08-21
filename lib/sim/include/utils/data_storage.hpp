@@ -137,6 +137,7 @@ namespace ssp4cpp::sim::utils
         friend std::ostream &operator<<(std::ostream &os, const DataStorage &obj)
         {
             os << "DataStorage \n{\n"
+                << " name: " << obj.name
                << "  areas: " << obj.areas
                << ", allocated: " << obj.allocated
                << ", total_size: " << obj.total_size
