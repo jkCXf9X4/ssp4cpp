@@ -22,7 +22,7 @@ namespace ssp4cpp::sim::utils
     class DataStorage
     {
     public:
-        common::Logger log = common::Logger("DataStorage", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("DataStorage", common::LogLevel::debug);
 
         // all data
         std::unique_ptr<std::byte[]> data;
@@ -61,7 +61,6 @@ namespace ssp4cpp::sim::utils
             names.push_back(name);
             positions.push_back(pos);
             types.push_back(type);
-            new_data_flags.push_back(false);
 
             index_name_map[name] = index;
 
@@ -89,6 +88,7 @@ namespace ssp4cpp::sim::utils
                 {
                     locations[i].push_back(&data[i * pos + p]);
                 }
+                new_data_flags.push_back(false);
             }
             allocated = true;
         }

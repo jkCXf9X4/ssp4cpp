@@ -17,14 +17,14 @@ namespace ssp4cpp::common
      */
     enum class LogLevel : int
     {
-        ext_trace,  /**< Extremely verbose trace messages */
-        trace,      /**< Verbose tracing information */
-        debug,      /**< Debug information */
-        info,       /**< General information */
-        success,    /**< Successful operations */
-        warning,    /**< Warnings */
-        error,      /**< Error conditions */
-        fatal       /**< Fatal errors */
+        ext_trace, /**< Extremely verbose trace messages */
+        trace,     /**< Verbose tracing information */
+        debug,     /**< Debug information */
+        info,      /**< General information */
+        success,   /**< Successful operations */
+        warning,   /**< Warnings */
+        error,     /**< Error conditions */
+        fatal      /**< Fatal errors */
     };
 
     /**
@@ -180,6 +180,8 @@ namespace ssp4cpp::common
         {
             switch (level)
             {
+            case LogLevel::ext_trace:
+                return "ext trace";
             case LogLevel::trace:
                 return "trace";
             case LogLevel::debug:
@@ -204,7 +206,9 @@ namespace ssp4cpp::common
          */
         static LogLevel str_to_log_level(std::string string)
         {
-            if (string == "trace")
+            if (string == "ext_trace")
+                return LogLevel::ext_trace;
+            else if (string == "trace")
                 return LogLevel::trace;
             else if (string == "debug")
                 return LogLevel::debug;

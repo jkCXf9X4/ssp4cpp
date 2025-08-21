@@ -84,7 +84,7 @@ namespace ssp4cpp::sim::graph
         uint64_t delayed_time = 0;
 
     public:
-        common::Logger log = common::Logger("Model", common::LogLevel::info);
+        common::Logger log = common::Logger("Model", common::LogLevel::debug);
 
         handler::FmuInfo *fmu;
 
@@ -126,26 +126,32 @@ namespace ssp4cpp::sim::graph
         // Retrieve inputs, and prepare the model
         void pre(uint64_t time)
         {
-            log.ext_trace("[{}] Init", __func__);
+            log.trace("[{}] Init", __func__);
 
             auto area = input_area->push(time);
+            log.ext_trace("[{}] Area {}", __func__, area);
             // Fetch valid data to input area
+            // fib input data if needed
+            log.trace("[{}] Copy connections", __func__);
             for (auto &connection : connections)
             {
+                log.ext_trace("[{}] Fetch valid data connection {}", __func__, connection.to_string());
                 auto output_item = connection.source_storage->get_valid_item(time, connection.source_index);
                 if (output_item)
                 {
+                    log.ext_trace("[{}] Found valid item, copying data", __func__);
                     auto input_item = input_area->get_item(area, connection.target_index);
-                    // fib input data
                     memcpy(input_item, output_item, connection.size);
                 }
             }
             input_area->flag_new_data(area);
-
+            
+            log.trace("[{}] Copy data to model", __func__);
             for (auto &[_, input] : inputs)
             {
+                log.ext_trace("[{}] Copying input {}", __func__, input.to_string());
                 auto input_item = input_area->get_item(area, input.index);
-                utils::write_to_model_(input.type, *fmu->model, input.value_ref, input_item);
+                utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void*)input_item);
             }
         }
 
@@ -170,6 +176,7 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Init", __func__);
 
             auto area = output_area->push(time);
+            log.trace("[{}] Copy data from model", __func__);
             for (auto &[_, output] : outputs)
             {
                 auto item = output_area->get_item(area, output.index);

@@ -107,6 +107,7 @@ namespace ssp4cpp::sim::graph
                 target_model->connections.push_back(con_info);
             }
 
+            // Allocate the input/output areas
             for (auto &[ssp_resource_name, model] : models)
             {
                 model->input_area->allocate();

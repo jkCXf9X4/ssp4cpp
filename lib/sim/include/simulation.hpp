@@ -98,10 +98,10 @@ namespace ssp4cpp::sim
                 log.ext_trace("[{}] NEW TIME {}", __func__, time);
                 invoke(start_node, time);
             }
-            
+
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = duration_cast<std::chrono::microseconds>(stop - start);
-            log.info("[{}] Simulation completed, {}", __func__, duration.count());
+            log.info("[{}] Simulation completed.\n Duration: {}ns", __func__, duration.count());
             
             // sleep(1);        // give the buffer time to flush to file
             

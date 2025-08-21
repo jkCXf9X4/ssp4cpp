@@ -74,9 +74,11 @@ namespace ssp4cpp::sim::utils
 
         byte *get_valid_item(uint64_t time, std::size_t index)
         {
+            log.ext_trace("[{}] Init", __func__);
             auto valid_area = get_valid_area(time);
             if (valid_area != -1)
             {
+                log.ext_trace("[{}] Valid area found, returning the pointer", __func__);
                 return data->get_item(valid_area, index);
             }
             return nullptr;

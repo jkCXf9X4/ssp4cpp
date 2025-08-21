@@ -27,6 +27,16 @@ TEST_CASE("RingStorage add and allocate")
     storage.allocate();
 }
 
+TEST_CASE("RingStorage push empty")
+{
+    RingStorage storage(3);
+    storage.allocate();
+
+    auto area = storage.push(2);
+    // std::cout << "Area:" << area << std::endl;
+    storage.flag_new_data(area);
+}
+
 TEST_CASE("RingStorage push")
 {
     RingStorage storage(3);
@@ -57,14 +67,17 @@ TEST_CASE("RingStorage get_item")
     auto area = storage.push(100);
     auto item = (int32_t*)storage.get_item(area, index);
     *item = 1;
-
+    storage.flag_new_data(area);
+    
     area = storage.push(200);
     item = (int32_t*)storage.get_item(area, index);
     *item = 2;
-
+    storage.flag_new_data(area);
+    
     area = storage.push(300);
     item = (int32_t*)storage.get_item(area, index);
     *item = 3;
+    storage.flag_new_data(area);
 
     REQUIRE( *(int32_t*)storage.get_valid_item(100, index) == 1);
     REQUIRE( *(int32_t*)storage.get_valid_item(180, index) == 1);
