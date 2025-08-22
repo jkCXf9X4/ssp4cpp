@@ -87,6 +87,7 @@ namespace ssp4cpp::sim::utils
 
         inline void reset_update_status(std::size_t row)
         {
+            log.ext_trace("[{}] Init", __func__);
             for (auto &t : trackers)
             {
                 updated_tracker[row][t.index] = false;
@@ -95,6 +96,7 @@ namespace ssp4cpp::sim::utils
 
         void print_headers()
         {
+            log.ext_trace("[{}] Init", __func__);
             file << "time";
             for (const auto &tracker : trackers)
             {
@@ -108,13 +110,24 @@ namespace ssp4cpp::sim::utils
 
         void init()
         {
-            data = std::make_unique<std::byte[]>(row_size * rows);
+            log.ext_trace("[{}] Init", __func__);
+            auto allocation_size = row_size * rows;
+
+            data = std::make_unique<std::byte[]>(allocation_size);
+            log.ext_trace("[{}] Completed allocation", __func__);
 
             // ensure that all rows have the status of not updated at the start
             updated_tracker.reserve(rows);
             for (int r = 0; r < rows; r++)
             {
-                updated_tracker[r].reserve(trackers.size());
+                vector<bool> trackers_status;
+                trackers_status.reserve(trackers.size());
+                for (auto &t : trackers)
+                {
+                    trackers_status.push_back(false);
+                }
+
+                updated_tracker.push_back(std::move(trackers_status));
                 reset_update_status(r);
             }
             print_headers();
@@ -145,7 +158,7 @@ namespace ssp4cpp::sim::utils
             // flush the rest of the memory to file
             for (int i = 1; i <= rows; i++)
             {
-                print_row((head +  i) % rows);
+                print_row((head + i) % rows);
             }
 
             if (file.is_open())

@@ -55,13 +55,19 @@ namespace ssp4cpp::sim
 
         void init()
         {
+            log.info("[{}] Initializing simulation...", __func__);
             auto analysis_graph = analysis::graph::AnalysisGraphBuilder(ssp, fmu_handler.get()).build();
             log.info("{}", analysis_graph->to_string());
+            log.info("[{}] Analysis graph completed", __func__);
             
             sim_graph = graph::GraphBuilder(analysis_graph.get(), recorder.get()).build();
             log.info("{}", sim_graph->to_string());
-
+            log.info("[{}] Simulation graph completed", __func__);
+            
+            
+            log.info("[{}] Initializing fmu handler", __func__);
             fmu_handler->init();
+            log.info("[{}] Initializing recorder", __func__);
             recorder->init();
         }
 
@@ -72,7 +78,7 @@ namespace ssp4cpp::sim
             recorder->start_recording();
 
 
-            uint64_t time = 0;
+            uint64_t time = 0.1;
             uint64_t end_time = 2 * time::nanoseconds_per_second;
             uint64_t timestep = 0.1 * time::nanoseconds_per_second;
 
