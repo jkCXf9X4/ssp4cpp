@@ -41,13 +41,13 @@ namespace ssp4cpp::sim
         Ssp *ssp;
         std::map<std::string, Fmu *> fmus;
 
-        std::string temp_file = "temp/output.csv";
+        std::string result_file = "temp/output.csv";
 
 
         Simulation(Ssp *ssp, std::map<std::string, Fmu *> fmus)
         {
             fmu_handler = make_unique<handler::FmuHandler>(fmus);
-            recorder = make_unique<utils::DataRecorder>(temp_file);
+            recorder = make_unique<utils::DataRecorder>(result_file);
 
             this->ssp = ssp;
             this->fmus = fmus;
@@ -65,21 +65,7 @@ namespace ssp4cpp::sim
             recorder->init();
         }
 
-        // need to think hard about the time...
-        void invoke(graph::Model *node, uint64_t time)
-        {
-            auto new_time = node->invoke(time);
-
-            recorder->update();
-
-            for (auto c_ : node->children)
-            {
-                auto c = (graph::Model *)c_;
-                invoke(c, new_time);
-            }
-        }
-
-        void execute()
+        void simulate()
         {
 
             log.info("[{}] Starting simulation...", __func__);
@@ -91,19 +77,14 @@ namespace ssp4cpp::sim
             uint64_t end_time = 2 * time::nanoseconds_per_second;
             uint64_t timestep = 0.1 * time::nanoseconds_per_second;
 
-            auto start_nodes = sim_graph->get_start_nodes();
-            assert(start_nodes.size() == 1);
-            auto start_node = start_nodes[0];
-
             auto start = std::chrono::high_resolution_clock::now();
-            // simulation time loop: invoke graph each timestep
 
             while (time < end_time)
             {
                 time += timestep;
 
                 log.ext_trace("[{}] NEW TIME {}", __func__, time);
-                invoke(start_node, time);
+                sim_graph->invoke(time);
             }
 
             auto stop = std::chrono::high_resolution_clock::now();
@@ -116,39 +97,5 @@ namespace ssp4cpp::sim
         }
     };
 
-    // /**
-    //  * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
-    //  */
-    // void invoke_graph(uint64_t timestep)
-    // {
-    //     // track which nodes have been invoked
-    //     std::unordered_set<SimNode*> invoked;
-    //     // start from ancestor nodes (no parents)
-    //     auto ready = graph::Node::get_ancestors(connection_graph);
-
-    //     while (!ready.empty()) {
-    //         std::vector<SimNode*> next;
-    //         for (auto node : ready) {
-    //             node->invoke(timestep);
-
-    //             invoked.insert(node);
-    //             // enqueue children whose all parents are invoked
-    //             for (auto *child : node->children) {
-    //                 if (invoked.count(child)) continue;
-    //                 bool all_parents_invoked = true;
-    //                 for (auto *p : child->parents) {
-    //                     if (!invoked.count(p)) {
-    //                         all_parents_invoked = false;
-    //                         break;
-    //                     }
-    //                 }
-    //                 if (all_parents_invoked) {
-    //                     next.push_back(child);
-    //                 }
-    //             }
-    //         }
-    //         ready.swap(next);
-    //     }
-    // }
 
 }

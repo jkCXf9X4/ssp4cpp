@@ -90,6 +90,7 @@ namespace ssp4cpp::sim::graph
 
         unique_ptr<utils::RingStorage> input_area;
         unique_ptr<utils::RingStorage> output_area;
+        utils::DataRecorder* recorder;
 
         std::map<std::string, ConnectorInfo> inputs;
         std::map<std::string, ConnectorInfo> outputs;
@@ -145,6 +146,7 @@ namespace ssp4cpp::sim::graph
                 }
             }
             input_area->flag_new_data(area);
+            recorder->update();
             
             log.trace("[{}] Copy data to model", __func__);
             for (auto &[_, input] : inputs)
@@ -184,6 +186,7 @@ namespace ssp4cpp::sim::graph
                 // fib output data
             }
             output_area->flag_new_data(area);
+            recorder->update();
         }
 
         uint64_t invoke(uint64_t time)

@@ -39,6 +39,7 @@ namespace ssp4cpp::sim::graph
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)
             {
                 auto m = make_unique<Model>(ssp_resource_name, analysis_model->fmu);
+                m->recorder = recorder;
 
                 log.trace("[{}] New Model: {}", __func__, m->name);
                 models[analysis_model->name] = std::move(m);

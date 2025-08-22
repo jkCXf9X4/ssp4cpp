@@ -29,7 +29,7 @@ namespace ssp4cpp::sim::utils
     class DataRecorder
     {
     public:
-        common::Logger log = common::Logger("DataRecorder", common::LogLevel::trace);
+        common::Logger log = common::Logger("DataRecorder", common::LogLevel::info);
 
         std::ofstream file;
         std::thread worker;

@@ -80,9 +80,9 @@ namespace ssp4cpp::sim
             sim->init();
         }
 
-        void execute()
+        void simulate()
         {
-            sim->execute();
+            sim->simulate();
         }
 
 
