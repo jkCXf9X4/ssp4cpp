@@ -71,8 +71,7 @@ namespace ssp4cpp::sim::handler
                 fmu->model->setup_experiment();
                 fmu->model->enter_initialization_mode();
                 fmu->model->exit_initialization_mode();
-                // Set up data managers for different types
-                
+
                 // apply parameter sets
                 
                 // set start values?

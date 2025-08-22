@@ -129,6 +129,11 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] Init", __func__);
 
+            if (input_area->data->items == 0)
+            {
+                return;
+            }
+
             auto area = input_area->push(time);
             log.ext_trace("[{}] Area {}", __func__, area);
             // Fetch valid data to input area

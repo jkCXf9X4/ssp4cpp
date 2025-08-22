@@ -71,7 +71,6 @@ namespace ssp4cpp::sim
             log.info("[{}] Starting simulation...", __func__);
             recorder->start_recording();
 
-            ThreadPool pool(5);
 
             uint64_t time = 0;
             uint64_t end_time = 2 * time::nanoseconds_per_second;

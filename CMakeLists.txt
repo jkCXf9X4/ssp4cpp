@@ -13,6 +13,8 @@ message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}\n")
 message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}\n")
 message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 
+# should add Link-Time Optimization (LTO) -flto and O2/O3 optimization
+
 set(CMAKE_CXX_STANDARD 23)
 
 project(ssp4cpp)
