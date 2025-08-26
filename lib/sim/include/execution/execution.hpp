@@ -6,6 +6,7 @@
 
 #include "model.hpp"
 #include "graph.hpp"
+#include "config.hpp"
 
 #include <map>
 #include <assert.h>
@@ -80,8 +81,12 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("Jacobi", common::LogLevel::debug);
 
+        bool parallelize;
+
         Jacobi(std::vector<Model *> models) : ExecutionBase(std::move(models))
         {
+            parallelize = utils::Config::getOr<bool>("simulation.jacobi.parallel", true);
+            log.info("[{}] Parallel: {}", __func__, parallelize);
         }
 
         friend std::ostream &operator<<(std::ostream &os, const Jacobi &obj)
@@ -93,11 +98,9 @@ namespace ssp4cpp::sim::graph
         uint64_t invoke(uint64_t time) override final
         {
             // If models execute in less than 10-15 microseconds then use sequence
-            // 
+            //
             // TODO: Implement some trigger to switch between them
-            switch (1)
-            {
-            case 1: // parallel, using tbb if compiling with gcc
+            if (parallelize)
             {
                 std::for_each(std::execution::par, models.begin(), models.end(),
                               [&](auto &model)
@@ -105,15 +108,12 @@ namespace ssp4cpp::sim::graph
                                   model->invoke(time);
                               });
             }
-            break;
-            case 2: // in sequence
+            else
             {
                 for (auto &model : this->models)
                 {
                     model->invoke(time);
                 }
-            }
-            break;
             }
 
             return time;

@@ -6,6 +6,7 @@
 
 #include "model.hpp"
 #include "execution.hpp"
+#include "config.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -32,7 +33,18 @@ namespace ssp4cpp::sim::graph
             auto m = map_ns::map_unique_to_ref(models);
             nodes = common::map_ns::map_to_value_vector_copy(m);
 
-            executor = make_unique<Jacobi>(nodes);
+            auto executor_method = utils::Config::getOr<std::string>("simulation.executor", "jacobi");
+            
+            if (executor_method == "jacobi")
+            {
+                log.info("[{}] Running jacobi", __func__);
+                executor = make_unique<Jacobi>(nodes);
+            }
+            else if(executor_method == "seidel")
+            {
+                log.info("[{}] Running seidel", __func__);
+                executor = make_unique<Seidel>(nodes);
+            }
         }
 
         friend std::ostream &operator<<(std::ostream &os, const Graph &obj)

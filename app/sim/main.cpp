@@ -37,7 +37,7 @@ int main()
     log.ext_trace("[{}] enter", __func__);
 
     // auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");
-    auto sim = sim::Simulator("./resources/delay_sys.ssp", "./resources/model_props.json");
+    auto sim = sim::Simulator("./resources/delay_sys.ssp", "./resources/config_1.json");
     // auto sim = sim::Simulator("./resources/embrace.ssp", "./resources/model_props.json");
     sim.init();
     sim.simulate();

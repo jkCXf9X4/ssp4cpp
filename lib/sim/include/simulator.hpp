@@ -6,6 +6,7 @@
 #include "common_map.hpp"
 
 #include "simulation.hpp"
+#include "config.hpp"
 
 #include <vector>
 #include <map>
@@ -27,8 +28,6 @@ namespace ssp4cpp::sim
         std::map<std::string, std::unique_ptr<Fmu>> fmus;
         std::map<std::string, ssp4cpp::Fmu *> fmus_ref; // Non owning
 
-        common::json::Json model_props;
-
         // system_graph: Simple graph only showing the connections between fmu's
         unique_ptr<Simulation> sim;
 
@@ -46,8 +45,8 @@ namespace ssp4cpp::sim
 
             fmus_ref = map_ns::map_unique_to_ref(fmus);
 
-            model_props = json::parse_json_file(props_path);
-            log.debug("[{}] Extra properties:\n{}\n", __func__, json::to_string(model_props));
+            utils::Config::loadFromFile(props_path);
+            log.debug("[{}] Config:\n{}\n", __func__, utils::Config::as_string());
 
             sim = make_unique<Simulation>(ssp.get(), fmus_ref);
         }

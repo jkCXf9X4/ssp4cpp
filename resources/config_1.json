@@ -1,5 +1,17 @@
 {
-    "Models": {
+    "simulation" :
+    {
+        "start_time":0.0,
+        "end_time":2.0,
+        "timestep": 0.1,
+
+        "executor": "jacobi",
+        "jacobi":
+        {
+            "parallel": true
+        }
+    },
+    "models": {
         "Model_1": {
             "delay": 0.005,
             "frequency": 0
@@ -21,7 +33,7 @@
             "frequency": 0
         }
     },
-    "Connections": {
+    "connections": {
         "c1": {
             "source": "Model_1",
             "target": "Model_2",

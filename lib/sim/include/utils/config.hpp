@@ -57,6 +57,13 @@ namespace ssp4cpp::sim::utils
             }
         }
 
+        static std::string as_string()
+        {
+            data_available();
+
+            return data_.dump();
+        }
+
         // Get a required value; throws if missing or type mismatch.
         template <class T>
         static T get(const std::string &dottedKey)
@@ -76,7 +83,7 @@ namespace ssp4cpp::sim::utils
             catch (const std::exception &e)
             {
                 throw type_error("Config: type error for key '" + dottedKey +
-                                        "': " + std::string(e.what()));
+                                 "': " + std::string(e.what()));
             }
         }
 
