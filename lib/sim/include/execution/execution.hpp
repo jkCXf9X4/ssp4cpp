@@ -92,7 +92,12 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(uint64_t time) override final
         {
-            if (false)
+            // If models execute in less than 10-15 microseconds then use sequence
+            // 
+            // TODO: Implement some trigger to switch between them
+            switch (1)
+            {
+            case 1: // parallel, using tbb if compiling with gcc
             {
                 std::for_each(std::execution::par, models.begin(), models.end(),
                               [&](auto &model)
@@ -100,12 +105,15 @@ namespace ssp4cpp::sim::graph
                                   model->invoke(time);
                               });
             }
-            else
+            break;
+            case 2: // in sequence
             {
                 for (auto &model : this->models)
                 {
                     model->invoke(time);
                 }
+            }
+            break;
             }
 
             return time;

@@ -2,6 +2,7 @@
 
 #include "common_map.hpp"
 #include "common_vector.hpp"
+#include "common_time.hpp"
 
 #include "common_thread_pool.hpp"
 
@@ -10,8 +11,6 @@
 
 #include "fmu_handler.hpp"
 #include "data_recorder.hpp"
-
-// #include "csv_converter.hpp"
 
 #include "ssp_ext.hpp"
 #include "ssp.hpp"
@@ -78,23 +77,14 @@ namespace ssp4cpp::sim
             recorder->start_recording();
 
 
-            uint64_t time = 0.1;
+            uint64_t start_time = 0.0;
             uint64_t end_time = 2 * time::nanoseconds_per_second;
             uint64_t timestep = 0.1 * time::nanoseconds_per_second;
 
-            auto start = std::chrono::high_resolution_clock::now();
-
-            while (time < end_time)
             {
-                time += timestep;
-
-                log.ext_trace("[{}] NEW TIME {}", __func__, time);
-                sim_graph->invoke(time);
+                auto timer = common::time::ScopeTimer("Simulation");
+                sim_graph->invoke(start_time, end_time, timestep);
             }
-
-            auto stop = std::chrono::high_resolution_clock::now();
-            auto duration = duration_cast<std::chrono::microseconds>(stop - start);
-            log.info("[{}] Simulation completed.\n Duration: {}ns", __func__, duration.count());
             
             recorder->stop_recording();
             

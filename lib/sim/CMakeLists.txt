@@ -23,5 +23,12 @@ target_compile_options(sim PRIVATE -Wfatal-errors)
 target_link_libraries(sim PRIVATE schema_lib)
 target_link_libraries(sim PRIVATE common)
 
+
+find_package(nlohmann_json CONFIG REQUIRED)
+target_link_libraries(sim PRIVATE nlohmann_json::nlohmann_json)
+
+find_package(TBB CONFIG REQUIRED)
+target_link_libraries(sim PRIVATE TBB::tbb TBB::tbbmalloc)
+
 find_package(fmi4cpp REQUIRED CONFIG)
 target_link_libraries(sim PRIVATE fmi4cpp::fmi4cpp)

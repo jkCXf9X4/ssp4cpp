@@ -1,31 +1,14 @@
 #include "ssp.hpp"
 #include "fmu.hpp"
-// #include "ssp_ext.hpp"
 #include "common_io.hpp"
 #include "common_log.hpp"
-// #include "common_string.hpp"
-// #include "common_node.hpp"
 #include "common_json.hpp"
-// #include "common_node.hpp"
 #include "common_map.hpp"
-// #include "common_thread_pool.hpp"
-// #include "common_time.hpp"
-// #include <unordered_set>
-
-
-// #include "SSP1_SystemStructureDescription_Ext.hpp"
-// #include "FMI2_modelDescription_Ext.hpp"
 
 #include "simulation.hpp"
 
-// #include <iostream>
-// #include <fstream>
-// #include <cassert>
 #include <vector>
-// #include <algorithm>
 #include <map>
-// #include <set>
-// #include <list>
 
 using namespace std;
 using namespace ssp4cpp;

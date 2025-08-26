@@ -5,6 +5,7 @@
     "pugixml",
     "fmi4cpp",
     "nlohmann-json",
-    "catch2"
+    "catch2",
+    "tbb"
   ]
 }
