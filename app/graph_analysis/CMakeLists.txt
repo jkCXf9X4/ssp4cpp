@@ -18,5 +18,7 @@ target_include_directories(ssp4cpp_graph
 target_link_libraries(ssp4cpp_graph PRIVATE schema_lib)
 target_link_libraries(ssp4cpp_graph PRIVATE common)
 
+#  need to add     "boost-graph", to vcpkg.json
+
 find_package(boost_graph REQUIRED CONFIG)
 target_link_libraries(ssp4cpp_graph PRIVATE Boost::graph)

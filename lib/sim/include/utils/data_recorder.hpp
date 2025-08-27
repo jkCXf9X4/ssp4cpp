@@ -147,7 +147,7 @@ namespace ssp4cpp::sim::utils
             log.trace("[{}] Stop recording", __func__);
             running = false; // to end the loop
 
-            usleep(100); // wait for complete eventual current runs
+            usleep(100); // wait to complete eventual current runs
             update();
 
             if (worker.joinable())

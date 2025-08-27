@@ -36,6 +36,20 @@ After building you can run the simulation engine:
 cmake --build build && ./build/tests/test_1
 ```
 
+## Running python
+```bash
+cmake --build build
+```
+
+Make sure to use the same version of python as you build for
+
+```bash
+python3 -m venv .venv
+. ./.venv/bin/activate
+pip install -r requirements.txt
+pip install -e build/lib/python
+```
+
 ## License
 This project is released under the MIT license. See [LICENCE](LICENCE) for details.
 

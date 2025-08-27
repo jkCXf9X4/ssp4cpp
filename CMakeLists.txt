@@ -27,6 +27,7 @@ add_subdirectory(3rdParty)
 add_subdirectory(lib/common)
 add_subdirectory(lib/schema)
 add_subdirectory(lib/sim)
+add_subdirectory(lib/python)
 
 add_subdirectory(app/sim)
 add_subdirectory(tests)

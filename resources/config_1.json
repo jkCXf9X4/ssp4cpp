@@ -9,6 +9,10 @@
         "jacobi":
         {
             "parallel": true
+        },
+        "seidel":
+        {
+            "parallel": true
         }
     },
     "models": {

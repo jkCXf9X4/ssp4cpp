@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyssp4cpp"
+version = "0.1.0"
+description = "SSP4CPP pybind11 binary module"
+requires-python = ">=3.8"
+authors = [{ name = "Erik Rosenlund" }]
+
+[tool.setuptools]
+packages = ["pyssp4cpp"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+# Include the compiled extension in the package
+pyssp4cpp = ["*.so", "*.pyd", "*.dll", "*.dylib"]

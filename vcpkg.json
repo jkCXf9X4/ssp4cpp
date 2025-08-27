@@ -1,11 +1,11 @@
 {
   "dependencies": [
-    "boost-graph",
     "libzip",
     "pugixml",
     "fmi4cpp",
     "nlohmann-json",
     "catch2",
-    "tbb"
+    "tbb",
+    "pybind11"
   ]
 }

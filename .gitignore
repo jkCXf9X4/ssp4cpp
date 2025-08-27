@@ -1,6 +1,7 @@
 
 
 build
+install
 vcpkg_installed
 
 build.log
