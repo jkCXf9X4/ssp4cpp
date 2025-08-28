@@ -49,8 +49,9 @@ namespace ssp4cpp::sim::graph
             return common::str::stream_to_str(*this);
         }
 
-        uint64_t invoke(uint64_t time)
+        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep)
         {
+            return end_time;
         }
 
     };

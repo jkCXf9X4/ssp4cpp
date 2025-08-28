@@ -73,13 +73,16 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep)
         {
+            log.info("[{}] Graph - start_time: {} timestep: {} end_time: {}",
+            __func__, start_time, timestep, end_time);
+
             auto t = start_time;
             while (t < end_time)
             {
-                t += timestep;
-
                 log.ext_trace("[{}] NEW TIME {}", __func__, t);
-                executor->invoke(t);
+                executor->invoke(t, t+timestep, timestep);
+
+                t += timestep;
             }
             return t;
 

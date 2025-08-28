@@ -79,9 +79,8 @@ namespace ssp4cpp::sim::graph
     class Model : public common::graph::Node
     {
         uint64_t delay = 0;
-        uint64_t start_time = 0;
-        uint64_t end_time = 0;
-        uint64_t delayed_time = 0;
+        uint64_t _start_time = 0;
+        uint64_t _end_time = 0;
 
     public:
         common::Logger log = common::Logger("Model", common::LogLevel::debug);
@@ -125,7 +124,7 @@ namespace ssp4cpp::sim::graph
         }
 
         // Retrieve inputs, and prepare the model
-        void pre(uint64_t time)
+        void pre(uint64_t model_start_time, uint64_t valid_input_time)
         {
             log.trace("[{}] Init", __func__);
 
@@ -134,7 +133,7 @@ namespace ssp4cpp::sim::graph
                 return;
             }
 
-            auto area = input_area->push(time);
+            auto area = input_area->push(model_start_time);
             log.ext_trace("[{}] Area {}", __func__, area);
             // Fetch valid data to input area
             // fib input data if needed
@@ -142,7 +141,7 @@ namespace ssp4cpp::sim::graph
             for (auto &connection : connections)
             {
                 log.ext_trace("[{}] Fetch valid data connection {}", __func__, connection.to_string());
-                auto output_item = connection.source_storage->get_valid_item(time, connection.source_index);
+                auto output_item = connection.source_storage->get_valid_item(valid_input_time, connection.source_index);
                 if (output_item)
                 {
                     log.ext_trace("[{}] Found valid item, copying data", __func__);
@@ -194,19 +193,20 @@ namespace ssp4cpp::sim::graph
             recorder->update();
         }
 
-        uint64_t invoke(uint64_t time)
+        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep, uint64_t valid_input_time)
         {
-            start_time = end_time;
-            end_time = time;
-            auto timestep = end_time - start_time;
-            delayed_time = end_time - delay;
+            _start_time = _end_time;
+            _end_time = end_time;
+            auto _timestep = _end_time - _start_time;
 
-            log.trace("[{}] {} start_time: {} timestep: {} end_time: {}, delayed_time {}",
-                      __func__, this->name.c_str(), start_time, timestep, end_time, delayed_time);
+            auto delayed_time = _end_time - delay;
 
-            pre(start_time);
+            log.trace("[{}] {} start_time: {} valid_input_time: {} timestep: {} end_time: {}, delayed_time {}",
+                      __func__, this->name.c_str(), _start_time, valid_input_time, _timestep, _end_time, delayed_time);
 
-            take_step(timestep);
+            pre(_start_time, valid_input_time);
+
+            take_step(_timestep);
             // this should return the new endtime if we have early return
 
             post(delayed_time);

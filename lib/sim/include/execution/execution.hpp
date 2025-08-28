@@ -21,7 +21,7 @@ namespace ssp4cpp::sim::graph
 
         ExecutionBase(std::vector<Model *> models) : models(std::move(models)) {}
 
-        virtual uint64_t invoke(uint64_t t) = 0;
+        virtual uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) = 0;
 
         friend std::ostream &operator<<(std::ostream &os, const ExecutionBase &obj)
         {
@@ -59,20 +59,23 @@ namespace ssp4cpp::sim::graph
         }
 
         // need to think hard about the time...
-        void invoke_model(Model *model, uint64_t time)
+        void invoke_model(Model *model, uint64_t start_time, uint64_t end_time, uint64_t timestep)
         {
-            auto new_time = model->invoke(time);
+            model->invoke(start_time, end_time, timestep, end_time);
             for (auto c_ : model->children)
             {
                 auto c = (Model *)c_;
-                invoke_model(c, new_time);
+                invoke_model(c, start_time, end_time, timestep);
             }
         }
 
-        uint64_t invoke(uint64_t time) override final
+        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) override final
         {
-            invoke_model(start_node, time);
-            return time;
+            log.ext_trace("[{}] start_time: {} timestep: {} end_time: {}",
+                     __func__, start_time, timestep, end_time);
+
+            invoke_model(start_node, start_time, end_time, timestep);
+            return end_time;
         }
     };
 
@@ -85,7 +88,7 @@ namespace ssp4cpp::sim::graph
 
         Jacobi(std::vector<Model *> models) : ExecutionBase(std::move(models))
         {
-            parallelize = utils::Config::getOr<bool>("simulation.jacobi.parallel", true);
+            parallelize = utils::Config::get<bool>("simulation.jacobi.parallel");
             log.info("[{}] Parallel: {}", __func__, parallelize);
         }
 
@@ -95,28 +98,29 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        uint64_t invoke(uint64_t time) override final
+        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) override final
         {
+            log.ext_trace("[{}] start_time: {} timestep: {} end_time: {}",
+                     __func__, start_time, timestep, end_time);
+
             // If models execute in less than 10-15 microseconds then use sequence
-            //
-            // TODO: Implement some trigger to switch between them
             if (parallelize)
             {
                 std::for_each(std::execution::par, models.begin(), models.end(),
                               [&](auto &model)
                               {
-                                  model->invoke(time);
+                                  model->invoke(start_time, end_time, timestep, start_time);
                               });
             }
             else
             {
                 for (auto &model : this->models)
                 {
-                    model->invoke(time);
+                    model->invoke(start_time, end_time, timestep, start_time);
                 }
             }
 
-            return time;
+            return end_time;
         }
     };
 }

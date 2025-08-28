@@ -135,7 +135,7 @@ namespace ssp4cpp::sim::utils
 
         void start_recording()
         {
-            log.trace("[{}] Starting recording", __func__);
+            log.info("[{}] Starting recording", __func__);
             running = true; // must be set before the start of the thread, otherwise it wont start
             worker = std::thread([this]()
                                  { loop(); });
@@ -144,7 +144,7 @@ namespace ssp4cpp::sim::utils
 
         void stop_recording()
         {
-            log.trace("[{}] Stop recording", __func__);
+            log.info("[{}] Stop recording", __func__);
             running = false; // to end the loop
 
             usleep(100); // wait to complete eventual current runs
@@ -174,10 +174,12 @@ namespace ssp4cpp::sim::utils
 
         void print_row(uint16_t row)
         {
-            log.trace("[{}] Init", __func__);
+            log.trace("[{}] Row: {}", __func__, row);
             file << row_time_map[row];
             for (const auto &tracker : trackers)
             {
+                auto print_tracker = updated_tracker[row][tracker.index];
+
                 for (int item = 0; item < tracker.storage->items; ++item)
                 {
                     log.ext_trace("[{}] Printing tracker: {}, item:{}", __func__, tracker.storage->name, item);
@@ -185,7 +187,7 @@ namespace ssp4cpp::sim::utils
                     auto pos = tracker.storage->positions[item];
                     auto type = tracker.storage->types[item];
                     file << ", ";
-                    if (updated_tracker[row][item])
+                    if (print_tracker)
                     {
                         output_string(type, get_data_pos(row, pos));
                     }
@@ -229,12 +231,12 @@ namespace ssp4cpp::sim::utils
                             auto ts = storage->timestamps[area];
                             if (time_row_map.count(ts) == 0)
                             {
-                                if (new_item_counter > rows)
+                                head = (head + 1) % rows;
+                                if (new_item_counter >= rows)
                                 {
                                     print_row(head); // print before overwriting
                                 }
-
-                                head = (head + 1) % rows;
+                                
                                 new_item_counter++;
 
                                 row_time_map[head] = ts;

@@ -11,6 +11,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
      endif()
  endif()
 
+# # Speed up linker times
+add_compile_options(-gsplit-dwarf)
+
 message("Current ssp4cpp version: ${projectVersion}\n")
 
 message("CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}\n")
