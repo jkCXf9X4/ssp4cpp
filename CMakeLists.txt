@@ -19,16 +19,24 @@ set(CMAKE_BUILD_TYPE Release) # Turn off debug outputs for fmi4ssp
 
 set(CMAKE_CXX_STANDARD 23)
 
-project(ssp4cpp)
-include(CTest)
+option(SSP4CPP_BUILD_TEST "Build test executable" OFF)
+option(SSP4CPP_BUILD_PYTHON "Build python lib" OFF)
 
 add_subdirectory(3rdParty)
 
 add_subdirectory(lib/common)
 add_subdirectory(lib/schema)
 add_subdirectory(lib/sim)
-add_subdirectory(lib/python)
 
 add_subdirectory(app/sim)
-add_subdirectory(tests)
+
+if (SSP4CPP_BUILD_TEST)
+    message("Building tests\n")
+    add_subdirectory(tests)
+ENDIF ()
+
+if (SSP4CPP_BUILD_PYTHON)
+    add_subdirectory(lib/python)
+ENDIF ()
+
 

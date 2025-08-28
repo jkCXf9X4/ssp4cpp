@@ -22,5 +22,24 @@ target_link_libraries(test_1 PRIVATE schema_lib)
 target_link_libraries(test_1 PRIVATE common)
 target_link_libraries(test_1 PRIVATE sim)
 
+
+include(CTest)
+
+enable_testing()
 include(Catch)
 catch_discover_tests(test_1)
+
+add_test(NAME test_1 COMMAND $<TARGET_FILE:test_1>)
+
+# add_custom_command(TARGET test_1
+#     POST_BUILD
+#     COMMAND test_1
+#     # COMMENT "Running test_1 after build"
+# )
+
+# add_custom_command(
+#     TARGET test_1
+#     POST_BUILD
+#     COMMAND ${CMAKE_COMMAND} -E echo "Running tests"
+#     COMMAND ${CMAKE_COMMAND} -E env bash $<TARGET_FILE:test_1>
+# )
