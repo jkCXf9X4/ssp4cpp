@@ -38,7 +38,9 @@ cmake --build build && ./build/tests/test_1
 
 ## Running python
 ```bash
+cmake -B build -S . -DSSP4CPP_BUILD_TEST=ON
 cmake --build build
+cmake -B build -S . -DSSP4CPP_BUILD_TEST=OFF
 ```
 
 Make sure to use the same version of python as you build for

@@ -3,7 +3,7 @@
     {
         "start_time":0.0,
         "end_time":2.0,
-        "timestep": 0.1,
+        "timestep": 0.01,
 
         "executor": "jacobi",
         "jacobi":

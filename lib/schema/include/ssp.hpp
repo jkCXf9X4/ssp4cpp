@@ -38,7 +38,7 @@ namespace ssp4cpp
         {
             log = Logger("Ssp", LogLevel::debug);
             ssd = parse_system_structure((dir / "SystemStructure.ssd").string());
-            log.info("SSP Imported");
+            log.info("SSP Imported, {}", ssd.name);
         }
 
         friend ostream &operator<<(ostream &os, const Ssp &obj)

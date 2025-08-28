@@ -12,8 +12,7 @@ target_include_directories(schema_lib
     ${CMAKE_CURRENT_LIST_DIR}/include/schema
     ${CMAKE_CURRENT_LIST_DIR}/include/schema/ssp1
     ${CMAKE_CURRENT_LIST_DIR}/include/schema/fmi2
-    ${CMAKE_CURRENT_LIST_DIR}/include/schema_ext
-    ${CMAKE_CURRENT_LIST_DIR}/include/ssp_ext
+    ${CMAKE_CURRENT_LIST_DIR}/include/utils
 
   PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/include_private

@@ -12,7 +12,7 @@
 #include "fmu_handler.hpp"
 #include "data_recorder.hpp"
 
-#include "ssp_ext.hpp"
+#include "SSP_Ext.hpp"
 #include "ssp.hpp"
 #include "fmu.hpp"
 
@@ -45,6 +45,7 @@ namespace ssp4cpp::sim
 
         Simulation(Ssp *ssp, std::map<std::string, Fmu *> fmus)
         {
+            log.info("[{}] Creating simulation", __func__);
             fmu_handler = make_unique<handler::FmuHandler>(fmus);
             recorder = make_unique<utils::DataRecorder>(result_file);
 
@@ -54,6 +55,8 @@ namespace ssp4cpp::sim
 
         void init()
         {
+            log.info("[{}] Initializing simulation", __func__);
+            
             log.trace("[{}] Creating analysis graph", __func__);
             auto analysis_graph = analysis::graph::AnalysisGraphBuilder(ssp, fmu_handler.get()).build();
             log.debug("{}", analysis_graph->to_string());
@@ -71,9 +74,8 @@ namespace ssp4cpp::sim
         void simulate()
         {
 
-            log.info("[{}] Starting simulation...", __func__);
+            log.info("[{}] Starting simulation", __func__);
             recorder->start_recording();
-
 
             uint64_t start_time = utils::Config::get<float>("simulation.start_time") * time::nanoseconds_per_second;
             uint64_t end_time = utils::Config::get<float>("simulation.end_time") * time::nanoseconds_per_second;
@@ -86,7 +88,7 @@ namespace ssp4cpp::sim
             
             recorder->stop_recording();
             
-            log.info("[{}] The End", __func__);
+            log.info("[{}] Simulation completed", __func__);
         }
     };
 

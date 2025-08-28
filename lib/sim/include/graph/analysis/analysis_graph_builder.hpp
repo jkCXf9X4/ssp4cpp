@@ -3,7 +3,7 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
-#include "ssp_ext.hpp"
+#include "SSP_Ext.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -42,7 +42,7 @@ namespace ssp4cpp::sim::analysis::graph
         {
             log.ext_trace("[{}] init", __func__);
             map<string, unique_ptr<AnalysisModel>> models;
-            for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resources(ssp))
+            for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resource_map(ssp))
             {
                 auto fmu = fmu_handler->fmus[ssp_resource_name].get();
                 auto m = make_unique<AnalysisModel>(ssp_resource_name, local_resource_name, fmu);
@@ -102,11 +102,14 @@ namespace ssp4cpp::sim::analysis::graph
         {
             log.ext_trace("[{}] init", __func__);
             map<string, unique_ptr<AnalysisConnection>> items;
-            for (auto &connection : ssp.ssd.System.Connections.value().Connections)
+            if (ssp.ssd.System.Connections.has_value())
             {
-                auto c = make_unique<AnalysisConnection>(&connection);
-                log.trace("[{}] New Connection: {}", __func__, c->name);
-                items[c->name] = std::move(c);
+                for (auto &connection : ssp.ssd.System.Connections.value().Connections)
+                {
+                    auto c = make_unique<AnalysisConnection>(&connection);
+                    log.trace("[{}] New Connection: {}", __func__, c->name);
+                    items[c->name] = std::move(c);
+                }  
             }
             log.ext_trace("[{}] exit, Total connections created: {}", __func__, items.size());
             return std::move(items);

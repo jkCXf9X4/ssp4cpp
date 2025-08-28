@@ -34,9 +34,12 @@ namespace ssp4cpp::sim
         Simulator(const string &ssp_path,
                   const string &props_path)
         {
+            log.info("[{}] Creating Simulator\n", __func__);
+            log.debug("[{}] Importing SSP", __func__);
             ssp = make_unique<ssp4cpp::Ssp>(ssp_path);
             log.debug("[{}] SSP: {}", __func__, ssp->to_string());
-
+            
+            log.debug("[{}] Creating FMU map", __func__);
             fmus = ssp4cpp::ssp::ext::create_fmu_map(*ssp);
             for (auto &[fmu_name, fmu] : fmus)
             {
@@ -47,23 +50,26 @@ namespace ssp4cpp::sim
 
             utils::Config::loadFromFile(props_path);
             log.debug("[{}] Config:\n{}\n", __func__, utils::Config::as_string());
-
+            
+            log.debug("[{}] Creating simulation\n", __func__);
             sim = make_unique<Simulation>(ssp.get(), fmus_ref);
         }
-
+        
         ~Simulator()
         {
             // unique_ptr will automatically clean up FMUs and SSP
             // when this is destroyed the application will end, no need to free memory resources
         }
-
+        
         void init()
         {
+            log.info("[{}] Initializing Simulator\n", __func__);
             sim->init();
         }
-
+        
         void simulate()
         {
+            log.info("[{}] Starting Simulator\n", __func__);
             sim->simulate();
         }
 
