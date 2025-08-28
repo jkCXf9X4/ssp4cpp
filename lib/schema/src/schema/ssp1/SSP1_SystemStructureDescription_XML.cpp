@@ -5,6 +5,8 @@
 
 #include "SSP1_SystemStructureDescription_XML.hpp"
 #include "SSP1_SystemStructureCommon_XML.hpp"
+#include "SSP1_SystemStructureParameterMapping_XML.hpp"
+#include "SSP1_SystemStructureParameterValues_XML.hpp"
 
 #include "xml_deserialize.hpp"
 
@@ -78,11 +80,33 @@ namespace ssp4cpp::ssp1::ssd
     }
 
 
+    void from_xml(const xml_node &node, ParameterMapping &obj)
+    {
+        log.ext_trace("Parsing ParameterMapping");
+
+        ssp4cpp::common::xml::parse_xml(node, obj.id                , "id");
+        ssp4cpp::common::xml::parse_xml(node, obj.description       , "description");
+        ssp4cpp::common::xml::parse_xml(node, obj.type              , "type");
+        ssp4cpp::common::xml::parse_xml(node, obj.source            , "source");
+        ssp4cpp::common::xml::parse_xml(node, obj.sourceBase        , "sourceBase");
+        ssp4cpp::common::xml::parse_xml(node, obj.ParameterMapping  , "ssm:ParameterMapping");
+
+        log.ext_trace("Completed ParameterMapping");
+    }
+
+
     void from_xml(const xml_node &node, ParameterBinding &obj)
     {
         log.ext_trace("Parsing ParameterBinding");
 
-
+        ssp4cpp::common::xml::parse_xml(node, obj.id                , "id");
+        ssp4cpp::common::xml::parse_xml(node, obj.description       , "description");
+        ssp4cpp::common::xml::parse_xml(node, obj.type              , "type");
+        ssp4cpp::common::xml::parse_xml(node, obj.source            , "source");
+        ssp4cpp::common::xml::parse_xml(node, obj.sourceBase        , "sourceBase");
+        ssp4cpp::common::xml::parse_xml(node, obj.prefix            , "prefix");
+        ssp4cpp::common::xml::parse_xml(node, obj.ParameterValues   , "ssv:ParameterValues");
+        ssp4cpp::common::xml::parse_xml(node, obj.ParameterMapping  , "ssd:ParameterMapping");
 
         log.ext_trace("Completed ParameterBinding");
     }

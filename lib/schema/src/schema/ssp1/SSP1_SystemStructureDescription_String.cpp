@@ -61,11 +61,31 @@ namespace ssp4cpp::ssp1::ssd
                "}";
     }
 
+     // ParameterMapping
+    std::string ParameterMapping::to_string(void) const
+    {
+        return "ParameterMapping { \n"
+               "id                : " + to_str( id                ) + "\n" +
+               "description       : " + to_str( description       ) + "\n" +
+               "type              : " + to_str( type              ) + "\n" +
+               "source            : " + to_str( source            ) + "\n" +
+               "sourceBase        : " + to_str( sourceBase        ) + "\n" +
+               "ParameterMapping  : " + to_str( ParameterMapping  ) + "\n" +
+               "}";
+    }
+
      // ParameterBinding
     std::string ParameterBinding::to_string(void) const
     {
         return "ParameterBinding { \n"
-
+               "id                : " + to_str( id                ) + "\n" +
+               "description       : " + to_str( description       ) + "\n" +
+               "type              : " + to_str( type              ) + "\n" +
+               "source            : " + to_str( source            ) + "\n" +
+               "sourceBase        : " + to_str( sourceBase        ) + "\n" +
+               "prefix            : " + to_str( prefix            ) + "\n" +
+               "ParameterValues   : " + to_str( ParameterValues   ) + "\n" +
+               "ParameterMapping  : " + to_str( ParameterMapping  ) + "\n" +
                "}";
     }
 

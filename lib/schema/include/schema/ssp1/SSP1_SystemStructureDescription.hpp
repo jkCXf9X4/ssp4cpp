@@ -10,6 +10,8 @@
 #include "FMI2_Enums.hpp"
 #include "SSP1_Enums.hpp"
 #include "SSP1_SystemStructureCommon.hpp"
+#include "SSP1_SystemStructureParameterMapping.hpp"
+#include "SSP1_SystemStructureParameterValues.hpp"
 
 #include <string>
 #include <vector>
@@ -72,10 +74,30 @@ namespace ssp4cpp::ssp1::ssd
         std::string to_string(void) const;
     };
 
+    class ParameterMapping : public IXmlNode
+    {
+    public:
+        optional<string> id;
+        optional<string> description;
+        optional<string> type;
+        optional<string> source;
+        optional<string> sourceBase;
+        optional<ssm::ParameterMapping> ParameterMapping;
+
+        std::string to_string(void) const;
+    };
+
     class ParameterBinding : public IXmlNode
     {
     public:
-
+        optional<string> id;
+        optional<string> description;
+        optional<string> type;
+        optional<string> source;
+        optional<string> sourceBase;
+        optional<string> prefix;
+        optional<ssv::ParameterSet> ParameterValues;
+        optional<ssd::ParameterMapping> ParameterMapping;
 
         std::string to_string(void) const;
     };

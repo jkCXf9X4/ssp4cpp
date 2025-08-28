@@ -2,7 +2,7 @@
     "simulation" :
     {
         "start_time":0.0,
-        "end_time":0.3,
+        "end_time":2.0,
         "timestep": 0.01,
 
         "executor": "jacobi",
