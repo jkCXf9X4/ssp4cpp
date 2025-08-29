@@ -35,19 +35,7 @@ namespace ssp4cpp::ssp1::ext
 
         // Get connections between fmus
         // return a set of <source_fmu, target_fmu> strings
-        inline set<pair<string, string>> get_fmu_connections(const ssp1::ssd::SystemStructureDescription &ssd)
-        {
-            auto fmu_connections = set<pair<string, string>>();
-            if (ssd.System.Connections.has_value())
-            {
-                for (auto connection : ssd.System.Connections.value().Connections)
-                {
-                    auto p = std::make_pair(connection.startElement.value(), connection.endElement.value());
-                    fmu_connections.insert(p);
-                }
-            }
-            return fmu_connections;
-        }
+        set<pair<string, string>> get_fmu_connections(const ssp1::ssd::SystemStructureDescription &ssd);
     }
 
 }
