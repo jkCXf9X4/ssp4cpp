@@ -25,9 +25,9 @@ namespace ssp4cpp::sim::handler
         ssp4cpp::Fmu *fmu;
 
         // Owning
-        unique_ptr<fmi4cpp::fmi2::fmu> fmi4cpp_fmu;
-        unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
-        unique_ptr<fmi4cpp::fmi2::cs_slave> model;
+        std::unique_ptr<fmi4cpp::fmi2::fmu> fmi4cpp_fmu;
+        std::unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
+        std::unique_ptr<fmi4cpp::fmi2::cs_slave> model;
         std::shared_ptr<const fmi4cpp::fmi2::cs_model_description> model_description;
 
         FmuInfo(std::string name, ssp4cpp::Fmu *fmu)
@@ -51,7 +51,7 @@ namespace ssp4cpp::sim::handler
     public:
         common::Logger log = common::Logger("sim::FmuHandler", common::LogLevel::debug);
 
-        map<string, unique_ptr<FmuInfo>> fmus;
+        map<string, std::unique_ptr<FmuInfo>> fmus;
 
         FmuHandler(std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
         {

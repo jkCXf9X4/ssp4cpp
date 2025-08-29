@@ -2,15 +2,11 @@
 #include "SSP_Ext.hpp"
 
 
-
-
 namespace ssp4cpp::ssp::ext
 {
-    using namespace std;
-
-    std::map<std::string,std::string> get_resource_map(ssp4cpp::Ssp &ssp)
+    std::map<std::string, std::string> get_resource_map(ssp4cpp::Ssp &ssp)
     {
-        auto resources = map<string,string>();
+        auto resources = std::map<std::string, std::string>();
 
         for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
         {
@@ -27,7 +23,7 @@ namespace ssp4cpp::ssp::ext
      */
     std::map<std::string, std::unique_ptr<Fmu>> create_fmu_map(ssp4cpp::Ssp &ssp)
     {
-        auto items = map<string, unique_ptr<Fmu>>();
+        auto items = std::map<std::string, std::unique_ptr<Fmu>>();
 
         for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
         {

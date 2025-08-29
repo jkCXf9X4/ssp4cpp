@@ -11,25 +11,25 @@
 #include <vector>
 #include <map>
 
-using namespace std;
-using namespace ssp4cpp;
-using namespace common::io;
-using namespace common;
-
 namespace ssp4cpp::sim
 {
+    
+    using namespace std;
+    using namespace ssp4cpp;
+    using namespace common::io;
+    using namespace common;
 
     class Simulator
     {
     public:
         common::Logger log = Logger("Simulator", LogLevel::info);
 
-        unique_ptr<Ssp> ssp;
+        std::unique_ptr<Ssp> ssp;
         std::map<std::string, std::unique_ptr<Fmu>> fmus;
         std::map<std::string, ssp4cpp::Fmu *> fmus_ref; // Non owning
 
         // system_graph: Simple graph only showing the connections between fmu's
-        unique_ptr<Simulation> sim;
+        std::unique_ptr<Simulation> sim;
 
         Simulator(const string &ssp_path,
                   const string &props_path)
@@ -57,7 +57,7 @@ namespace ssp4cpp::sim
         
         ~Simulator()
         {
-            // unique_ptr will automatically clean up FMUs and SSP
+            // std::unique_ptr will automatically clean up FMUs and SSP
             // when this is destroyed the application will end, no need to free memory resources
         }
         

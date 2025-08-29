@@ -28,11 +28,11 @@ namespace ssp4cpp::sim::graph
             this->recorder = recorder;
         }
 
-        unique_ptr<Graph> build()
+        std::unique_ptr<Graph> build()
         {
             log.ext_trace("[{}] init", __func__);
 
-            std::map<string, unique_ptr<Model>> models;
+            std::map<string, std::unique_ptr<Model>> models;
 
             // create the models
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)

@@ -7,10 +7,10 @@
 
 #include <iostream>
 
-using namespace std;
 
 namespace ssp4cpp::fmi2::ext
 {
+    using namespace std;
     using namespace ssp4cpp::fmi2::md;
 
     namespace model_variables

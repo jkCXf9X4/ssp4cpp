@@ -3,11 +3,8 @@
 #include "ssp.hpp"
 #include "fmu.hpp"
 
-#include <vector>
-#include <algorithm>
 #include <map>
-#include <set>
-#include <list>
+#include <string>
 
 namespace ssp4cpp::ssp::ext
 {

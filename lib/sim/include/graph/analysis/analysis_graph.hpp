@@ -21,17 +21,17 @@ namespace ssp4cpp::sim::analysis::graph
     public:
         common::Logger log = common::Logger("AnalysisGraph", common::LogLevel::debug);
 
-        map<string, unique_ptr<AnalysisModel>> models;
-        map<string, unique_ptr<AnalysisConnector>> connectors;
-        map<string, unique_ptr<AnalysisConnection>> connections;
+        std::map<std::string, std::unique_ptr<AnalysisModel>> models;
+        std::map<std::string, std::unique_ptr<AnalysisConnector>> connectors;
+        std::map<std::string, std::unique_ptr<AnalysisConnection>> connections;
 
         vector<AnalysisModel *> nodes;
 
         AnalysisGraph() = default;
 
-        AnalysisGraph(map<string, unique_ptr<AnalysisModel>> models_,
-                      map<string, unique_ptr<AnalysisConnector>> connectors_,
-                      map<string, unique_ptr<AnalysisConnection>> connections_)
+        AnalysisGraph(std::map<std::string, std::unique_ptr<AnalysisModel>> models_,
+                      std::map<std::string, std::unique_ptr<AnalysisConnector>> connectors_,
+                      std::map<std::string, std::unique_ptr<AnalysisConnection>> connections_)
             : models(std::move(models_)),
               connectors(std::move(connectors_)),
               connections(std::move(connections_))

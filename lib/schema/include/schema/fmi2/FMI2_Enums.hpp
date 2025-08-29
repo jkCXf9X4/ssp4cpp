@@ -9,14 +9,14 @@
 #include <vector>
 
 
-using namespace std;
-
-using namespace ssp4cpp::common::interfaces;
-using namespace ssp4cpp::common::xml;
 
 
 namespace ssp4cpp::fmi2::md
 {
+    using namespace std;
+    
+    using namespace ssp4cpp::common::interfaces;
+    using namespace ssp4cpp::common::xml;
 
     class Status : public IEnum
     {

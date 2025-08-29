@@ -4,9 +4,7 @@
 #include <vector>
 
 namespace ssp4cpp::common::list
-{
-    using namespace std;
-    
+{    
     /**
      * @brief Check if a value exists in a container supporting begin/end.
      */
@@ -20,9 +18,9 @@ namespace ssp4cpp::common::list
      * @brief Helper that converts a vector of objects to a vector of pointers to those objects.
      */
     template <typename T>
-    vector<T *> to_pointers(const vector<T> &v)
+    std::vector<T *> to_pointers(const std::vector<T> &v)
     {
-        vector<T *> values;
+        std::vector<T *> values;
         for (auto &item : v)
         {
             values.push_back(&item);

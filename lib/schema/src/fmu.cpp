@@ -12,17 +12,15 @@
 #include <filesystem>
 #include <iostream>
 
-using namespace std;
-namespace fs = std::filesystem;
 
 namespace ssp4cpp
 {
-    using namespace common;
+    namespace fs = std::filesystem;
 
     Fmu::Fmu(const path &file) : Archive(file, "fmi_")
     {
         log = Logger("Fmu", LogLevel::debug);
-        md = parse_file<fmi2::md::fmi2ModelDescription>((dir / "modelDescription.xml").string(), "fmiModelDescription");
+        md = common::xml::parse_file<fmi2::md::fmi2ModelDescription>((dir / "modelDescription.xml").string(), "fmiModelDescription");
     }
 
     std::string Fmu::to_string()

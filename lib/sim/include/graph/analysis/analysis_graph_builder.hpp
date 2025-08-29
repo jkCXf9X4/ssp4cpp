@@ -38,10 +38,10 @@ namespace ssp4cpp::sim::analysis::graph
             this->fmu_handler = fmu_handler;
         }
 
-        map<string, unique_ptr<AnalysisModel>> create_models(ssp4cpp::Ssp &ssp)
+        map<string, std::unique_ptr<AnalysisModel>> create_models(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
-            map<string, unique_ptr<AnalysisModel>> models;
+            map<string, std::unique_ptr<AnalysisModel>> models;
             for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resource_map(ssp))
             {
                 auto fmu = fmu_handler->fmus[ssp_resource_name].get();
@@ -72,10 +72,10 @@ namespace ssp4cpp::sim::analysis::graph
                 component_name, connector_name, value_reference, type);
         }
 
-        map<string, unique_ptr<AnalysisConnector>> create_connectors(ssp4cpp::Ssp &ssp)
+        map<string, std::unique_ptr<AnalysisConnector>> create_connectors(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
-            map<string, unique_ptr<AnalysisConnector>> items;
+            map<string, std::unique_ptr<AnalysisConnector>> items;
             if (ssp.ssd.System.Elements.has_value())
             {
                 auto connectors = ssp1::ext::elements::get_connectors(
@@ -98,10 +98,10 @@ namespace ssp4cpp::sim::analysis::graph
             return std::move(items);
         }
 
-        map<string, unique_ptr<AnalysisConnection>> create_connections(ssp4cpp::Ssp &ssp)
+        map<string, std::unique_ptr<AnalysisConnection>> create_connections(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
-            map<string, unique_ptr<AnalysisConnection>> items;
+            map<string, std::unique_ptr<AnalysisConnection>> items;
             if (ssp.ssd.System.Connections.has_value())
             {
                 for (auto &connection : ssp.ssd.System.Connections.value().Connections)
@@ -115,10 +115,10 @@ namespace ssp4cpp::sim::analysis::graph
             return std::move(items);
         }
 
-        map<string, unique_ptr<AnalysisModelVariable>> create_model_variables(map<string, ssp4cpp::Fmu *> &fmu_map)
+        map<string, std::unique_ptr<AnalysisModelVariable>> create_model_variables(map<string, ssp4cpp::Fmu *> &fmu_map)
         {
             log.warning("[{}] init, deprecated", __func__);
-            map<string, unique_ptr<AnalysisModelVariable>> items;
+            map<string, std::unique_ptr<AnalysisModelVariable>> items;
             for (auto [name, fmu] : fmu_map)
             {
                 for (auto &variable : fmu->md.ModelVariables.ScalarVariable)
@@ -133,7 +133,7 @@ namespace ssp4cpp::sim::analysis::graph
             return std::move(items);
         }
 
-        unique_ptr<AnalysisGraph> build()
+        std::unique_ptr<AnalysisGraph> build()
         {
             log.ext_trace("[{}] init", __func__);
             auto models = create_models(*ssp);

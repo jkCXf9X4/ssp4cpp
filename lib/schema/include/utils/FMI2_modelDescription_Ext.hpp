@@ -10,7 +10,6 @@
 #include <string>
 #include <tuple>
 
-using namespace std;
 
 namespace ssp4cpp::fmi2::ext
 {
@@ -37,19 +36,19 @@ namespace ssp4cpp::fmi2::ext
     
         // Unknowns
         /** @brief Get variable dependencies for an Unknown by index. */
-        vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u);
+        std::vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u);
     
         /** @brief Get variable dependencies for an Unknown filtered by kind. */
-        vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u, DependenciesKind kind);
+        std::vector<IndexDependencyCoupling> get_dependencies_index(Unknown &u, DependenciesKind kind);
     
         /** @brief Resolve variable dependencies for a single Unknown. */
-        vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv);
+        std::vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv);
     
         /** @brief Resolve variable dependencies filtered by kind. */
-        vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind);
+        std::vector<VariableDependencyCoupling> get_dependencies_variables(Unknown &u, ModelVariables &mv, DependenciesKind kind);
     
         /** @brief Resolve dependencies for multiple Unknowns filtered by kind. */
-        vector<VariableDependencyCoupling> get_dependencies_variables(vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind);
+        std::vector<VariableDependencyCoupling> get_dependencies_variables(std::vector<Unknown> &us, ModelVariables &mv, DependenciesKind kind);
     }
 
 }

@@ -20,14 +20,14 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::debug);
 
-        std::map<string, unique_ptr<Model>> models;
+        std::map<string, std::unique_ptr<Model>> models;
         std::vector<Model *> nodes;
         
         std::unique_ptr<ExecutionBase> executor;
 
         Graph() = default;
 
-        Graph(std::map<string, unique_ptr<Model>> models_)
+        Graph(std::map<string, std::unique_ptr<Model>> models_)
             : models(std::move(models_))
         {
             auto m = map_ns::map_unique_to_ref(models);

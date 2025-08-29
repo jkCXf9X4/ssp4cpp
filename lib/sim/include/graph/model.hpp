@@ -87,8 +87,8 @@ namespace ssp4cpp::sim::graph
 
         handler::FmuInfo *fmu;
 
-        unique_ptr<utils::RingStorage> input_area;
-        unique_ptr<utils::RingStorage> output_area;
+        std::unique_ptr<utils::RingStorage> input_area;
+        std::unique_ptr<utils::RingStorage> output_area;
         utils::DataRecorder* recorder;
 
         std::map<std::string, ConnectorInfo> inputs;

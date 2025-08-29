@@ -11,7 +11,6 @@
 
 namespace ssp4cpp::common::xml
 {
-    using namespace std;
 
 
 }

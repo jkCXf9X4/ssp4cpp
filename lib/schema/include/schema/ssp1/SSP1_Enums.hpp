@@ -9,11 +9,11 @@
 #include <optional>
 
 
-using namespace std;
-using namespace ssp4cpp::common::interfaces;
 
 namespace ssp4cpp::ssp1::ssd
 {
+    using namespace std;
+    using namespace ssp4cpp::common::interfaces;
     class ComponentType : public IEnum
     {
     public:

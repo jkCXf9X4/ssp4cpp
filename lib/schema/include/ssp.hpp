@@ -12,13 +12,11 @@
 #include <optional>
 #include <sstream>
 
-using namespace std;
-using namespace std::filesystem;
-
-using namespace ssp4cpp::common::str;
-
 namespace ssp4cpp
 {
+    using namespace std::filesystem;
+    
+    using namespace ssp4cpp::common::str;
     using namespace common;
 
     struct Bindings
@@ -34,7 +32,7 @@ namespace ssp4cpp
     {
     public:
         ssp1::ssd::SystemStructureDescription ssd;
-        vector<Bindings> bindings;
+        std::vector<Bindings> bindings;
 
         /**
          * @brief Construct an Ssp from a file path.

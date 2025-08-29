@@ -30,7 +30,7 @@ namespace ssp4cpp::sim::utils
         public:
 
         
-        unique_ptr<DataStorage> data;
+        std::unique_ptr<DataStorage> data;
 
         size_t head; /* next position to write             */
         size_t tail; /* first data position      */
