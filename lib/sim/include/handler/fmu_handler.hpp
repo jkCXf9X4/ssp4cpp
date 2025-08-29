@@ -3,6 +3,7 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
+#include "ssp.hpp"
 #include "fmu.hpp"
 #include <fmi4cpp/fmi4cpp.hpp>
 
@@ -34,7 +35,7 @@ namespace ssp4cpp::sim::handler
         {
             this->model_name = fmu->md.modelName;
             this->system_name = name;
-            
+
             this->fmu = fmu;
 
             this->fmi4cpp_fmu = make_unique<fmi4cpp::fmi2::fmu>(this->fmu->original_file);
@@ -52,12 +53,22 @@ namespace ssp4cpp::sim::handler
         common::Logger log = common::Logger("sim::FmuHandler", common::LogLevel::debug);
 
         map<string, std::unique_ptr<FmuInfo>> fmus;
+        ssp4cpp::Ssp *ssp;
 
-        FmuHandler(std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
+        FmuHandler(std::map<std::string, ssp4cpp::Fmu *> &str_fmu, ssp4cpp::Ssp *ssp)
         {
             for (auto &[name, fmu] : str_fmu)
             {
                 fmus.emplace(name, make_unique<FmuInfo>(name, fmu));
+            }
+            this->ssp = ssp;
+        }
+
+        void apply_start_values(fmi4cpp::fmi2::cs_slave* model)
+        {
+            for (auto &binding: ssp->bindings)
+            {
+
             }
         }
 
@@ -67,14 +78,12 @@ namespace ssp4cpp::sim::handler
             for (auto &[_, fmu] : this->fmus)
             {
                 fmu->model = fmu->cs_fmu->new_instance();
-                
+
+                apply_start_values(fmu->model.get());
+
                 fmu->model->setup_experiment();
                 fmu->model->enter_initialization_mode();
                 fmu->model->exit_initialization_mode();
-
-                // apply parameter sets
-                
-                // set start values?
             }
             log.trace("[{}] Model init completed", __func__);
         }
