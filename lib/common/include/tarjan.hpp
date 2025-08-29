@@ -7,10 +7,6 @@
 #include <stack>
 #include <unordered_map>
 #include <unordered_set>
-#include <algorithm> // std::min
-#include <cassert>
-#include <string>
-#include <sstream>
 
 namespace ssp4cpp::common::graph
 {
@@ -34,45 +30,7 @@ namespace ssp4cpp::common::graph
         int nextIndex = 0;                       // global DFS counter
         std::vector<std::vector<Node *>> result; // final SCCs
 
-        void strongConnect(Node *v)
-        {
-            index[v] = nextIndex;
-            lowlink[v] = nextIndex;
-            ++nextIndex;
-
-            S.push(v);
-            onStack.insert(v);
-
-            /* ---- DFS over all outgoing arcs ---- */
-            for (Node *w : v->children)
-            {
-                if (index.find(w) == index.end()) // (1) tree-edge
-                {
-                    strongConnect(w);
-                    lowlink[v] = std::min(lowlink[v], lowlink[w]);
-                }
-                else if (onStack.count(w)) // (2) back-edge
-                {
-                    lowlink[v] = std::min(lowlink[v], index[w]);
-                }
-            }
-
-            /* ---- root of an SCC? ---- */
-            if (lowlink[v] == index[v])
-            {
-                std::vector<Node *> component;
-                Node *w;
-                do
-                {
-                    w = S.top();
-                    S.pop();
-                    onStack.erase(w);
-                    component.push_back(w);
-                } while (w != v);
-
-                result.push_back(std::move(component));
-            }
-        }
+        void strongConnect(Node *v);
     };
 
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
@@ -85,35 +43,13 @@ namespace ssp4cpp::common::graph
      * @param nodes Vector containing each node in the graph exactly once.
      * @return List of components, each component being a vector of nodes.
      */
-    inline std::vector<std::vector<Node *>> strongly_connected_components(
-        const std::vector<Node *> &nodes)
-    {
-        _TarjanSccImpl impl;
-
-        for (Node *v : nodes)
-            if (impl.index.find(v) == impl.index.end())
-                impl.strongConnect(v);
-
-        return impl.result; // O(V + E)
-    }
+    std::vector<std::vector<Node *>> strongly_connected_components(
+        const std::vector<Node *> &nodes);
 
     /**
      * @brief Utility to pretty print the list of components returned by
      *        strongly_connected_components().
      */
-    inline std::string ssc_to_string(std::vector<std::vector<Node *>> ssc)
-    {
-        std::stringstream ss;
-        ss << "Tarjans SSC Result" << std::endl;
-        for (auto &strong : ssc)
-        {
-            ss << "Strongly connected group:" << std::endl;
-            for (auto &node : strong)
-            {
-                ss << " - " << node->name << std::endl;
-            }
-        }
-        return ss.str();
-    }
+    std::string ssc_to_string(std::vector<std::vector<Node *>> ssc);
 
 }

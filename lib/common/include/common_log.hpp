@@ -5,7 +5,6 @@
 #include <iostream>
 #include <format>
 #include <chrono>
-#include <filesystem>
 #include <stdexcept>
 #include <mutex>
 
@@ -104,11 +103,6 @@ namespace ssp4cpp::common
         void fatal(std::format_string<Args...> s, Args &&...args)
         {
             log<LogLevel::fatal>(s, std::forward<Args>(args)...);
-        }
-
-        void new_line()
-        {
-            std::cout << std::endl;
         }
 
         /**

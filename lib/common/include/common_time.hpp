@@ -1,12 +1,9 @@
 #pragma once
 
-#include "common_interface.hpp"
-#include "common_string.hpp"
 #include "common_log.hpp"
 
 #include <chrono>
-#include <string_view>
-#include <source_location>
+#include <string>
 
 /**
  * @brief Time related utility constants.
@@ -30,15 +27,9 @@ namespace ssp4cpp::common::time
 
         common::Logger log = common::Logger("ScopeTimer", common::LogLevel::debug);
 
-        ScopeTimer(std::string label)
-            : label_(label), start_(clock::now()) {}
+        ScopeTimer(std::string label);
 
-        ~ScopeTimer()
-        {
-            const auto dur = std::chrono::duration_cast<std::chrono::microseconds>(clock::now() - start_);
-            // log: "<func> <label> took X µs"
-            log.info("[ScopeTimer] {} took {} µs", label_, dur.count());
-        }
+        ~ScopeTimer();
 
     private:
         std::string label_;

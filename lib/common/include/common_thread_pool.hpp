@@ -10,7 +10,6 @@
 #include <condition_variable>
 #include <functional>
 #include <future>
-#include <atomic>
 #include <semaphore>
 
 namespace ssp4cpp::common
@@ -35,46 +34,13 @@ namespace ssp4cpp::common
         std::counting_semaphore<> task_semaphore;
 
     public:
-        explicit ThreadPool(size_t num_threads)
-            : stop(false), log("common::ThreadPool", LogLevel::info), task_semaphore(0)
-        {
-            for (size_t i = 0; i < num_threads; ++i)
-            {
-                workers.emplace_back([this] { this->worker_thread(); });
-            }
-            log.debug("[{}] Threads started", __func__);
-        }
+        ThreadPool(size_t num_threads);
 
-    private:
         /**
-         * @brief Function executed by each worker thread to process tasks.
+         * @brief Stop all worker threads and wait for completion.
          */
-        void worker_thread()
-        {
-            while (true)
-            {            
-                task_semaphore.acquire();
-                if (stop)
-                {
-                    break;
-                }
+        ~ThreadPool();
 
-                std::function<void()> task;
-                {
-                    std::unique_lock<std::mutex> lock(queue_mutex);
-
-                    log.debug("[{}] Task starting", __func__);
-                    task = std::move(tasks.front());
-                    tasks.pop();
-                }
-                task();
-                log.debug("[{}] Task completed", __func__);
-            }
-
-            log.debug("[{}] Thread finished", __func__);
-        }
-
-    public:
         /**
          * @brief Queue a new task for execution.
          *
@@ -103,27 +69,13 @@ namespace ssp4cpp::common
             log.debug("[{}] Notifying task to start (semaphore)", __func__);
             return res;
         }
-
+        
+    private:
         /**
-         * @brief Stop all worker threads and wait for completion.
+         * @brief Function executed by each worker thread to process tasks.
          */
-        ~ThreadPool()
-        {
-            log.debug("[{}] Destroying threadpool", __func__);
-            stop = true; // atomic
+        void worker_thread();
 
-            // release all threads to ensure that they are closing down
-            for (size_t i = 0; i < workers.size(); ++i) {
-                task_semaphore.release();
-            }
-
-            log.debug("[{}] Waiting for all tasks to complete", __func__);
-            for (std::thread &worker : workers)
-            {
-                worker.join();
-            }
-            log.debug("[{}] Threadpool successfully destroyed", __func__);
-        }
     };
 
 } // namespace common

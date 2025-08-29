@@ -51,14 +51,14 @@ Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 Enumerations = {type = "ssc::TEnumeration", list = true, namespace="ssc", xml_tag="TEnumeration"}
 
 [BaseUnit]
-kg = {type = "int", optional=true}
-m = {type = "int", optional=true}
-s = {type = "int", optional=true}
-a = {type = "int", optional=true}
-k = {type = "int", optional=true}
-mol = {type = "int", optional=true}
-cd = {type = "int", optional=true}
-rad = {type = "int", optional=true}
+kg = {type = "double", optional=true}
+m = {type = "double", optional=true}
+s = {type = "double", optional=true}
+a = {type = "double", optional=true}
+k = {type = "double", optional=true}
+mol = {type = "double", optional=true}
+cd = {type = "double", optional=true}
+rad = {type = "double", optional=true}
 factor = {type = "double", optional=true}
 offset = {type = "double", optional=true}
 
@@ -66,7 +66,7 @@ offset = {type = "double", optional=true}
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string"}
-# ssv uses baseunit without namespace. evaluate if this is true everywhere
+# ssv uses BaseUnit without namespace. evaluate if this is true everywhere
 BaseUnit = {type = "ssc::BaseUnit"}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
