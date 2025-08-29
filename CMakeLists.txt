@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" projectVersion)
 project(ssp4cpp VERSION ${projectVersion})
 
+# # Speed up linker times
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
      if(EXISTS "/usr/bin/lld")
          message(STATUS "Using lld linker")
@@ -11,7 +12,6 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
      endif()
  endif()
 
-# # Speed up linker times
 add_compile_options(-gsplit-dwarf)
 
 message("Current ssp4cpp version: ${projectVersion}\n")
@@ -29,7 +29,7 @@ set(CMAKE_BUILD_TYPE Release) # Turn off debug outputs for fmi4ssp
 
 set(CMAKE_CXX_STANDARD 23)
 
-option(SSP4CPP_BUILD_TEST "Build test executable" OFF)
+option(SSP4CPP_BUILD_TEST "Build test executable" ON)
 option(SSP4CPP_BUILD_PYTHON "Build python lib" OFF)
 
 add_subdirectory(3rdParty)

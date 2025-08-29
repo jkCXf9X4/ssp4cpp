@@ -10,6 +10,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <format>
 
 
 // deserialize xml to object
@@ -192,6 +193,25 @@ namespace ssp4cpp::common::xml
         {
             throw runtime_error("Unreachable : " + name + " : " + typeid(T).name());
         }
+    }
+
+
+    template <typename T>
+    T parse_file(const string &fileName, std::string root_name)
+    {
+        pugi::xml_document doc;
+        pugi::xml_parse_result result = doc.load_file(fileName.c_str());
+        if (!result)
+        {
+            throw runtime_error(std::format("Unable to parse {}", root_name.c_str()));
+        }
+        auto root = doc.child(root_name.c_str());
+
+        T obj;
+
+        from_xml(root, obj);
+
+        return obj;
     }
 
 }

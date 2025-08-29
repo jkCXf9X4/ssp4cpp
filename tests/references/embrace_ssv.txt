@@ -1,0 +1,2582 @@
+ParameterSet { 
+version                : null
+name                   : product_mainAssembly
+id                     : null
+description            : null
+author                 : null
+fileversion            : null
+copyright              : null
+license                : null
+generationTool         : null
+generationDateAndTime  : null
+Parameters             : TParameters { 
+Parameters  : {
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.parameterSet_inputParameters.parameter_pipeRadius
+Real         : Real { 
+value  : 0.005000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.parameterSet_inputParameters.parameter_pipeThickness
+Real         : Real { 
+value  : 0.001000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.parameterSet_inputParameters.parameter_bendRadius
+Real         : Real { 
+value  : 0.035000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.parameterSet_inputParameters.parameter_testReal
+Real         : Real { 
+value  : 2.500000
+unit   : Unit Not Applicable
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.parameterSet_inputParameters.parameter_testInteger
+Real         : null
+Integer      : Integer { 
+value  : 7
+}
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.parameterSet_inputParameters.parameter_testBoolean
+Real         : null
+Integer      : null
+Boolean      : Boolean { 
+value  : true
+}
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.parameterSet_outputParameters.parameter_pipeLength
+Real         : Real { 
+value  : 0.976535
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_1.parameter_innerAngle
+Real         : Real { 
+value  : 2.291096
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_1.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.850497
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_2.parameter_innerAngle
+Real         : Real { 
+value  : 1.729975
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_2.parameter_absoluteAngle
+Real         : Real { 
+value  : 1.411617
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_3.parameter_innerAngle
+Real         : Real { 
+value  : 2.363702
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_3.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.777890
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_4.parameter_innerAngle
+Real         : Real { 
+value  : 2.870646
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_4.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.270947
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_5.parameter_innerAngle
+Real         : Real { 
+value  : 2.801600
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_5.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.339992
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_6.parameter_innerAngle
+Real         : Real { 
+value  : 2.919511
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_6.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.222082
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_7.parameter_innerAngle
+Real         : Real { 
+value  : 2.819323
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_7.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.322269
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_8.parameter_innerAngle
+Real         : Real { 
+value  : 1.531319
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_8.parameter_absoluteAngle
+Real         : Real { 
+value  : 1.610273
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeLength.parameter_pipeLength
+Real         : Real { 
+value  : 0.976535
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe1.geometricalSet_systemsInfoExp.parameterSet_pipeLength.parameter_noOfBends
+Real         : null
+Integer      : Integer { 
+value  : 8
+}
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.parameterSet_inputParameters.parameter_pipeRadius
+Real         : Real { 
+value  : 0.005000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.parameterSet_inputParameters.parameter_pipeThickness
+Real         : Real { 
+value  : 0.001000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.parameterSet_inputParameters.parameter_bendRadius
+Real         : Real { 
+value  : 0.035000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.parameterSet_outputParameters.parameter_pipeLength
+Real         : Real { 
+value  : 1.159899
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateX
+Real         : Real { 
+value  : 5.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateY
+Real         : Real { 
+value  : 0.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateZ
+Real         : Real { 
+value  : 3.000000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_1.parameter_innerAngle
+Real         : Real { 
+value  : 1.570796
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_1.parameter_absoluteAngle
+Real         : Real { 
+value  : 1.570796
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_2.parameter_innerAngle
+Real         : Real { 
+value  : 2.363702
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_2.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.777890
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_3.parameter_innerAngle
+Real         : Real { 
+value  : 2.363702
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_3.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.777890
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_4.parameter_innerAngle
+Real         : Real { 
+value  : 2.870646
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_4.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.270947
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_5.parameter_innerAngle
+Real         : Real { 
+value  : 2.801600
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_5.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.339992
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_6.parameter_innerAngle
+Real         : Real { 
+value  : 2.919511
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_6.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.222082
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_7.parameter_innerAngle
+Real         : Real { 
+value  : 2.565504
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_7.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.576089
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_8.parameter_innerAngle
+Real         : Real { 
+value  : 1.338103
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_8.parameter_absoluteAngle
+Real         : Real { 
+value  : 1.803489
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeLength.parameter_pipeLength
+Real         : Real { 
+value  : 1.159899
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_testPipe2.geometricalSet_systemsInfoExp.parameterSet_pipeLength.parameter_noOfBends
+Real         : null
+Integer      : Integer { 
+value  : 8
+}
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_valve1.parameterSet_inputParameters.parameter_pipeRadius
+Real         : Real { 
+value  : 0.010000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_valve1.parameterSet_inputParameters.parameter_pipeThickness
+Real         : Real { 
+value  : 0.001000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly1.part_valve1.parameterSet_outputParameters.parameter_valveLength
+Real         : Real { 
+value  : 0.050000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.parameterSet_inputParameters.parameter_pipeRadius
+Real         : Real { 
+value  : 0.005000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.parameterSet_inputParameters.parameter_pipeThickness
+Real         : Real { 
+value  : 0.001000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.parameterSet_inputParameters.parameter_bendRadius
+Real         : Real { 
+value  : 0.035000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.parameterSet_inputParameters.parameter_testReal
+Real         : Real { 
+value  : 2.500000
+unit   : Unit Not Applicable
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.parameterSet_inputParameters.parameter_testInteger
+Real         : null
+Integer      : Integer { 
+value  : 7
+}
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.parameterSet_inputParameters.parameter_testBoolean
+Real         : null
+Integer      : null
+Boolean      : Boolean { 
+value  : true
+}
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.parameterSet_outputParameters.parameter_pipeLength
+Real         : Real { 
+value  : 1.032920
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateX
+Real         : Real { 
+value  : 11.830000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateY
+Real         : Real { 
+value  : 0.960000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_1.parameter_coordinateZ
+Real         : Real { 
+value  : 4.190000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateX
+Real         : Real { 
+value  : 11.820000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateY
+Real         : Real { 
+value  : 0.960000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_2.parameter_coordinateZ
+Real         : Real { 
+value  : 4.340000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateX
+Real         : Real { 
+value  : 11.820000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateY
+Real         : Real { 
+value  : 1.070000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_3.parameter_coordinateZ
+Real         : Real { 
+value  : 4.340000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateX
+Real         : Real { 
+value  : 11.860000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateY
+Real         : Real { 
+value  : 1.135000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_4.parameter_coordinateZ
+Real         : Real { 
+value  : 4.290000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateX
+Real         : Real { 
+value  : 11.860000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateY
+Real         : Real { 
+value  : 1.210000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_5.parameter_coordinateZ
+Real         : Real { 
+value  : 4.290000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateX
+Real         : Real { 
+value  : 11.830000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateY
+Real         : Real { 
+value  : 1.390000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_6.parameter_coordinateZ
+Real         : Real { 
+value  : 4.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateX
+Real         : Real { 
+value  : 11.835000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateY
+Real         : Real { 
+value  : 1.440000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_7.parameter_coordinateZ
+Real         : Real { 
+value  : 4.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateX
+Real         : Real { 
+value  : 11.880000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateY
+Real         : Real { 
+value  : 1.575000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_8.parameter_coordinateZ
+Real         : Real { 
+value  : 4.250000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateX
+Real         : Real { 
+value  : 11.885000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateY
+Real         : Real { 
+value  : 1.700000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_9.parameter_coordinateZ
+Real         : Real { 
+value  : 4.230000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateX
+Real         : Real { 
+value  : 11.750000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateY
+Real         : Real { 
+value  : 1.700000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_Point_10.parameter_coordinateZ
+Real         : Real { 
+value  : 4.230000
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_1.parameter_innerAngle
+Real         : Real { 
+value  : 1.570796
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_1.parameter_absoluteAngle
+Real         : Real { 
+value  : 1.570796
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_2.parameter_innerAngle
+Real         : Real { 
+value  : 2.363702
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_2.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.777890
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_3.parameter_innerAngle
+Real         : Real { 
+value  : 2.363702
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_3.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.777890
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_4.parameter_innerAngle
+Real         : Real { 
+value  : 2.870646
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_4.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.270947
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_5.parameter_innerAngle
+Real         : Real { 
+value  : 2.801600
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_5.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.339992
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_6.parameter_innerAngle
+Real         : Real { 
+value  : 2.919511
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_6.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.222082
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_7.parameter_innerAngle
+Real         : Real { 
+value  : 2.819323
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_7.parameter_absoluteAngle
+Real         : Real { 
+value  : 0.322269
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_8.parameter_innerAngle
+Real         : Real { 
+value  : 1.531319
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeBendAngle_8.parameter_absoluteAngle
+Real         : Real { 
+value  : 1.610273
+unit   : [rad]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeLength.parameter_pipeLength
+Real         : Real { 
+value  : 1.032920
+unit   : [m]
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : product_subAssembly2.part_testPipe.geometricalSet_systemsInfoExp.parameterSet_pipeLength.parameter_noOfBends
+Real         : null
+Integer      : Integer { 
+value  : 8
+}
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+}
+
+}
+Enumerations           : null
+Units                  : TUnits { 
+Units  : {
+TUnit { 
+id           : null
+description  : null
+name         : m
+BaseUnit     : BaseUnit { 
+kg      : null
+m       : 1
+s       : null
+a       : null
+k       : null
+mol     : null
+cd      : null
+rad     : null
+factor  : null
+offset  : null
+}
+Annotations  : null
+}
+TUnit { 
+id           : null
+description  : null
+name         : deg
+BaseUnit     : BaseUnit { 
+kg      : null
+m       : null
+s       : null
+a       : null
+k       : null
+mol     : null
+cd      : null
+rad     : 0
+factor  : null
+offset  : null
+}
+Annotations  : null
+}
+TUnit { 
+id           : null
+description  : null
+name         : kg/m3
+BaseUnit     : BaseUnit { 
+kg      : 1
+m       : 3
+s       : null
+a       : null
+k       : null
+mol     : null
+cd      : null
+rad     : null
+factor  : null
+offset  : null
+}
+Annotations  : null
+}
+TUnit { 
+id           : null
+description  : null
+name         : m3
+BaseUnit     : BaseUnit { 
+kg      : null
+m       : 3
+s       : null
+a       : null
+k       : null
+mol     : null
+cd      : null
+rad     : null
+factor  : null
+offset  : null
+}
+Annotations  : null
+}
+TUnit { 
+id           : null
+description  : null
+name         : kg
+BaseUnit     : BaseUnit { 
+kg      : 1
+m       : null
+s       : null
+a       : null
+k       : null
+mol     : null
+cd      : null
+rad     : null
+factor  : null
+offset  : null
+}
+Annotations  : null
+}
+}
+
+}
+Annotations            : null
+}

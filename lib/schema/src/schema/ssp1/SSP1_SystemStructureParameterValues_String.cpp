@@ -103,7 +103,7 @@ namespace ssp4cpp::ssp1::ssv
                "license                : " + to_str( license                ) + "\n" +
                "generationTool         : " + to_str( generationTool         ) + "\n" +
                "generationDateAndTime  : " + to_str( generationDateAndTime  ) + "\n" +
-               "TParameters            : " + to_str( TParameters            ) + "\n" +
+               "Parameters             : " + to_str( Parameters             ) + "\n" +
                "Enumerations           : " + to_str( Enumerations           ) + "\n" +
                "Units                  : " + to_str( Units                  ) + "\n" +
                "Annotations            : " + to_str( Annotations            ) + "\n" +

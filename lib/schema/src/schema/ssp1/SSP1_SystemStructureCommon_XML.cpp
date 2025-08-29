@@ -174,7 +174,7 @@ namespace ssp4cpp::ssp1::ssc
         ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.BaseUnit     , "ssc:BaseUnit");
+        ssp4cpp::common::xml::parse_xml(node, obj.BaseUnit     , "BaseUnit");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
         log.ext_trace("Completed TUnit");
@@ -185,7 +185,7 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing TUnits");
 
-        ssp4cpp::common::xml::parse_xml(node, obj.Units  , "ssc:Unit");
+        ssp4cpp::common::xml::parse_xml(node, obj.Units  , "Unit");
 
         log.ext_trace("Completed TUnits");
     }

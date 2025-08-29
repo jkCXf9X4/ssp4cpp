@@ -1,16 +1,14 @@
 #pragma once
 
-#include "zip.hpp"
-#include "archive.hpp"
-#include "common_string.hpp"
 #include "common_log.hpp"
+
+#include "archive.hpp"
 
 #include "SSP1_SystemStructureDescription.hpp"
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 
 #include <string>
 #include <vector>
-#include <filesystem>
 #include <optional>
 #include <sstream>
 
@@ -23,6 +21,12 @@ namespace ssp4cpp
 {
     using namespace common;
 
+    struct Bindings
+    {
+        ssp1::ssv::ParameterSet ssv;
+        optional<ssp1::ssm::ParameterMapping> ssm;
+    };
+
     /**
      * @brief Represents an SSP archive and its parsed SystemStructureDescription.
      */
@@ -30,16 +34,12 @@ namespace ssp4cpp
     {
     public:
         ssp1::ssd::SystemStructureDescription ssd;
+        vector<Bindings> bindings;
 
         /**
          * @brief Construct an Ssp from a file path.
          */
-        Ssp(const path &file) : Archive(file, "ssp_")
-        {
-            log = Logger("Ssp", LogLevel::debug);
-            ssd = parse_system_structure((dir / "SystemStructure.ssd").string());
-            log.info("SSP Imported, {}", ssd.name);
-        }
+        Ssp(const path &file);
 
         friend ostream &operator<<(ostream &os, const Ssp &obj)
         {
@@ -60,14 +60,7 @@ namespace ssp4cpp
         }
 
         /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
-
-    private:
-        /** @brief Parse the SystemStructure.ssd inside the archive. */
-        static ssp1::ssd::SystemStructureDescription parse_system_structure(const string &fileName);
+        std::string to_string();
     };
 
 }

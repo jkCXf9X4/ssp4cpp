@@ -1,16 +1,16 @@
 
-#include <pugixml.hpp>
-#include <iostream>
-#include <cstring>
-
-#include "common_log.hpp"
 
 #include "ssp.hpp"
 
-#include "SSP1_SystemStructureDescription.hpp"
-#include "SSP1_SystemStructureDescription_XML.hpp"
+#include "xml_deserialize.hpp"
 
-#include "zip.hpp"
+#include "SSP1_SystemStructureDescription_XML.hpp"
+#include "SSP1_SystemStructureParameterValues_XML.hpp"
+#include "SSP1_SystemStructureParameterMapping_XML.hpp"
+
+// #include <cstring>
+#include <format>
+#include <filesystem>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -19,20 +19,38 @@ namespace ssp4cpp
 {
     using namespace common;
 
-    ssp1::ssd::SystemStructureDescription Ssp::parse_system_structure(const string &fileName)
-    {
-        pugi::xml_document doc;
-        pugi::xml_parse_result result = doc.load_file(fileName.c_str());
-        if (!result)
+        Ssp::Ssp(const path &file) : Archive(file, "ssp_")
         {
-            throw runtime_error("Unable to parse SystemStructure.ssd");
+            log = Logger("Ssp", LogLevel::debug);
+            ssd = parse_file<ssp1::ssd::SystemStructureDescription>((dir / "SystemStructure.ssd").string(), "ssd:SystemStructureDescription");
+            log.info("SSP Imported, {}", ssd.name);
+
+            if (ssd.System.ParameterBindings.has_value())
+            {
+                for (auto &binding : ssd.System.ParameterBindings.value().ParameterBindings)
+                {
+                    Bindings b;
+                    if (binding.source.has_value())
+                    {
+                        log.info("Parsing SSV {}", binding.source.value());
+                        b.ssv = parse_file<ssp1::ssv::ParameterSet>((dir / binding.source.value()).string(), "ssv:ParameterSet");
+
+                        if (binding.ParameterMapping.has_value() && binding.ParameterMapping.value().source.has_value())
+                        {
+                            auto m = binding.ParameterMapping.value();
+                            b.ssm = parse_file<ssp1::ssm::ParameterMapping>((dir / m.source.value()).string(), "ssm:ParameterMapping");
+                        }
+                    }
+                    bindings.push_back(std::move(b));
+                }
+            }
         }
-        auto root = doc.child("ssd:SystemStructureDescription");
 
-        ssp1::ssd::SystemStructureDescription ssd;
+        std::string Ssp::to_string()
+        {
+            return common::str::stream_to_str(*this);
+        }
 
-        from_xml(root, ssd);
 
-        return ssd;
-    }
+
 }

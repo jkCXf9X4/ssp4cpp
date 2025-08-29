@@ -30,19 +30,19 @@ mime_type = { type = "string", optional = true, xml_tag="mime-type" }
 id = {type = "string", optional = true}
 description = {type = "string", optional = true}
 name = {type = "string"}
-Real = { type = "ssv::Real", optional = true}
-Integer = { type = "ssv::Integer", optional = true}
-Boolean = { type = "ssv::Boolean", optional = true}
-String = { type = "ssv::String", optional = true}
-Enumeration = { type = "ssv::Enumeration", optional = true}
-Binary = { type = "ssv::Binary", optional = true}
+Real = { type = "ssv::Real", optional = true, namespace="ssv"}
+Integer = { type = "ssv::Integer", optional = true, namespace="ssv"}
+Boolean = { type = "ssv::Boolean", optional = true, namespace="ssv"}
+String = { type = "ssv::String", optional = true, namespace="ssv"}
+Enumeration = { type = "ssv::Enumeration", optional = true, namespace="ssv"}
+Binary = { type = "ssv::Binary", optional = true, namespace="ssv"}
 Annotations = {type = "ssc::TAnnotations", optional = true, namespace="ssc"}
 
 [TParameters]
-Parameters = {type = "ssv::TParameter", list = true, namespace="ssv"}
+Parameters = {type = "ssv::TParameter", list = true, namespace="ssv", xml_tag="Parameter"}
 
 [ParameterSet]
-version = {type = "string"}
+version = {type = "string", optional = true } #should not be optional but some tools miss this
 name = {type = "string"}
 id = {type = "string", optional = true}
 description = {type = "string", optional = true}
@@ -52,7 +52,7 @@ copyright = {type = "string", optional = true}
 license = {type = "string", optional = true}
 generationTool = {type = "string", optional = true}
 generationDateAndTime = {type = "string", optional = true}
-TParameters = {type = "ssv::TParameters", namespace="ssv"}
+Parameters = {type = "ssv::TParameters", namespace="ssv"}
 Enumerations = {type = "ssc::TEnumerations", optional = true, namespace="ssc"}
-Units = {type = "ssc::TUnits", optional = true, namespace="ssc"}
+Units = {type = "ssc::TUnits", optional = true, xml_tag="Units"}
 Annotations = {type = "ssc::TAnnotations", optional = true, namespace="ssc"}

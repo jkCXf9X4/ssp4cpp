@@ -24,7 +24,6 @@ namespace ssp4cpp
         path original_file;
         path dir;
 
-
         // Makes no sense to have a archive not associated with a file 
         Archive() = delete;
 

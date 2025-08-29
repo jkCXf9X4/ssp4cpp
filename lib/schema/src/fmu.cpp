@@ -7,9 +7,8 @@
 #include "FMI2_modelDescription.hpp"
 #include "FMI2_modelDescription_XML.hpp"
 
-#include "zip.hpp"
+#include "xml_deserialize.hpp"
 
-#include <pugixml.hpp>
 #include <filesystem>
 #include <iostream>
 
@@ -20,22 +19,15 @@ namespace ssp4cpp
 {
     using namespace common;
 
-
-    fmi2::md::fmi2ModelDescription Fmu::parse_model_description(const string &fileName)
+    Fmu::Fmu(const path &file) : Archive(file, "fmi_")
     {
-        pugi::xml_document doc;
-        pugi::xml_parse_result result = doc.load_file(fileName.c_str());
-        if (!result)
-        {
-            throw runtime_error("Unable to parse modelDescription.xml");
-        }
-        auto root = doc.child("fmiModelDescription");
+        log = Logger("Fmu", LogLevel::debug);
+        md = parse_file<fmi2::md::fmi2ModelDescription>((dir / "modelDescription.xml").string(), "fmiModelDescription");
+    }
 
-        fmi2::md::fmi2ModelDescription md;
-
-        from_xml(root, md);
-
-        return md;
+    std::string Fmu::to_string()
+    {
+        return common::str::stream_to_str(*this);
     }
 
 }

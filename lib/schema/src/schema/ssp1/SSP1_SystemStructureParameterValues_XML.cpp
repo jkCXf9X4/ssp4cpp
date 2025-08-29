@@ -88,12 +88,12 @@ namespace ssp4cpp::ssp1::ssv
         ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.Real         , "Real");
-        ssp4cpp::common::xml::parse_xml(node, obj.Integer      , "Integer");
-        ssp4cpp::common::xml::parse_xml(node, obj.Boolean      , "Boolean");
-        ssp4cpp::common::xml::parse_xml(node, obj.String       , "String");
-        ssp4cpp::common::xml::parse_xml(node, obj.Enumeration  , "Enumeration");
-        ssp4cpp::common::xml::parse_xml(node, obj.Binary       , "Binary");
+        ssp4cpp::common::xml::parse_xml(node, obj.Real         , "ssv:Real");
+        ssp4cpp::common::xml::parse_xml(node, obj.Integer      , "ssv:Integer");
+        ssp4cpp::common::xml::parse_xml(node, obj.Boolean      , "ssv:Boolean");
+        ssp4cpp::common::xml::parse_xml(node, obj.String       , "ssv:String");
+        ssp4cpp::common::xml::parse_xml(node, obj.Enumeration  , "ssv:Enumeration");
+        ssp4cpp::common::xml::parse_xml(node, obj.Binary       , "ssv:Binary");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
         log.ext_trace("Completed TParameter");
@@ -104,7 +104,7 @@ namespace ssp4cpp::ssp1::ssv
     {
         log.ext_trace("Parsing TParameters");
 
-        ssp4cpp::common::xml::parse_xml(node, obj.Parameters  , "ssv:Parameters");
+        ssp4cpp::common::xml::parse_xml(node, obj.Parameters  , "ssv:Parameter");
 
         log.ext_trace("Completed TParameters");
     }
@@ -124,9 +124,9 @@ namespace ssp4cpp::ssp1::ssv
         ssp4cpp::common::xml::parse_xml(node, obj.license                , "license");
         ssp4cpp::common::xml::parse_xml(node, obj.generationTool         , "generationTool");
         ssp4cpp::common::xml::parse_xml(node, obj.generationDateAndTime  , "generationDateAndTime");
-        ssp4cpp::common::xml::parse_xml(node, obj.TParameters            , "ssv:TParameters");
+        ssp4cpp::common::xml::parse_xml(node, obj.Parameters             , "ssv:Parameters");
         ssp4cpp::common::xml::parse_xml(node, obj.Enumerations           , "ssc:Enumerations");
-        ssp4cpp::common::xml::parse_xml(node, obj.Units                  , "ssc:Units");
+        ssp4cpp::common::xml::parse_xml(node, obj.Units                  , "Units");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
 
         log.ext_trace("Completed ParameterSet");

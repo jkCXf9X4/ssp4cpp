@@ -66,11 +66,13 @@ offset = {type = "double", optional=true}
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string"}
-BaseUnit = {type = "ssc::BaseUnit", namespace="ssc"}
+# ssv uses baseunit without namespace. evaluate if this is true everywhere
+BaseUnit = {type = "ssc::BaseUnit"}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 
 [TUnits]
-Units = {type = "ssc::TUnit", list = true, namespace="ssc", xml_tag="Unit"}
+# ssv uses unit without namespace. evaluate if this is true everywhere
+Units = {type = "ssc::TUnit", list = true, xml_tag="Unit"} 
 
 [GTypeReal]
 unit = {type = "string", optional=true}

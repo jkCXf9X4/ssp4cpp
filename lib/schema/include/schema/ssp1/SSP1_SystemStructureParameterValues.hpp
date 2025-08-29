@@ -102,7 +102,7 @@ namespace ssp4cpp::ssp1::ssv
     class ParameterSet : public IXmlNode
     {
     public:
-        string version;
+        optional<string> version;
         string name;
         optional<string> id;
         optional<string> description;
@@ -112,7 +112,7 @@ namespace ssp4cpp::ssp1::ssv
         optional<string> license;
         optional<string> generationTool;
         optional<string> generationDateAndTime;
-        ssv::TParameters TParameters;
+        ssv::TParameters Parameters;
         optional<ssc::TEnumerations> Enumerations;
         optional<ssc::TUnits> Units;
         optional<ssc::TAnnotations> Annotations;
