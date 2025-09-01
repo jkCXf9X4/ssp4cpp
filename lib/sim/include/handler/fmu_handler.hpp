@@ -52,36 +52,40 @@ namespace ssp4cpp::sim::handler
     public:
         common::Logger log = common::Logger("sim::FmuHandler", common::LogLevel::debug);
 
-        map<string, std::unique_ptr<FmuInfo>> fmus;
+        Ssp *ssp;
 
-        FmuHandler(std::map<std::string, ssp4cpp::Fmu *> &str_fmu)
+        std::map<std::string, std::unique_ptr<Fmu>> fmu_map;
+        std::map<std::string, ssp4cpp::Fmu *> fmu_ref_map; // Non owning
+
+        map<string, std::unique_ptr<FmuInfo>> fmu_info_map;
+
+        FmuHandler(ssp4cpp::Ssp *ssp)
         {
-            for (auto &[name, fmu] : str_fmu)
+            this->ssp = ssp;
+
+            log.debug("[{}] Creating FMU map", __func__);
+            fmu_map = ssp4cpp::ssp::ext::create_fmu_map(*ssp);
+            for (auto &[fmu_name, fmu] : fmu_map)
             {
-                fmus.emplace(name, make_unique<FmuInfo>(name, fmu));
+                log.debug("[{}] - FMU: {} - ", __func__, fmu_name, fmu->to_string());
+            }
+            
+            // create a non owning variant to be passed around
+            fmu_ref_map = map_ns::map_unique_to_ref(fmu_map);
+            
+            log.debug("[{}] Creating FMU Info map", __func__);
+            for (auto &[name, fmu] : fmu_ref_map)
+            {
+                fmu_info_map.emplace(name, make_unique<FmuInfo>(name, fmu));
             }
         }
-
-        // void apply_start_values(fmi4cpp::fmi2::cs_slave* model)
-        // {
-        //     for (auto &binding: ssp->bindings)
-        //     {
-
-        //     }
-        // }
 
         void init()
         {
             log.trace("[{}] Model init ", __func__);
-            for (auto &[_, fmu] : this->fmus)
+            for (auto &[_, fmu] : this->fmu_info_map)
             {
                 fmu->model = fmu->cs_fmu->new_instance();
-
-                // apply_start_values(fmu->model.get());
-
-                fmu->model->setup_experiment();
-                fmu->model->enter_initialization_mode();
-                fmu->model->exit_initialization_mode();
             }
             log.trace("[{}] Model init completed", __func__);
         }

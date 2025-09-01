@@ -44,7 +44,7 @@ namespace ssp4cpp::sim::analysis::graph
             map<string, std::unique_ptr<AnalysisModel>> models;
             for (auto &[ssp_resource_name, local_resource_name] : ssp::ext::get_resource_map(ssp))
             {
-                auto fmu = fmu_handler->fmus[ssp_resource_name].get();
+                auto fmu = fmu_handler->fmu_info_map[ssp_resource_name].get();
                 auto m = make_unique<AnalysisModel>(ssp_resource_name, local_resource_name, fmu);
 
                 log.trace("[{}] New Model: {}", __func__, m->name);
@@ -60,7 +60,7 @@ namespace ssp4cpp::sim::analysis::graph
         {
             using namespace handler;
 
-            auto fmu = fmu_handler->fmus[component_name].get();
+            auto fmu = fmu_handler->fmu_info_map[component_name].get();
 
             auto md = fmu->model_description;
             auto var = md->get_variable_by_name(connector_name);

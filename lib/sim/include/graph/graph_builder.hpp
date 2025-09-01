@@ -94,8 +94,8 @@ namespace ssp4cpp::sim::graph
                 auto source_model = models[connection->source_model->name].get();
                 auto target_model = models[connection->target_model->name].get();
 
-                auto source_connector = source_model->outputs[connection->get_source_connector_name()];
-                auto target_connector = target_model->inputs[connection->get_target_connector_name()];
+                auto &source_connector = source_model->outputs[connection->get_source_connector_name()];
+                auto &target_connector = target_model->inputs[connection->get_target_connector_name()];
 
                 ConnectionInfo con_info;
                 con_info.type = source_connector.type;
@@ -107,7 +107,7 @@ namespace ssp4cpp::sim::graph
                 con_info.target_index = target_connector.index;
 
                 // the target is responsible for copying the connection
-                target_model->connections.push_back(con_info);
+                target_model->connections.push_back(std::move(con_info));
             }
 
             // Allocate the input/output areas
@@ -117,7 +117,14 @@ namespace ssp4cpp::sim::graph
                 model->output_area->allocate();
                 recorder->add_storage(model->input_area->data.get());
                 recorder->add_storage(model->output_area->data.get());
+
+                // input push time 0
+                // set possible input values from ssd/md
             }
+
+            // store parameters that need to be set during init
+
+
 
             log.ext_trace("[{}] exit", __func__);
             return make_unique<Graph>(std::move(models));

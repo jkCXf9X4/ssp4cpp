@@ -16,14 +16,14 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class Graph final: public Invocable
+    class Graph final : public Invocable
     {
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::debug);
 
         std::map<string, std::unique_ptr<Model>> models;
         std::vector<Model *> nodes;
-        
+
         std::unique_ptr<ExecutionBase> executor;
 
         Graph() = default;
@@ -35,13 +35,13 @@ namespace ssp4cpp::sim::graph
             nodes = common::map_ns::map_to_value_vector_copy(m);
 
             auto executor_method = utils::Config::getOr<std::string>("simulation.executor", "jacobi");
-            
+
             if (executor_method == "jacobi")
             {
                 log.info("[{}] Running jacobi", __func__);
                 executor = make_unique<Jacobi>(nodes);
             }
-            else if(executor_method == "seidel")
+            else if (executor_method == "seidel")
             {
                 log.info("[{}] Running seidel", __func__);
                 executor = make_unique<Seidel>(nodes);
@@ -51,36 +51,47 @@ namespace ssp4cpp::sim::graph
         friend std::ostream &operator<<(std::ostream &os, const Graph &obj)
         {
             auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(obj.nodes));
-            
-            os << "Simulation Graph DOT:\n" 
-            << common::graph::Node::to_dot(obj.nodes) << std::endl
-            << common::graph::ssc_to_string(strong_system_graph) << std::endl;
+
+            os << "Simulation Graph DOT:\n"
+               << common::graph::Node::to_dot(obj.nodes) << std::endl
+               << common::graph::ssc_to_string(strong_system_graph) << std::endl;
 
             os << "Storage areas:" << std::endl;
             for (auto &[name, model] : obj.models)
             {
                 os << "Model: " << name << std::endl
-                << " Input: " << *model->input_area << std:: endl
-                << " Output: " << *model->output_area << std::endl;
+                   << " Input: " << *model->input_area << std::endl
+                   << " Output: " << *model->output_area << std::endl;
             }
             return os;
+        }
+
+        void init()
+        {
+            log.trace("[{}] Initializing Graph", __func__);
+            log.trace("[{}] - Initializing models ", __func__);
+
+            for (auto &[_, model] : this->models)
+            {
+                model->init();
+            }
+            log.ext_trace("[{}] - Model init completed", __func__);
         }
 
         uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) final override
         {
             log.info("[{}] Graph - start_time: {} timestep: {} end_time: {}",
-            __func__, start_time, timestep, end_time);
+                     __func__, start_time, timestep, end_time);
 
             auto t = start_time;
             while (t < end_time)
             {
                 log.ext_trace("[{}] NEW TIME {}", __func__, t);
-                executor->invoke(t, t+timestep, timestep);
+                executor->invoke(t, t + timestep, timestep);
 
                 t += timestep;
             }
             return t;
-
         }
     };
 

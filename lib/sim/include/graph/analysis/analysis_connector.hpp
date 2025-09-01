@@ -81,7 +81,6 @@ namespace ssp4cpp::sim::analysis::graph
 
             return os;
         }
-
     };
 
 }

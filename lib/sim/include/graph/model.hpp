@@ -27,6 +27,8 @@ namespace ssp4cpp::sim::graph
         uint32_t index;
         uint64_t value_ref;
 
+        std::unique_ptr<std::byte[]> initial_value;
+
         friend std::ostream &operator<<(std::ostream &os, const ConnectorInfo &obj)
         {
             os << "ConnectorInfo { "
@@ -37,6 +39,12 @@ namespace ssp4cpp::sim::graph
                << ", value_ref: " << obj.value_ref
                << " }";
             return os;
+        }
+
+        void store_initial_value(void* initial_value)
+        {
+            this->initial_value = std::make_unique<std::byte[]>(this->size);
+            memcpy((void*)this->initial_value.get(), initial_value, this->size);
         }
     };
 
@@ -64,7 +72,7 @@ namespace ssp4cpp::sim::graph
         }
     };
 
-    class Model final: public common::graph::Node
+    class Model final : public common::graph::Node
     {
         uint64_t delay = 0;
         uint64_t _start_time = 0;
@@ -77,7 +85,7 @@ namespace ssp4cpp::sim::graph
 
         std::unique_ptr<utils::RingStorage> input_area;
         std::unique_ptr<utils::RingStorage> output_area;
-        utils::DataRecorder* recorder;
+        utils::DataRecorder *recorder;
 
         std::map<std::string, ConnectorInfo> inputs;
         std::map<std::string, ConnectorInfo> outputs;
@@ -87,8 +95,8 @@ namespace ssp4cpp::sim::graph
         {
             this->fmu = fmu;
             this->name = name;
-            input_area = make_unique<utils::RingStorage>(3, name +".input");
-            output_area = make_unique<utils::RingStorage>(5, name +".output");
+            input_area = make_unique<utils::RingStorage>(3, name + ".input");
+            output_area = make_unique<utils::RingStorage>(5, name + ".output");
         }
 
         ~Model()
@@ -103,6 +111,27 @@ namespace ssp4cpp::sim::graph
                << " }" << endl;
 
             return os;
+        }
+
+        void init()
+        {
+            log.trace("[{}] Model init ", __func__);
+
+            // set parameters
+            for (auto &[name, connector] : this->inputs)
+            {
+                if (connector.initial_value)
+                {
+                    log.ext_trace("[{}] Set initial value for {}", __func__, name);
+                    utils::write_to_model_(connector.type, *fmu->model, connector.value_ref, (void *)connector.initial_value.get());
+                }
+            }
+            
+            fmu->model->setup_experiment();
+            fmu->model->enter_initialization_mode();
+            fmu->model->exit_initialization_mode();
+
+            log.ext_trace("[{}] Model init completed", __func__);
         }
 
         // Retrieve inputs, and prepare the model
@@ -133,13 +162,13 @@ namespace ssp4cpp::sim::graph
             }
             input_area->flag_new_data(area);
             recorder->update();
-            
+
             log.trace("[{}] Copy data to model", __func__);
             for (auto &[_, input] : inputs)
             {
                 log.ext_trace("[{}] Copying input {}", __func__, input.to_string());
                 auto input_item = input_area->get_item(area, input.index);
-                utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void*)input_item);
+                utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void *)input_item);
             }
         }
 
