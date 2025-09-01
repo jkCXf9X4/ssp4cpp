@@ -107,8 +107,6 @@ namespace ssp4cpp::common::graph
 
     int Node::nr_parents() const { return static_cast<int>(parents.size()); }
 
-    std::string Node::to_string() const { return common::str::stream_to_str(*this); }
-
     std::vector<Node *> Node::all_nodes() const
     {
         std::vector<Node *> result;

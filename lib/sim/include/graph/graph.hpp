@@ -4,6 +4,7 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
+#include "invocable.hpp"
 #include "model.hpp"
 #include "execution.hpp"
 #include "config.hpp"
@@ -15,7 +16,7 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class Graph
+    class Graph final: public Invocable
     {
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::debug);
@@ -65,13 +66,7 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
-
-        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep)
+        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) final override
         {
             log.info("[{}] Graph - start_time: {} timestep: {} end_time: {}",
             __func__, start_time, timestep, end_time);

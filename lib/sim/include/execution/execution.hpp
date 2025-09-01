@@ -4,37 +4,24 @@
 
 #include "common_log.hpp"
 
+#include "invocable.hpp"
+
 #include "model.hpp"
-#include "graph.hpp"
 #include "config.hpp"
 
-#include <map>
 #include <assert.h>
 #include <execution>
 
 namespace ssp4cpp::sim::graph
 {
-    class ExecutionBase
+
+
+    class ExecutionBase : public Invocable
     {
     public:
         std::vector<Model *> models;
 
         ExecutionBase(std::vector<Model *> models) : models(std::move(models)) {}
-
-        virtual uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) = 0;
-
-        friend std::ostream &operator<<(std::ostream &os, const ExecutionBase &obj)
-        {
-            os << "ExecutionBase:\n{}" << std::endl;
-
-            return os;
-        }
-
-        /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
     };
 
     class Seidel final : public ExecutionBase

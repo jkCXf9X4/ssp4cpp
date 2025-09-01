@@ -23,7 +23,7 @@ namespace ssp4cpp::sim::utils
     * - store multiple time versions of the data to enable access backwards in time
     */ 
 
-    class DataStorage
+    class DataStorage : public common::str::IString
     {
     public:
         common::Logger log = common::Logger("DataStorage", common::LogLevel::debug);
@@ -156,10 +156,5 @@ namespace ssp4cpp::sim::utils
             return os;
         }
 
-        /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
     };
 }

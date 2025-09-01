@@ -18,7 +18,7 @@ namespace ssp4cpp::sim::graph
     // forward declaration
     class Model;
 
-    struct ConnectorInfo
+    struct ConnectorInfo : public common::str::IString
     {
         utils::DataType type;
         size_t size;
@@ -38,15 +38,9 @@ namespace ssp4cpp::sim::graph
                << " }";
             return os;
         }
-
-        /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
     };
 
-    struct ConnectionInfo
+    struct ConnectionInfo : public common::str::IString
     {
         utils::DataType type;
         size_t size;
@@ -68,15 +62,9 @@ namespace ssp4cpp::sim::graph
                << " }";
             return os;
         }
-
-                /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
     };
 
-    class Model : public common::graph::Node
+    class Model final: public common::graph::Node
     {
         uint64_t delay = 0;
         uint64_t _start_time = 0;
@@ -115,12 +103,6 @@ namespace ssp4cpp::sim::graph
                << " }" << endl;
 
             return os;
-        }
-
-                /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
         }
 
         // Retrieve inputs, and prepare the model

@@ -6,6 +6,7 @@
 #include "common_time.hpp"
 
 #include "model.hpp"
+#include "invocable.hpp"
 
 #include <string>
 #include <vector>
@@ -15,7 +16,7 @@ namespace ssp4cpp::sim::graph
 {
 
 
-    class SubGraph : public common::graph::Node
+    class SubGraph final: public common::graph::Node, Invocable
     {
          common::Logger log = common::Logger("Model", common::LogLevel::debug);
 
@@ -43,13 +44,7 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-                /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
-        }
-
-        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep)
+        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) final override
         {
             return end_time;
         }

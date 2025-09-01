@@ -14,7 +14,7 @@ namespace ssp4cpp::common::graph
     /**
      * @brief Basic bidirectional graph node used throughout the project.
      */
-    class Node
+    class Node : public str::IString
     {
         Logger log = Logger("Node", LogLevel::ext_trace);
 
@@ -76,8 +76,6 @@ namespace ssp4cpp::common::graph
         int nr_children() const;
 
         int nr_parents() const;
-
-        std::string to_string() const;
 
         /**
          * @brief Return every node reachable through either child or parent

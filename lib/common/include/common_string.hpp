@@ -165,4 +165,20 @@ namespace ssp4cpp::common::str
         return from_strs<T>(str, ' ');
     }
 
+    class IString
+    {
+    public:
+        std::string to_string() const
+        {
+            return stream_to_str(*this);
+        }
+
+        friend std::ostream &operator<<(std::ostream &os, const IString &obj)
+        {
+            os << "IString {}" << std::endl;
+
+            return os;
+        }
+    };
+
 } // namespace ssp4cpp::str
