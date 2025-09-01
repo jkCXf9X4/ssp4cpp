@@ -40,12 +40,6 @@ namespace ssp4cpp::sim::graph
                << " }";
             return os;
         }
-
-        void store_initial_value(void* initial_value)
-        {
-            this->initial_value = std::make_unique<std::byte[]>(this->size);
-            memcpy((void*)this->initial_value.get(), initial_value, this->size);
-        }
     };
 
     struct ConnectionInfo : public common::str::IString
@@ -89,6 +83,7 @@ namespace ssp4cpp::sim::graph
 
         std::map<std::string, ConnectorInfo> inputs;
         std::map<std::string, ConnectorInfo> outputs;
+        std::map<std::string, ConnectorInfo> parameters;
         vector<ConnectionInfo> connections;
 
         Model(std::string name, handler::FmuInfo *fmu)
@@ -102,6 +97,7 @@ namespace ssp4cpp::sim::graph
         ~Model()
         {
             log.ext_trace("[{}] Destroying Model", __func__);
+            fmu->model->terminate();
         }
 
         friend ostream &operator<<(ostream &os, const Model &obj)
@@ -118,15 +114,15 @@ namespace ssp4cpp::sim::graph
             log.trace("[{}] Model init ", __func__);
 
             // set parameters
-            for (auto &[name, connector] : this->inputs)
+            for (auto &[name, parameter] : this->parameters)
             {
-                if (connector.initial_value)
+                if (parameter.initial_value)
                 {
                     log.ext_trace("[{}] Set initial value for {}", __func__, name);
-                    utils::write_to_model_(connector.type, *fmu->model, connector.value_ref, (void *)connector.initial_value.get());
+                    utils::write_to_model_(parameter.type, *fmu->model, parameter.value_ref, (void *)parameter.initial_value.get());
                 }
             }
-            
+
             fmu->model->setup_experiment();
             fmu->model->enter_initialization_mode();
             fmu->model->exit_initialization_mode();

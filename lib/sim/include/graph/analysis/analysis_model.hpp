@@ -26,6 +26,7 @@ namespace ssp4cpp::sim::analysis::graph
 
         map<string, AnalysisConnector *> input_connectors;
         map<string, AnalysisConnector *> output_connectors;
+        map<string, AnalysisConnector *> parameters;
 
         AnalysisModel() {}
 

@@ -24,23 +24,25 @@ namespace ssp4cpp::sim::handler
 
         // Borrowing
         ssp4cpp::Fmu *fmu;
+        ssp4cpp::fmi2::md::fmi2ModelDescription*  model_description;
 
         // Owning
         std::unique_ptr<fmi4cpp::fmi2::fmu> fmi4cpp_fmu;
         std::unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
         std::unique_ptr<fmi4cpp::fmi2::cs_slave> model;
-        std::shared_ptr<const fmi4cpp::fmi2::cs_model_description> model_description;
+
 
         FmuInfo(std::string name, ssp4cpp::Fmu *fmu)
         {
-            this->model_name = fmu->md.modelName;
+            this->model_name = fmu->md->modelName;
             this->system_name = name;
 
             this->fmu = fmu;
 
             this->fmi4cpp_fmu = make_unique<fmi4cpp::fmi2::fmu>(this->fmu->original_file);
             this->cs_fmu = this->fmi4cpp_fmu->as_cs_fmu();
-            this->model_description = this->cs_fmu->get_model_description();
+
+            this->model_description = fmu->md.get();
         }
         // can not be copied, has unique pointers
         FmuInfo(const FmuInfo &) = delete;
@@ -50,7 +52,7 @@ namespace ssp4cpp::sim::handler
     class FmuHandler
     {
     public:
-        common::Logger log = common::Logger("sim::FmuHandler", common::LogLevel::debug);
+        common::Logger log = common::Logger("FmuHandler", common::LogLevel::debug);
 
         Ssp *ssp;
 

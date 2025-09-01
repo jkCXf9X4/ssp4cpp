@@ -8,7 +8,7 @@ namespace ssp4cpp::ssp::ext
     {
         auto resources = std::map<std::string, std::string>();
 
-        for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
+        for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(*ssp.ssd))
         {
             auto name = resource->name.value_or("null");
             log.trace("Resource {} : {}", name, resource->source);
@@ -25,7 +25,7 @@ namespace ssp4cpp::ssp::ext
     {
         auto items = std::map<std::string, std::unique_ptr<Fmu>>();
 
-        for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(ssp.ssd))
+        for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(*ssp.ssd))
         {
             auto name = resource->name.value_or("null");
             log.trace("Resource {}", name);

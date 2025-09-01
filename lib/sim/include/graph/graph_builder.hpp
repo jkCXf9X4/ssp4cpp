@@ -30,11 +30,11 @@ namespace ssp4cpp::sim::graph
 
         std::unique_ptr<Graph> build()
         {
-            log.ext_trace("[{}] init", __func__);
+            log.trace("[{}] init", __func__);
 
             std::map<string, std::unique_ptr<Model>> models;
 
-            // create the models
+            log.ext_trace("[{}] Create the models", __func__);
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)
             {
                 auto m = make_unique<Model>(ssp_resource_name, analysis_model->fmu);
@@ -44,7 +44,7 @@ namespace ssp4cpp::sim::graph
                 models[analysis_model->name] = std::move(m);
             }
 
-            // Connect the models
+            log.ext_trace("[{}] Create connections between models", __func__);
             for (auto &[_, analysis_model] : analysis_graph->models)
             {
                 for (auto &child : analysis_model->children)
@@ -53,7 +53,7 @@ namespace ssp4cpp::sim::graph
                 }
             }
 
-            // Create the data storage areas within the model
+            log.ext_trace("[{}] Create the data storage areas within the model", __func__);
             for (auto &[_, analysis_model] : analysis_graph->models)
             {
                 auto model = models[analysis_model->name].get();
@@ -88,7 +88,7 @@ namespace ssp4cpp::sim::graph
                 }
             }
 
-            // Hand the information regarding the connections over to the model
+            log.ext_trace("[{}] Hand the information regarding the connections over to the model", __func__);
             for (auto &[_, connection] : analysis_graph->connections)
             {
                 auto source_model = models[connection->source_model->name].get();
@@ -110,7 +110,7 @@ namespace ssp4cpp::sim::graph
                 target_model->connections.push_back(std::move(con_info));
             }
 
-            // Allocate the input/output areas
+            log.ext_trace("[{}] Allocate the input/output areas", __func__);
             for (auto &[ssp_resource_name, model] : models)
             {
                 model->input_area->allocate();
@@ -120,11 +120,12 @@ namespace ssp4cpp::sim::graph
 
                 // input push time 0
                 // set possible input values from ssd/md
+                // This is strange, why should initial values exist?
             }
 
+        
+            
             // store parameters that need to be set during init
-
-
 
             log.ext_trace("[{}] exit", __func__);
             return make_unique<Graph>(std::move(models));

@@ -19,10 +19,19 @@ namespace ssp4cpp
     using namespace ssp4cpp::common::str;
     using namespace common;
 
+
+    class Parameters
+    {
+        std::string name;
+        fmi2::md::Type type;
+        std::unique_ptr<std::byte[]> initial_value;
+    };
+
     struct Bindings
     {
-        ssp1::ssv::ParameterSet ssv;
-        optional<ssp1::ssm::ParameterMapping> ssm;
+        std::unique_ptr<ssp1::ssv::ParameterSet> ssv;
+        std::unique_ptr<ssp1::ssm::ParameterMapping> ssm;
+        std::vector<Parameters> parameters;
     };
 
     /**
@@ -31,7 +40,7 @@ namespace ssp4cpp
     class Ssp : public Archive
     {
     public:
-        ssp1::ssd::SystemStructureDescription ssd;
+        unique_ptr<ssp1::ssd::SystemStructureDescription> ssd;
         std::vector<Bindings> bindings;
 
         /**
@@ -41,12 +50,12 @@ namespace ssp4cpp
 
         friend ostream &operator<<(ostream &os, const Ssp &obj)
         {
-            auto resources = ssp1::ext::ssd::get_resources(obj.ssd);
+            auto resources = ssp1::ext::ssd::get_resources(*obj.ssd);
 
             os << "Ssp { \n"
                << "original_file: " << obj.original_file << endl
                << "dir: " << obj.dir << endl
-               << "ssd: " << obj.ssd.name << endl
+               << "ssd: " << obj.ssd->name << endl
                << "resources: " << resources.size() << endl
                << " }" << endl;
 

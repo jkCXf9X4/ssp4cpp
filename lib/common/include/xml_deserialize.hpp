@@ -11,7 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <format>
-
+#include <memory>      // for std::unique_ptr, std::make_unique
 
 // deserialize xml to object
 
@@ -169,7 +169,7 @@ namespace ssp4cpp::common::xml
         {
             throw runtime_error("Unreachable : " + name + " : " + typeid(T).name());
         }
-        
+
         obj = T();
         parse_xml(node, *obj, name);
     }
@@ -195,21 +195,24 @@ namespace ssp4cpp::common::xml
         }
     }
 
-
     template <typename T>
-    T parse_file(const string &fileName, std::string root_name)
+    std::unique_ptr<T> parse_file(const string &fileName, const std::string &root_name)
     {
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(fileName.c_str());
         if (!result)
         {
-            throw runtime_error(std::format("Unable to parse {}", root_name.c_str()));
+            throw runtime_error(std::format("Unable to parse {}", root_name));
         }
         auto root = doc.child(root_name.c_str());
+        if (!root)
+        {
+            throw std::runtime_error(std::format("Root node '{}' not found", root_name));
+        }
 
-        T obj;
+        std::unique_ptr<T> obj = std::make_unique<T>();
 
-        from_xml(root, obj);
+        from_xml(root, *obj);
 
         return obj;
     }

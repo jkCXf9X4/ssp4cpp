@@ -7,7 +7,6 @@
 
 #include <iostream>
 
-
 namespace ssp4cpp::fmi2::ext
 {
     using namespace std;
@@ -15,7 +14,7 @@ namespace ssp4cpp::fmi2::ext
 
     namespace model_variables
     {
-        fmi2ScalarVariable* get_variable(ModelVariables &mv, int index)
+        fmi2ScalarVariable *get_variable(ModelVariables &mv, int index)
         {
             if (index < 0 || index >= mv.ScalarVariable.size())
             {
@@ -24,6 +23,72 @@ namespace ssp4cpp::fmi2::ext
 
             // index start at 1
             return &mv.ScalarVariable[index - 1];
+        }
+
+        fmi2ScalarVariable *get_variable_by_name(ModelVariables &mv, std::string name)
+        {
+            for (auto &var : mv.ScalarVariable)
+            {
+                if (var.name == name)
+                {
+                    return &var;
+                }
+            }
+            log.warning("[{}] No variable found for name {}", __func__, name);
+            return nullptr;
+        }
+
+        DataType get_variable_type(fmi2ScalarVariable &var)
+        {
+            if (var.Boolean.has_value())
+            {
+                return DataType::boolean;
+            }
+            else if (var.Enumeration.has_value())
+            {
+                return DataType::enumeration;
+            }
+            else if (var.Integer.has_value())
+            {
+                return DataType::integer;
+            }
+            else if (var.Real.has_value())
+            {
+                return DataType::real;
+            }
+            else if (var.String.has_value())
+            {
+                return DataType::string;
+            }
+            else
+            {
+                throw runtime_error("Unknown type");
+            }
+        }
+
+        void *get_variable_start_value(fmi2ScalarVariable &var)
+        {
+            if (var.Boolean.has_value() && var.Boolean.value().start.has_value())
+            {
+                return &var.Boolean.value().start.value();
+            }
+            else if (var.Enumeration.has_value()&& var.Enumeration.value().start.has_value())
+            {
+                return &var.Enumeration.value().start.value();
+            }
+            else if (var.Integer.has_value()&& var.Integer.value().start.has_value())
+            {
+                return &var.Integer.value().start.value();
+            }
+            else if (var.Real.has_value()&& var.Real.value().start.has_value())
+            {
+                return &var.Real.value().start.value();
+            }
+            else if (var.String.has_value()&& var.String.value().start.has_value())
+            {
+                return &var.String.value().start.value();
+            }
+            return nullptr;
         }
     }
 

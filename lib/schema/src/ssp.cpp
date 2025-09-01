@@ -24,23 +24,24 @@ namespace ssp4cpp
         {
             log = Logger("Ssp", LogLevel::debug);
             
-            ssd = common::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / "SystemStructure.ssd").string(), "ssd:SystemStructureDescription");
-            log.info("SSP Imported, {}", ssd.name);
+            this->ssd = common::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / "SystemStructure.ssd").string(), "ssd:SystemStructureDescription");
+            log.info("SSP Imported, {}", ssd->name);
 
-            if (ssd.System.ParameterBindings.has_value())
+            if (ssd->System.ParameterBindings.has_value())
             {
-                for (auto &binding : ssd.System.ParameterBindings.value().ParameterBindings)
+                for (auto &binding : ssd->System.ParameterBindings.value().ParameterBindings)
                 {
                     Bindings b;
                     if (binding.source.has_value())
                     {
-                        log.info("Parsing SSV {}", binding.source.value());
+                        log.info("Parsing SSV {}", binding.source.value_or(""));
                         b.ssv = common::xml::parse_file<ssp1::ssv::ParameterSet>((dir / binding.source.value()).string(), "ssv:ParameterSet");
-
+                        
                         if (binding.ParameterMapping.has_value() && binding.ParameterMapping.value().source.has_value())
                         {
                             auto m = binding.ParameterMapping.value();
                             b.ssm = common::xml::parse_file<ssp1::ssm::ParameterMapping>((dir / m.source.value()).string(), "ssm:ParameterMapping");
+                            log.info("Parsing SSM {}", m.source.value_or(""));
                         }
                     }
                     bindings.push_back(std::move(b));

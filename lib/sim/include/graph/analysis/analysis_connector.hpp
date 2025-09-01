@@ -17,6 +17,8 @@ namespace ssp4cpp::sim::analysis::graph
 
     class AnalysisModel;
 
+    using Causality = ssp4cpp::fmi2::md::Causality;
+
     // template class to enable constexpression invoke
     class AnalysisConnector : public ssp4cpp::common::graph::Node
     {
@@ -28,12 +30,14 @@ namespace ssp4cpp::sim::analysis::graph
         string component_name;
         string connector_name;
 
-        ssp4cpp::fmi2::md::Causality causality;
+        Causality causality;
 
         uint64_t value_reference;
 
         utils::DataType type;
         std::size_t size;
+
+        std::unique_ptr<std::byte[]> initial_value;
 
         AnalysisModel *model;
 
@@ -80,6 +84,17 @@ namespace ssp4cpp::sim::analysis::graph
                << " }" << endl;
 
             return os;
+        }
+
+        void store_initial_value(void* initial_value)
+        {
+            if (this->type == utils::DataType::string)
+            {
+                log.warning("[{}] Initial start values of string not supported", __func__); 
+                return;
+            }
+            this->initial_value = std::make_unique<std::byte[]>(this->size);
+            memcpy((void*)this->initial_value.get(), initial_value, this->size);
         }
     };
 

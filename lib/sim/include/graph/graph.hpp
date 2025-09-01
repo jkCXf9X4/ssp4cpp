@@ -70,9 +70,11 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] Initializing Graph", __func__);
             log.trace("[{}] - Initializing models ", __func__);
-
+            
             for (auto &[_, model] : this->models)
             {
+                
+                log.ext_trace("[{}] - Initializing model: {} ", __func__, model->name);
                 model->init();
             }
             log.ext_trace("[{}] - Model init completed", __func__);

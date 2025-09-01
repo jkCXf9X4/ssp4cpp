@@ -20,7 +20,7 @@ namespace ssp4cpp
     class Fmu : public Archive
     {
     public:
-        fmi2::md::fmi2ModelDescription md;
+        std::unique_ptr<fmi2::md::fmi2ModelDescription> md;
 
         /**
          * @brief Construct an FMU from a file path.
@@ -32,7 +32,7 @@ namespace ssp4cpp
             os << "Fmu { \n"
                << "original_file: " << obj.original_file << endl
                << "dir: " << obj.dir << endl
-               << "modelName: " << obj.md.modelName << endl
+               << "modelName: " << obj.md->modelName << endl
                << " }" << endl;
 
             return os;

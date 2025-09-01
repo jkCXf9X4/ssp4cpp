@@ -30,7 +30,7 @@ namespace ssp4cpp::sim
     class Simulation
     {
     public:
-        common::Logger log = common::Logger("sim::Simulation", common::LogLevel::info);
+        common::Logger log = common::Logger("Simulation", common::LogLevel::info);
 
         Ssp *ssp;
 
@@ -53,21 +53,21 @@ namespace ssp4cpp::sim
         {
             log.info("[{}] Initializing simulation", __func__);
 
-            log.trace("[{}] - Initializing fmus", __func__);
+            log.info("[{}] - Initializing fmus", __func__);
             fmu_handler->init();
 
-            log.trace("[{}] - Creating analysis graph", __func__);
+            log.info("[{}] - Creating analysis graph", __func__);
             auto analysis_graph = analysis::graph::AnalysisGraphBuilder(ssp, fmu_handler.get()).build();
             log.debug(" -- {}", analysis_graph->to_string());
 
-            log.trace("[{}] - Creating simulation graph", __func__);
+            log.info("[{}] - Creating simulation graph", __func__);
             sim_graph = graph::GraphBuilder(analysis_graph.get(), recorder.get()).build();
             log.debug(" -- {}", sim_graph->to_string());
 
-            log.trace("[{}] - Init simulation graph", __func__);
+            log.info("[{}] - Init simulation graph", __func__);
             sim_graph->init();
 
-            log.trace("[{}] - Initializing recorder", __func__);
+            log.info("[{}] - Initializing recorder", __func__);
             recorder->init();
         }
 

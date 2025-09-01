@@ -4,6 +4,7 @@
 #include "common_vector.hpp"
 
 #include "SSP_Ext.hpp"
+#include "FMI2_modelDescription_Ext.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -56,42 +57,59 @@ namespace ssp4cpp::sim::analysis::graph
 
         // Helper: create_variable with explicit type and context
         std::unique_ptr<AnalysisConnector> create_connector(std::string component_name,
-                                                            std::string connector_name)
+                                                            std::string connector_name,
+                                                            Causality &causality)
         {
-            using namespace handler;
-
-            auto fmu = fmu_handler->fmu_info_map[component_name].get();
-
-            auto md = fmu->model_description;
-            auto var = md->get_variable_by_name(connector_name);
-
-            auto value_reference = var.value_reference;
-            auto type = utils::get_variable_type(var);
-
-            return std::make_unique<AnalysisConnector>(
-                component_name, connector_name, value_reference, type);
         }
 
         map<string, std::unique_ptr<AnalysisConnector>> create_connectors(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
             map<string, std::unique_ptr<AnalysisConnector>> items;
-            if (ssp.ssd.System.Elements.has_value())
+            if (ssp.ssd->System.Elements.has_value())
             {
                 auto connectors = ssp1::ext::elements::get_connectors(
-                    ssp.ssd.System.Elements.value(),
-                    {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output});
+                    ssp.ssd->System.Elements.value(),
+                    {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output, ssp4cpp::fmi2::md::Causality::parameter});
 
                 for (auto &[index, connector, component] : connectors)
                 {
                     auto component_name = component->name.value();
                     auto connector_name = connector->name;
+                    log.trace("[{}] Creating Connector: {} - {}", __func__, component_name, connector_name);
 
-                    auto c = create_connector(component_name, connector_name);
-                    c->causality = connector->kind;
+                    // using namespace handler;
 
-                    log.trace("[{}] New Connector: {}", __func__, c->name);
-                    items[c->name] = std::move(c);
+                    auto fmu = fmu_handler->fmu_info_map[component_name].get();
+
+                    auto md = fmu->model_description;
+
+                    log.ext_trace("[{}] get_variable_by_name", __func__);
+                    auto var = fmi2::ext::model_variables::get_variable_by_name(md->ModelVariables, connector_name);
+                    if (var)
+                    {
+                        auto value_reference = var->valueReference.value();
+                        log.ext_trace("[{}] get_variable_type", __func__);
+                        auto type = fmi2::ext::model_variables::get_variable_type(*var);
+
+                        log.ext_trace("[{}] Create AnalysisConnector", __func__);
+                        auto c = std::make_unique<AnalysisConnector>(
+                            component_name, connector_name, value_reference, type);
+
+                        c->causality = connector->kind;
+
+                        if (c->causality == Causality::input)
+                        {
+                            auto start_value = fmi2::ext::model_variables::get_variable_start_value(*var);
+                            if (start_value)
+                            {
+                                log.info("[{}] Storing start value for {}", __func__, var->name);
+                                c->store_initial_value(start_value);
+                            }
+                        }
+
+                        items[c->name] = std::move(c);
+                    }
                 }
             }
             log.ext_trace("[{}] exit, Total connectors created: {}", __func__, items.size());
@@ -102,14 +120,14 @@ namespace ssp4cpp::sim::analysis::graph
         {
             log.ext_trace("[{}] init", __func__);
             map<string, std::unique_ptr<AnalysisConnection>> items;
-            if (ssp.ssd.System.Connections.has_value())
+            if (ssp.ssd->System.Connections.has_value())
             {
-                for (auto &connection : ssp.ssd.System.Connections.value().Connections)
+                for (auto &connection : ssp.ssd->System.Connections.value().Connections)
                 {
                     auto c = make_unique<AnalysisConnection>(&connection);
                     log.trace("[{}] New Connection: {}", __func__, c->name);
                     items[c->name] = std::move(c);
-                }  
+                }
             }
             log.ext_trace("[{}] exit, Total connections created: {}", __func__, items.size());
             return std::move(items);
@@ -121,7 +139,7 @@ namespace ssp4cpp::sim::analysis::graph
             map<string, std::unique_ptr<AnalysisModelVariable>> items;
             for (auto [name, fmu] : fmu_map)
             {
-                for (auto &variable : fmu->md.ModelVariables.ScalarVariable)
+                for (auto &variable : fmu->md->ModelVariables.ScalarVariable)
                 {
                     auto mv = make_unique<AnalysisModelVariable>(name, variable.name);
                     log.trace("[{}] New ModelVariable: {}", __func__, mv->name);
@@ -135,30 +153,35 @@ namespace ssp4cpp::sim::analysis::graph
 
         std::unique_ptr<AnalysisGraph> build()
         {
-            log.ext_trace("[{}] init", __func__);
+            log.trace("[{}] Building AnalysisGraph", __func__);
             auto models = create_models(*ssp);
             auto connectors = create_connectors(*ssp);
             auto connections = create_connections(*ssp);
 
-            auto fmu_connections = ssp1::ext::elements::get_fmu_connections(ssp->ssd);
+            auto fmu_connections = ssp1::ext::elements::get_fmu_connections(*ssp->ssd);
 
-            log.debug("[{}] Connecting FMUs", __func__);
+            log.trace("[{}] Connecting FMUs", __func__);
             for (auto &[source, target] : fmu_connections)
             {
-                log.debug("[{}] Connecting: {} -> {}", __func__, source, target);
+                log.trace("[{}] - Connecting: {} -> {}", __func__, source, target);
                 models[source]->add_child(models[target].get());
             }
 
+            log.trace("[{}] Attaching connectors to models", __func__);
             for (auto &[name, connector] : connectors)
             {
                 auto model = models[connector->component_name].get();
-                if (connector->causality == ssp4cpp::fmi2::md::Causality::input)
+                if (connector->causality == Causality::input)
                 {
                     model->input_connectors[connector->name] = connector.get();
                 }
-                else if (connector->causality == ssp4cpp::fmi2::md::Causality::output)
+                else if (connector->causality == Causality::output)
                 {
                     model->output_connectors[connector->name] = connector.get();
+                }
+                else if (connector->causality == Causality::parameter)
+                {
+                    model->parameters[connector->name] = connector.get();
                 }
                 else
                 {
@@ -166,10 +189,10 @@ namespace ssp4cpp::sim::analysis::graph
                 }
             }
 
-            log.debug("[{}] Connecting connectors", __func__);
+            log.trace("[{}] Creating connections between connectors", __func__);
             for (auto &[name, connection] : connections)
             {
-                log.debug("[{}] Connecting {}", __func__, connection->name);
+                log.trace("[{}] Connecting {}", __func__, connection->name);
 
                 auto source_model = models[connection->source_component_name].get();
                 auto target_model = models[connection->target_component_name].get();
