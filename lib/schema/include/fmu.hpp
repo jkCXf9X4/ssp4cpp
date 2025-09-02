@@ -7,12 +7,9 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-using namespace std::filesystem;
 
 namespace ssp4cpp
 {
-    using namespace common;
 
     /**
      * @brief Represents an FMU archive and its parsed model description.
@@ -25,21 +22,18 @@ namespace ssp4cpp
         /**
          * @brief Construct an FMU from a file path.
          */
-        Fmu(const path &file);
+        Fmu(const std::filesystem::path &file);
 
-        friend ostream &operator<<(ostream &os, const Fmu &obj)
+        friend std::ostream &operator<<(std::ostream &os, const Fmu &obj)
         {
             os << "Fmu { \n"
-               << "original_file: " << obj.original_file << endl
-               << "dir: " << obj.dir << endl
-               << "modelName: " << obj.md->modelName << endl
-               << " }" << endl;
+               << "original_file: " << obj.original_file << std::endl
+               << "dir: " << obj.dir << std::endl
+               << "modelName: " << obj.md->modelName << std::endl
+               << " }" << std::endl;
 
             return os;
         }
-
-        /** @brief Convert to string for debugging purposes. */
-        std::string to_string();
 
     };
 

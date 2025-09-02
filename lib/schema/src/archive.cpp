@@ -5,13 +5,10 @@
 #include <filesystem>
 #include <string>
 
-using namespace std;
-using namespace std::filesystem;
-
 namespace ssp4cpp
 {
 
-    Archive::Archive(const path &file, const std::string &tmp_prefix)
+    Archive::Archive(const std::filesystem::path &file, const std::string &tmp_prefix)
         : original_file(file)
     {
 
@@ -29,7 +26,7 @@ namespace ssp4cpp
         }
         else
         {
-            throw runtime_error("File is not a regular file or directory: " + file.string());
+            throw std::runtime_error("File is not a regular file or directory: " + file.string());
         }
     }
 

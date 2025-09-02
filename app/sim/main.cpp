@@ -2,11 +2,10 @@
 #include "simulator.hpp"
 
 using namespace ssp4cpp;
-using namespace ssp4cpp::common;
 
 int main()
 {
-    auto log = Logger("main", LogLevel::debug);
+    auto log = common::Logger("main", common::LogLevel::debug);
     log.ext_trace("[{}] enter", __func__);
 
     // auto sim = Simulator("./resources/algebraic_loop_4.ssp", "./resources/model_props.json");

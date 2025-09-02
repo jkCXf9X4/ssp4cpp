@@ -7,7 +7,7 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class Invocable :  public str::IString
+    class Invocable :  public common::str::IString
     {
     public:
         virtual uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) = 0;

@@ -84,7 +84,7 @@ namespace ssp4cpp::sim::graph
         std::map<std::string, ConnectorInfo> inputs;
         std::map<std::string, ConnectorInfo> outputs;
         std::map<std::string, ConnectorInfo> parameters;
-        vector<ConnectionInfo> connections;
+        std::vector<ConnectionInfo> connections;
 
         Model(std::string name, handler::FmuInfo *fmu)
         {
@@ -100,11 +100,11 @@ namespace ssp4cpp::sim::graph
             fmu->model->terminate();
         }
 
-        friend ostream &operator<<(ostream &os, const Model &obj)
+        friend std::ostream &operator<<(std::ostream &os, const Model &obj)
         {
             os << "Model { \n"
-               << "Name: " << obj.name << endl
-               << " }" << endl;
+               << "Name: " << obj.name << std::endl
+               << " }" << std::endl;
 
             return os;
         }
@@ -178,7 +178,7 @@ namespace ssp4cpp::sim::graph
                 log.error("Error! step() returned with status: {}", std::to_string(status));
                 if (status == 3)
                 {
-                    throw runtime_error("Execution failed");
+                    throw std::runtime_error("Execution failed");
                 }
             }
             log.trace("[{}], sim time {}", __func__, fmu->model->get_simulation_time());

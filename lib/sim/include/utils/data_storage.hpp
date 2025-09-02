@@ -5,6 +5,8 @@
 #include "common_string.hpp"
 #include "common_time.hpp"
 
+#include "FMI2_Enums_Ext.hpp"
+
 #include "data_type.hpp"
 
 #include <string>
@@ -75,7 +77,7 @@ namespace ssp4cpp::sim::utils
 
             index_name_map[name] = index;
 
-            auto size = utils::get_data_type_size(type);
+            auto size = fmi2::ext::enums::get_data_type_size(type);
             pos += size;
             sizes.push_back(size);
 

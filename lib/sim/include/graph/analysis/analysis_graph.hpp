@@ -25,7 +25,7 @@ namespace ssp4cpp::sim::analysis::graph
         std::map<std::string, std::unique_ptr<AnalysisConnector>> connectors;
         std::map<std::string, std::unique_ptr<AnalysisConnection>> connections;
 
-        vector<AnalysisModel *> nodes;
+        std::vector<AnalysisModel *> nodes;
 
         AnalysisGraph() = default;
 
@@ -37,11 +37,11 @@ namespace ssp4cpp::sim::analysis::graph
               connections(std::move(connections_))
 
         {
-            auto m = map_ns::map_unique_to_ref(models);
+            auto m = common::map_ns::map_unique_to_ref(models);
             nodes = common::map_ns::map_to_value_vector_copy(m);
         }
 
-        vector<AnalysisModel *> get_start_nodes() const
+        std::vector<AnalysisModel *> get_start_nodes() const
         {
             auto start_nodes = common::graph::Node::get_ancestors(nodes);
             return start_nodes;

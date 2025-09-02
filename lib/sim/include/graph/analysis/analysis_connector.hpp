@@ -6,8 +6,11 @@
 #include "common_time.hpp"
 #include "common_log.hpp"
 
-#include "data_type.hpp"
-// #include "analysis_model.hpp"
+#include "FMI2_Enums.hpp"
+#include "FMI2_Enums_Ext.hpp"
+#include "SSP1_SystemStructureParameter_Ext.hpp"
+
+#include "sim.hpp"
 
 #include <string>
 #include <vector>
@@ -17,8 +20,6 @@ namespace ssp4cpp::sim::analysis::graph
 
     class AnalysisModel;
 
-    using Causality = ssp4cpp::fmi2::md::Causality;
-
     // template class to enable constexpression invoke
     class AnalysisConnector : public ssp4cpp::common::graph::Node
     {
@@ -27,17 +28,18 @@ namespace ssp4cpp::sim::analysis::graph
     public:
         common::Logger log = common::Logger("AnalysisConnector", common::LogLevel::debug);
 
-        string component_name;
-        string connector_name;
+        std::string component_name;
+        std::string connector_name;
 
         Causality causality;
 
         uint64_t value_reference;
 
-        utils::DataType type;
+        DataType type;
         std::size_t size;
 
-        std::unique_ptr<std::byte[]> initial_value;
+        // use parameter since it already has all the required attributes
+        std::unique_ptr<ssp1::ext::ssv::Parameter> initial_value;
 
         AnalysisModel *model;
 
@@ -48,7 +50,7 @@ namespace ssp4cpp::sim::analysis::graph
         AnalysisConnector(std::string component_name,
                           std::string connector_name,
                           uint64_t value_reference,
-                          sim::utils::DataType type)
+                          DataType type)
         {
             this->component_name = component_name;
             this->connector_name = connector_name;
@@ -56,7 +58,7 @@ namespace ssp4cpp::sim::analysis::graph
 
             this->value_reference = value_reference;
             this->type = type;
-            this->size = utils::get_data_type_size(type);
+            this->size = fmi2::ext::enums::get_data_type_size(type);
         }
 
         virtual ~AnalysisConnector()
@@ -69,32 +71,21 @@ namespace ssp4cpp::sim::analysis::graph
             this->name = AnalysisConnector::create_name(component_name, connector_name);
         }
 
-        static std::string create_name(string component_name, string connector_name)
+        static std::string create_name(std::string component_name, std::string connector_name)
         {
             return component_name + "." + connector_name;
         }
 
-        friend ostream &operator<<(ostream &os, const AnalysisConnector &obj)
+        friend std::ostream &operator<<(std::ostream &os, const AnalysisConnector &obj)
         {
             os << "Connector { \n"
-               << "name: " << obj.name << endl
-               << "vr: " << obj.value_reference << endl
-               << "type: " << obj.type << endl
-               << "causality: " << obj.causality << endl
-               << " }" << endl;
+               << "name: " << obj.name << std::endl
+               << "vr: " << obj.value_reference << std::endl
+               << "type: " << obj.type << std::endl
+               << "causality: " << obj.causality << std::endl
+               << " }" << std::endl;
 
             return os;
-        }
-
-        void store_initial_value(void* initial_value)
-        {
-            if (this->type == utils::DataType::string)
-            {
-                log.warning("[{}] Initial start values of string not supported", __func__); 
-                return;
-            }
-            this->initial_value = std::make_unique<std::byte[]>(this->size);
-            memcpy((void*)this->initial_value.get(), initial_value, this->size);
         }
     };
 

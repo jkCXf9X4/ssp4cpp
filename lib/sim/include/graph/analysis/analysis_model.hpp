@@ -21,12 +21,12 @@ namespace ssp4cpp::sim::analysis::graph
     public:
         common::Logger log = common::Logger("AnalysisModel", common::LogLevel::info);
 
-        string fmu_name;
+        std::string fmu_name;
         handler::FmuInfo *fmu;
 
-        map<string, AnalysisConnector *> input_connectors;
-        map<string, AnalysisConnector *> output_connectors;
-        map<string, AnalysisConnector *> parameters;
+        std::map<std::string, AnalysisConnector *> input_connectors;
+        std::map<std::string, AnalysisConnector *> output_connectors;
+        std::map<std::string, AnalysisConnector *> parameters;
 
         AnalysisModel() {}
 
@@ -42,12 +42,12 @@ namespace ssp4cpp::sim::analysis::graph
             log.ext_trace("[{}] Destroying AnalysisModel", __func__);
         }
 
-        friend ostream &operator<<(ostream &os, const AnalysisModel &obj)
+        friend std::ostream &operator<<(std::ostream &os, const AnalysisModel &obj)
         {
             os << "Model { \n"
-               << "Name: " << obj.name << endl
-               << "Fmu: " << obj.fmu_name << endl
-               << " }" << endl;
+               << "Name: " << obj.name << std::endl
+               << "Fmu: " << obj.fmu_name << std::endl
+               << " }" << std::endl;
 
             return os;
         }

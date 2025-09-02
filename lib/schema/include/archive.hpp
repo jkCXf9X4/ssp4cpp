@@ -1,26 +1,24 @@
 #pragma once
 #include "common_log.hpp"
+#include "common_string.hpp"
 
 #include <filesystem>
 #include <string>
 
-using namespace std;
-using namespace std::filesystem;
 
 namespace ssp4cpp
 {
-    using namespace common;
 
     /**
      * @brief Base class for archives extracted to a temporary directory.
      */
-    class Archive
+    class Archive : public common::str::IString
     {
     public:
-        Logger log = Logger("Archive", LogLevel::info);
+        common::Logger log = common::Logger("Archive", common::LogLevel::info);
         bool using_tmp_dir = false;
-        path original_file;
-        path dir;
+        std::filesystem::path original_file;
+        std::filesystem::path dir;
 
         // Makes no sense to have a archive not associated with a file 
         Archive() = delete;
@@ -34,7 +32,7 @@ namespace ssp4cpp
         /**
          * @brief Extract a file or directory to a working location.
          */
-        Archive(const path &file, const std::string &tmp_prefix);
+        Archive(const std::filesystem::path &file, const std::string &tmp_prefix);
 
         /** @brief Clean up any temporary directory used by the archive. */
         virtual ~Archive();

@@ -14,8 +14,6 @@ namespace ssp4cpp::fmi2::ext
 {
     using namespace ssp4cpp::fmi2::md;
 
-    inline auto log = common::Logger("fmi2.ext", common::LogLevel::debug);
-
     namespace model_variables
     {
         using DataType = ssp4cpp::fmi2::md::Type;

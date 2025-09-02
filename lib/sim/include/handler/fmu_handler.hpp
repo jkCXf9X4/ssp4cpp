@@ -15,7 +15,7 @@
 
 namespace ssp4cpp::sim::handler
 {
-    using namespace std;
+    // using namespace std;
 
     struct FmuInfo
     {
@@ -39,7 +39,7 @@ namespace ssp4cpp::sim::handler
 
             this->fmu = fmu;
 
-            this->fmi4cpp_fmu = make_unique<fmi4cpp::fmi2::fmu>(this->fmu->original_file);
+            this->fmi4cpp_fmu = std::make_unique<fmi4cpp::fmi2::fmu>(this->fmu->original_file);
             this->cs_fmu = this->fmi4cpp_fmu->as_cs_fmu();
 
             this->model_description = fmu->md.get();
@@ -59,7 +59,7 @@ namespace ssp4cpp::sim::handler
         std::map<std::string, std::unique_ptr<Fmu>> fmu_map;
         std::map<std::string, ssp4cpp::Fmu *> fmu_ref_map; // Non owning
 
-        map<string, std::unique_ptr<FmuInfo>> fmu_info_map;
+        std::map<std::string, std::unique_ptr<FmuInfo>> fmu_info_map;
 
         FmuHandler(ssp4cpp::Ssp *ssp)
         {
@@ -73,7 +73,7 @@ namespace ssp4cpp::sim::handler
             }
             
             // create a non owning variant to be passed around
-            fmu_ref_map = map_ns::map_unique_to_ref(fmu_map);
+            fmu_ref_map = common::map_ns::map_unique_to_ref(fmu_map);
             
             log.debug("[{}] Creating FMU Info map", __func__);
             for (auto &[name, fmu] : fmu_ref_map)

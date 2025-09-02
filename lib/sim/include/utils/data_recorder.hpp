@@ -50,7 +50,7 @@ namespace ssp4cpp::sim::utils
         std::map<std::uint64_t, std::uint64_t> row_time_map;
         std::map<std::uint64_t, std::uint64_t> time_row_map;
         std::unique_ptr<std::byte[]> data;
-        vector<vector<bool>> updated_tracker; // [row][tracker] bool to signify if the tracker is updated
+        std::vector<std::vector<bool>> updated_tracker; // [row][tracker] bool to signify if the tracker is updated
 
         DataRecorder(const std::string &filename)
             : file(filename, std::ios::out)
@@ -120,7 +120,7 @@ namespace ssp4cpp::sim::utils
             updated_tracker.reserve(rows);
             for (int r = 0; r < rows; r++)
             {
-                vector<bool> trackers_status;
+                std::vector<bool> trackers_status;
                 trackers_status.reserve(trackers.size());
                 for (auto &t : trackers)
                 {
@@ -167,7 +167,7 @@ namespace ssp4cpp::sim::utils
             }
         }
 
-        inline byte *get_data_pos(std::size_t row, std::size_t offset)
+        inline std::byte *get_data_pos(std::size_t row, std::size_t offset)
         {
             return data.get() + row * row_size + offset;
         }

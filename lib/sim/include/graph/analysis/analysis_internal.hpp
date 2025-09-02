@@ -20,12 +20,12 @@ namespace ssp4cpp::sim::analysis::graph
 
     public:
         common::Logger log = common::Logger("AnalysisModelVariable", common::LogLevel::debug);
-        string component;
-        string variable_name;
+        std::string component;
+        std::string variable_name;
 
         AnalysisModelVariable() {}
 
-        AnalysisModelVariable(string component, string variable_name)
+        AnalysisModelVariable(std::string component, std::string variable_name)
         {
             this->component = component;
             this->variable_name = variable_name;
@@ -47,13 +47,13 @@ namespace ssp4cpp::sim::analysis::graph
             return AnalysisConnector::create_name(component, variable_name);
         }
 
-        friend ostream &operator<<(ostream &os, const AnalysisModelVariable &obj)
+        friend std::ostream &operator<<(std::ostream &os, const AnalysisModelVariable &obj)
         {
             os << "AnalysisModelVariable { \n"
-               << "name: " << obj.name << endl
-               << "component: " << obj.component << endl
-               << "variable_name: " << obj.variable_name << endl
-               << " }" << endl;
+               << "name: " << obj.name << std::endl
+               << "component: " << obj.component << std::endl
+               << "variable_name: " << obj.variable_name << std::endl
+               << " }" << std::endl;
 
             return os;
         }

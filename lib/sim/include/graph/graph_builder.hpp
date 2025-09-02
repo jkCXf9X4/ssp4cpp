@@ -32,7 +32,7 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] init", __func__);
 
-            std::map<string, std::unique_ptr<Model>> models;
+            std::map<std::string, std::unique_ptr<Model>> models;
 
             log.ext_trace("[{}] Create the models", __func__);
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)
@@ -128,7 +128,7 @@ namespace ssp4cpp::sim::graph
             // store parameters that need to be set during init
 
             log.ext_trace("[{}] exit", __func__);
-            return make_unique<Graph>(std::move(models));
+            return std::make_unique<Graph>(std::move(models));
         }
     };
 

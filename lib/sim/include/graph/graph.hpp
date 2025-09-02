@@ -21,17 +21,17 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::debug);
 
-        std::map<string, std::unique_ptr<Model>> models;
+        std::map<std::string, std::unique_ptr<Model>> models;
         std::vector<Model *> nodes;
 
         std::unique_ptr<ExecutionBase> executor;
 
         Graph() = default;
 
-        Graph(std::map<string, std::unique_ptr<Model>> models_)
+        Graph(std::map<std::string, std::unique_ptr<Model>> models_)
             : models(std::move(models_))
         {
-            auto m = map_ns::map_unique_to_ref(models);
+            auto m = common::map_ns::map_unique_to_ref(models);
             nodes = common::map_ns::map_to_value_vector_copy(m);
 
             auto executor_method = utils::Config::getOr<std::string>("simulation.executor", "jacobi");

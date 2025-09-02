@@ -21,10 +21,10 @@ namespace ssp4cpp::sim::analysis::graph
 
     public:
         common::Logger log = common::Logger("AnalysisConnection", common::LogLevel::debug);
-        string source_component_name;
-        string source_connector_name;
-        string target_component_name;
-        string target_connector_name;
+        std::string source_component_name;
+        std::string source_connector_name;
+        std::string target_component_name;
+        std::string target_connector_name;
 
         AnalysisConnector *source_connector;
         AnalysisConnector *target_connector;
@@ -56,7 +56,7 @@ namespace ssp4cpp::sim::analysis::graph
             this->name = AnalysisConnection::create_name(source_component_name, source_connector_name, target_component_name, target_connector_name);
         }
 
-        static std::string create_name(string &start_com, string &start_con, string &end_com, string &end_con)
+        static std::string create_name(std::string &start_com, std::string &start_con, std::string &end_com, std::string &end_con)
         {
             return start_com + "." + start_con + "->" + end_com + "." + end_con;
         }
@@ -71,15 +71,15 @@ namespace ssp4cpp::sim::analysis::graph
             return AnalysisConnector::create_name(target_component_name, target_connector_name);
         }
 
-        friend ostream &operator<<(ostream &os, const AnalysisConnection &obj)
+        friend std::ostream &operator<<(std::ostream &os, const AnalysisConnection &obj)
         {
             os << "Connection { \n"
-               << "name: " << obj.name << endl
-               << "source_component_name: " << obj.source_component_name << endl
-               << "source_connector_name: " << obj.source_connector_name << endl
-               << "target_component_name: " << obj.target_component_name << endl
-               << "target_connector_name: " << obj.target_connector_name << endl
-               << " }" << endl;
+               << "name: " << obj.name << std::endl
+               << "source_component_name: " << obj.source_component_name << std::endl
+               << "source_connector_name: " << obj.source_connector_name << std::endl
+               << "target_component_name: " << obj.target_component_name << std::endl
+               << "target_connector_name: " << obj.target_connector_name << std::endl
+               << " }" << std::endl;
 
             return os;
         }

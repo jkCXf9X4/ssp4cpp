@@ -15,7 +15,6 @@
 namespace ssp4cpp::sim::graph
 {
 
-
     class ExecutionBase : public Invocable
     {
     public:
@@ -59,7 +58,7 @@ namespace ssp4cpp::sim::graph
         uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) override final
         {
             log.ext_trace("[{}] start_time: {} timestep: {} end_time: {}",
-                     __func__, start_time, timestep, end_time);
+                          __func__, start_time, timestep, end_time);
 
             invoke_model(start_node, start_time, end_time, timestep);
             return end_time;
@@ -88,7 +87,7 @@ namespace ssp4cpp::sim::graph
         uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) override final
         {
             log.ext_trace("[{}] start_time: {} timestep: {} end_time: {}",
-                     __func__, start_time, timestep, end_time);
+                          __func__, start_time, timestep, end_time);
 
             // If models execute in less than 10-15 microseconds then use sequence
             if (parallelize)

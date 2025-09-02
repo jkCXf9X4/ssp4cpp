@@ -65,13 +65,9 @@ TEST_CASE("SSP Import embrace", "[SSP]") {
     // log.debug("Parsing ssp to external file");
     save_string("./tests/references/embrace_ssd.txt", ssp.ssd->to_string());
     
-    for(auto & binding : ssp.bindings)
+    for(auto & [name, parameter] : ssp.parameter_map)
     {
-        save_string("./tests/references/embrace_ssv.txt", binding.ssv->to_string());
-        if (binding.ssm)
-        {
-            save_string("./tests/references/embrace_ssm.txt", binding.ssm->to_string());
-        }
+        
     }
 
     std::cout << "Parsing complete\n";

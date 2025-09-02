@@ -1,6 +1,7 @@
 #include <catch.hpp>
 
 #include "FMI2_Enums.hpp"
+#include "FMI2_Enums_Ext.hpp"
 
 #include "data_storage.hpp"
 
@@ -29,9 +30,9 @@ TEST_CASE("DataStorage2 basic allocation", "[DataStorage2]")
 
     REQUIRE(storage.positions.size() == 2);
     REQUIRE(storage.positions[0] == 0);
-    REQUIRE(storage.positions[1] == get_data_type_size(DataType::integer));
+    REQUIRE(storage.positions[1] == ssp4cpp::fmi2::ext::enums::get_data_type_size(DataType::integer));
 
-    REQUIRE(storage.pos == get_data_type_size(DataType::integer) + get_data_type_size(DataType::real));
+    REQUIRE(storage.pos == ssp4cpp::fmi2::ext::enums::get_data_type_size(DataType::integer) + ssp4cpp::fmi2::ext::enums::get_data_type_size(DataType::real));
 
     REQUIRE(storage.locations.size() == 1);
     REQUIRE(storage.locations[0].size() == 2);

@@ -55,13 +55,6 @@ namespace ssp4cpp::sim::analysis::graph
             return std::move(models);
         }
 
-        // Helper: create_variable with explicit type and context
-        std::unique_ptr<AnalysisConnector> create_connector(std::string component_name,
-                                                            std::string connector_name,
-                                                            Causality &causality)
-        {
-        }
-
         map<string, std::unique_ptr<AnalysisConnector>> create_connectors(ssp4cpp::Ssp &ssp)
         {
             log.ext_trace("[{}] init", __func__);
@@ -104,7 +97,8 @@ namespace ssp4cpp::sim::analysis::graph
                             if (start_value)
                             {
                                 log.info("[{}] Storing start value for {}", __func__, var->name);
-                                c->store_initial_value(start_value);
+                                c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(var->name, type);
+                                c->initial_value->store_value(start_value);
                             }
                         }
 

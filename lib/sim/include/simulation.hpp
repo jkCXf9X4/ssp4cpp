@@ -25,8 +25,6 @@
 
 namespace ssp4cpp::sim
 {
-    using namespace std;
-
     class Simulation
     {
     public:
@@ -45,8 +43,8 @@ namespace ssp4cpp::sim
             this->ssp = ssp;
 
             log.info("[{}] Creating simulation", __func__);
-            fmu_handler = make_unique<handler::FmuHandler>(this->ssp);
-            recorder = make_unique<utils::DataRecorder>(result_file);
+            fmu_handler = std::make_unique<handler::FmuHandler>(this->ssp);
+            recorder = std::make_unique<utils::DataRecorder>(result_file);
         }
 
         void init()
@@ -76,9 +74,9 @@ namespace ssp4cpp::sim
             log.info("[{}] Starting simulation", __func__);
             recorder->start_recording();
 
-            uint64_t start_time = utils::Config::get<float>("simulation.start_time") * time::nanoseconds_per_second;
-            uint64_t end_time = utils::Config::get<float>("simulation.end_time") * time::nanoseconds_per_second;
-            uint64_t timestep = utils::Config::get<float>("simulation.timestep") * time::nanoseconds_per_second;
+            uint64_t start_time = utils::Config::get<float>("simulation.start_time") * common::time::nanoseconds_per_second;
+            uint64_t end_time = utils::Config::get<float>("simulation.end_time") * common::time::nanoseconds_per_second;
+            uint64_t timestep = utils::Config::get<float>("simulation.timestep") * common::time::nanoseconds_per_second;
 
             {
                 auto timer = common::time::ScopeTimer("Simulation");

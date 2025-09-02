@@ -30,7 +30,7 @@ namespace ssp4cpp::ssp::ext
             auto name = resource->name.value_or("null");
             log.trace("Resource {}", name);
 
-            auto fmu = make_unique<ssp4cpp::Fmu>(ssp.dir / resource->source);
+            auto fmu = std::make_unique<ssp4cpp::Fmu>(ssp.dir / resource->source);
             items[name] = std::move(fmu);
         }
 
