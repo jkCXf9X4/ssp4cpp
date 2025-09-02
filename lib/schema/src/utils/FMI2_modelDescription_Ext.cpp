@@ -34,7 +34,7 @@ namespace ssp4cpp::fmi2::ext
                     return &var;
                 }
             }
-            log.warning("[{}] No variable found for name {}", __func__, name);
+            log.trace("[{}] No variable found for name {}", __func__, name);
             return nullptr;
         }
 

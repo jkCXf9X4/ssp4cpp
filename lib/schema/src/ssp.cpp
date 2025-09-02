@@ -80,6 +80,11 @@ namespace ssp4cpp
             {
                 parameter_map.insert_or_assign(p.name, std::move(p));
             }
+
+            for (auto& [name, p]: parameter_map)
+            {
+                log.info("[{}] - parameter {}, {}", __func__, name, p.type.to_string());
+            }
         }
     }
 }

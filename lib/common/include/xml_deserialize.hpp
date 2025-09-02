@@ -23,24 +23,24 @@ namespace ssp4cpp::common::xml
     using namespace ssp4cpp::common::interfaces;
     using namespace ssp4cpp::common::types;
 
-    inline string parents_to_string(const xml_node &node)
+    inline std::string parents_to_string(const xml_node &node)
     {
-        string s = string(node.name());
+        std::string s = std::string(node.name());
         for (auto p = node.parent(); p; p = p.parent())
         {
-            s = string(p.name()) + "/" + s;
+            s = std::string(p.name()) + "/" + s;
         }
         return s;
     }
 
     template <typename T>
-    void get_attribute(const xml_node &node, T &obj, const string &name)
+    void get_attribute(const xml_node &node, T &obj, const std::string &name)
     {
         auto attr = node.attribute(name.c_str());
         if (attr.empty())
         {
-            string erro_msg = "ERROR: In Node: " + parents_to_string(node) + "\n Attribute not found: " + name;
-            throw runtime_error(erro_msg);
+            std::string erro_msg = "ERROR: In Node: " + parents_to_string(node) + "\n Attribute not found: " + name;
+            throw std::runtime_error(erro_msg);
         }
 
         if constexpr (is_same_v<T, int>)
@@ -70,34 +70,34 @@ namespace ssp4cpp::common::xml
     }
 
     template <typename T>
-    void get_class(const xml_node &node, T &obj, const string &name)
+    void get_class(const xml_node &node, T &obj, const std::string &name)
     {
         auto child = node.child(name.c_str());
 
         if (child.empty())
         {
-            string erro_msg = "ERROR: In Node: " + string(node.name()) + "\n Child not found: " + name;
-            throw runtime_error(erro_msg);
+            std::string erro_msg = "ERROR: In Node: " + std::string(node.name()) + "\n Child not found: " + name;
+            throw std::runtime_error(erro_msg);
         }
 
         from_xml(child, obj);
     }
 
     template <typename T>
-    void from_string(const xml_node &node, T &obj, const string &name)
+    void from_string(const xml_node &node, T &obj, const std::string &name)
     {
         auto attr = node.attribute(name.c_str());
         if (attr.empty())
         {
-            string erro_msg = "ERROR: In Node: " + string(node.name()) + "\n Attribute not found: " + name;
-            throw runtime_error(erro_msg);
+            std::string erro_msg = "ERROR: In Node: " + std::string(node.name()) + "\n Attribute not found: " + name;
+            throw std::runtime_error(erro_msg);
         }
 
         obj.from_string(attr.as_string());
     }
 
     template <typename T>
-    void get_vector(const xml_node &node, vector<T> &list, const string &name)
+    void get_vector(const xml_node &node, std::vector<T> &list, const std::string &name)
     {
         // cout << "get_vector: " << name + " : " + typeid(T).name() << endl;
         for (auto child : node.children(name.c_str()))
@@ -112,7 +112,7 @@ namespace ssp4cpp::common::xml
      * @brief Generic parser for XML attributes or child nodes into C++ objects.
      */
     template <typename T, typename = std::enable_if<!is_vector_v<T> && !is_optional_v<T>>>
-    void parse_xml(const xml_node &node, T &obj, const string &name)
+    void parse_xml(const xml_node &node, T &obj, const std::string &name)
     {
         // cout << "parse_xml: " << name << endl;
         if constexpr (is_same_v<T, int> ||
