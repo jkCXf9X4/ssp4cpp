@@ -33,33 +33,22 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] init", __func__);
 
-            std::map<std::string, std::unique_ptr<InvocableNode>> async_models;
-            std::map<std::string, FmuModel *> models;
+
+            std::map<std::string, std::unique_ptr<FmuModel>> models;
 
             log.ext_trace("[{}] Create the fmu models", __func__);
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)
             {
                 auto m = make_unique<FmuModel>(ssp_resource_name, analysis_model->fmu);
-                models[analysis_model->name] = m.get();
                 m->recorder = recorder;
-
                 log.trace("[{}] New Model: {}", __func__, m->name);
-                async_models[analysis_model->name] = std::make_unique<AsyncNode>(analysis_model->name, std::move(m));
-            }
-
-            log.ext_trace("[{}] Create connections between models", __func__);
-            for (auto &[_, analysis_model] : analysis_graph->models)
-            {
-                for (auto &child : analysis_model->children)
-                {
-                    async_models[analysis_model->name]->add_child(async_models[child->name].get());
-                }
+                models[analysis_model->name] = std::move(m);
             }
 
             log.ext_trace("[{}] Create the data storage areas within the model", __func__);
             for (auto &[_, analysis_model] : analysis_graph->models)
             {
-                auto model = models[analysis_model->name];
+                auto model = models[analysis_model->name].get();
                 for (auto &[name, connector] : analysis_model->input_connectors)
                 {
                     auto index = model->input_area->add(name, connector->type);
@@ -94,8 +83,8 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Hand the information regarding the connections over to the model", __func__);
             for (auto &[_, connection] : analysis_graph->connections)
             {
-                auto source_model = models[connection->source_model->name];
-                auto target_model = models[connection->target_model->name];
+                auto source_model = models[connection->source_model->name].get();
+                auto target_model = models[connection->target_model->name].get();
 
                 auto &source_connector = source_model->outputs[connection->get_source_connector_name()];
                 auto &target_connector = target_model->inputs[connection->get_target_connector_name()];
@@ -127,6 +116,25 @@ namespace ssp4cpp::sim::graph
             }
 
             // store parameters that need to be set during init
+
+            // Wrap models in async
+            std::map<std::string, std::unique_ptr<InvocableNode>> async_models;
+            for (auto &[n, m] : models)
+            {
+                auto name = m->name;
+                async_models[name] = std::make_unique<AsyncNode>(name, std::move(m));
+            }
+
+            log.ext_trace("[{}] Create connections between models", __func__);
+            for (auto &[_, analysis_model] : analysis_graph->models)
+            {
+                for (auto &child : analysis_model->children)
+                {
+                    async_models[analysis_model->name]->add_child(async_models[child->name].get());
+                }
+            }
+
+            // do something fancy with the graph
 
             log.ext_trace("[{}] exit", __func__);
             return std::make_unique<Graph>(std::move(async_models));

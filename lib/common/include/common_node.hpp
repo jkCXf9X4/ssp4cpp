@@ -14,7 +14,7 @@ namespace ssp4cpp::common::graph
     /**
      * @brief Basic bidirectional graph node used throughout the project.
      */
-    class Node : public str::IString
+    class Node : public virtual str::IString
     {
         Logger log = Logger("Node", LogLevel::ext_trace);
 

@@ -26,11 +26,16 @@ namespace ssp4cpp::sim::graph
         InvocableNode *start_node;
         common::Logger log = common::Logger("Seidel", common::LogLevel::debug);
 
+        bool parallelize;
+
         Seidel(std::vector<InvocableNode *> models) : ExecutionBase(std::move(models))
         {
             auto start_nodes = common::graph::Node::get_ancestors(this->models);
             assert(start_nodes.size() == 1);
             start_node = start_nodes[0];
+
+            parallelize = utils::Config::get<bool>("simulation.seidel.parallel");
+            log.info("[{}] Parallel: {}", __func__, parallelize);
         }
 
         friend std::ostream &operator<<(std::ostream &os, const Seidel &obj)

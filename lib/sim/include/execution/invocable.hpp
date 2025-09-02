@@ -57,7 +57,7 @@ namespace ssp4cpp::sim::graph
         }
     };
 
-    class Invocable : public common::str::IString
+    class Invocable : public virtual common::str::IString
     {
     public:
 

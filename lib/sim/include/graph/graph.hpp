@@ -15,7 +15,7 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class Graph final : public Invocable
+    class Graph final : public InvocableNode
     {
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::debug);
@@ -23,6 +23,7 @@ namespace ssp4cpp::sim::graph
         std::map<std::string, std::unique_ptr<InvocableNode>> models;
         std::vector<InvocableNode *> nodes;
 
+        std::string executor_method;
         std::unique_ptr<ExecutionBase> executor;
 
         Graph() = default;
@@ -33,18 +34,7 @@ namespace ssp4cpp::sim::graph
             auto m = common::map_ns::map_unique_to_ref(models);
             nodes = common::map_ns::map_to_value_vector_copy(m);
 
-            auto executor_method = utils::Config::getOr<std::string>("simulation.executor", "jacobi");
-
-            if (executor_method == "jacobi")
-            {
-                log.info("[{}] Running jacobi", __func__);
-                executor = make_unique<Jacobi>(nodes);
-            }
-            else if (executor_method == "seidel")
-            {
-                log.info("[{}] Running seidel", __func__);
-                executor = make_unique<Seidel>(nodes);
-            }
+            executor_method = utils::Config::getOr<std::string>("simulation.executor", "jacobi");
         }
 
         friend std::ostream &operator<<(std::ostream &os, const Graph &obj)
@@ -66,8 +56,20 @@ namespace ssp4cpp::sim::graph
         void init()
         {
             log.trace("[{}] Initializing Graph", __func__);
+
+            if (executor_method == "jacobi")
+            {
+                log.info("[{}] Running jacobi", __func__);
+                executor = make_unique<Jacobi>(nodes);
+            }
+            else if (executor_method == "seidel")
+            {
+                log.info("[{}] Running seidel", __func__);
+                executor = make_unique<Seidel>(nodes);
+            }
+
             log.trace("[{}] - Initializing models ", __func__);
-            
+
             for (auto &[_, model] : this->models)
             {
                 log.ext_trace("[{}] -- Initializing model: {} ", __func__, model->name);
@@ -79,7 +81,7 @@ namespace ssp4cpp::sim::graph
         uint64_t invoke(StepData step_data) override final
         {
             log.ext_trace("[{}] Graph - stepdata: {}", __func__, step_data.to_string());
-        
+
             auto t = step_data.start_time;
             while (t < step_data.end_time)
             {
