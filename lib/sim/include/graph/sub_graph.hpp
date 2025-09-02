@@ -5,7 +5,6 @@
 #include "common_string.hpp"
 #include "common_time.hpp"
 
-#include "model.hpp"
 #include "invocable.hpp"
 
 #include <string>
@@ -15,10 +14,9 @@
 namespace ssp4cpp::sim::graph
 {
 
-
-    class SubGraph final: public common::graph::Node, Invocable
+    class SubGraph final : public InvocableNode
     {
-         common::Logger log = common::Logger("Model", common::LogLevel::debug);
+        common::Logger log = common::Logger("SubGraph", common::LogLevel::debug);
 
         uint64_t delay = 0;
         uint64_t start_time = 0;
@@ -27,7 +25,6 @@ namespace ssp4cpp::sim::graph
 
         SubGraph()
         {
-
         }
 
         ~SubGraph()
@@ -35,19 +32,24 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Destroying SubGraph", __func__);
         }
 
-        friend ostream &operator<<(ostream &os, const SubGraph &obj)
+        friend std::ostream &operator<<(std::ostream &os, const SubGraph &obj)
         {
             os << "SubGraph { \n"
-               << "delay: " << obj.delay << endl
-               << " }" << endl;
+               << "delay: " << obj.delay << std::endl
+               << " }" << std::endl;
 
             return os;
         }
 
-        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) final override
+        void init() override
         {
-            return end_time;
         }
 
+        uint64_t invoke(StepData step_data) override final
+        {
+            log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
+
+            return step_data.end_time;
+        }
     };
 }

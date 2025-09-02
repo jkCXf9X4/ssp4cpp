@@ -1,16 +1,68 @@
 #pragma once
 
 #include "common_string.hpp"
+#include "common_node.hpp"
 
 #include <cstdint>
+#include <string>
 
 namespace ssp4cpp::sim::graph
 {
 
-    class Invocable :  public common::str::IString
+    class StepData : public common::str::IString
     {
     public:
-        virtual uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) = 0;
+
+        uint64_t start_time;
+        uint64_t end_time;
+        uint64_t timestep;
+        bool include_valid_input_time = false;
+        uint64_t valid_input_time;
+
+        StepData(){}
+
+        StepData(uint64_t start_time,
+                 uint64_t end_time,
+                 uint64_t timestep,
+                 uint64_t valid_input_time)
+        {
+            this->start_time = start_time;
+            this->end_time = end_time;
+            this->timestep = timestep;
+            this->valid_input_time = valid_input_time;
+            include_valid_input_time = true;
+        }
+
+        StepData(uint64_t start_time,
+                 uint64_t end_time,
+                 uint64_t timestep)
+        {
+            this->start_time = start_time;
+            this->end_time = end_time;
+            this->timestep = timestep;
+            include_valid_input_time = false;
+        }
+
+        friend std::ostream &operator<<(std::ostream &os, const StepData &obj)
+        {
+            os << "StepData:{\n"
+               << std::endl
+               << "start_time" << obj.start_time << std::endl
+               << "end_time" << obj.end_time << std::endl
+               << "timestep" << obj.timestep << std::endl
+               << "valid_input_time" << obj.valid_input_time << std::endl
+               << "}" << std::endl;
+
+            return os;
+        }
+    };
+
+    class Invocable : public common::str::IString
+    {
+    public:
+
+        virtual void init() = 0;
+        virtual uint64_t invoke(StepData data) = 0;
 
         friend std::ostream &operator<<(std::ostream &os, const Invocable &obj)
         {
@@ -18,6 +70,16 @@ namespace ssp4cpp::sim::graph
 
             return os;
         }
+    };
 
+    class InvocableNode : public common::graph::Node, public Invocable
+    {
+    public:
+        friend std::ostream &operator<<(std::ostream &os, const InvocableNode &obj)
+        {
+            os << "InvocableNode:\n{}" << std::endl;
+
+            return os;
+        }
     };
 }

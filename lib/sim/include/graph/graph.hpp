@@ -5,7 +5,6 @@
 #include "common_vector.hpp"
 
 #include "invocable.hpp"
-#include "model.hpp"
 #include "execution.hpp"
 #include "config.hpp"
 
@@ -21,14 +20,14 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::debug);
 
-        std::map<std::string, std::unique_ptr<Model>> models;
-        std::vector<Model *> nodes;
+        std::map<std::string, std::unique_ptr<InvocableNode>> models;
+        std::vector<InvocableNode *> nodes;
 
         std::unique_ptr<ExecutionBase> executor;
 
         Graph() = default;
 
-        Graph(std::map<std::string, std::unique_ptr<Model>> models_)
+        Graph(std::map<std::string, std::unique_ptr<InvocableNode>> models_)
             : models(std::move(models_))
         {
             auto m = common::map_ns::map_unique_to_ref(models);
@@ -56,12 +55,10 @@ namespace ssp4cpp::sim::graph
                << common::graph::Node::to_dot(obj.nodes) << std::endl
                << common::graph::ssc_to_string(strong_system_graph) << std::endl;
 
-            os << "Storage areas:" << std::endl;
+            os << "Models:" << std::endl;
             for (auto &[name, model] : obj.models)
             {
-                os << "Model: " << name << std::endl
-                   << " Input: " << *model->input_area << std::endl
-                   << " Output: " << *model->output_area << std::endl;
+                os << "Model: " << name << std::endl;
             }
             return os;
         }
@@ -73,25 +70,23 @@ namespace ssp4cpp::sim::graph
             
             for (auto &[_, model] : this->models)
             {
-                
-                log.ext_trace("[{}] - Initializing model: {} ", __func__, model->name);
+                log.ext_trace("[{}] -- Initializing model: {} ", __func__, model->name);
                 model->init();
             }
             log.ext_trace("[{}] - Model init completed", __func__);
         }
 
-        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) final override
+        uint64_t invoke(StepData step_data) override final
         {
-            log.info("[{}] Graph - start_time: {} timestep: {} end_time: {}",
-                     __func__, start_time, timestep, end_time);
-
-            auto t = start_time;
-            while (t < end_time)
+            log.ext_trace("[{}] Graph - stepdata: {}", __func__, step_data.to_string());
+        
+            auto t = step_data.start_time;
+            while (t < step_data.end_time)
             {
                 log.ext_trace("[{}] NEW TIME {}", __func__, t);
-                executor->invoke(t, t + timestep, timestep);
+                executor->invoke(StepData(t, t + step_data.timestep, step_data.timestep));
 
-                t += timestep;
+                t += step_data.timestep;
             }
             return t;
         }

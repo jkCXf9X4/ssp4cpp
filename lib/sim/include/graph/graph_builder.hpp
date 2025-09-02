@@ -5,7 +5,8 @@
 #include "analysis_graph.hpp"
 #include "data_recorder.hpp"
 
-#include "model.hpp"
+#include "async_node.hpp"
+#include "model_fmu.hpp"
 #include "graph.hpp"
 
 #include <map>
@@ -17,12 +18,12 @@ namespace ssp4cpp::sim::graph
     class GraphBuilder
     {
     public:
-        static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::info);
+        static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::trace);
 
         AnalysisGraph *analysis_graph;
-        utils::DataRecorder* recorder;
+        utils::DataRecorder *recorder;
 
-        GraphBuilder(AnalysisGraph *ag, utils::DataRecorder* recorder)
+        GraphBuilder(AnalysisGraph *ag, utils::DataRecorder *recorder)
         {
             this->analysis_graph = ag;
             this->recorder = recorder;
@@ -32,16 +33,18 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] init", __func__);
 
-            std::map<std::string, std::unique_ptr<Model>> models;
+            std::map<std::string, std::unique_ptr<InvocableNode>> async_models;
+            std::map<std::string, FmuModel *> models;
 
-            log.ext_trace("[{}] Create the models", __func__);
+            log.ext_trace("[{}] Create the fmu models", __func__);
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)
             {
-                auto m = make_unique<Model>(ssp_resource_name, analysis_model->fmu);
+                auto m = make_unique<FmuModel>(ssp_resource_name, analysis_model->fmu);
+                models[analysis_model->name] = m.get();
                 m->recorder = recorder;
 
                 log.trace("[{}] New Model: {}", __func__, m->name);
-                models[analysis_model->name] = std::move(m);
+                async_models[analysis_model->name] = std::make_unique<AsyncNode>(analysis_model->name, std::move(m));
             }
 
             log.ext_trace("[{}] Create connections between models", __func__);
@@ -49,14 +52,14 @@ namespace ssp4cpp::sim::graph
             {
                 for (auto &child : analysis_model->children)
                 {
-                    models[analysis_model->name]->add_child(models[child->name].get());
+                    async_models[analysis_model->name]->add_child(async_models[child->name].get());
                 }
             }
 
             log.ext_trace("[{}] Create the data storage areas within the model", __func__);
             for (auto &[_, analysis_model] : analysis_graph->models)
             {
-                auto model = models[analysis_model->name].get();
+                auto model = models[analysis_model->name];
                 for (auto &[name, connector] : analysis_model->input_connectors)
                 {
                     auto index = model->input_area->add(name, connector->type);
@@ -91,8 +94,8 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Hand the information regarding the connections over to the model", __func__);
             for (auto &[_, connection] : analysis_graph->connections)
             {
-                auto source_model = models[connection->source_model->name].get();
-                auto target_model = models[connection->target_model->name].get();
+                auto source_model = models[connection->source_model->name];
+                auto target_model = models[connection->target_model->name];
 
                 auto &source_connector = source_model->outputs[connection->get_source_connector_name()];
                 auto &target_connector = target_model->inputs[connection->get_target_connector_name()];
@@ -123,12 +126,10 @@ namespace ssp4cpp::sim::graph
                 // This is strange, why should initial values exist?
             }
 
-        
-            
             // store parameters that need to be set during init
 
             log.ext_trace("[{}] exit", __func__);
-            return std::make_unique<Graph>(std::move(models));
+            return std::make_unique<Graph>(std::move(async_models));
         }
     };
 

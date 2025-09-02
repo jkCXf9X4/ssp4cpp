@@ -1,12 +1,9 @@
-
-
 #pragma once
 
 #include "common_log.hpp"
 
 #include "invocable.hpp"
 
-#include "model.hpp"
 #include "config.hpp"
 
 #include <assert.h>
@@ -18,18 +15,18 @@ namespace ssp4cpp::sim::graph
     class ExecutionBase : public Invocable
     {
     public:
-        std::vector<Model *> models;
+        std::vector<InvocableNode *> models;
 
-        ExecutionBase(std::vector<Model *> models) : models(std::move(models)) {}
+        ExecutionBase(std::vector<InvocableNode *> models) : models(std::move(models)) {}
     };
 
     class Seidel final : public ExecutionBase
     {
     public:
-        Model *start_node;
+        InvocableNode *start_node;
         common::Logger log = common::Logger("Seidel", common::LogLevel::debug);
 
-        Seidel(std::vector<Model *> models) : ExecutionBase(std::move(models))
+        Seidel(std::vector<InvocableNode *> models) : ExecutionBase(std::move(models))
         {
             auto start_nodes = common::graph::Node::get_ancestors(this->models);
             assert(start_nodes.size() == 1);
@@ -44,24 +41,28 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        // need to think hard about the time...
-        void invoke_model(Model *model, uint64_t start_time, uint64_t end_time, uint64_t timestep)
+        void init() override
         {
-            model->invoke(start_time, end_time, timestep, end_time);
+        }
+
+        // need to think hard about the time...
+        void invoke_model(InvocableNode *model, uint64_t start_time, uint64_t end_time, uint64_t timestep)
+        {
+            auto step = StepData(start_time, end_time, timestep, end_time);
+            model->invoke(step);
             for (auto c_ : model->children)
             {
-                auto c = (Model *)c_;
+                auto c = (InvocableNode *)c_;
                 invoke_model(c, start_time, end_time, timestep);
             }
         }
 
-        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) override final
+        uint64_t invoke(StepData step_data) override final
         {
-            log.ext_trace("[{}] start_time: {} timestep: {} end_time: {}",
-                          __func__, start_time, timestep, end_time);
+            log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
 
-            invoke_model(start_node, start_time, end_time, timestep);
-            return end_time;
+            invoke_model(start_node, step_data.start_time, step_data.end_time, step_data.timestep);
+            return step_data.end_time;
         }
     };
 
@@ -72,7 +73,7 @@ namespace ssp4cpp::sim::graph
 
         bool parallelize;
 
-        Jacobi(std::vector<Model *> models) : ExecutionBase(std::move(models))
+        Jacobi(std::vector<InvocableNode *> models) : ExecutionBase(std::move(models))
         {
             parallelize = utils::Config::get<bool>("simulation.jacobi.parallel");
             log.info("[{}] Parallel: {}", __func__, parallelize);
@@ -84,29 +85,33 @@ namespace ssp4cpp::sim::graph
             return os;
         }
 
-        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep) override final
+        void init() override
         {
-            log.ext_trace("[{}] start_time: {} timestep: {} end_time: {}",
-                          __func__, start_time, timestep, end_time);
+        }
+
+        uint64_t invoke(StepData step_data) override final
+        {
+            log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
 
             // If models execute in less than 10-15 microseconds then use sequence
+            auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
             if (parallelize)
             {
                 std::for_each(std::execution::par, models.begin(), models.end(),
                               [&](auto &model)
                               {
-                                  model->invoke(start_time, end_time, timestep, start_time);
+                                  model->invoke(step);
                               });
             }
             else
             {
                 for (auto &model : this->models)
                 {
-                    model->invoke(start_time, end_time, timestep, start_time);
+                    model->invoke(step);
                 }
             }
 
-            return end_time;
+            return step_data.end_time;
         }
     };
 }

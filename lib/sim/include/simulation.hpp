@@ -6,6 +6,7 @@
 
 #include "common_thread_pool.hpp"
 
+#include "invocable.hpp"
 #include "analysis_graph_builder.hpp"
 #include "graph_builder.hpp"
 
@@ -80,7 +81,7 @@ namespace ssp4cpp::sim
 
             {
                 auto timer = common::time::ScopeTimer("Simulation");
-                sim_graph->invoke(start_time, end_time, timestep);
+                sim_graph->invoke(sim::graph::StepData(start_time, end_time, timestep));
             }
             recorder->stop_recording();
 

@@ -6,6 +6,8 @@
 #include "common_time.hpp"
 
 #include "data_ring_storage.hpp"
+#include "data_recorder.hpp"
+#include "invocable.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -16,7 +18,7 @@
 namespace ssp4cpp::sim::graph
 {
     // forward declaration
-    class Model;
+    class FmuModel;
 
     struct ConnectorInfo : public common::str::IString
     {
@@ -66,7 +68,7 @@ namespace ssp4cpp::sim::graph
         }
     };
 
-    class Model final : public common::graph::Node
+    class FmuModel final : public Invocable
     {
         uint64_t delay = 0;
         uint64_t _start_time = 0;
@@ -75,6 +77,7 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("Model", common::LogLevel::debug);
 
+        std::string name;
         handler::FmuInfo *fmu;
 
         std::unique_ptr<utils::RingStorage> input_area;
@@ -86,7 +89,7 @@ namespace ssp4cpp::sim::graph
         std::map<std::string, ConnectorInfo> parameters;
         std::vector<ConnectionInfo> connections;
 
-        Model(std::string name, handler::FmuInfo *fmu)
+        FmuModel(std::string name, handler::FmuInfo *fmu)
         {
             this->fmu = fmu;
             this->name = name;
@@ -94,15 +97,15 @@ namespace ssp4cpp::sim::graph
             output_area = make_unique<utils::RingStorage>(5, name + ".output");
         }
 
-        ~Model()
+        ~FmuModel()
         {
-            log.ext_trace("[{}] Destroying Model", __func__);
+            log.ext_trace("[{}] Destroying FmuModel", __func__);
             fmu->model->terminate();
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const Model &obj)
+        friend std::ostream &operator<<(std::ostream &os, const FmuModel &obj)
         {
-            os << "Model { \n"
+            os << "FmuModel { \n"
                << "Name: " << obj.name << std::endl
                << " }" << std::endl;
 
@@ -111,7 +114,7 @@ namespace ssp4cpp::sim::graph
 
         void init()
         {
-            log.trace("[{}] Model init ", __func__);
+            log.trace("[{}] FmuModel init ", __func__);
 
             // set parameters
             for (auto &[name, parameter] : this->parameters)
@@ -127,7 +130,7 @@ namespace ssp4cpp::sim::graph
             fmu->model->enter_initialization_mode();
             fmu->model->exit_initialization_mode();
 
-            log.ext_trace("[{}] Model init completed", __func__);
+            log.ext_trace("[{}] FmuModel init completed", __func__);
         }
 
         // Retrieve inputs, and prepare the model
@@ -171,7 +174,7 @@ namespace ssp4cpp::sim::graph
         void take_step(uint64_t timestep)
         {
             auto step_double = (double)timestep / common::time::nanoseconds_per_second;
-            log.trace("[{}] Model {} ", __func__, step_double);
+            log.trace("[{}] FmuModel {} ", __func__, step_double);
             if (fmu->model->step(step_double) == false)
             {
                 int status = (int)fmu->model->last_status();
@@ -200,18 +203,20 @@ namespace ssp4cpp::sim::graph
             recorder->update();
         }
 
-        uint64_t invoke(uint64_t start_time, uint64_t end_time, uint64_t timestep, uint64_t valid_input_time)
+        uint64_t invoke(StepData step_data) override final
         {
+            log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
+        
             _start_time = _end_time;
-            _end_time = end_time;
+            _end_time = step_data.end_time;
             auto _timestep = _end_time - _start_time;
 
             auto delayed_time = _end_time - delay;
 
             log.trace("[{}] {} start_time: {} valid_input_time: {} timestep: {} end_time: {}, delayed_time {}",
-                      __func__, this->name.c_str(), _start_time, valid_input_time, _timestep, _end_time, delayed_time);
+                      __func__, this->name.c_str(), _start_time, step_data.valid_input_time, _timestep, _end_time, delayed_time);
 
-            pre(_start_time, valid_input_time);
+            pre(_start_time, step_data.valid_input_time);
 
             take_step(_timestep);
             // this should return the new endtime if we have early return
