@@ -1,132 +1,182 @@
 classDiagram
-    class Simulator {
-        +Ssp ssp
-        +map~string, Fmu~ fmus
-        +Simulation sim
-        +Simulator(ssp_path, props_path)
-        +init()
-        +simulate()
-    }
 
-    class Simulation {
-        +FmuHandler fmu_handler
-        +DataRecorder recorder
-        +Graph sim_graph
-        +Ssp ssp
-        +map~string, Fmu~ fmus
-        +Simulation(ssp, fmus)
-        +init()
-        +simulate()
-    }
-    Simulator o-- Simulation
+class Simulator {
+  +ssp: std::unique_ptr<Ssp>
+  +sim: std::unique_ptr<Simulation>
+  +Simulator(ssp_path, props_path)
+  +init()
+  +simulate()
+}
 
-    class FmuHandler {
-        +map~string, FmuInfo~ fmus
-        +Ssp ssp
-        +FmuHandler(str_fmu, ssp)
-        +init()
-    }
-    Simulation o-- FmuHandler
-
-    class FmuInfo {
-        +string system_name
-        +string model_name
-        +Fmu fmu
-        +fmi4cpp_fmu
-        +cs_fmu
-        +model
-        +model_description
-        +FmuInfo(name, fmu)
-    }
-    FmuHandler o-- FmuInfo
-
-    class AnalysisGraphBuilder {
-        +Ssp ssp
-        +FmuHandler fmu_handler
-        +AnalysisGraphBuilder(ssp, fmu_handler)
-        +build() AnalysisGraph
-    }
-    Simulation ..> AnalysisGraphBuilder
-
-    class AnalysisGraph {
-        +map~string, AnalysisModel~ models
-        +map~string, AnalysisConnector~ connectors
-        +map~string, AnalysisConnection~ connections
-        +vector~AnalysisModel~ nodes
-    }
-    AnalysisGraphBuilder ..> AnalysisGraph
+class Simulation {
+  +ssp: Ssp*
+  +fmu_handler: std::unique_ptr<handler::FmuHandler>
+  +recorder: std::unique_ptr<utils::DataRecorder>
+  +sim_graph: std::unique_ptr<graph::Graph>
+  +Simulation(ssp)
+  +init()
+  +simulate()
+}
 
 
-    class GraphBuilder {
-        +AnalysisGraph analysis_graph
-        +DataRecorder recorder
-        +GraphBuilder(ag, recorder)
-        +build() Graph
-    }
-    AnalysisGraph ..> GraphBuilder
-    Simulation ..> GraphBuilder
+  class FmuHandler {
+    +ssp: Ssp*
+    +fmu_map: std::map<string, std::unique_ptr<Fmu>>
+    +fmu_info_map: std::map<string, std::unique_ptr<FmuInfo>>
+    +FmuHandler(ssp)
+    +init()
+  }
 
-    class Graph {
-        +map~string, Model~ models
-        +vector~Model~ nodes
-        +ExecutionBase executor
-        +invoke(start_time, end_time, timestep)
-    }
-    GraphBuilder ..> Graph
-    Simulation o-- Graph
+  class FmuInfo {
+    +system_name: std::string
+    +model_name: std::string
+    +fmu: ssp4cpp::Fmu*
+    +model_description: ssp4cpp::fmi2::md::fmi2ModelDescription*
+    +fmi4cpp_fmu: std::unique_ptr<fmi4cpp::fmi2::fmu>
+    +cs_fmu: std::unique_ptr<fmi4cpp::fmi2::cs_fmu>
+    +model: std::unique_ptr<fmi4cpp::fmi2::cs_slave>
+    +FmuInfo(name, fmu)
+  }
 
-    class Model {
-        +FmuInfo fmu
-        +RingStorage input_area
-        +RingStorage output_area
-        +DataRecorder recorder
-        +map~string, ConnectorInfo~ inputs
-        +map~string, ConnectorInfo~ outputs
-        +vector~ConnectionInfo~ connections
-        +invoke(start_time, end_time, timestep, valid_input_time)
-    }
-    Graph o-- Model
-    Model o-- FmuInfo
+
+
+  class Graph {
+    +models: std::map<string, std::unique_ptr<InvocableNode>>
+    +nodes: std::vector<InvocableNode*>
+    +executor: std::unique_ptr<ExecutionBase>
+    +Graph(models)
+    +init()
+    +invoke(step_data)
+  }
+
+  class GraphBuilder {
+    +analysis_graph: analysis::graph::AnalysisGraph*
+    +recorder: utils::DataRecorder*
+    +GraphBuilder(ag, recorder)
+    +build(): std::unique_ptr<Graph>
+  }
+
+  class FmuModel {
+    +name: std::string
+    +fmu: handler::FmuInfo*
+    +input_area: std::unique_ptr<utils::RingStorage>
+    +output_area: std::unique_ptr<utils::RingStorage>
+    +recorder: utils::DataRecorder*
+    +connections: std::vector<ConnectionInfo>
+    +FmuModel(name, fmu)
+    +init()
+    +invoke(step_data)
+  }
+
+  class AsyncNode {
+    +worker: std::thread
+    +invocable_obj: std::unique_ptr<Invocable>
+    +AsyncNode(name, m)
+    +init()
+    +invoke(step_data)
+  }
+
+  class Invocable {
+    <<Interface>>
+    +init()
+    +invoke(data)
+  }
+
+  class InvocableNode {
+    <<Interface>>
+  }
 
 
     class ExecutionBase {
-        <<interface>>
-        +vector~Model~ models
-        +invoke(start_time, end_time, timestep)
+      <<Abstract>>
+      +models: std::vector<InvocableNode*>
+      +ExecutionBase(models)
+      +init()
+      +invoke(step_data)
     }
-    Graph o-- ExecutionBase
-
-    class Seidel {
-        +Model start_node
-        +invoke(start_time, end_time, timestep)
-    }
-    ExecutionBase <|-- Seidel
 
     class Jacobi {
-        +bool parallelize
-        +invoke(start_time, end_time, timestep)
+      +Jacobi(models)
+      +invoke(step_data)
     }
-    ExecutionBase <|-- Jacobi
 
-    class DataRecorder {
-        +ofstream file
-        +vector~Tracker~ trackers
-        +start_recording()
-        +stop_recording()
+    class Seidel {
+      +Seidel(models)
+      +invoke(step_data)
     }
-    Simulation o-- DataRecorder
-    DataRecorder o-- Model
 
-    class RingStorage {
-        +DataStorage data
-        +push(time)
-        +get_valid_item(time, index) byte*
-    }
-    Model o-- RingStorage
 
-    class DataStorage {
-        +byte[] data
-        +add(name, type)
-        +allocate()
+
+
+    class AnalysisGraph {
+        +models: std::map<string, std::unique_ptr<AnalysisModel>>
+        +connectors: std::map<string, std::unique_ptr<AnalysisConnector>>
+        +connections: std::map<string, std::unique_ptr<AnalysisConnection>>
+        +AnalysisGraph(models, connectors, connections)
     }
-    RingStorage o-- DataStorage
+
+    class AnalysisGraphBuilder {
+        +ssp: ssp4cpp::Ssp*
+        +fmu_handler: handler::FmuHandler*
+        +AnalysisGraphBuilder(ssp, fmu_handler)
+        +build(): std::unique_ptr<AnalysisGraph>
+    }
+
+
+  class DataRecorder {
+    +file: std::ofstream
+    +trackers: std::vector<Tracker>
+    +DataRecorder(filename)
+    +add_storage(storage)
+    +start_recording()
+    +stop_recording()
+  }
+
+  class RingStorage {
+    +data: std::unique_ptr<DataStorage>
+    +capacity: size_t
+    +RingStorage(capacity, name)
+    +add(name, type)
+    +push(time)
+  }
+
+  class DataStorage {
+    +data: std::unique_ptr<std::byte[]>
+    +positions: std::vector<std::size_t>
+    +types: std::vector<utils::DataType>
+    +names: std::vector<std::string>
+    +DataStorage(areas)
+    +add(name, type)
+    +allocate()
+  }
+
+
+Simulator *-- Simulation
+
+Simulation *-- FmuHandler
+Simulation *-- DataRecorder
+Simulation *-- Graph
+Simulation -->  GraphBuilder
+Simulation -->  AnalysisGraphBuilder
+AnalysisGraph --> GraphBuilder
+
+FmuHandler *-- "many" FmuInfo
+
+GraphBuilder --> Graph
+InvocableNode --> Graph
+Graph *-- AsyncNode
+Jacobi --> ExecutionBase 
+Seidel -->ExecutionBase  
+ExecutionBase --> Graph 
+
+Invocable ..> InvocableNode
+InvocableNode --> AsyncNode
+Invocable --> FmuModel
+FmuInfo --> FmuModel
+FmuModel --> RingStorage
+AsyncNode *-- FmuModel
+
+AnalysisGraphBuilder --> AnalysisGraph
+
+DataRecorder *-- "many" RingStorage
+RingStorage *-- DataStorage

@@ -14,8 +14,3 @@ input connector -> fmu -> output connectors
 
 output connectors -> input connector
 
-
-
-Sim graph 
-
-model -> model
