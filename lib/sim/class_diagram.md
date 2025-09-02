@@ -105,9 +105,6 @@ class Simulation {
       +invoke(step_data)
     }
 
-
-
-
     class AnalysisGraph {
         +models: std::map<string, std::unique_ptr<AnalysisModel>>
         +connectors: std::map<string, std::unique_ptr<AnalysisConnector>>
@@ -156,27 +153,28 @@ Simulator *-- Simulation
 Simulation *-- FmuHandler
 Simulation *-- DataRecorder
 Simulation *-- Graph
-Simulation -->  GraphBuilder
-Simulation -->  AnalysisGraphBuilder
+Simulation *--  GraphBuilder
+Simulation *--  AnalysisGraphBuilder
 AnalysisGraph --> GraphBuilder
 
 FmuHandler *-- "many" FmuInfo
 
 GraphBuilder --> Graph
-InvocableNode --> Graph
+InvocableNode ..> Graph
 Graph *-- AsyncNode
-Jacobi --> ExecutionBase 
-Seidel -->ExecutionBase  
-ExecutionBase --> Graph 
+ExecutionBase ..> Jacobi 
+ExecutionBase ..> Seidel 
+Seidel --> Graph 
+Jacobi --> Graph 
 
 Invocable ..> InvocableNode
-InvocableNode --> AsyncNode
-Invocable --> FmuModel
+InvocableNode ..> AsyncNode
+Invocable ..> FmuModel
 FmuInfo --> FmuModel
 FmuModel --> RingStorage
 AsyncNode *-- FmuModel
 
 AnalysisGraphBuilder --> AnalysisGraph
 
-DataRecorder *-- "many" RingStorage
+RingStorage --> DataRecorder
 RingStorage *-- DataStorage
