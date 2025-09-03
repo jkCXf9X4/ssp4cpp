@@ -31,16 +31,15 @@ namespace ssp4cpp::sim::graph
 
         std::unique_ptr<std::byte[]> initial_value;
 
-        friend std::ostream &operator<<(std::ostream &os, const ConnectorInfo &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "ConnectorInfo { "
-               << "name: " << obj.name
-               << ", type: " << obj.type
-               << ", size: " << obj.size
-               << ", index: " << obj.index
-               << ", value_ref: " << obj.value_ref
+               << "name: " << name
+               << ", type: " << type
+               << ", size: " << size
+               << ", index: " << index
+               << ", value_ref: " << value_ref
                << " }";
-            return os;
         }
     };
 
@@ -54,17 +53,16 @@ namespace ssp4cpp::sim::graph
         uint32_t source_index;
         uint32_t target_index;
 
-        friend std::ostream &operator<<(std::ostream &os, const ConnectionInfo &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "ConnectionInfo { "
-               << "type: " << obj.type
-               << ", size: " << obj.size
-               << ", source_storage: " << obj.source_storage
-               << ", target_storage: " << obj.target_storage
-               << ", source_index: " << obj.source_index
-               << ", target_index: " << obj.target_index
+               << "type: " << type
+               << ", size: " << size
+               << ", source_storage: " << source_storage
+               << ", target_storage: " << target_storage
+               << ", source_index: " << source_index
+               << ", target_index: " << target_index
                << " }";
-            return os;
         }
     };
 
@@ -103,13 +101,11 @@ namespace ssp4cpp::sim::graph
             fmu->model->terminate();
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const FmuModel &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "FmuModel { \n"
-               << "Name: " << obj.name << std::endl
+               << "Name: " << name << std::endl
                << " }" << std::endl;
-
-            return os;
         }
 
         void init()

@@ -71,17 +71,16 @@ namespace ssp4cpp::sim::analysis::graph
             return AnalysisConnector::create_name(target_component_name, target_connector_name);
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const AnalysisConnection &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "Connection { \n"
-               << "name: " << obj.name << std::endl
-               << "source_component_name: " << obj.source_component_name << std::endl
-               << "source_connector_name: " << obj.source_connector_name << std::endl
-               << "target_component_name: " << obj.target_component_name << std::endl
-               << "target_connector_name: " << obj.target_connector_name << std::endl
+               << "name: " << name << std::endl
+               << "source_component_name: " << source_component_name << std::endl
+               << "source_connector_name: " << source_connector_name << std::endl
+               << "target_component_name: " << target_component_name << std::endl
+               << "target_connector_name: " << target_connector_name << std::endl
                << " }" << std::endl;
 
-            return os;
         }
 
     };

@@ -31,14 +31,14 @@ namespace ssp4cpp
          */
         Ssp(const std::filesystem::path &file);
 
-        friend std::ostream &operator<<(std::ostream &os, const Ssp &obj)
+        virtual void print(std::ostream &os) const
         {
-            auto resources = ssp1::ext::ssd::get_resources(*obj.ssd);
+            auto resources = ssp1::ext::ssd::get_resources(*ssd);
 
             os << "Ssp { \n"
-               << "original_file: " << obj.original_file << std::endl
-               << "dir: " << obj.dir << std::endl
-               << "ssd: " << obj.ssd->name << std::endl
+               << "original_file: " << original_file << std::endl
+               << "dir: " << dir << std::endl
+               << "ssd: " << ssd->name << std::endl
                << "resources: " << resources.size() << std::endl
                << " }" << std::endl;
 
@@ -46,7 +46,6 @@ namespace ssp4cpp
             {
                 os << "Resource: " << res->name.value_or("null") << std::endl;
             }
-            return os;
         }
     };
 

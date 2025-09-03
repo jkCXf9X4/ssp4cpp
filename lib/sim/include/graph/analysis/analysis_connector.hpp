@@ -76,16 +76,14 @@ namespace ssp4cpp::sim::analysis::graph
             return component_name + "." + connector_name;
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const AnalysisConnector &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "Connector { \n"
-               << "name: " << obj.name << std::endl
-               << "vr: " << obj.value_reference << std::endl
-               << "type: " << obj.type << std::endl
-               << "causality: " << obj.causality << std::endl
+               << "name: " << name << std::endl
+               << "vr: " << value_reference << std::endl
+               << "type: " << type << std::endl
+               << "causality: " << causality << std::endl
                << " }" << std::endl;
-
-            return os;
         }
     };
 

@@ -10,7 +10,8 @@
 #include <mutex>
 #include <thread>
 #include <atomic>
-#include <mutex>
+#include <queue>
+#include <semaphore> // std::counting_semaphore
 #include <condition_variable>
 
 namespace ssp4cpp::sim::graph
@@ -25,6 +26,19 @@ namespace ssp4cpp::sim::graph
         exit       //
     };
 
+    struct DoneMsg
+    {
+        int worker_id;
+        uint64_t time;
+    };
+
+    struct SharedState
+    {
+        std::mutex mtx;
+        std::queue<DoneMsg> inbox;
+        std::counting_semaphore<> sem{0}; // initially zero permits
+    };
+
     class AsyncNode final : public InvocableNode
     {
 
@@ -32,15 +46,17 @@ namespace ssp4cpp::sim::graph
         common::Logger log = common::Logger("AsyncNode", common::LogLevel::debug);
 
         std::thread worker;
+        int worker_id;
         std::atomic<bool> running;
-        std::mutex event_mutex;
-        std::condition_variable event;
 
         std::unique_ptr<Invocable> invocable_obj;
         std::atomic<ModelStatus> status;
 
         StepData input;
         uint64_t output;
+
+        SharedState *shared_state;
+        std::counting_semaphore<> sem{0}; // initially zero permits
 
         AsyncNode(std::string name, std::unique_ptr<Invocable> m) : invocable_obj(std::move(m))
         {
@@ -54,7 +70,7 @@ namespace ssp4cpp::sim::graph
             running = false; // to end the loop
 
             usleep(100); // wait to complete eventual current runs
-            event.notify_all();
+            sem.release();
 
             if (worker.joinable())
             {
@@ -62,13 +78,16 @@ namespace ssp4cpp::sim::graph
             }
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const AsyncNode &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "AsyncNode { \n"
-               << "Name: " << obj.name << std::endl
+               << "Name: " << name << std::endl
                << " }" << std::endl;
-
-            return os;
+        }
+        void set_shared_state(int worker_id, SharedState *ss)
+        {
+            this->worker_id = worker_id;
+            this->shared_state = ss;
         }
 
         void loop()
@@ -76,15 +95,13 @@ namespace ssp4cpp::sim::graph
             log.trace("[{}] Starting async node thread", __func__);
             while (true)
             {
-                // log.ext_trace("[{}] Holding on lock", __func__);
-                std::unique_lock<std::mutex> lock(event_mutex);
-                event.wait(lock);
+                sem.acquire();
                 if (!running)
                 {
                     return;
                 }
 
-                if (status == ModelStatus::ready)
+                // if (status == ModelStatus::ready)
                 {
                     log.trace("[{}] Executing node", __func__);
                     status = ModelStatus::running;
@@ -93,6 +110,11 @@ namespace ssp4cpp::sim::graph
 
                     log.trace("[{}] Node execution completed", __func__);
                     status = ModelStatus::completed;
+                    {
+                        std::lock_guard<std::mutex> lock(shared_state->mtx);
+                        shared_state->inbox.push({worker_id, output});
+                    }
+                    shared_state->sem.release(); // signal main thread
                     status = ModelStatus::ready;
                 }
             }
@@ -122,10 +144,16 @@ namespace ssp4cpp::sim::graph
 
         void async_invoke(StepData step_data)
         {
-            log.ext_trace("[{}] Invoking async model", __func__);
+            log.info("[{}] Invoking async model {} - {}", __func__, this->name, step_data.start_time);
             input = step_data;
-
-            event.notify_all();
+            if (status == ModelStatus::ready)
+            {
+                sem.release();
+            }
+            else
+            {
+                log.warning("[{}] Unable to start model, its not ready", __func__);
+            }
         }
     };
 }

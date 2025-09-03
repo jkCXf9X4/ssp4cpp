@@ -42,14 +42,12 @@ namespace ssp4cpp::sim::analysis::graph
             log.ext_trace("[{}] Destroying AnalysisModel", __func__);
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const AnalysisModel &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "Model { \n"
-               << "Name: " << obj.name << std::endl
-               << "Fmu: " << obj.fmu_name << std::endl
+               << "Name: " << name << std::endl
+               << "Fmu: " << fmu_name << std::endl
                << " }" << std::endl;
-
-            return os;
         }
 
     };

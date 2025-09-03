@@ -23,7 +23,7 @@ namespace ssp4cpp::sim::utils
      * The buffer is not designed to store all data of the simulation but will continuously overwrite old data
      * 
      */
-    class RingStorage
+    class RingStorage : public common::str::IString
     {
 
         common::Logger log = common::Logger("RingStorage", common::LogLevel::debug);
@@ -159,23 +159,16 @@ namespace ssp4cpp::sim::utils
             return (head + capacity - index) % capacity;
         }
 
-        friend ostream &operator<<(ostream &os, const RingStorage &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "RingStorage \n{\n"
-               << "  capacity: " << obj.capacity
-               << ", size: " << obj.size
-               << ", head: " << obj.head
-               << ", tail: " << obj.tail
-               << ", access_counter: " << obj.access_counter << std::endl
-               << "  " << *obj.data << std::endl
+               << "  capacity: " << capacity
+               << ", size: " << size
+               << ", head: " << head
+               << ", tail: " << tail
+               << ", access_counter: " << access_counter << std::endl
+               << "  " << *data << std::endl
                << "}";
-            return os;
-        }
-
-                /** @brief Convert to string for debugging purposes. */
-        std::string to_string()
-        {
-            return common::str::stream_to_str(*this);
         }
     };
 }

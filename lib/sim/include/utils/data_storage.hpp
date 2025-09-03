@@ -136,26 +136,25 @@ namespace ssp4cpp::sim::utils
             return index_name_map[name];
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const DataStorage &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "DataStorage \n{\n"
-                << " name: " << obj.name
-               << "  areas: " << obj.areas
-               << ", allocated: " << obj.allocated
-               << ", total_size: " << obj.total_size
-               << ", pos: " << obj.pos
-               << ", items: " << obj.items
-               << ", index: " << obj.index << std::endl;
+                << " name: " << name
+               << "  areas: " << areas
+               << ", allocated: " << allocated
+               << ", total_size: " << total_size
+               << ", pos: " << pos
+               << ", items: " << items
+               << ", index: " << index << std::endl;
 
-            for (int i = 0; i < obj.items; i++)
+            for (int i = 0; i < items; i++)
             {
-                os << "  { position " << obj.positions[i]
-                   << ", name " << obj.names[i]
-                   << ", type " << obj.types[i]
-                   << ", size " << obj.sizes[i] << " }" << std::endl;
+                os << "  { position " << positions[i]
+                   << ", name " << names[i]
+                   << ", type " << types[i]
+                   << ", size " << sizes[i] << " }" << std::endl;
             }
             os << "}";
-            return os;
         }
 
     };

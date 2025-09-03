@@ -24,15 +24,13 @@ namespace ssp4cpp
          */
         Fmu(const std::filesystem::path &file);
 
-        friend std::ostream &operator<<(std::ostream &os, const Fmu &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "Fmu { \n"
-               << "original_file: " << obj.original_file << std::endl
-               << "dir: " << obj.dir << std::endl
-               << "modelName: " << obj.md->modelName << std::endl
+               << "original_file: " << original_file << std::endl
+               << "dir: " << dir << std::endl
+               << "modelName: " << md->modelName << std::endl
                << " }" << std::endl;
-
-            return os;
         }
 
     };

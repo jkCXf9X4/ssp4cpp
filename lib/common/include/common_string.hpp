@@ -168,16 +168,24 @@ namespace ssp4cpp::common::str
     class IString
     {
     public:
+        virtual ~IString() = default;
+
         std::string to_string() const
         {
-            return stream_to_str(*this);
+            std::ostringstream oss;
+            oss << *this;
+            return oss.str();
         }
 
         friend std::ostream &operator<<(std::ostream &os, const IString &obj)
         {
-            os << "IString {}" << std::endl;
-
+            obj.print(os); // delegate to virtual function
             return os;
+        }
+
+        virtual void print(std::ostream &os) const
+        {
+            os << "IString {}"; // default representation
         }
     };
 

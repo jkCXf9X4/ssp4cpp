@@ -47,15 +47,13 @@ namespace ssp4cpp::sim::analysis::graph
             return AnalysisConnector::create_name(component, variable_name);
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const AnalysisModelVariable &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "AnalysisModelVariable { \n"
-               << "name: " << obj.name << std::endl
-               << "component: " << obj.component << std::endl
-               << "variable_name: " << obj.variable_name << std::endl
+               << "name: " << name << std::endl
+               << "component: " << component << std::endl
+               << "variable_name: " << variable_name << std::endl
                << " }" << std::endl;
-
-            return os;
         }
     };
 

@@ -3,6 +3,7 @@
 #include "common_log.hpp"
 
 #include "invocable.hpp"
+#include "async_node.hpp"
 
 #include "config.hpp"
 
@@ -15,58 +16,111 @@ namespace ssp4cpp::sim::graph
     class ExecutionBase : public Invocable
     {
     public:
-        std::vector<InvocableNode *> models;
+        std::vector<AsyncNode *> nodes;
+        std::vector<std::size_t> nr_parents;
+        std::vector<std::size_t> nr_parents_counter;
 
-        ExecutionBase(std::vector<InvocableNode *> models) : models(std::move(models)) {}
+        bool parallelize;
+        std::unique_ptr<SharedState> shared_state;
+
+        ExecutionBase(std::vector<AsyncNode *> nodes) : nodes(std::move(nodes))
+        {
+            shared_state = std::make_unique<SharedState>();
+
+            for (int i = 0; i < nodes.size(); i++)
+            {
+                nodes[i]->set_shared_state(i, shared_state.get());
+            }
+
+            for (auto &m : nodes)
+            {
+                nr_parents.push_back(m->parents.size());
+                nr_parents_counter.push_back(m->parents.size());
+            }
+        }
     };
 
     class Seidel final : public ExecutionBase
     {
     public:
-        InvocableNode *start_node;
         common::Logger log = common::Logger("Seidel", common::LogLevel::debug);
 
-        bool parallelize;
+        // std::vector<ssp4cpp::sim::graph::AsyncNode *> start_nodes;
 
-        Seidel(std::vector<InvocableNode *> models) : ExecutionBase(std::move(models))
+        Seidel(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
-            auto start_nodes = common::graph::Node::get_ancestors(this->models);
-            assert(start_nodes.size() == 1);
-            start_node = start_nodes[0];
-
             parallelize = utils::Config::get<bool>("simulation.seidel.parallel");
             log.info("[{}] Parallel: {}", __func__, parallelize);
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const Seidel &obj)
+        virtual void print(std::ostream &os) const
         {
-            os << "Seidel:\n{\nStart nodes:\n"
-               << "- Start node: " << obj.start_node << "\n}" << std::endl;
-
-            return os;
+            os << "Seidel:\n{}" << std::endl;
         }
 
         void init() override
         {
         }
 
-        // need to think hard about the time...
-        void invoke_model(InvocableNode *model, uint64_t start_time, uint64_t end_time, uint64_t timestep)
+        /**
+         * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
+         */
+        void invoke_graph(StepData step)
         {
-            auto step = StepData(start_time, end_time, timestep, end_time);
-            model->invoke(step);
-            for (auto c_ : model->children)
+            // track how many are currently running
+            int launched = 0;
+            int completed = 0;
+
+            // start from ancestor nodes (no parents)
+            for (int i = 0; i < nodes.size(); i++)
             {
-                auto c = (InvocableNode *)c_;
-                invoke_model(c, start_time, end_time, timestep);
+                // reset all counters, no allocation
+                this->nr_parents_counter[i] = this->nr_parents[i];
+                auto node = nodes[i];
+
+                // starting all models without parents
+                if (this->nr_parents_counter[i] == 0)
+                {
+                    log.info("[{}] Invoking: {}", __func__, node->name);
+                    node->async_invoke(step);
+                    launched += 1;
+                }
+            }
+
+            while (launched == completed)
+            {
+                shared_state->sem.acquire();
+                completed += 1;
+
+                DoneMsg msg;
+                {
+                    std::lock_guard<std::mutex> lock(shared_state->mtx);
+                    msg = std::move(shared_state->inbox.front());
+                    shared_state->inbox.pop();
+                }
+                auto finished_node = nodes[msg.worker_id];
+
+                // enqueue children whose all parents are invoked
+                for (auto n : finished_node->children)
+                {
+                    AsyncNode *node = (AsyncNode *)n;
+                    this->nr_parents_counter[node->worker_id] -= 1;
+                    if (this->nr_parents_counter[node->worker_id] == 0)
+                    {
+                        log.info("[{}] Invoking: {}", __func__, node->name);
+                        node->async_invoke(step);
+                        launched += 1;
+                    }
+                }
             }
         }
 
         uint64_t invoke(StepData step_data) override final
         {
             log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
+            step_data.valid_input_time = step_data.end_time;
 
-            invoke_model(start_node, step_data.start_time, step_data.end_time, step_data.timestep);
+            invoke_graph(step_data);
             return step_data.end_time;
         }
     };
@@ -78,16 +132,15 @@ namespace ssp4cpp::sim::graph
 
         bool parallelize;
 
-        Jacobi(std::vector<InvocableNode *> models) : ExecutionBase(std::move(models))
+        Jacobi(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
             parallelize = utils::Config::get<bool>("simulation.jacobi.parallel");
             log.info("[{}] Parallel: {}", __func__, parallelize);
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const Jacobi &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "Jacobi:\n{}" << std::endl;
-            return os;
         }
 
         void init() override
@@ -102,7 +155,7 @@ namespace ssp4cpp::sim::graph
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
             if (parallelize)
             {
-                std::for_each(std::execution::par, models.begin(), models.end(),
+                std::for_each(std::execution::par, nodes.begin(), nodes.end(),
                               [&](auto &model)
                               {
                                   model->invoke(step);
@@ -110,7 +163,7 @@ namespace ssp4cpp::sim::graph
             }
             else
             {
-                for (auto &model : this->models)
+                for (auto &model : this->nodes)
                 {
                     model->invoke(step);
                 }
@@ -120,39 +173,3 @@ namespace ssp4cpp::sim::graph
         }
     };
 }
-
-// /**
-//  * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
-//  */
-// void invoke_graph(uint64_t timestep)
-// {
-// ThreadPool pool(5);
-//     // track which nodes have been invoked
-//     std::unordered_set<SimNode*> invoked;
-//     // start from ancestor nodes (no parents)
-//     auto ready = graph::Node::get_ancestors(connection_graph);
-
-//     while (!ready.empty()) {
-//         std::vector<SimNode*> next;
-//         for (auto node : ready) {
-//             node->invoke(timestep);
-
-//             invoked.insert(node);
-//             // enqueue children whose all parents are invoked
-//             for (auto *child : node->children) {
-//                 if (invoked.count(child)) continue;
-//                 bool all_parents_invoked = true;
-//                 for (auto *p : child->parents) {
-//                     if (!invoked.count(p)) {
-//                         all_parents_invoked = false;
-//                         break;
-//                     }
-//                 }
-//                 if (all_parents_invoked) {
-//                     next.push_back(child);
-//                 }
-//             }
-//         }
-//         ready.swap(next);
-//     }
-// }

@@ -35,15 +35,13 @@ namespace ssp4cpp::common::graph
          */
         Node(const Node &other);
 
-        friend std::ostream &operator<<(std::ostream &os, const Node &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "Node { \n"
-               << "name: " << obj.name << std::endl
-               << "children: " << obj.children.size() << std::endl
-               << "parents: " << obj.parents.size() << std::endl
+               << "name: " << name << std::endl
+               << "children: " << children.size() << std::endl
+               << "parents: " << parents.size() << std::endl
                << " }" << std::endl;
-
-            return os;
         }
 
         /* === Relationship management ======================================= */

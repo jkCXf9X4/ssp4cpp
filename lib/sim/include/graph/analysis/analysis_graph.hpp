@@ -15,7 +15,7 @@
 
 namespace ssp4cpp::sim::analysis::graph
 {
-
+    // Kind of unnecessary but doesn't hurt ether
     class AnalysisGraph : public common::str::IString
     {
     public:
@@ -47,20 +47,19 @@ namespace ssp4cpp::sim::analysis::graph
             return start_nodes;
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const AnalysisGraph &obj)
+        virtual void print(std::ostream &os) const
         {
-            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(obj.nodes));
+            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
             
             os << "Simulation Graph DOT:\n" 
-            << common::graph::Node::to_dot(obj.nodes) << std::endl
+            << common::graph::Node::to_dot(nodes) << std::endl
             << common::graph::ssc_to_string(strong_system_graph) << std::endl
             << "Start nodes:" << std::endl;
             
-            for (auto &model : obj.get_start_nodes())
+            for (auto &model : get_start_nodes())
             {
                 os << "Model: " << *model << std::endl;
             }
-            return os;
         }
 
     };

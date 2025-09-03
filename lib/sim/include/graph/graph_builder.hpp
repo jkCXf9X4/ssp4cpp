@@ -118,7 +118,7 @@ namespace ssp4cpp::sim::graph
             // store parameters that need to be set during init
 
             // Wrap models in async
-            std::map<std::string, std::unique_ptr<InvocableNode>> async_models;
+            std::map<std::string, std::unique_ptr<AsyncNode>> async_models;
             for (auto &[n, m] : models)
             {
                 auto name = m->name;

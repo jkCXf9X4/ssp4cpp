@@ -43,17 +43,14 @@ namespace ssp4cpp::sim::graph
             include_valid_input_time = false;
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const StepData &obj)
+        virtual void print(std::ostream &os) const
         {
-            os << "StepData:{\n"
-               << std::endl
-               << "start_time" << obj.start_time << std::endl
-               << "end_time" << obj.end_time << std::endl
-               << "timestep" << obj.timestep << std::endl
-               << "valid_input_time" << obj.valid_input_time << std::endl
+            os << "StepData: \n{" << std::endl
+               << "start_time: " << start_time << std::endl
+               << "end_time: " << end_time << std::endl
+               << "timestep: " << timestep << std::endl
+               << "valid_input_time: " << valid_input_time << std::endl
                << "}" << std::endl;
-
-            return os;
         }
     };
 
@@ -64,22 +61,18 @@ namespace ssp4cpp::sim::graph
         virtual void init() = 0;
         virtual uint64_t invoke(StepData data) = 0;
 
-        friend std::ostream &operator<<(std::ostream &os, const Invocable &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "Invocable:\n{}" << std::endl;
-
-            return os;
         }
     };
 
     class InvocableNode : public common::graph::Node, public Invocable
     {
     public:
-        friend std::ostream &operator<<(std::ostream &os, const InvocableNode &obj)
+        virtual void print(std::ostream &os) const
         {
             os << "InvocableNode:\n{}" << std::endl;
-
-            return os;
         }
     };
 }

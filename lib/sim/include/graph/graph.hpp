@@ -18,17 +18,17 @@ namespace ssp4cpp::sim::graph
     class Graph final : public InvocableNode
     {
     public:
-        common::Logger log = common::Logger("Graph", common::LogLevel::debug);
+        common::Logger log = common::Logger("Graph", common::LogLevel::ext_trace);
 
-        std::map<std::string, std::unique_ptr<InvocableNode>> models;
-        std::vector<InvocableNode *> nodes;
+        std::map<std::string, std::unique_ptr<AsyncNode>> models;
+        std::vector<AsyncNode *> nodes;
 
         std::string executor_method;
         std::unique_ptr<ExecutionBase> executor;
 
         Graph() = default;
 
-        Graph(std::map<std::string, std::unique_ptr<InvocableNode>> models_)
+        Graph(std::map<std::string, std::unique_ptr<AsyncNode>> models_)
             : models(std::move(models_))
         {
             auto m = common::map_ns::map_unique_to_ref(models);
@@ -37,20 +37,19 @@ namespace ssp4cpp::sim::graph
             executor_method = utils::Config::getOr<std::string>("simulation.executor", "jacobi");
         }
 
-        friend std::ostream &operator<<(std::ostream &os, const Graph &obj)
+        virtual void print(std::ostream &os) const
         {
-            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(obj.nodes));
+            auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
 
             os << "Simulation Graph DOT:\n"
-               << common::graph::Node::to_dot(obj.nodes) << std::endl
+               << common::graph::Node::to_dot(nodes) << std::endl
                << common::graph::ssc_to_string(strong_system_graph) << std::endl;
 
             os << "Models:" << std::endl;
-            for (auto &[name, model] : obj.models)
+            for (auto &[name, model] : models)
             {
                 os << "Model: " << name << std::endl;
             }
-            return os;
         }
 
         void init()
@@ -80,13 +79,14 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.ext_trace("[{}] Graph - stepdata: {}", __func__, step_data.to_string());
+            log.trace("[{}] Graph - stepdata: {}", __func__, step_data.to_string());
 
             auto t = step_data.start_time;
             while (t < step_data.end_time)
             {
-                log.ext_trace("[{}] NEW TIME {}", __func__, t);
-                executor->invoke(StepData(t, t + step_data.timestep, step_data.timestep));
+                auto s = StepData(t, t + step_data.timestep, step_data.timestep);
+                log.ext_trace("[{}] Step {}", __func__, s.to_string());
+                executor->invoke(s);
 
                 t += step_data.timestep;
             }
