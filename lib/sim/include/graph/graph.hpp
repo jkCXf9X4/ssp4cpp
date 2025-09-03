@@ -18,7 +18,7 @@ namespace ssp4cpp::sim::graph
     class Graph final : public InvocableNode
     {
     public:
-        common::Logger log = common::Logger("Graph", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("Graph", common::LogLevel::info);
 
         std::map<std::string, std::unique_ptr<AsyncNode>> models;
         std::vector<AsyncNode *> nodes;
@@ -79,13 +79,13 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.trace("[{}] Graph - stepdata: {}", __func__, step_data.to_string());
+            log.trace("[{}] Invoking Graph, full step: {}", __func__, step_data.to_string());
 
             auto t = step_data.start_time;
             while (t < step_data.end_time)
             {
                 auto s = StepData(t, t + step_data.timestep, step_data.timestep);
-                log.ext_trace("[{}] Step {}", __func__, s.to_string());
+                log.ext_trace("[{}] Graph executing step: {}", __func__, s.to_string());
                 executor->invoke(s);
 
                 t += step_data.timestep;

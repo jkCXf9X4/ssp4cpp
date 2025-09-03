@@ -16,26 +16,20 @@ namespace ssp4cpp::sim::graph
     class ExecutionBase : public Invocable
     {
     public:
+        common::Logger log = common::Logger("ExecutionBase", common::LogLevel::info);
         std::vector<AsyncNode *> nodes;
-        std::vector<std::size_t> nr_parents;
-        std::vector<std::size_t> nr_parents_counter;
 
         bool parallelize;
         std::unique_ptr<SharedState> shared_state;
 
         ExecutionBase(std::vector<AsyncNode *> nodes) : nodes(std::move(nodes))
         {
+            log.trace("[{}] Setting up shared state", __func__);
             shared_state = std::make_unique<SharedState>();
 
-            for (int i = 0; i < nodes.size(); i++)
+            for (int i = 0; i < this->nodes.size(); i++)
             {
-                nodes[i]->set_shared_state(i, shared_state.get());
-            }
-
-            for (auto &m : nodes)
-            {
-                nr_parents.push_back(m->parents.size());
-                nr_parents_counter.push_back(m->parents.size());
+                this->nodes[i]->set_shared_state(i, shared_state.get());
             }
         }
     };
@@ -43,14 +37,22 @@ namespace ssp4cpp::sim::graph
     class Seidel final : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("Seidel", common::LogLevel::debug);
-
-        // std::vector<ssp4cpp::sim::graph::AsyncNode *> start_nodes;
+        common::Logger log = common::Logger("Seidel", common::LogLevel::info);
+        std::vector<std::size_t> nr_parents;
+        std::vector<std::size_t> nr_parents_counter;
 
         Seidel(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
             parallelize = utils::Config::get<bool>("simulation.seidel.parallel");
             log.info("[{}] Parallel: {}", __func__, parallelize);
+
+            log.trace("[{}] Setting up counters, {}pc", __func__, this->nodes.size());
+            for (auto &node : this->nodes)
+            {
+                log.ext_trace("[{}] {} nr_parents {}", __func__, node->name, node->parents.size());
+                nr_parents.push_back(node->parents.size());
+                nr_parents_counter.push_back(node->parents.size());
+            }
         }
 
         virtual void print(std::ostream &os) const
@@ -67,28 +69,34 @@ namespace ssp4cpp::sim::graph
          */
         void invoke_graph(StepData step)
         {
+            log.trace("[{}] step data: {}", __func__, step.to_string());
             // track how many are currently running
             int launched = 0;
             int completed = 0;
 
             // start from ancestor nodes (no parents)
+            log.trace("[{}] Reseting counters", __func__);
             for (int i = 0; i < nodes.size(); i++)
             {
-                // reset all counters, no allocation
-                this->nr_parents_counter[i] = this->nr_parents[i];
-                auto node = nodes[i];
+                this->nr_parents_counter[i] = this->nr_parents[i]; // ensure no allocation
+            }
 
-                // starting all models without parents
+            log.trace("[{}] starting all models without parents", __func__);
+            for (int i = 0; i < nodes.size(); i++)
+            {
+                auto node = nodes[i];
                 if (this->nr_parents_counter[i] == 0)
                 {
-                    log.info("[{}] Invoking: {}", __func__, node->name);
+                    log.debug("[{}] Invoking: {}", __func__, node->name);
                     node->async_invoke(step);
                     launched += 1;
                 }
             }
-
-            while (launched == completed)
+            
+            log.trace("[{}] launched {}, completed  {}", __func__, launched, completed);
+            while (launched != completed)
             {
+                log.trace("[{}] Waiting for nodes to finish", __func__);
                 shared_state->sem.acquire();
                 completed += 1;
 
@@ -99,25 +107,28 @@ namespace ssp4cpp::sim::graph
                     shared_state->inbox.pop();
                 }
                 auto finished_node = nodes[msg.worker_id];
+                log.trace("[{}] Node finished: {}", __func__, finished_node->name);
 
                 // enqueue children whose all parents are invoked
                 for (auto n : finished_node->children)
                 {
                     AsyncNode *node = (AsyncNode *)n;
+                    log.ext_trace("[{}] Evaluating child node: {}", __func__, node->name);
                     this->nr_parents_counter[node->worker_id] -= 1;
                     if (this->nr_parents_counter[node->worker_id] == 0)
                     {
-                        log.info("[{}] Invoking: {}", __func__, node->name);
+                        log.debug("[{}] Node ready, invoking: {}", __func__, node->name);
                         node->async_invoke(step);
                         launched += 1;
                     }
                 }
             }
+            log.trace("[{}] completed", __func__, launched, completed);
         }
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
+            log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
             step_data.valid_input_time = step_data.end_time;
 
             invoke_graph(step_data);

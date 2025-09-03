@@ -43,7 +43,7 @@ namespace ssp4cpp::sim::graph
     {
 
     public:
-        common::Logger log = common::Logger("AsyncNode", common::LogLevel::debug);
+        common::Logger log = common::Logger("AsyncNode", common::LogLevel::info);
 
         std::thread worker;
         int worker_id;
@@ -92,9 +92,10 @@ namespace ssp4cpp::sim::graph
 
         void loop()
         {
-            log.trace("[{}] Starting async node thread", __func__);
+            log.info("[{}] Starting async node thread, {}", __func__, this->name);
             while (true)
             {
+                log.trace("[{}] Holding node {}", __func__, this->name);
                 sem.acquire();
                 if (!running)
                 {
@@ -103,12 +104,12 @@ namespace ssp4cpp::sim::graph
 
                 // if (status == ModelStatus::ready)
                 {
-                    log.trace("[{}] Executing node", __func__);
+                    log.trace("[{}] Executing, node {}", __func__, this->name);
                     status = ModelStatus::running;
 
                     output = invoke(input);
 
-                    log.trace("[{}] Node execution completed", __func__);
+                    log.trace("[{}] Execution completed, node {}", __func__, this->name);
                     status = ModelStatus::completed;
                     {
                         std::lock_guard<std::mutex> lock(shared_state->mtx);
@@ -118,13 +119,13 @@ namespace ssp4cpp::sim::graph
                     status = ModelStatus::ready;
                 }
             }
-            log.trace("[{}] Exiting async node thread", __func__);
+            log.trace("[{}] Exiting async node thread, node {}", __func__, this->name);
             status = ModelStatus::exit;
         }
 
         void init() override final
         {
-            log.trace("[{}] Node init ", __func__);
+            log.trace("[{}] Init, node {}", __func__, this->name);
             this->invocable_obj->init();
 
             status = ModelStatus::ready;
@@ -137,14 +138,14 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
+            log.ext_trace("[{}] Invoking async, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
 
             return invocable_obj->invoke(step_data);
         }
 
         void async_invoke(StepData step_data)
         {
-            log.info("[{}] Invoking async model {} - {}", __func__, this->name, step_data.start_time);
+            log.trace("[{}] Invoking async, model {} start time {}", __func__, this->name, step_data.start_time);
             input = step_data;
             if (status == ModelStatus::ready)
             {
@@ -152,7 +153,7 @@ namespace ssp4cpp::sim::graph
             }
             else
             {
-                log.warning("[{}] Unable to start model, its not ready", __func__);
+                log.warning("[{}] Unable to start model {}, its not ready", __func__, this->name);
             }
         }
     };

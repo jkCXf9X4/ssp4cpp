@@ -45,12 +45,12 @@ namespace ssp4cpp::sim::graph
 
         virtual void print(std::ostream &os) const
         {
-            os << "StepData: \n{" << std::endl
-               << "start_time: " << start_time << std::endl
-               << "end_time: " << end_time << std::endl
-               << "timestep: " << timestep << std::endl
-               << "valid_input_time: " << valid_input_time << std::endl
-               << "}" << std::endl;
+            os << "StepData: \n{" 
+               << " start_time: " << start_time 
+               << " end_time: " << end_time 
+               << " timestep: " << timestep 
+               << " valid_input_time: " << valid_input_time
+               << " }" << std::endl;
         }
     };
 
