@@ -13,6 +13,14 @@
 
 namespace ssp4cpp::sim
 {
+    /**
+     * @brief A high-level simulator class that simplifies the process of running
+     * a simulation.
+     *
+     * This class provides a simple interface for loading an SSP file, configuring
+     * the simulation, and running it. It handles the creation and management of
+     * the underlying Simulation object.
+     */
     class Simulator
     {
     public:
@@ -21,6 +29,12 @@ namespace ssp4cpp::sim
         std::unique_ptr<Ssp> ssp;
         std::unique_ptr<Simulation> sim;
 
+        /**
+         * @brief Constructs a new Simulator object.
+         *
+         * @param ssp_path The path to the SSP file to be simulated.
+         * @param props_path The path to the simulation configuration file.
+         */
         Simulator(const std::string &ssp_path,
                   const std::string &props_path)
         {
@@ -43,12 +57,18 @@ namespace ssp4cpp::sim
             // when this is destroyed the application will end, no need to free memory resources
         }
         
+        /**
+         * @brief Initializes the simulator.
+         */
         void init()
         {
             log.info("[{}] Initializing Simulator\n", __func__);
             sim->init();
         }
         
+        /**
+         * @brief Runs the simulation.
+         */
         void simulate()
         {
             log.info("[{}] Starting Simulator\n", __func__);
@@ -58,3 +78,4 @@ namespace ssp4cpp::sim
 
     };
 }
+

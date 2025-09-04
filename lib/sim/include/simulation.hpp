@@ -26,6 +26,13 @@
 
 namespace ssp4cpp::sim
 {
+    /**
+     * @brief Main class for running a simulation.
+     *
+     * This class orchestrates the entire simulation process, from loading the SSP
+     * file to initializing the FMUs, building the simulation graph, and running
+     * the simulation.
+     */
     class Simulation
     {
     public:
@@ -39,6 +46,11 @@ namespace ssp4cpp::sim
 
         std::string result_file = "temp/output.csv";
 
+        /**
+         * @brief Constructs a new Simulation object.
+         *
+         * @param ssp A pointer to the SSP object to be simulated.
+         */
         Simulation(Ssp *ssp)
         {
             this->ssp = ssp;
@@ -48,6 +60,10 @@ namespace ssp4cpp::sim
             recorder = std::make_unique<utils::DataRecorder>(result_file);
         }
 
+        /**
+         * @brief Initializes the simulation.
+         *
+         */
         void init()
         {
             log.info("[{}] Initializing simulation", __func__);
@@ -70,6 +86,13 @@ namespace ssp4cpp::sim
             recorder->init();
         }
 
+        /**
+         * @brief Runs the simulation.
+         *
+         * This method runs the simulation from the configured start time to the
+         * end time, with the specified timestep. The simulation results are
+         * written to the configured output file.
+         */
         void simulate()
         {
             log.info("[{}] Starting simulation", __func__);
