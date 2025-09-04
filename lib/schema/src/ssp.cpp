@@ -83,7 +83,7 @@ namespace ssp4cpp
 
             for (auto& [name, p]: parameter_map)
             {
-                log.info("[{}] - parameter {}, {}", __func__, name, p.type.to_string());
+                log.debug("[{}] - parameter {}, {}, {}", __func__, name, p.type.to_string(), *(double*)p.value.get());
             }
         }
     }

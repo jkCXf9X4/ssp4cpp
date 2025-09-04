@@ -24,9 +24,8 @@ namespace ssp4cpp::sim::analysis::graph
         std::string fmu_name;
         handler::FmuInfo *fmu;
 
-        std::map<std::string, AnalysisConnector *> input_connectors;
-        std::map<std::string, AnalysisConnector *> output_connectors;
-        std::map<std::string, AnalysisConnector *> parameters;
+        std::map<std::string, AnalysisConnector *> connectors;
+
 
         AnalysisModel() {}
 

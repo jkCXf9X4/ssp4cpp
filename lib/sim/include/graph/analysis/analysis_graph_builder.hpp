@@ -101,6 +101,14 @@ namespace ssp4cpp::sim::analysis::graph
                                 c->initial_value->store_value(start_value);
                             }
                         }
+                        else if (c->causality == Causality::parameter)
+                        {
+                            if (ssp.parameter_map.count(connector_name))
+                            {
+                                log.info("[{}] Storing parameter for {} - {}", __func__, var->name, connector_name);
+                                c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(ssp.parameter_map[connector_name]);
+                            }
+                        }
 
                         items[c->name] = std::move(c);
                     }
@@ -165,22 +173,12 @@ namespace ssp4cpp::sim::analysis::graph
             for (auto &[name, connector] : connectors)
             {
                 auto model = models[connector->component_name].get();
-                if (connector->causality == Causality::input)
+                if (model->connectors.count(connector->name))
                 {
-                    model->input_connectors[connector->name] = connector.get();
+                    log.error("[{}] Naming conflict for connectors {}", __func__, connector->name );
+                    throw std::runtime_error("Naming conflict between connectors");
                 }
-                else if (connector->causality == Causality::output)
-                {
-                    model->output_connectors[connector->name] = connector.get();
-                }
-                else if (connector->causality == Causality::parameter)
-                {
-                    model->parameters[connector->name] = connector.get();
-                }
-                else
-                {
-                    log.error("[{}] Connector causality unknown", __func__);
-                }
+                model->connectors[connector->name] = connector.get();
             }
 
             log.trace("[{}] Creating connections between connectors", __func__);

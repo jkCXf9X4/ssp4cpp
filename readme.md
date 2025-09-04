@@ -9,7 +9,7 @@ See the [SSP standard](https://ssp-standard.org) for more information about the 
 ## Features
 - Extracts SSP archives to a temporary directory
 - Parses `SystemStructure.ssd` into C++ objects
-- Example applications for graph analysis and basic simulation
+- Example applications for basic simulation
 
 ## Getting started
 1. Clone the repository and initialise submodules
@@ -26,7 +26,7 @@ See the [SSP standard](https://ssp-standard.org) for more information about the 
    ```
 
 ## Running examples
-After building you can run the simulation engine:
+After building you can run the ssp simulation engine:
 ```bash
 ./build/app/sim/sim_app
 ```
@@ -35,14 +35,13 @@ After building you can run the simulation engine:
 ```bash
 cmake --build build && ./build/tests/test_1
 ```
-
-## Running python
 ```bash
 cmake -B build -S . -DSSP4CPP_BUILD_TEST=ON
 cmake --build build
 cmake -B build -S . -DSSP4CPP_BUILD_TEST=OFF
 ```
 
+## Running python
 Make sure to use the same version of python as you build for
 
 ```bash

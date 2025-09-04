@@ -38,7 +38,7 @@ namespace ssp4cpp::sim::analysis::graph
         DataType type;
         std::size_t size;
 
-        // use parameter since it already has all the required attributes
+        // for start value / parameter
         std::unique_ptr<ssp1::ext::ssv::Parameter> initial_value;
 
         AnalysisModel *model;

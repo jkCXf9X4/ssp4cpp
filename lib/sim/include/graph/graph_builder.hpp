@@ -32,24 +32,22 @@ namespace ssp4cpp::sim::graph
         std::unique_ptr<Graph> build()
         {
             log.trace("[{}] init", __func__);
-
-
             std::map<std::string, std::unique_ptr<FmuModel>> models;
 
-            log.ext_trace("[{}] Create the fmu models", __func__);
+            log.trace("[{}] - Create the fmu models", __func__);
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)
             {
                 auto m = make_unique<FmuModel>(ssp_resource_name, analysis_model->fmu);
                 m->recorder = recorder;
-                log.trace("[{}] New Model: {}", __func__, m->name);
+                log.ext_trace("[{}] -- New Model: {}", __func__, m->name);
                 models[analysis_model->name] = std::move(m);
             }
 
-            log.ext_trace("[{}] Create the data storage areas within the model", __func__);
+            log.trace("[{}] - Create the data storage areas within the model", __func__);
             for (auto &[_, analysis_model] : analysis_graph->models)
             {
                 auto model = models[analysis_model->name].get();
-                for (auto &[name, connector] : analysis_model->input_connectors)
+                for (auto &[name, connector] : analysis_model->connectors)
                 {
                     auto index = model->input_area->add(name, connector->type);
 
@@ -61,26 +59,21 @@ namespace ssp4cpp::sim::graph
                     info.index = index;
                     info.value_ref = connector->value_reference;
 
-                    model->inputs[name] = std::move(info);
-                }
+                    if (connector->initial_value)
+                    {
+                        info.initial_value = std::move(connector->initial_value->value);
+                    }
 
-                for (auto &[name, connector] : analysis_model->output_connectors)
-                {
-                    auto index = model->output_area->add(name, connector->type);
-
-                    ConnectorInfo info;
-                    info.type = connector->type;
-                    info.size = connector->size;
-                    info.name = name;
-
-                    info.index = index;
-                    info.value_ref = connector->value_reference;
-
-                    model->outputs[name] = std::move(info);
+                    if (connector->causality == Causality::input)
+                        model->inputs[name] = std::move(info);
+                    else if (connector->causality == Causality::output)
+                        model->outputs[name] = std::move(info);
+                    else if (connector->causality == Causality::parameter)
+                        model->parameters[name] = std::move(info);
                 }
             }
 
-            log.ext_trace("[{}] Hand the information regarding the connections over to the model", __func__);
+            log.trace("[{}] - Hand the information regarding the connections over to the model", __func__);
             for (auto &[_, connection] : analysis_graph->connections)
             {
                 auto source_model = models[connection->source_model->name].get();
@@ -102,22 +95,20 @@ namespace ssp4cpp::sim::graph
                 target_model->connections.push_back(std::move(con_info));
             }
 
-            log.ext_trace("[{}] Allocate the input/output areas", __func__);
+            log.trace("[{}] - Allocate the input/output areas", __func__);
             for (auto &[ssp_resource_name, model] : models)
             {
                 model->input_area->allocate();
                 model->output_area->allocate();
                 recorder->add_storage(model->input_area->data.get());
                 recorder->add_storage(model->output_area->data.get());
-
+                
                 // input push time 0
                 // set possible input values from ssd/md
                 // This is strange, why should initial values exist?
             }
-
-            // store parameters that need to be set during init
-
-            // Wrap models in async
+            
+            log.trace("[{}] - Wrap models in async", __func__);
             std::map<std::string, std::unique_ptr<AsyncNode>> async_models;
             for (auto &[n, m] : models)
             {
@@ -125,7 +116,7 @@ namespace ssp4cpp::sim::graph
                 async_models[name] = std::make_unique<AsyncNode>(name, std::move(m));
             }
 
-            log.ext_trace("[{}] Create connections between models", __func__);
+            log.trace("[{}] - Create connections between models", __func__);
             for (auto &[_, analysis_model] : analysis_graph->models)
             {
                 for (auto &child : analysis_model->children)
@@ -133,6 +124,9 @@ namespace ssp4cpp::sim::graph
                     async_models[analysis_model->name]->add_child(async_models[child->name].get());
                 }
             }
+
+            // break algebraic loops here... or before they are connected....
+            // Add a delay of a minor time amount to make sure that the broken loop cant use data that is to new
 
             // do something fancy with the graph
 
