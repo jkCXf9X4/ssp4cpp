@@ -50,17 +50,24 @@ The `xml_parser` directory contains a Python script for generating C++ classes f
 ## Getting started
 1.  Clone the repository and initialize submodules:
     ```bash
+    git clone git@github.com:jkCXf9X4/ssp4cpp.git
+    git submodule update --init --recursive 
+    or
     git clone --recursive git@github.com:jkCXf9X4/ssp4cpp.git
-    cd ssp4cpp
     ```
+
 2.  Configure the build using the provided CMake preset (requires [vcpkg](https://github.com/microsoft/vcpkg)):
     ```bash
     cmake --preset=vcpkg
     ```
+
 3.  Build the project:
     ```bash
     cmake --build build
     ```
+
+Possible dependencies
+sudo apt install ninja-build
 
 ## Running examples
 After building, you can run the SSP simulation engine:

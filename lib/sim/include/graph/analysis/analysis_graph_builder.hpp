@@ -106,7 +106,7 @@ namespace ssp4cpp::sim::analysis::graph
                             if (ssp.parameter_map.count(connector_name))
                             {
                                 log.info("[{}] Storing parameter for {} - {}", __func__, var->name, connector_name);
-                                c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(ssp.parameter_map[connector_name]);
+                                c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(ssp.parameter_map.at(connector_name));
                             }
                         }
 

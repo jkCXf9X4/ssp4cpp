@@ -23,24 +23,60 @@ namespace ssp4cpp::ssp1::ext::ssv
         std::string name;
         DataType type;
         size_t size;
-        std::unique_ptr<std::byte[]>value;
+        std::unique_ptr<std::byte[]> value; // owning, raw byte buffer
 
-        Parameter(std::string name, DataType type)
+        Parameter(std::string name_, DataType type_)
+            : name(std::move(name_)),
+              type(type_),
+              size(fmi2::ext::enums::get_data_type_size(type_)),
+              value(size ? std::make_unique<std::byte[]>(size) : nullptr) // value-initialized (zeros)
         {
-            this->name = name;
-            this->type = type;
-            this->size = fmi2::ext::enums::get_data_type_size(type);
-            this->value = std::make_unique<std::byte[]>(this->size);
         }
 
-        void store_value(void* value)
+        // Deep-copy constructor
+        Parameter(const Parameter &other)
+            : name(other.name),
+              type(other.type),
+              size(other.size),
+              value(other.size ? std::make_unique<std::byte[]>(other.size) : nullptr)
+        {
+            if (other.value)
+            {
+                std::memcpy(value.get(), other.value.get(), other.size);
+            }
+        }
+
+        // // Copy assignment (copy-and-swap for strong exception safety)
+        // Parameter &operator=(Parameter other) noexcept
+        // {
+        //     swap(*this, other);
+        //     return *this;
+        // }
+
+        // Moves can be defaulted (unique_ptr is movable)
+        Parameter(Parameter &&) noexcept = default;
+        Parameter &operator=(Parameter &&) noexcept = default;
+
+        // Store from untyped memory (size must match)
+        void store_value(const void *value)
         {
             if (this->type == DataType::string)
             {
-                log.warning("[{}] Values of string not supported", __func__); 
+                log.warning("[{}] Values of string not supported", __func__);
                 return;
             }
-            memcpy((void*)this->value.get(), value, this->size);
+            if (!this->value || !value)
+                return;
+            std::memcpy(this->value.get(), value, this->size);
+        }
+
+        friend void swap(Parameter &a, Parameter &b) noexcept
+        {
+            using std::swap;
+            swap(a.name, b.name);
+            swap(a.type, b.type);
+            swap(a.size, b.size);
+            swap(a.value, b.value);
         }
     };
 
@@ -116,6 +152,5 @@ namespace ssp4cpp::ssp1::ext::ssv
         }
         return nullptr;
     }
-    
 
 }
