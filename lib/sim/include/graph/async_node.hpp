@@ -17,6 +17,8 @@
 namespace ssp4cpp::sim::graph
 {
 
+    // A wrapper to get async behavior of a node
+
     enum class ModelStatus
     {
         initialization,

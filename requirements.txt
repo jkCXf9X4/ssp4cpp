@@ -1,2 +1,4 @@
 pysspstandard
 -e ./build/lib/python
+
+omsimulator

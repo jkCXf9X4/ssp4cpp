@@ -24,7 +24,7 @@ namespace ssp4cpp
 
         log.info("Parse parameter sets");
 
-        // should be moved to ext
+        // should be moved to ext or somewhere else...
         std::vector<ssp1::ext::ssv::Bindings> bindings;
         if (ssd->System.ParameterBindings.has_value())
         {

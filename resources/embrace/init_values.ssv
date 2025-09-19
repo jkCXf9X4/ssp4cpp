@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ssv:ParameterSet xmlns:ssv="http://ssp-standard.org/SSP1/ParameterValues" version="1.0" name="Default">
+	<ssv:Parameters>
+		<ssv:Parameter name="scenario_input">
+			<ssv:String value="Alt;L;0,0;300,10000&#10;Mach;L;0,0;300,1.2&#10;heat_load;ZOH;0,50;150,4000&#10;Wgt_On_Whl;ZOH;0,1;150,0&#10;Aircraft_state;ZOH;0,0;150,4" />
+		</ssv:Parameter>
+		<ssv:Parameter name="Alt_start">
+			<ssv:Real value="0" />
+		</ssv:Parameter>
+		<ssv:Parameter name="Mach_start">
+			<ssv:Real value="0" />
+		</ssv:Parameter>
+		<ssv:Parameter name="heat_load_start">
+			<ssv:Real value="50" />
+		</ssv:Parameter>
+		<ssv:Parameter name="Wgt_On_Whl_start">
+			<ssv:Real value="1" />
+		</ssv:Parameter>
+		<ssv:Parameter name="Aircraft_state_start">
+			<ssv:Real value="0" />
+		</ssv:Parameter>
+	</ssv:Parameters>
+</ssv:ParameterSet>

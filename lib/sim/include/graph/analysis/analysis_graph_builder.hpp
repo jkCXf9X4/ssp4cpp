@@ -159,6 +159,7 @@ namespace ssp4cpp::sim::analysis::graph
             auto models = create_models(*ssp);
             auto connectors = create_connectors(*ssp);
             auto connections = create_connections(*ssp);
+            auto model_variables = create_model_variables(fmu_handler->fmu_ref_map);
 
             auto fmu_connections = ssp1::ext::elements::get_fmu_connections(*ssp->ssd);
 
