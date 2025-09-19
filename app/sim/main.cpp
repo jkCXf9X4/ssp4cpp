@@ -12,7 +12,8 @@ int main()
     // auto sim = sim::Simulator("./resources/sine_wave.ssp", "./resources/sine_wave_config.json");
     // auto sim = sim::Simulator("./resources/delay_sys/delay_sys.ssp", "./resources/delay_sys/delay_sys_config.json");
     // auto sim = sim::Simulator("./resources/embrace/embrace.ssp", "./resources/generic_config.json");
-    auto sim = sim::Simulator("./resources/scenario/scenario.ssp", "./resources/scenario/scenario.json");
+    // auto sim = sim::Simulator("./resources/scenario/scenario.ssp", "./resources/scenario/scenario.json");
+    auto sim = sim::Simulator("./resources/scenario/scenario_parameter.ssp", "./resources/scenario/scenario.json");
     sim.init();
     sim.simulate();
 

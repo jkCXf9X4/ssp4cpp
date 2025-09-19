@@ -101,10 +101,13 @@ namespace ssp4cpp::sim::analysis::graph
                         }
 
                         // parameter set might overwrite initial value
-                        if (ssp.parameter_map.count(connector_name))
+                        auto parameter_name = std::format("{}.{}", component_name, connector_name);
+                        log.info("Parameter name {}", parameter_name);
+                        if (ssp.parameter_map.contains(parameter_name))
                         {
-                            log.trace("[{}] Storing parameter for {} - {}", __func__, var->name, connector_name);
-                            const auto &parameter = ssp.parameter_map.at(connector_name);
+                            log.info("[{}] Applying parameter for {} - {}", __func__, parameter_name, type.to_string());
+
+                            const auto &parameter = ssp.parameter_map.at(parameter_name);
                             c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(parameter);
                         }
 

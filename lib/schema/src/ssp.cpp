@@ -80,10 +80,18 @@ namespace ssp4cpp
             {
                 parameter_map.insert_or_assign(p.name, std::move(p));
             }
-
-            for (auto& [name, p]: parameter_map)
+            
+            log.ext_trace("Available parameters");
+            for (auto &[name, p] : parameter_map)
             {
-                log.debug("[{}] - parameter {}, {}, {}", __func__, name, p.type.to_string(), *(double*)p.value.get());
+                if (p.type == fmi2::md::Type::string)
+                {
+                    log.ext_trace("[{}] - parameter {}, {}, {}", __func__, name, p.type.to_string(), *(std::string *)p.value.get());
+                }
+                else
+                {
+                    log.ext_trace("[{}] - parameter {}, {}, {}", __func__, name, p.type.to_string(), *(double *)p.value.get());
+                }
             }
         }
     }
