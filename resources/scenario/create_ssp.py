@@ -8,6 +8,7 @@ import OMSimulator as oms
 scenario = Path("scenario.fmu").resolve()
 
 ssp_new = Path("scenario.ssp").resolve()
+ssp_parameter_set = Path("scenario_parameterset.ssp").resolve()
 
 print(f" {scenario=} {ssp_new=}")
 
@@ -16,3 +17,4 @@ root = model.addSystem('root', oms.Types.System.WC)
 root.addSubModel('scenario', scenario.as_posix())
 
 oms.OMSimulator().export("model", ssp_new.as_posix())
+

@@ -6,11 +6,12 @@ vcpkg_installed
 
 build.log
 .venv/
-results
 temp
 
 CMakeFiles
 CMakeCache.txt
+
+results/*result*
 
 
 # PYTHON

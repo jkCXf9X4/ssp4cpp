@@ -121,9 +121,10 @@ namespace ssp4cpp::sim::utils
             // increase head
             head = (head + 1) % capacity;
 
+            // Fix sometime when you need to feel more sad ;)
             if(data->new_data_flags[head] == true)
             {
-                log.warning("Potentially overwriting unsaved data in data storage, {}", name);
+                usleep(10);
             }
 
             access_counter += 1;

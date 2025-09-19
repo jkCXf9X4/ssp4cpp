@@ -37,6 +37,7 @@ namespace ssp4cpp::common
     {
     public:
         static inline bool enabled = false;
+        static inline bool include_time = false;
         static inline LogLevel static_level = LogLevel::debug;
         static inline std::mutex print_mutex;
 
@@ -120,7 +121,16 @@ namespace ssp4cpp::common
             {
                 const auto time = std::chrono::system_clock::now();
                 auto str = std::format(s, std::forward<Args>(args)...);
-                auto out = std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str);
+                std::string out;
+                if (include_time)
+                {
+                    out = std::format("[{}][{}][{}] {}", name, log_level_to_str(Level), time, str);
+                    
+                }
+                else
+                {
+                    out = std::format("[{}][{}] {}", name, log_level_to_str(Level), str);
+                }
 
                 {
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);

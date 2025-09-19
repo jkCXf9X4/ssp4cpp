@@ -73,7 +73,7 @@ namespace ssp4cpp::sim::graph
         uint64_t _end_time = 0;
 
     public:
-        common::Logger log = common::Logger("Model", common::LogLevel::debug);
+        common::Logger log = common::Logger("FmuModel", common::LogLevel::info);
 
         std::string name;
         handler::FmuInfo *fmu;
@@ -112,9 +112,11 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] FmuModel init ", __func__);
 
-            fmu->model->setup_experiment();
+            if (!fmu->model->setup_experiment())
+                log.error("[{}] setup_experiment failed ", __func__);
 
-            // set parameters
+            log.trace("[{}] Set start values", __func__);
+            log.ext_trace("[{}] - set parameter start values", __func__);
             for (auto &[name, parameter] : this->parameters)
             {
                 if (parameter.initial_value)
@@ -124,19 +126,39 @@ namespace ssp4cpp::sim::graph
                 }
             }
 
-            // set input start values as well
-            // make sure to store input start values in the input storage area to make sure they are applied each step if until new data is created
+            // -set
+            log.ext_trace("[{}] - set input stat values", __func__);
+            auto area = input_area->push(0);
+            for (auto &[name, input] : this->inputs)
+            {
+                if (input.initial_value)
+                {
+                    if (input.type == DataType::string)
+                    {
+                        log.warning("[{}] Set initial value for strings is not supported yet", __func__);
+                    }
+                    else
+                    {
+                        log.info("[{}] Set initial value for {}, {}", __func__, name, input.type.to_string());
+                        utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void *)input.initial_value.get());
 
-            fmu->model->enter_initialization_mode();
-            fmu->model->exit_initialization_mode();
+                        auto item = input_area->get_item(area, input.index);
+                        memcpy(item, (void *)input.initial_value.get(), input.size);
+                    }
+                }
+            }
+
+            if (!fmu->model->enter_initialization_mode())
+                log.error("[{}] enter_initialization_mode failed ", __func__);
+            if (!fmu->model->exit_initialization_mode())
+                log.error("[{}] exit_initialization_mode failed ", __func__);
 
             log.ext_trace("[{}] FmuModel init completed", __func__);
         }
 
-        // Retrieve inputs, and prepare the model
         void pre(uint64_t model_start_time, uint64_t valid_input_time)
         {
-            log.trace("[{}] Init", __func__);
+            log.trace("[{}] Init, Retrieve inputs, and prepare the model", __func__);
 
             if (input_area->data->items == 0)
             {
@@ -144,8 +166,7 @@ namespace ssp4cpp::sim::graph
             }
 
             auto area = input_area->push(model_start_time);
-            log.ext_trace("[{}] Area {}", __func__, area);
-            // Fetch valid data to input area
+            log.ext_trace("[{}] Fetch valid data to input area. Area {}", __func__, area);
             // fib input data if needed
             log.trace("[{}] Copy connections", __func__);
             for (auto &connection : connections)
@@ -189,24 +210,28 @@ namespace ssp4cpp::sim::graph
 
         void post(uint64_t time)
         {
-            log.ext_trace("[{}] Init", __func__);
+            log.ext_trace("[{}] Init {}", __func__, time);
 
             auto area = output_area->push(time);
             log.trace("[{}] Copy data from model", __func__);
+            log.trace("[{}] {}", __func__, output_area->to_string());
             for (auto &[_, output] : outputs)
             {
+                log.trace("[{}] Copying ref {} ({}) to index {}", __func__, output.value_ref, output.type.to_string(), output.index);
                 auto item = output_area->get_item(area, output.index);
+
                 utils::read_from_model_(output.type, *fmu->model, output.value_ref, (void *)item);
                 // fib output data
             }
+            log.trace("[{}] Completed copy from model", __func__);
             output_area->flag_new_data(area);
             recorder->update();
         }
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.ext_trace("[{}] stepdata: {}", __func__, step_data.to_string());
-        
+            log.ext_trace("[{}] Init, stepdata: {}", __func__, step_data.to_string());
+
             _start_time = _end_time;
             _end_time = step_data.end_time;
             auto _timestep = _end_time - _start_time;
@@ -223,6 +248,7 @@ namespace ssp4cpp::sim::graph
 
             post(delayed_time);
 
+            log.ext_trace("[{}] Completed", __func__, step_data.to_string());
             return delayed_time;
         }
     };

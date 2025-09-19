@@ -89,6 +89,7 @@ namespace ssp4cpp::sim::utils
             locations.clear();
             total_size = pos * areas;
             data = std::make_unique<std::byte[]>(total_size);
+            std::memset(data.get(), 0, total_size);
 
             timestamps.resize(areas);
             locations.resize(areas);

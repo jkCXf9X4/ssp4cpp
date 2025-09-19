@@ -12,14 +12,13 @@ namespace ssp4cpp::sim::graph
     class StepData : public common::str::IString
     {
     public:
-
         uint64_t start_time;
         uint64_t end_time;
         uint64_t timestep;
         bool include_valid_input_time = false;
-        uint64_t valid_input_time;
+        uint64_t valid_input_time = 0;
 
-        StepData(){}
+        StepData() {}
 
         StepData(uint64_t start_time,
                  uint64_t end_time,
@@ -45,19 +44,21 @@ namespace ssp4cpp::sim::graph
 
         virtual void print(std::ostream &os) const
         {
-            os << "StepData: \n{" 
-               << " start_time: " << start_time 
-               << " end_time: " << end_time 
-               << " timestep: " << timestep 
-               << " valid_input_time: " << valid_input_time
-               << " }" << std::endl;
+            os << "StepData: \n{"
+               << " start_time: " << start_time
+               << " end_time: " << end_time
+               << " timestep: " << timestep;
+            if (include_valid_input_time)
+            {
+                os << " valid_input_time: " << valid_input_time;
+            }
+            os << " }" << std::endl;
         }
     };
 
     class Invocable : public virtual common::str::IString
     {
     public:
-
         virtual void init() = 0;
         virtual uint64_t invoke(StepData data) = 0;
 

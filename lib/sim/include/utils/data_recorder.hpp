@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common_log.hpp"
+#include "common_time.hpp"
 
 #include "data_storage.hpp"
 
@@ -43,7 +44,7 @@ namespace ssp4cpp::sim::utils
 
         std::uint16_t head = 0;
         std::size_t new_item_counter = 0;
-        const std::size_t rows = 20;
+        const std::size_t rows = 200;
 
         std::size_t row_size = 0;
 
@@ -160,6 +161,7 @@ namespace ssp4cpp::sim::utils
             {
                 print_row((head + i) % rows);
             }
+            file.flush();
 
             if (file.is_open())
             {
@@ -175,7 +177,7 @@ namespace ssp4cpp::sim::utils
         void print_row(uint16_t row)
         {
             log.trace("[{}] Row: {}", __func__, row);
-            file << row_time_map[row];
+            file << (double)row_time_map[row] / common::time::nanoseconds_per_second;
             for (const auto &tracker : trackers)
             {
                 auto print_tracker = updated_tracker[row][tracker.index];
@@ -196,7 +198,12 @@ namespace ssp4cpp::sim::utils
             file << '\n';
             // reset the status after printing the row
             reset_update_status(row);
-            file.flush();
+
+            // Flush to file only once in a while to save on disk writes
+            if (row % 50 == 0)
+            {
+                file.flush();
+            }
         }
 
         void update()

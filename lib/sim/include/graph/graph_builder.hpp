@@ -49,7 +49,12 @@ namespace ssp4cpp::sim::graph
                 auto model = models[analysis_model->name].get();
                 for (auto &[name, connector] : analysis_model->connectors)
                 {
-                    auto index = model->input_area->add(name, connector->type);
+                    int index = -1;
+                    if (connector->causality == Causality::input)
+                        index = model->input_area->add(name, connector->type);
+                    else if (connector->causality == Causality::output)
+                        index = model->output_area->add(name, connector->type);
+                        
 
                     ConnectorInfo info;
                     info.type = connector->type;

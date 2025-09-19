@@ -44,7 +44,7 @@ namespace ssp4cpp::sim
         std::unique_ptr<utils::DataRecorder> recorder;
         std::unique_ptr<graph::Graph> sim_graph;
 
-        std::string result_file = "temp/output.csv";
+        std::string result_file = "results/result.csv";
 
         /**
          * @brief Constructs a new Simulation object.

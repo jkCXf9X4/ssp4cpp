@@ -92,7 +92,7 @@ namespace ssp4cpp::sim::graph
                     launched += 1;
                 }
             }
-            
+
             log.trace("[{}] launched {}, completed  {}", __func__, launched, completed);
             while (launched != completed)
             {
@@ -139,7 +139,7 @@ namespace ssp4cpp::sim::graph
     class Jacobi final : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("Jacobi", common::LogLevel::debug);
+        common::Logger log = common::Logger("Jacobi", common::LogLevel::info);
 
         bool parallelize;
 
@@ -169,6 +169,7 @@ namespace ssp4cpp::sim::graph
                 std::for_each(std::execution::par, nodes.begin(), nodes.end(),
                               [&](auto &model)
                               {
+                                  log.ext_trace("[{}] Invoking model {}", __func__, model->name);
                                   model->invoke(step);
                               });
             }
