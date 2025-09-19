@@ -47,27 +47,7 @@ namespace ssp4cpp::ssp1::ext::ssv
 
         Parameter(Parameter &&other) noexcept = default;
 
-        Parameter &operator=(const Parameter &other)
-        {
-            if (this == &other)
-            {
-                return *this;
-            }
-            name = other.name;
-            type = other.type;
-            size = other.size;
-            if (other.value)
-            {
-                value = std::make_unique<std::byte[]>(size);
-                std::memcpy(value.get(), other.value.get(), size);
-            }
-            else
-            {
-                value.reset();
-            }
-            return *this;
-        }
-
+        Parameter &operator=(const Parameter &other)  = default;
         Parameter &operator=(Parameter &&other) noexcept = default;
 
         void store_value(void* value)

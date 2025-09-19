@@ -12,6 +12,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
      endif()
  endif()
 
+# Link static
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libstdc++")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++")
+
 add_compile_options(-gsplit-dwarf)
 
 message("Current ssp4cpp version: ${projectVersion}\n")

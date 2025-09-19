@@ -103,10 +103,6 @@ namespace ssp4cpp::sim::graph
                 model->output_area->allocate();
                 recorder->add_storage(model->input_area->data.get());
                 recorder->add_storage(model->output_area->data.get());
-                
-                // input push time 0
-                // set possible input values from ssd/md
-                // This is strange, why should initial values exist?
             }
             
             log.trace("[{}] - Wrap models in async", __func__);
