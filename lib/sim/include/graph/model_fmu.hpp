@@ -112,17 +112,21 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] FmuModel init ", __func__);
 
+            fmu->model->setup_experiment();
+
             // set parameters
             for (auto &[name, parameter] : this->parameters)
             {
                 if (parameter.initial_value)
                 {
-                    log.ext_trace("[{}] Set initial value for {}", __func__, name);
+                    log.info("[{}] Set initial value for {}, {}", __func__, name, parameter.type.to_string());
                     utils::write_to_model_(parameter.type, *fmu->model, parameter.value_ref, (void *)parameter.initial_value.get());
                 }
             }
 
-            fmu->model->setup_experiment();
+            // set input start values as well
+            // make sure to store input start values in the input storage area to make sure they are applied each step if until new data is created
+
             fmu->model->enter_initialization_mode();
             fmu->model->exit_initialization_mode();
 

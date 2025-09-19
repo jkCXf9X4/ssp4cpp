@@ -28,7 +28,7 @@ namespace ssp4cpp::sim::analysis::graph
     class AnalysisGraphBuilder
     {
     public:
-        static inline auto log = common::Logger("analysis::graph::AnalysisGraphBuilder", common::LogLevel::info);
+        static inline auto log = common::Logger("AnalysisGraphBuilder", common::LogLevel::info);
 
         ssp4cpp::Ssp *ssp;
         handler::FmuHandler *fmu_handler;
@@ -72,17 +72,18 @@ namespace ssp4cpp::sim::analysis::graph
                     log.trace("[{}] Creating Connector: {} - {}", __func__, component_name, connector_name);
 
                     // using namespace handler;
-
                     auto fmu = fmu_handler->fmu_info_map[component_name].get();
 
                     auto md = fmu->model_description;
 
                     log.ext_trace("[{}] get_variable_by_name", __func__);
                     auto var = fmi2::ext::model_variables::get_variable_by_name(md->ModelVariables, connector_name);
+
+                    log.ext_trace("[{}] Name {}", __func__, var->name);
                     if (var)
                     {
                         auto value_reference = var->valueReference.value();
-                        log.ext_trace("[{}] get_variable_type", __func__);
+                        log.ext_trace("[{}] get_variable_type {}", __func__, value_reference);
                         auto type = fmi2::ext::model_variables::get_variable_type(*var);
 
                         log.ext_trace("[{}] Create AnalysisConnector", __func__);
@@ -91,23 +92,20 @@ namespace ssp4cpp::sim::analysis::graph
 
                         c->causality = connector->kind;
 
-                        if (c->causality == Causality::input)
+                        auto start_value = fmi2::ext::model_variables::get_variable_start_value(*var);
+                        if (start_value)
                         {
-                            auto start_value = fmi2::ext::model_variables::get_variable_start_value(*var);
-                            if (start_value)
-                            {
-                                log.info("[{}] Storing start value for {}", __func__, var->name);
-                                c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(var->name, type);
-                                c->initial_value->store_value(start_value);
-                            }
+                            log.info("[{}] Storing start value for {}, {}", __func__, var->name, type.to_string());
+                            c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(var->name, type);
+                            c->initial_value->store_value(start_value);
                         }
-                        else if (c->causality == Causality::parameter)
+
+                        // parameter set might overwrite initial value
+                        if (ssp.parameter_map.count(connector_name))
                         {
-                            if (ssp.parameter_map.count(connector_name))
-                            {
-                                log.info("[{}] Storing parameter for {} - {}", __func__, var->name, connector_name);
-                                c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(ssp.parameter_map[connector_name]);
-                            }
+                            log.trace("[{}] Storing parameter for {} - {}", __func__, var->name, connector_name);
+                            const auto &parameter = ssp.parameter_map.at(connector_name);
+                            c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(parameter);
                         }
 
                         items[c->name] = std::move(c);
@@ -176,7 +174,7 @@ namespace ssp4cpp::sim::analysis::graph
                 auto model = models[connector->component_name].get();
                 if (model->connectors.count(connector->name))
                 {
-                    log.error("[{}] Naming conflict for connectors {}", __func__, connector->name );
+                    log.error("[{}] Naming conflict for connectors {}", __func__, connector->name);
                     throw std::runtime_error("Naming conflict between connectors");
                 }
                 model->connectors[connector->name] = connector.get();

@@ -95,8 +95,8 @@ namespace ssp4cpp::sim
          */
         void simulate()
         {
-            log.info("[{}] Starting simulation", __func__);
             recorder->start_recording();
+            log.info("[{}] Starting simulation", __func__);
 
             uint64_t start_time = utils::Config::get<float>("simulation.start_time") * common::time::nanoseconds_per_second;
             uint64_t end_time = utils::Config::get<float>("simulation.end_time") * common::time::nanoseconds_per_second;

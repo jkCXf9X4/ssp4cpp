@@ -18,7 +18,7 @@ namespace ssp4cpp::sim::graph
     class GraphBuilder
     {
     public:
-        static inline auto log = common::Logger("sim::graph::GraphBuilder", common::LogLevel::trace);
+        static inline auto log = common::Logger("GraphBuilder", common::LogLevel::trace);
 
         AnalysisGraph *analysis_graph;
         utils::DataRecorder *recorder;
@@ -60,7 +60,8 @@ namespace ssp4cpp::sim::graph
                     info.value_ref = connector->value_reference;
 
                     if (connector->initial_value)
-                    {
+                    {  
+                        log.trace("[{}] - Set init value for {}", __func__, info.name);
                         info.initial_value = std::move(connector->initial_value->value);
                     }
 

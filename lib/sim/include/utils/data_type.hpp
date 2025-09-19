@@ -30,9 +30,10 @@ namespace ssp4cpp::sim::utils
         case DataType::enumeration:
             model.read_integer(value_reference, *(int *)out);
             return;
-        // case DataType::string:
+        case DataType::string:
+            throw std::invalid_argument("String not supported");
         //     model.read_string(value_reference, *(const char *)out);
-        //     return;
+            return;
         case DataType::unknown:
             return;
         }
@@ -47,7 +48,7 @@ namespace ssp4cpp::sim::utils
         switch (t)
         {
         case DataType::real:
-            model.write_real(value_reference, *(int *)data);
+            model.write_real(value_reference, *(double *)data);
             return;
         case DataType::boolean:
             model.write_boolean(value_reference, *(int *)data);
@@ -56,9 +57,13 @@ namespace ssp4cpp::sim::utils
         case DataType::enumeration:
             model.write_integer(value_reference, *(int *)data);
             return;
-        // case DataType::string:
-        //     model.write_string(value_reference, *(int *)data);
-        //     return;
+        case DataType::string:
+        {
+            auto s = (std::string *)data;
+            auto c_str = s->c_str();
+            model.write_string(value_reference, c_str);
+            return;
+        }
         case DataType::unknown:
             return;
         }

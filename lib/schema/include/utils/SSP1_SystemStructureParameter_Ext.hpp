@@ -33,11 +33,51 @@ namespace ssp4cpp::ssp1::ext::ssv
             this->value = std::make_unique<std::byte[]>(this->size);
         }
 
+        Parameter(const Parameter &other)
+        {
+            name = other.name;
+            type = other.type;
+            size = other.size;
+            if (other.value)
+            {
+                value = std::make_unique<std::byte[]>(size);
+                std::memcpy(value.get(), other.value.get(), size);
+            }
+        }
+
+        Parameter(Parameter &&other) noexcept = default;
+
+        Parameter &operator=(const Parameter &other)
+        {
+            if (this == &other)
+            {
+                return *this;
+            }
+            name = other.name;
+            type = other.type;
+            size = other.size;
+            if (other.value)
+            {
+                value = std::make_unique<std::byte[]>(size);
+                std::memcpy(value.get(), other.value.get(), size);
+            }
+            else
+            {
+                value.reset();
+            }
+            return *this;
+        }
+
+        Parameter &operator=(Parameter &&other) noexcept = default;
+
         void store_value(void* value)
         {
             if (this->type == DataType::string)
             {
-                log.warning("[{}] Values of string not supported", __func__); 
+                log.ext_trace("[{}] Storing value {}", __func__, *(string*)value); 
+                auto s = (string*)this->value.get();
+                *s = *(string*)value;
+                log.ext_trace("[{}] Value stored {}", __func__, *(string*)this->value.get()); 
                 return;
             }
             memcpy((void*)this->value.get(), value, this->size);

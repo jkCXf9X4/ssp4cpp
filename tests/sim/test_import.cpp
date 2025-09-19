@@ -29,7 +29,7 @@ TEST_CASE("SSP Import", "[SSP]") {
     // auto log = Logger("cosim.main", LogLevel::debug);
     // log.debug("Opening ssp");
 
-    auto ssp = ssp4cpp::Ssp("./resources/algebraic_loop_4.ssp");
+    auto ssp = ssp4cpp::Ssp("./resources/algebraic_loop/algebraic_loop_4.ssp");
 
     // log.debug("Imported ssp! \n");
     // log.debug("{}", ssp.to_string());
@@ -60,7 +60,7 @@ TEST_CASE("SSP Import embrace", "[SSP]") {
     // log.debug("Opening ssp");
 
     std::cout << "Loading embrace.ssp\n";
-    auto ssp = ssp4cpp::Ssp("./resources/embrace.ssp");
+    auto ssp = ssp4cpp::Ssp("./resources/embrace/embrace.ssp");
 
     // log.debug("Parsing ssp to external file");
     save_string("./tests/references/embrace_ssd.txt", ssp.ssd->to_string());
