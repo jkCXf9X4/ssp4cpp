@@ -41,7 +41,7 @@ namespace ssp4cpp::sim::graph
         std::counting_semaphore<> sem{0}; // initially zero permits
     };
 
-    class AsyncNode final : public InvocableNode
+    class AsyncNode final : public Invocable
     {
 
     public:

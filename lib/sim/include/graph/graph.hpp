@@ -15,7 +15,7 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class Graph final : public InvocableNode
+    class Graph final : public Invocable
     {
     public:
         common::Logger log = common::Logger("Graph", common::LogLevel::info);

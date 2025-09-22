@@ -29,10 +29,13 @@ namespace ssp4cpp::common::time
 
         ScopeTimer(std::string label);
 
+        ScopeTimer(std::string label, uint64_t *result_callback);
+
         ~ScopeTimer();
 
     private:
         std::string label_;
         clock::time_point start_;
+        uint64_t *result_callback_ns = nullptr;
     };
 }

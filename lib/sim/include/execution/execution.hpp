@@ -160,7 +160,7 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.info("[{}] stepdata: {}", __func__, step_data.to_string());
+            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
 
             // If models execute in less than 10-15 microseconds then use sequence
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
@@ -169,7 +169,7 @@ namespace ssp4cpp::sim::graph
                 std::for_each(std::execution::par, nodes.begin(), nodes.end(),
                               [&](auto &model)
                               {
-                                  log.info("[{}] Invoking model {}", __func__, model->name);
+                                  log.debug("[{}] Invoking model {}", __func__, model->name);
                                   model->invoke(step);
                               });
             }

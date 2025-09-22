@@ -77,7 +77,6 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("FmuModel", common::LogLevel::info);
 
-        std::string name;
         handler::FmuInfo *fmu;
 
         std::unique_ptr<utils::RingStorage> input_area;
@@ -208,15 +207,21 @@ namespace ssp4cpp::sim::graph
         {
             auto step_double = (double)timestep / common::time::nanoseconds_per_second;
             log.trace("[{}] FmuModel {} ", __func__, step_double);
-            if (fmu->model->step(step_double) == false)
+
+            uint64_t timer;
             {
-                int status = (int)fmu->model->last_status();
-                log.error("Error! step() returned with status: {}", std::to_string(status));
-                if (status == 3)
+                common::time::ScopeTimer(this->name, &timer);
+                if (fmu->model->step(step_double) == false)
                 {
-                    throw std::runtime_error("Execution failed");
+                    int status = (int)fmu->model->last_status();
+                    log.error("Error! step() returned with status: {}", std::to_string(status));
+                    if (status == 3)
+                    {
+                        throw std::runtime_error("Execution failed");
+                    }
                 }
             }
+            this->invocation_walltime_ns += timer;
             log.trace("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
         }
 
@@ -242,7 +247,7 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.info("[{}] Init {}, stepdata: {}", __func__, name, step_data.to_string());
+            log.debug("[{}] Init {}, stepdata: {}", __func__, name, step_data.to_string());
 
             _start_time = _end_time;
             _end_time = step_data.end_time;

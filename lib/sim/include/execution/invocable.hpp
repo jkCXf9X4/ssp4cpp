@@ -56,24 +56,17 @@ namespace ssp4cpp::sim::graph
         }
     };
 
-    class Invocable : public virtual common::str::IString
+    class Invocable : public common::graph::Node, public virtual common::str::IString
     {
     public:
+        uint64_t invocation_walltime_ns = 0;
+
         virtual void init() = 0;
         virtual uint64_t invoke(StepData data) = 0;
 
         virtual void print(std::ostream &os) const
         {
             os << "Invocable:\n{}" << std::endl;
-        }
-    };
-
-    class InvocableNode : public common::graph::Node, public Invocable
-    {
-    public:
-        virtual void print(std::ostream &os) const
-        {
-            os << "InvocableNode:\n{}" << std::endl;
         }
     };
 }
