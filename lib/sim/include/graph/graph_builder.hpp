@@ -2,6 +2,8 @@
 
 #include "common_log.hpp"
 
+#include "FMI2_Enums_Ext.hpp"
+
 #include "analysis_graph.hpp"
 #include "data_recorder.hpp"
 
@@ -18,7 +20,7 @@ namespace ssp4cpp::sim::graph
     class GraphBuilder
     {
     public:
-        static inline auto log = common::Logger("GraphBuilder", common::LogLevel::trace);
+        static inline auto log = common::Logger("GraphBuilder", common::LogLevel::info);
 
         AnalysisGraph *analysis_graph;
         utils::DataRecorder *recorder;
@@ -54,7 +56,6 @@ namespace ssp4cpp::sim::graph
                         index = model->input_area->add(name, connector->type);
                     else if (connector->causality == Causality::output)
                         index = model->output_area->add(name, connector->type);
-                        
 
                     ConnectorInfo info;
                     info.type = connector->type;
@@ -65,9 +66,10 @@ namespace ssp4cpp::sim::graph
                     info.value_ref = connector->value_reference;
 
                     if (connector->initial_value)
-                    {  
-                        log.trace("[{}] - Set init value for {}", __func__, info.name);
-                        info.initial_value = std::move(connector->initial_value->value);
+                    {
+                        info.initial_value = connector->initial_value->get_value();
+
+                        log.debug("[{}] -- Store start value for {} : {}", __func__, info.name, fmi2::ext::enums::data_type_to_string(info.type, (void*)info.initial_value.get()));
                     }
 
                     if (connector->causality == Causality::input)
@@ -109,7 +111,7 @@ namespace ssp4cpp::sim::graph
                 recorder->add_storage(model->input_area->data.get());
                 recorder->add_storage(model->output_area->data.get());
             }
-            
+
             log.trace("[{}] - Wrap models in async", __func__);
             std::map<std::string, std::unique_ptr<AsyncNode>> async_models;
             for (auto &[n, m] : models)

@@ -132,14 +132,14 @@ namespace ssp4cpp::ssp1::ssc
     class BaseUnit : public IXmlNode
     {
     public:
-        optional<int> kg;
-        optional<int> m;
-        optional<int> s;
-        optional<int> a;
-        optional<int> k;
-        optional<int> mol;
-        optional<int> cd;
-        optional<int> rad;
+        optional<double> kg;
+        optional<double> m;
+        optional<double> s;
+        optional<double> a;
+        optional<double> k;
+        optional<double> mol;
+        optional<double> cd;
+        optional<double> rad;
         optional<double> factor;
         optional<double> offset;
 

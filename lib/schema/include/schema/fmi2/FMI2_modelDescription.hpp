@@ -72,7 +72,7 @@ namespace ssp4cpp::fmi2::md
     {
     public:
         optional<string> declaredType;
-        optional<string> start;
+        optional<bool> start;
 
         std::string to_string(void) const;
     };
@@ -81,7 +81,7 @@ namespace ssp4cpp::fmi2::md
     {
     public:
         optional<string> declaredType;
-        optional<string> start;
+        optional<int> start;
         optional<string> quantity;
         optional<int> min;
         optional<int> max;

@@ -1,19 +1,21 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-The C++ core lives under `lib/`, split into `common` (shared utilities), `schema` (generated SSP schema types), and `sim` (execution engine). Example apps are in `app/sim`, and reusable resources/SSP archives are stored in `resources/`. Tests live under `tests/` and mirror the library layout (`tests/common`, `tests/sim`, etc.). Vendor code and CMake add-ons reside in `3rdParty/`. Python binding sources are in `lib/python` and depend on generated headers.
+The C++ core lives under `lib/`, with `lib/common` for shared utilities, `lib/schema` for generated SSP model types (do not edit manually; rerun the XML parser), and `lib/sim` for runtime logic. Example apps live in `app/sim`; reusable SSP archives and fixtures are in `resources/`. Tests mirror the layout inside `tests/`. Third-party CMake modules and vendored sources are in `3rdParty/`. Generated Python bindings appear in `build/lib/python` after a binding build.
 
 ## Build, Test, and Development Commands
-Use the vcpkg preset when setting up a fresh tree: `cmake --preset=vcpkg`. Incremental work happens via `cmake --build build`. To force a configure, run `cmake -B build -S .`. The main sample executable is `./build/app/sim/sim_app`, which expects SSP archives from `resources/`. Toggle optional components with cache flags such as `cmake -B build -S . -DSSP4CPP_BUILD_TEST=ON -DSSP4CPP_BUILD_PYTHON=ON`.
+Run `cmake --preset=vcpkg` before first compilation to pull toolchains and configure the build. Use `cmake --build build` for incremental C++ builds; append `--target sim_app` to focus on the sample executable. Reconfigure options with `cmake -B build -S . -DSSP4CPP_BUILD_TEST=ON -DSSP4CPP_BUILD_PYTHON=ON`. Launch the sample via `./build/app/sim/sim_app resources/demo.ssp`. Activate the Python bindings only when needed: `pip install -e build/lib/python`.
 
 ## Coding Style & Naming Conventions
-Match the existing Allman-style braces and 4-space indentation found in `lib/`. Prefer `PascalCase` for types (`Node`, `SystemGraph`) and `snake_case` for functions and variables (`add_child`, `root_path`). Group and alphabetize includes, keeping project headers inside quotes. When touching generated schema files, rerun the XML parser pipeline rather than editing by hand.
+Follow Allman braces and 4-space indentation seen in `lib/`. Use `PascalCase` for types (`Node`, `SystemGraph`) and `snake_case` for functions, variables, and filenames. Place standard headers first, then project headers grouped and alphabetized. Prefer `spdlog` helpers from `lib/common` for logging; avoid raw `std::cout`. Regenerate schema code instead of hand-editing files under `lib/schema`.
 
 ## Testing Guidelines
-Tests use Catch2 and land in the mirrored folders under `tests/`. Ensure new features ship with focused unit tests and add regression inputs in `resources/` when relevant. After configuring with `SSP4CPP_BUILD_TEST=ON`, build and run the suite via `cmake --build build` followed by `directly invoking `./build/tests/test_1`. Prefer descriptive `SECTION` names so failures map cleanly.
+Enable tests with `cmake -B build -S . -DSSP4CPP_BUILD_TEST=ON`, then build via `cmake --build build --target test_1`. Run suites directly (`./build/tests/test_1`). Create new Catch2 cases in mirrored directories (`tests/sim/...`). Use descriptive `TEST_CASE` and `SECTION` names, and add regression archives to `resources/` when a bug fix needs coverage.
 
 ## Commit & Pull Request Guidelines
-Commit messages in this repository are short and imperative (for example `Prep for applying parameter values`). Keep each commit scoped to one concern and include context in the body when behavior changes. Pull requests should describe motivation, outline testing performed, and link related issues. Attach screenshots or log excerpts when modifying CLI output to simplify review.
+Write short, imperative commit subjects (e.g., `Guard against empty signals`). Scope each commit to one concern and document behavior or migration notes in the body. PR descriptions should outline motivation, summarize functional changes, list verification steps (commands or logs), and link issues. Include screenshots or sample output when altering CLI text so reviewers can compare results.
 
 ## Python & Tooling Notes
-Enable `SSP4CPP_BUILD_PYTHON` only when you need the bindings; they reuse the C++ build artifacts. Follow the steps in `readme.md` to create a virtualenv and install `requirements.txt`. Generated bindings land under `build/lib/python`; reinstall with `pip install -e` after rebuilds.
+Enable `SSP4CPP_BUILD_PYTHON` only when you need the bindings; they reuse the C++ build artifacts.
+`cmake -B build -S . -DSSP4CPP_BUILD_PYTHON=ON`
+ Follow the steps in `readme.md` to create a virtualenv and install `requirements.txt`. Generated bindings land under `build/lib/python`; reinstall with `pip install -e` after rebuilds.

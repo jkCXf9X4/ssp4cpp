@@ -5,6 +5,7 @@
 
 #include "SSP_Ext.hpp"
 #include "FMI2_modelDescription_Ext.hpp"
+#include "FMI2_Enums_Ext.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -65,6 +66,8 @@ namespace ssp4cpp::sim::analysis::graph
                     ssp.ssd->System.Elements.value(),
                     {ssp4cpp::fmi2::md::Causality::input, ssp4cpp::fmi2::md::Causality::output, ssp4cpp::fmi2::md::Causality::parameter});
 
+                auto start_values = ssp1::ext::ssv::get_start_value_mappings(ssp.dir, *ssp.ssd);
+
                 for (auto &[index, connector, component] : connectors)
                 {
                     auto component_name = component->name.value();
@@ -95,20 +98,20 @@ namespace ssp4cpp::sim::analysis::graph
                         auto start_value = fmi2::ext::model_variables::get_variable_start_value(*var);
                         if (start_value)
                         {
-                            log.info("[{}] Storing start value for {}, {}", __func__, var->name, type.to_string());
-                            c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(var->name, type);
+                            log.debug("[{}] Storing start value for {}.{}, {}", __func__, component_name, var->name, type.to_string());
+                            c->initial_value = std::make_unique<ssp1::ext::ssv::StartValue>(var->name, type);
                             c->initial_value->store_value(start_value);
+                            log.debug("[{}] - Value {}", __func__, fmi2::ext::enums::data_type_to_string(type, c->initial_value->value.get()));
                         }
 
                         // parameter set might overwrite initial value
-                        auto parameter_name = std::format("{}.{}", component_name, connector_name);
-                        log.info("Parameter name {}", parameter_name);
-                        if (ssp.parameter_map.contains(parameter_name))
+                        auto parameter_name = std::format("{}.{}", component_name, var->name);
+                        log.ext_trace("Parameter name {}", parameter_name);
+                        if (start_values.contains(parameter_name))
                         {
-                            log.info("[{}] Applying parameter for {} - {}", __func__, parameter_name, type.to_string());
-
-                            const auto &parameter = ssp.parameter_map.at(parameter_name);
-                            c->initial_value = std::make_unique<ssp1::ext::ssv::Parameter>(parameter);
+                            log.debug("[{}] Applying parameter for {} - {}", __func__, parameter_name, type.to_string());
+                            const auto &start_value = start_values.at(parameter_name);
+                            c->initial_value = std::make_unique<ssp1::ext::ssv::StartValue>(start_value);
                         }
 
                         items[c->name] = std::move(c);

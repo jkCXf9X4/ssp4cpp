@@ -40,6 +40,26 @@ namespace ssp4cpp::fmi2::ext
             // this keeps the compiler happy in -Wall/-Wswitch-enums builds.
             throw std::invalid_argument("Unknown DataType");
         }
+
+
+        inline constexpr std::string data_type_to_string(DataType type, void *data)
+        {
+            log.ext_trace("[{}] init", __func__);
+            switch (type)
+            {
+            case DataType::real:
+                return std::format("{}" , *(double *)data);
+            case DataType::boolean:
+                return std::format("{}" , (*(bool *)data ? 1 : 0));
+            case DataType::integer:
+            case DataType::enumeration:
+                return std::format("{}" , *(int *)data);
+            case DataType::string:
+                return  *(std::string *)data;
+            default:
+                return "<bin>";
+            }
+        }
     }
 
 }

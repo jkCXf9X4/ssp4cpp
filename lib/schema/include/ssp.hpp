@@ -24,8 +24,6 @@ namespace ssp4cpp
     public:
         std::unique_ptr<ssp1::ssd::SystemStructureDescription> ssd;
 
-        std::map<std::string, ssp1::ext::ssv::Parameter> parameter_map;
-
         /**
          * @brief Construct an Ssp from a file path.
          */

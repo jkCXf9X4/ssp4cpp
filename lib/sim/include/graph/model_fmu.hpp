@@ -5,6 +5,8 @@
 #include "common_string.hpp"
 #include "common_time.hpp"
 
+#include "FMI2_Enums_Ext.hpp"
+
 #include "data_ring_storage.hpp"
 #include "data_recorder.hpp"
 #include "invocable.hpp"
@@ -110,48 +112,58 @@ namespace ssp4cpp::sim::graph
 
         void init()
         {
-            log.trace("[{}] FmuModel init ", __func__);
+            log.trace("[{}] FmuModel init {}", __func__, name);
 
             if (!fmu->model->setup_experiment())
                 log.error("[{}] setup_experiment failed ", __func__);
 
-            log.trace("[{}] Set start values", __func__);
-            log.ext_trace("[{}] - set parameter start values", __func__);
+            log.trace("[{}] Set parameter start values", __func__);
             for (auto &[name, parameter] : this->parameters)
             {
                 if (parameter.initial_value)
                 {
-                    log.info("[{}] Set initial value for {}, {}", __func__, name, parameter.type.to_string());
-                    utils::write_to_model_(parameter.type, *fmu->model, parameter.value_ref, (void *)parameter.initial_value.get());
+                    auto data_ptr = (void *)parameter.initial_value.get();
+                    log.debug("[{}] Set initial parameter value for {}, {} : {}", __func__, name, parameter.type.to_string(), fmi2::ext::enums::data_type_to_string(parameter.type, data_ptr));
+                    utils::write_to_model_(parameter.type, *fmu->model, parameter.value_ref, data_ptr);
                 }
             }
 
-            // -set
-            log.ext_trace("[{}] - set input stat values", __func__);
+            log.trace("[{}] Set input start values", __func__);
             auto area = input_area->push(0);
             for (auto &[name, input] : this->inputs)
             {
                 if (input.initial_value)
                 {
-                    if (input.type == DataType::string)
+                    auto data_ptr = (void *)input.initial_value.get();
+
+                    log.debug("[{}] Set initial input value for {}, {} : {}", __func__, name, input.type.to_string(), fmi2::ext::enums::data_type_to_string(input.type, data_ptr));
+                    utils::write_to_model_(input.type, *fmu->model, input.value_ref, data_ptr);
+
+                    if (input.type != DataType::string)
                     {
-                        log.warning("[{}] Set initial value for strings is not supported yet", __func__);
+                        auto item = input_area->get_item(area, input.index);
+                        memcpy(item, data_ptr, input.size);
                     }
                     else
                     {
-                        log.info("[{}] Set initial value for {}, {}", __func__, name, input.type.to_string());
-                        utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void *)input.initial_value.get());
-
-                        auto item = input_area->get_item(area, input.index);
-                        memcpy(item, (void *)input.initial_value.get(), input.size);
+                        log.warning("[{}] Input area does not support initial value for strings yet", __func__);
                     }
                 }
             }
+            log.debug("[{}] enter_initialization_mode: {} ", __func__, name);
 
             if (!fmu->model->enter_initialization_mode())
+            {
                 log.error("[{}] enter_initialization_mode failed ", __func__);
+                throw std::runtime_error(std::format("[{}] enter_initialization_mode failed for {}", __func__, name));
+            }
+
+            log.debug("[{}] exit_initialization_mode: {} ", __func__, name);
             if (!fmu->model->exit_initialization_mode())
+            {
                 log.error("[{}] exit_initialization_mode failed ", __func__);
+                throw std::runtime_error(std::format("[{}] exit_initialization_mode failed for {}", __func__, name));
+            }
 
             log.ext_trace("[{}] FmuModel init completed", __func__);
         }
@@ -230,7 +242,7 @@ namespace ssp4cpp::sim::graph
 
         uint64_t invoke(StepData step_data) override final
         {
-            log.ext_trace("[{}] Init, stepdata: {}", __func__, step_data.to_string());
+            log.info("[{}] Init {}, stepdata: {}", __func__, name, step_data.to_string());
 
             _start_time = _end_time;
             _end_time = step_data.end_time;

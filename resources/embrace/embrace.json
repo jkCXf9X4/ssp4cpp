@@ -1,0 +1,18 @@
+{
+    "simulation" :
+    {
+        "start_time":0.0,
+        "end_time":1200.0,
+        "timestep": 0.001,
+
+        "executor": "jacobi",
+        "jacobi":
+        {
+            "parallel": true
+        },
+        "seidel":
+        {
+            "parallel": true
+        }
+    }
+}

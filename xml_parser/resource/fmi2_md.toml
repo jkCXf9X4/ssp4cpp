@@ -34,12 +34,12 @@ Units = { type = "fmi2::md::fmi2Unit", list = true, xml_tag="Unit"}
 
 [Boolean]
 declaredType = { type = "string", optional = true }
-start = { type = "string", optional = true }
+start = { type = "bool", optional = true }
 
 
 [Integer]
 declaredType = { type = "string", optional = true }
-start = { type = "string", optional = true }
+start = { type = "int", optional = true }
 quantity = { type = "string", optional = true }
 min = { type = "int", optional = true }
 max = { type = "int", optional = true }

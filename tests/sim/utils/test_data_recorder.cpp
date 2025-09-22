@@ -42,7 +42,7 @@ void remove_if_existing(std::string name)
 TEST_CASE("DataRecorder initialization and cleanup", "[DataRecorder]")
 {
     // Use a temporary filename for testing
-    std::string test_filename = "temp/test_recorder_output.csv";
+    std::string test_filename = "build/test_recorder_output.csv";
     remove_if_existing(test_filename);
 
     // Scope for the DataRecorder to ensure it's destructed properly

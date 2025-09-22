@@ -14,6 +14,6 @@ namespace ssp4cpp::common::time
         {
             const auto dur = std::chrono::duration_cast<std::chrono::microseconds>(clock::now() - start_);
             // log: "<func> <label> took X µs"
-            log.info("[ScopeTimer] {} took {} µs", label_, dur.count());
+            log.info("[ScopeTimer] {} took {}s", label_, (double)dur.count() /ssp4cpp::common::time::microseconds_per_second );
         }
 }

@@ -4,5 +4,5 @@
   <ssm:MappingEntry target="Consumer.fd.Ma_start" source="Mach_start"/>
   <ssm:MappingEntry target="ECS_HW.fd.Alt_start" source="Alt_start"/>
   <ssm:MappingEntry target="Consumer.fd.Alt_start" source="Alt_start"/>
-  <ssm:MappingEntry target="Scenario.scenario_input" source="scenario_input"/>
+  <ssm:MappingEntry target="scenario.scenario_input" source="scenario_input"/>
 </ssm:ParameterMapping>
