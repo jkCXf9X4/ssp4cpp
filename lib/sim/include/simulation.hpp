@@ -102,12 +102,12 @@ namespace ssp4cpp::sim
             uint64_t end_time = utils::Config::get<float>("simulation.end_time") * common::time::nanoseconds_per_second;
             uint64_t timestep = utils::Config::get<float>("simulation.timestep") * common::time::nanoseconds_per_second;
 
-            uint64_t sim_wall_time = 0;
-            {
-                auto timer = common::time::ScopeTimer("Simulation", &sim_wall_time);
-                sim_graph->invoke(sim::graph::StepData(start_time, end_time, timestep));
-            }
-            log.info("[{}] Simulation completed", __func__);
+            auto sim_timer = common::time::Timer();
+            sim_graph->invoke(sim::graph::StepData(start_time, end_time, timestep));
+            auto sim_wall_time = sim_timer.stop();
+
+            recorder->stop_recording();
+            log.info("[{}] Simulation completed\n", __func__);
 
             uint64_t total_model_time = 0;
             for (auto &node : sim_graph->nodes)
@@ -116,9 +116,9 @@ namespace ssp4cpp::sim
                 log.info("[{}] Model {} walltime: {}", __func__, node->invocable_obj->name, model_walltime);
                 total_model_time += model_walltime;
             }
-            auto sim_wall_time_s = (double)sim_wall_time / common::time::nanoseconds_per_second;
-            auto total_model_time_s = (double)total_model_time / common::time::nanoseconds_per_second;
-            log.info("[{}] Total walltime: {} Model walltime: {}", __func__, sim_wall_time_s , total_model_time_s);
+            auto sim_wall_time_s = ((double)sim_wall_time) / common::time::nanoseconds_per_second;
+            auto total_model_time_s = ((double)total_model_time) / common::time::nanoseconds_per_second;
+            log.info("[{}] Total walltime: {} Model walltime: {}", __func__, sim_wall_time_s, total_model_time_s);
         }
     };
 

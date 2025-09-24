@@ -158,5 +158,24 @@ namespace ssp4cpp::sim::utils
             os << "}";
         }
 
+        std::string export_area(int area)
+        {
+            std::ostringstream oss;
+            for (int i = 0; i < items; i++)
+            {
+                auto item = get_item(area, i);
+
+                auto data_type_str = fmi2::ext::enums::data_type_to_string(types[i], item);
+                oss << "Area: \n" << area;
+                oss << "{ position " << positions[i]
+                << ", name: " << names[i]
+                << ", type: " << types[i]
+                << ", size: " << sizes[i] 
+                << ", value:" << data_type_str
+                <<  " }" << std::endl;
+            }
+            return oss.str();
+        }
+
     };
 }

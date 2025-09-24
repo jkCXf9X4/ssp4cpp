@@ -2,39 +2,36 @@ cmake_minimum_required(VERSION 3.10)
 
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" projectVersion)
 project(ssp4cpp VERSION ${projectVersion})
+message("Current ssp4cpp version: ${projectVersion}\n")
 
-# # Speed up linker times
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-     if(EXISTS "/usr/bin/lld")
-         message(STATUS "Using lld linker")
-         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=lld")
-         set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fuse-ld=lld")
-     endif()
- endif()
+set(CMAKE_CXX_STANDARD 23)
 
-# Link static
+# OPTIONS
+option(SSP4CPP_BUILD_TEST "Build test executable" ON)
+option(SSP4CPP_BUILD_PYTHON "Build python lib" OFF)
+
+## Link static
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libstdc++")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++")
 
-add_compile_options(-gsplit-dwarf)
 
-message("Current ssp4cpp version: ${projectVersion}\n")
+
+# COMPILER
+
+#SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -flto")
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O3")
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -g")
 
 message("CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}\n")
 message("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}\n")
-
-# SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -flto -O3")
 
 message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}\n")
 message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}\n")
 message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 
-set(CMAKE_BUILD_TYPE Release) # Turn off debug outputs for fmi4ssp
 
-set(CMAKE_CXX_STANDARD 23)
-
-option(SSP4CPP_BUILD_TEST "Build test executable" ON)
-option(SSP4CPP_BUILD_PYTHON "Build python lib" OFF)
+# OTHER
+#set(CMAKE_BUILD_TYPE Release) # Turn off debug outputs for fmi4ssp
 
 add_subdirectory(3rdParty)
 

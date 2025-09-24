@@ -13,3 +13,13 @@ Use ninjatracing to convert
 build/.ninja_log into 
 
 ninjatracing build/.ninja_log > build/trace.json
+
+
+
+sudo sysctl kernel.perf_event_paranoid=1
+
+
+perf record ./build/app/sim/sim_app -o ./build/perf.data
+perf report
+
+perf top ./build/app/sim/sim_app

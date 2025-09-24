@@ -1,14 +1,16 @@
 {
     "simulation" :
     {
+        "ssp": "",
         "start_time":0.0,
-        "end_time":100,
+        "end_time":400,
         "timestep": 0.1,
+        "tolerance": 1e-4,
 
         "executor": "jacobi",
         "jacobi":
         {
-            "parallel": true
+            "parallel": false
         },
         "seidel":
         {

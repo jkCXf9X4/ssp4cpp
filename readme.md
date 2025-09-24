@@ -66,6 +66,12 @@ The `xml_parser` directory contains a Python script for generating C++ classes f
     cmake --build build
     ```
 
+4. Release/debug
+```
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+```
+
 Possible dependencies
 sudo apt install ninja-build
 

@@ -159,7 +159,19 @@ namespace ssp4cpp::sim::utils
             // flush the rest of the memory to file
             for (int i = 1; i <= rows; i++)
             {
-                print_row((head + i) % rows);
+                bool print = false;
+                auto row = (head + i) % rows;
+                for (auto &tracker : trackers)
+                {
+                    if (updated_tracker[row][tracker.index])
+                    {
+                        print = true;
+                    }
+                }
+                if (print)
+                {
+                    print_row(row);
+                }
             }
             file.flush();
 
@@ -191,7 +203,8 @@ namespace ssp4cpp::sim::utils
                     file << ", ";
                     if (print_tracker)
                     {
-                        output_string(type, get_data_pos(row, pos));
+                        auto data_type_str = fmi2::ext::enums::data_type_to_string(type, get_data_pos(row, tracker.row_pos + pos));
+                        file << data_type_str;
                     }
                 }
             }
@@ -243,7 +256,7 @@ namespace ssp4cpp::sim::utils
                                 {
                                     print_row(head); // print before overwriting
                                 }
-                                
+
                                 new_item_counter++;
 
                                 row_time_map[head] = ts;
@@ -253,10 +266,10 @@ namespace ssp4cpp::sim::utils
                             }
                             auto row = time_row_map[ts];
 
-                            updated_tracker[row][tracker.index] = true;
                             log.trace("[{}] Copying data; row {}, size: {}", __func__, row, tracker.size);
-
                             memcpy(get_data_pos(row, tracker.row_pos), storage->locations[area][0], tracker.size);
+
+                            updated_tracker[row][tracker.index] = true;
                             storage->new_data_flags[area] = false;
                         }
                     }
@@ -264,28 +277,28 @@ namespace ssp4cpp::sim::utils
             }
         }
 
-        void output_string(DataType type, void *data)
-        {
-            log.ext_trace("[{}] init", __func__);
-            switch (type)
-            {
-            case DataType::real:
-                file << *(double *)data;
-                break;
-            case DataType::boolean:
-                file << (*(bool *)data ? 1 : 0);
-                break;
-            case DataType::integer:
-            case DataType::enumeration:
-                file << *(int *)data;
-                break;
-            case DataType::string:
-                file << *(std::string *)data;
-                break;
-            default:
-                file << "<bin>";
-                break;
-            }
-        }
+        // void output_string(DataType type, void *data)
+        // {
+        //     log.ext_trace("[{}] init", __func__);
+        //     switch (type)
+        //     {
+        //     case DataType::real:
+        //         file << *(double *)data;
+        //         break;
+        //     case DataType::boolean:
+        //         file << (*(bool *)data ? 1 : 0);
+        //         break;
+        //     case DataType::integer:
+        //     case DataType::enumeration:
+        //         file << *(int *)data;
+        //         break;
+        //     case DataType::string:
+        //         file << *(std::string *)data;
+        //         break;
+        //     default:
+        //         file << "<bin>";
+        //         break;
+        //     }
+        // }
     };
 }

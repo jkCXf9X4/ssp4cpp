@@ -15,6 +15,7 @@ int main()
     // auto sim = sim::Simulator("./resources/scenario/scenario.ssp", "./resources/scenario/scenario.json");
     // auto sim = sim::Simulator("./resources/scenario/scenario_parameter.ssp", "./resources/scenario/scenario.json");
     auto sim = sim::Simulator("./resources/embrace/embrace_scen.ssp", "./resources/embrace/embrace.json");
+
     sim.init();
     sim.simulate();
 
