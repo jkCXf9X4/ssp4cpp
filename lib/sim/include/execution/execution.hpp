@@ -4,6 +4,7 @@
 
 #include "invocable.hpp"
 #include "async_node.hpp"
+#include "task_thread_pool.hpp"
 
 #include "config.hpp"
 
@@ -143,6 +144,9 @@ namespace ssp4cpp::sim::graph
 
         bool parallelize;
 
+        common::ThreadPool pool{5};
+        std::vector<std::future<void>> futures;
+
         Jacobi(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
             parallelize = utils::Config::get<bool>("simulation.jacobi.parallel");
@@ -169,14 +173,26 @@ namespace ssp4cpp::sim::graph
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
             if (parallelize)
             {
-                std::for_each(std::execution::par, nodes.begin(), nodes.end(),
-                              [&](auto &model)
-                              {
-#ifndef NDEBUG
-                                  log.debug("[{}] Invoking model {}", __func__, model->name);
-#endif
-                                  model->invoke(step);
-                              });
+                if (true)
+                {
+
+                    std::for_each(std::execution::par, nodes.begin(), nodes.end(),
+                                  [&](auto &model)
+                                  {
+                                      model->invoke(step);
+                                  });
+                }
+                else
+                {
+                    for (auto &node : nodes)
+                    {
+                        futures.push_back(pool.enqueue([&]()
+                                                       { node->invoke(step); }));
+                    }
+                    for (auto &f : futures)
+                        f.get();
+                    futures.clear();
+                }
             }
             else
             {

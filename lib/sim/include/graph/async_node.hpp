@@ -147,7 +147,7 @@ namespace ssp4cpp::sim::graph
         uint64_t invoke(StepData step_data) override final
         {
 #ifndef NDEBUG
-            log.ext_trace("[{}] Invoking async, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
+            log.ext_trace("[{}] Invoking, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
 #endif
 
             return invocable_obj->invoke(step_data);

@@ -17,8 +17,6 @@ set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++")
 
 # COMPILER
 
-
-
 # Optimize release builds
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -flto -O3 -march=native -fno-omit-frame-pointer -DNDEBUG" CACHE STRING "" FORCE)
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -flto -O3 -march=native -fno-omit-frame-pointer -DNDEBUG" CACHE STRING "" FORCE)
@@ -29,6 +27,9 @@ set(CMAKE_C_FLAGS_DEBUG   "-O3 -g" CACHE STRING "" FORCE)
 
 # Unsure how much this does
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -ffp-contract=fast -fno-math-errno -fno-trapping-math")
+
+
+# Status
 
 message("CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}\n")
 message("CMAKE_C_FLAGS_DEBUG: ${CMAKE_C_FLAGS_DEBUG}\n")
@@ -43,9 +44,7 @@ message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}\n")
 message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}\n")
 message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 
-
-# OTHER
-#set(CMAKE_BUILD_TYPE Release) # Turn off debug outputs for fmi4ssp
+# Subdirectories
 
 add_subdirectory(3rdParty)
 

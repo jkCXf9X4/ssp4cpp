@@ -4,8 +4,6 @@
 #include "common_vector.hpp"
 #include "common_time.hpp"
 
-#include "common_thread_pool.hpp"
-
 #include "invocable.hpp"
 #include "analysis_graph_builder.hpp"
 #include "graph_builder.hpp"

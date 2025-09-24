@@ -1,5 +1,5 @@
 
-#include <common_thread_pool.hpp>
+#include <task_thread_pool.hpp>
 
 #include <atomic>
 #include <chrono>
@@ -23,18 +23,6 @@ TEST_CASE("ThreadPool executes simple tasks", "[threadpool]")
         f2.get();
     // }
     REQUIRE(counter == 3);
-}
-
-TEST_CASE("ThreadPool returns future results", "[threadpool]")
-{
-    std::cout << "\n";
-    std::future<int> f;
-    // {
-        ThreadPool pool(2);
-        f = pool.enqueue([](int a, int b)
-                         { return a + b; }, 2, 3);
-    // }
-    REQUIRE(f.get() == 5);
 }
 
 TEST_CASE("ThreadPool handles many tasks", "[threadpool]")

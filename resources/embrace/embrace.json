@@ -3,14 +3,14 @@
     {
         "ssp": "",
         "start_time":0.0,
-        "end_time":1200,
+        "end_time":700,
         "timestep": 0.1,
         "tolerance": 1e-4,
 
         "executor": "jacobi",
         "jacobi":
         {
-            "parallel": false
+            "parallel": true
         },
         "seidel":
         {
