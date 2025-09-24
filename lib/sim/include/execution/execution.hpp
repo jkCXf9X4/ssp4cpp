@@ -5,6 +5,7 @@
 #include "invocable.hpp"
 #include "async_node.hpp"
 #include "task_thread_pool.hpp"
+#include "task_thread_pool2.hpp"
 
 #include "config.hpp"
 
@@ -147,6 +148,8 @@ namespace ssp4cpp::sim::graph
         common::ThreadPool pool{5};
         std::vector<std::future<void>> futures;
 
+        utils::ThreadPool2 pool2{5};
+
         Jacobi(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
             parallelize = utils::Config::get<bool>("simulation.jacobi.parallel");
@@ -173,16 +176,19 @@ namespace ssp4cpp::sim::graph
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
             if (parallelize)
             {
-                if (true)
+                switch (3)
                 {
 
+                case 1:
+                {
                     std::for_each(std::execution::par, nodes.begin(), nodes.end(),
                                   [&](auto &model)
                                   {
                                       model->invoke(step);
                                   });
+                    break;
                 }
-                else
+                case 2:
                 {
                     for (auto &node : nodes)
                     {
@@ -192,6 +198,38 @@ namespace ssp4cpp::sim::graph
                     for (auto &f : futures)
                         f.get();
                     futures.clear();
+                    break;
+                }
+                case 3:
+                {
+                    // pool2
+                    // log.info("[{}] New step: {}", __func__, step_data.to_string());
+
+                    pool2.ready(nodes.size());
+
+                    for (auto &node : this->nodes)
+                    {
+                        auto ti = sim::utils::task_info{node, step};
+                        pool2.enqueue(ti);
+                    }
+
+                    // log.info("[{}] Spinning", __func__);
+                    // spin until done
+                    bool all_done = false;
+                    while (!all_done)
+                    {
+                        all_done = true;
+                        for (int i = 0; i < pool2.dones.size(); ++i)
+                        {
+                            if (!pool2.dones[i])
+                            {
+                                all_done = false;
+                                break;
+                            }
+                        }
+                    }
+                    // log.info("[{}] All done", __func__);
+                }
                 }
             }
             else
