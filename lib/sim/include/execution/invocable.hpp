@@ -52,7 +52,7 @@ namespace ssp4cpp::sim::graph
             {
                 os << " valid_input_time: " << valid_input_time;
             }
-            os << " }" << std::endl;
+            os << " }\n";
         }
     };
 
@@ -66,7 +66,7 @@ namespace ssp4cpp::sim::graph
 
         virtual void print(std::ostream &os) const
         {
-            os << "Invocable:\n{}" << std::endl;
+            os << "Invocable:\n{}\n";
         }
     };
 }

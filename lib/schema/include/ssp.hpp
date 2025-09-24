@@ -33,16 +33,16 @@ namespace ssp4cpp
         {
             auto resources = ssp1::ext::ssd::get_resources(*ssd);
 
-            os << "Ssp { \n"
-               << "original_file: " << original_file << std::endl
-               << "dir: " << dir << std::endl
-               << "ssd: " << ssd->name << std::endl
-               << "resources: " << resources.size() << std::endl
-               << " }" << std::endl;
+            os << "Ssp {"
+               << "\noriginal_file: " << original_file
+               << "\ndir: " << dir
+               << "\nssd: " << ssd->name
+               << "\nresources: " << resources.size()
+               << "\n }\n";
 
             for (auto &res : resources)
             {
-                os << "Resource: " << res->name.value_or("null") << std::endl;
+                os << "Resource: " << res->name.value_or("null") << "\n";
             }
         }
     };

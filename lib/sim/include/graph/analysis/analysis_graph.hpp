@@ -52,13 +52,13 @@ namespace ssp4cpp::sim::analysis::graph
             auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
             
             os << "Simulation Graph DOT:\n" 
-            << common::graph::Node::to_dot(nodes) << std::endl
-            << common::graph::ssc_to_string(strong_system_graph) << std::endl
-            << "Start nodes:" << std::endl;
+            << common::graph::Node::to_dot(nodes) << "\n"
+            << common::graph::ssc_to_string(strong_system_graph)
+            << "\nStart nodes:\n";
             
             for (auto &model : get_start_nodes())
             {
-                os << "Model: " << *model << std::endl;
+                os << "Model: " << *model << "\n";
             }
         }
 

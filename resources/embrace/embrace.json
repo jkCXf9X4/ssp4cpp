@@ -3,7 +3,7 @@
     {
         "ssp": "",
         "start_time":0.0,
-        "end_time":400,
+        "end_time":1200,
         "timestep": 0.1,
         "tolerance": 1e-4,
 

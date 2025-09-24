@@ -136,11 +136,11 @@ namespace ssp4cpp::common
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);
                     if constexpr (Level < LogLevel::error)
                     {
-                        std::cout << out << std::endl;
+                        std::cout << out << "\n";
                     }
                     else
                     {
-                        std::cerr << out << std::endl;
+                        std::cerr << out << "\n";
                     }
                 }
             }
@@ -165,11 +165,11 @@ namespace ssp4cpp::common
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);
                     if constexpr (Level < LogLevel::error)
                     {
-                        std::cout << out << std::endl;
+                        std::cout << out << "\n";
                     }
                     else
                     {
-                        std::cerr << out << std::endl;
+                        std::cerr << out << "\n";
                     }
                 }
             }

@@ -54,11 +54,11 @@ namespace ssp4cpp::common::str
     std::string to_str(const std::map<T, U> &obj)
     {
         std::stringstream ss;
-        ss << "Map [key:value]" << std::endl;
+        ss << "Map [key:value]\n";
         // key : value
         for (auto const [key, value] : obj)
         {
-            ss << key << ':' << value << std::endl;
+            ss << key << ':' << value << "\n";
         }
         return ss.str();
     }

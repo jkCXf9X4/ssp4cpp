@@ -27,7 +27,7 @@ namespace ssp4cpp::dsm
             auto component = g[row].component;
             if(!comp_map.contains(component))
             {
-                std::cout << component << " : " << group_id << std::endl;
+                std::cout << component << " : " << group_id << "\n";
                 comp_map[component] = group_id++;
             }
             matrix.set_group(row, comp_map[component]);

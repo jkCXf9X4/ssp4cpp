@@ -83,8 +83,6 @@ namespace ssp4cpp::sim::graph
         std::unique_ptr<utils::RingStorage> output_area;
         utils::DataRecorder *recorder;
 
-        const bool debug_areas = false;
-
         std::map<std::string, ConnectorInfo> inputs;
         std::map<std::string, ConnectorInfo> outputs;
         std::map<std::string, ConnectorInfo> parameters;
@@ -107,8 +105,8 @@ namespace ssp4cpp::sim::graph
         virtual void print(std::ostream &os) const
         {
             os << "FmuModel { \n"
-               << "Name: " << name << std::endl
-               << " }" << std::endl;
+               << "Name: " << name
+               << "\n}\n";
         }
 
         void set_start_values(std::map<std::string, ConnectorInfo> &connectors)
@@ -196,26 +194,30 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] FmuModel init completed", __func__);
         }
 
+        // hot path
         void pre(uint64_t model_start_time, uint64_t valid_input_time)
         {
-            log.trace("[{}] Init, Retrieve inputs, and prepare the model", __func__);
 
             auto area = input_area->push(model_start_time);
+#ifndef NDEBUG
+            log.trace("[{}] Init, Retrieve inputs, and prepare the model", __func__);
             log.ext_trace("[{}] Fetch valid data to input area. Area {}", __func__, area);
-            // fib input data if needed
+
             log.trace("[{}] Copy connections", __func__);
+#endif
             for (auto &connection : connections)
             {
+#ifndef NDEBUG
                 log.ext_trace("[{}] Fetch valid data connection {}", __func__, connection.to_string());
+#endif
                 auto output_item = connection.source_storage->get_valid_item(valid_input_time, connection.source_index);
                 if (output_item)
                 {
-                    if (debug_areas)
-                    {
-                        auto data_type_str = fmi2::ext::enums::data_type_to_string(connection.type, output_item);
-                        log.debug("[{}] Found valid item, copying data to storage area: {}",
-                                  __func__, data_type_str);
-                    }
+#ifndef NDEBUG
+                    auto data_type_str = fmi2::ext::enums::data_type_to_string(connection.type, output_item);
+                    log.debug("[{}] Found valid item, copying data to storage area: {}",
+                              __func__, data_type_str);
+#endif
 
                     auto input_item = input_area->get_item(area, connection.target_index);
                     memcpy(input_item, output_item, connection.size);
@@ -224,31 +226,33 @@ namespace ssp4cpp::sim::graph
             input_area->flag_new_data(area);
             recorder->update();
 
+#ifndef NDEBUG
             log.trace("[{}] Copy data to model", __func__);
+#endif
             for (auto &[_, input] : inputs)
             {
                 auto input_item = input_area->get_item(area, input.index);
 
-                if (debug_areas)
-                {
-                    auto data_type_str = fmi2::ext::enums::data_type_to_string(input.type, input_item);
-                    log.debug("[{}] Copying input to model. {}, data: {}", __func__, input.to_string(), data_type_str);
-                }
+#ifndef NDEBUG
+                auto data_type_str = fmi2::ext::enums::data_type_to_string(input.type, input_item);
+                log.debug("[{}] Copying input to model. {}, data: {}", __func__, input.to_string(), data_type_str);
+#endif
 
                 utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void *)input_item);
             }
-            if (debug_areas)
-            {
-                log.debug("[{}] Input area after pre: {}", __func__, input_area->data->export_area(area));
-            }
+#ifndef NDEBUG
+            log.debug("[{}] Input area after pre: {}", __func__, input_area->data->export_area(area));
+#endif
         }
 
+        // hot path
         void take_step(uint64_t timestep)
         {
             auto step_double = (double)timestep / common::time::nanoseconds_per_second;
+#ifndef NDEBUG
             log.debug("[{}] FmuModel {} ", __func__, step_double);
-
             auto model_timer = common::time::Timer();
+#endif
 
             if (fmu->model->step(step_double) == false)
             {
@@ -260,46 +264,55 @@ namespace ssp4cpp::sim::graph
                 }
             }
 
+#ifndef NDEBUG
             this->invocation_walltime_ns += model_timer.stop();
             log.trace("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
+#endif
         }
 
+        // hot path
         void post(uint64_t time)
         {
+#ifndef NDEBUG
             log.ext_trace("[{}] Init {}", __func__, time);
+            log.trace("[{}] Copy data from model", __func__);
+#endif
 
             auto area = output_area->push(time);
-            log.trace("[{}] Copy data from model", __func__);
             for (auto &[_, output] : outputs)
             {
+#ifndef NDEBUG
                 log.ext_trace("[{}] Copying ref {} ({}) to index {}", __func__, output.value_ref, output.type.to_string(), output.index);
-    
+#endif
+
                 auto item = output_area->get_item(area, output.index);
                 utils::read_from_model_(output.type, *fmu->model, output.value_ref, (void *)item);
                 // fib output data
             }
-            log.trace("[{}] Completed copy from model", __func__);
             output_area->flag_new_data(area);
             recorder->update();
-
-            if (debug_areas)
-            {
-                log.debug("[{}] Output area after post: {}", __func__, output_area->data->export_area(area));
-            }
+#ifndef NDEBUG
+            log.trace("[{}] Completed copy from model", __func__);
+            log.debug("[{}] Output area after post: {}", __func__, output_area->data->export_area(area));
+#endif
         }
 
+        // hot path
         uint64_t invoke(StepData step_data) override final
         {
+#ifndef NDEBUG
             log.debug("[{}] Init {}, stepdata: {}", __func__, name, step_data.to_string());
+#endif
 
             _start_time = _end_time;
             _end_time = step_data.end_time;
             auto _timestep = _end_time - _start_time;
 
             auto delayed_time = _end_time - delay;
-
+#ifndef NDEBUG
             log.trace("[{}] {} start_time: {} valid_input_time: {} timestep: {} end_time: {}, delayed_time {}",
                       __func__, this->name.c_str(), _start_time, step_data.valid_input_time, _timestep, _end_time, delayed_time);
+#endif
 
             pre(_start_time, step_data.valid_input_time);
 
@@ -307,8 +320,9 @@ namespace ssp4cpp::sim::graph
             // this should return the new endtime if we have early return
 
             post(delayed_time);
-
+#ifndef NDEBUG
             log.ext_trace("[{}] Completed", __func__, step_data.to_string());
+#endif
             return delayed_time;
         }
     };

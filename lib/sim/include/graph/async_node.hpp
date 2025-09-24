@@ -83,8 +83,8 @@ namespace ssp4cpp::sim::graph
         virtual void print(std::ostream &os) const
         {
             os << "AsyncNode { \n"
-               << "Name: " << name << std::endl
-               << " }" << std::endl;
+               << "Name: " << name
+               << "\n}\n";
         }
         void set_shared_state(int worker_id, SharedState *ss)
         {
@@ -97,7 +97,9 @@ namespace ssp4cpp::sim::graph
             log.info("[{}] Starting async node thread, {}", __func__, this->name);
             while (true)
             {
+#ifndef NDEBUG
                 log.trace("[{}] Holding node {}", __func__, this->name);
+#endif
                 sem.acquire();
                 if (!running)
                 {
@@ -106,12 +108,15 @@ namespace ssp4cpp::sim::graph
 
                 // if (status == ModelStatus::ready)
                 {
+#ifndef NDEBUG
                     log.trace("[{}] Executing, node {}", __func__, this->name);
+#endif
                     status = ModelStatus::running;
 
                     output = invoke(input);
-
+#ifndef NDEBUG
                     log.trace("[{}] Execution completed, node {}", __func__, this->name);
+#endif
                     status = ModelStatus::completed;
                     {
                         std::lock_guard<std::mutex> lock(shared_state->mtx);
@@ -138,16 +143,22 @@ namespace ssp4cpp::sim::graph
             usleep(100); // wait for thread to start
         }
 
+        // hot path
         uint64_t invoke(StepData step_data) override final
         {
+#ifndef NDEBUG
             log.ext_trace("[{}] Invoking async, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
+#endif
 
             return invocable_obj->invoke(step_data);
         }
 
+        // hot path
         void async_invoke(StepData step_data)
         {
+#ifndef NDEBUG
             log.trace("[{}] Invoking async, model {} start time {}", __func__, this->name, step_data.start_time);
+#endif
             input = step_data;
             if (status == ModelStatus::ready)
             {

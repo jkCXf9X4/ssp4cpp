@@ -58,13 +58,13 @@ namespace ssp4cpp::common::graph
     std::string ssc_to_string(std::vector<std::vector<Node *>> ssc)
     {
         std::stringstream ss;
-        ss << "Tarjans SSC Result" << std::endl;
+        ss << "Tarjans SSC Result\n";
         for (auto &strong : ssc)
         {
-            ss << "Strongly connected group:" << std::endl;
+            ss << "Strongly connected group:\n";
             for (auto &node : strong)
             {
-                ss << " - " << node->name << std::endl;
+                ss << " - " << node->name << "\n";
             }
         }
         return ss.str();

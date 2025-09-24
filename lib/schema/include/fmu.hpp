@@ -26,11 +26,11 @@ namespace ssp4cpp
 
         virtual void print(std::ostream &os) const
         {
-            os << "Fmu { \n"
-               << "original_file: " << original_file << std::endl
-               << "dir: " << dir << std::endl
-               << "modelName: " << md->modelName << std::endl
-               << " }" << std::endl;
+            os << "Fmu {"
+               << "\noriginal_file: " << original_file
+               << "\ndir: " << dir
+               << "\nmodelName: " << md->modelName
+               << "\n}\n";
         }
 
     };

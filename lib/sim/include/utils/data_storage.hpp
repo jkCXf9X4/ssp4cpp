@@ -146,14 +146,14 @@ namespace ssp4cpp::sim::utils
                << ", total_size: " << total_size
                << ", pos: " << pos
                << ", items: " << items
-               << ", index: " << index << std::endl;
+               << ", index: " << index << "\n";
 
             for (int i = 0; i < items; i++)
             {
                 os << "  { position " << positions[i]
                    << ", name " << names[i]
                    << ", type " << types[i]
-                   << ", size " << sizes[i] << " }" << std::endl;
+                   << ", size " << sizes[i] << " }\n";
             }
             os << "}";
         }
@@ -172,7 +172,7 @@ namespace ssp4cpp::sim::utils
                 << ", type: " << types[i]
                 << ", size: " << sizes[i] 
                 << ", value:" << data_type_str
-                <<  " }" << std::endl;
+                <<  " }\n";
             }
             return oss.str();
         }

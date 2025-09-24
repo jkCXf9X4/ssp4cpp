@@ -78,12 +78,12 @@ namespace ssp4cpp::sim::analysis::graph
 
         virtual void print(std::ostream &os) const
         {
-            os << "Connector { \n"
-               << "name: " << name << std::endl
-               << "vr: " << value_reference << std::endl
-               << "type: " << type << std::endl
-               << "causality: " << causality << std::endl
-               << " }" << std::endl;
+            os << "Connector {"
+               << "\nname: " << name
+               << "\nvr: " << value_reference
+               << "\ntype: " << type
+               << "\ncausality: " << causality
+               << "\n }\n";
         }
     };
 

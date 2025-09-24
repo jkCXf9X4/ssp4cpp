@@ -38,10 +38,10 @@ namespace ssp4cpp::common::graph
         virtual void print(std::ostream &os) const
         {
             os << "Node { \n"
-               << "name: " << name << std::endl
-               << "children: " << children.size() << std::endl
-               << "parents: " << parents.size() << std::endl
-               << " }" << std::endl;
+               << "name: " << name << "\n"
+               << "children: " << children.size() << "\n"
+               << "parents: " << parents.size() << "\n"
+               << " }" << "\n";
         }
 
         /* === Relationship management ======================================= */
@@ -114,7 +114,7 @@ namespace ssp4cpp::common::graph
         static std::string to_dot(const std::vector<T *> &nodes)
         {
             std::stringstream ss;
-            ss << "digraph{" << std::endl;
+            ss << "digraph{\n";
 
             for (auto &node : nodes)
             {
@@ -123,7 +123,7 @@ namespace ssp4cpp::common::graph
                     ss << '\"' << node->name << "\" -> \"" << c->name << "\"\n";
                 }
             }
-            ss << "}" << std::endl;
+            ss << "}\n";
             return ss.str();
         }
 

@@ -167,9 +167,9 @@ namespace ssp4cpp::sim::utils
                << ", size: " << size
                << ", head: " << head
                << ", tail: " << tail
-               << ", access_counter: " << access_counter << std::endl
-               << "  " << *data << std::endl
-               << "}";
+               << ", access_counter: " << access_counter
+               << "\n  " << *data
+               << "\n}";
         }
     };
 }

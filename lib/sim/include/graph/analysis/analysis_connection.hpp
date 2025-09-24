@@ -73,13 +73,13 @@ namespace ssp4cpp::sim::analysis::graph
 
         virtual void print(std::ostream &os) const
         {
-            os << "Connection { \n"
-               << "name: " << name << std::endl
-               << "source_component_name: " << source_component_name << std::endl
-               << "source_connector_name: " << source_connector_name << std::endl
-               << "target_component_name: " << target_component_name << std::endl
-               << "target_connector_name: " << target_connector_name << std::endl
-               << " }" << std::endl;
+            os << "Connection {"
+               << "\nname: " << name
+               << "\nsource_component_name: " << source_component_name
+               << "\nsource_connector_name: " << source_connector_name
+               << "\ntarget_component_name: " << target_component_name
+               << "\ntarget_connector_name: " << target_connector_name
+               << "\n }\n";
 
         }
 

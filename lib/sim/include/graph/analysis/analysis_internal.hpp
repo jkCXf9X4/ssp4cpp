@@ -49,11 +49,11 @@ namespace ssp4cpp::sim::analysis::graph
 
         virtual void print(std::ostream &os) const
         {
-            os << "AnalysisModelVariable { \n"
-               << "name: " << name << std::endl
-               << "component: " << component << std::endl
-               << "variable_name: " << variable_name << std::endl
-               << " }" << std::endl;
+            os << "AnalysisModelVariable {"
+               << "\nname: " << name
+               << "\ncomponent: " << component
+               << "\nvariable_name: " << variable_name
+               << "\n}\n";
         }
     };
 

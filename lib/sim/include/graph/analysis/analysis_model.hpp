@@ -44,9 +44,9 @@ namespace ssp4cpp::sim::analysis::graph
         virtual void print(std::ostream &os) const
         {
             os << "Model { \n"
-               << "Name: " << name << std::endl
-               << "Fmu: " << fmu_name << std::endl
-               << " }" << std::endl;
+               << "\nName: " << name
+               << "\nFmu: " << fmu_name
+               << "\n}\n";
         }
 
     };

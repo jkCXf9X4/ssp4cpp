@@ -42,13 +42,13 @@ namespace ssp4cpp::sim::graph
             auto strong_system_graph = common::graph::strongly_connected_components(common::graph::Node::cast_to_parent_ptrs(nodes));
 
             os << "Simulation Graph DOT:\n"
-               << common::graph::Node::to_dot(nodes) << std::endl
-               << common::graph::ssc_to_string(strong_system_graph) << std::endl;
+               << common::graph::Node::to_dot(nodes) << "\n"
+               << common::graph::ssc_to_string(strong_system_graph) << "\n";
 
-            os << "Models:" << std::endl;
+            os << "Models:\n";
             for (auto &[name, model] : models)
             {
-                os << "Model: " << name << std::endl;
+                os << "Model: " << name << "\n";
             }
         }
 
@@ -77,15 +77,20 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] - Model init completed", __func__);
         }
 
+        // hot path
         uint64_t invoke(StepData step_data) override final
         {
+#ifndef NDEBUG
             log.trace("[{}] Invoking Graph, full step: {}", __func__, step_data.to_string());
+#endif
 
             auto t = step_data.start_time;
             while (t < step_data.end_time)
             {
                 auto s = StepData(t, t + step_data.timestep, step_data.timestep);
+#ifndef NDEBUG
                 log.ext_trace("[{}] Graph executing step: {}", __func__, s.to_string());
+#endif
                 executor->invoke(s);
 
                 t += step_data.timestep;
