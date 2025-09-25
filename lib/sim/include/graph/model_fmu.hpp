@@ -246,7 +246,10 @@ namespace ssp4cpp::sim::graph
                             auto source_der = connection.source_storage->get_derivative(source_area, connection.source_index, order);
                             auto target_der = connection.target_storage->get_derivative(target_area, connection.target_index, order);
 
-                            // memcpy(target_der, source_der, sizeof(double));
+                             log.ext_trace("[{}] Copying derivatives {} -> {}", __func__, (uint64_t)source_der, (uint64_t)target_der);
+
+                            // this line is causing an error when
+                            memcpy(target_der, source_der, sizeof(double));
                         }
                     }
                 }
