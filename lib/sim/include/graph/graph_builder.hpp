@@ -53,14 +53,17 @@ namespace ssp4cpp::sim::graph
                 {
                     int index = -1;
                     if (connector->causality == Causality::input)
-                        index = model->input_area->add(name, connector->type);
+                        index = model->input_area->add(name, connector->type, connector->forward_derivatives_order);
                     else if (connector->causality == Causality::output)
-                        index = model->output_area->add(name, connector->type);
+                        index = model->output_area->add(name, connector->type, connector->forward_derivatives_order);
 
                     ConnectorInfo info;
                     info.type = connector->type;
                     info.size = connector->size;
                     info.name = name;
+
+                    info.forward_derivatives = connector->forward_derivatives;
+                    info.forward_derivatives_order = connector->forward_derivatives_order;
 
                     info.index = index;
                     info.value_ref = connector->value_reference;
@@ -69,7 +72,7 @@ namespace ssp4cpp::sim::graph
                     {
                         info.initial_value = connector->initial_value->get_value();
 
-                        log.debug("[{}] -- Store start value for {} : {}", __func__, info.name, fmi2::ext::enums::data_type_to_string(info.type, (void*)info.initial_value.get()));
+                        log.debug("[{}] -- Store start value for {} : {}", __func__, info.name, fmi2::ext::enums::data_type_to_string(info.type, (void *)info.initial_value.get()));
                     }
 
                     if (connector->causality == Causality::input)
@@ -98,6 +101,9 @@ namespace ssp4cpp::sim::graph
                 con_info.target_storage = target_model->input_area.get();
                 con_info.source_index = source_connector.index;
                 con_info.target_index = target_connector.index;
+
+                con_info.forward_derivatives = source_connector.forward_derivatives;
+                con_info.forward_derivatives_order = source_connector.forward_derivatives_order;
 
                 // the target is responsible for copying the connection
                 target_model->connections.push_back(std::move(con_info));

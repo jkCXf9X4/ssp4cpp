@@ -57,6 +57,7 @@ namespace ssp4cpp::sim
             log.info("[{}] Creating simulation", __func__);
             fmu_handler = std::make_unique<handler::FmuHandler>(this->ssp);
             recorder = std::make_unique<utils::DataRecorder>(result_file);
+            recorder->recording_interval = utils::Config::get<float>("simulation.result_interval");
         }
 
         /**

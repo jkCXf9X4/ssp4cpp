@@ -26,6 +26,8 @@ namespace ssp4cpp::sim::analysis::graph
 
         std::map<std::string, AnalysisConnector *> connectors;
 
+        bool canInterpolateInputs = false;
+        int maxOutputDerivativeOrder = 0;
 
         AnalysisModel() {}
 
@@ -36,9 +38,16 @@ namespace ssp4cpp::sim::analysis::graph
             this->fmu_name = fmu_name;
         }
 
+        
         ~AnalysisModel()
         {
             log.ext_trace("[{}] Destroying AnalysisModel", __func__);
+        }
+
+        void set_interpolation_data(bool canInterpolateInputs, int maxOutputDerivativeOrder)
+        {
+            this->canInterpolateInputs = canInterpolateInputs;
+            this->maxOutputDerivativeOrder = maxOutputDerivativeOrder;
         }
 
         virtual void print(std::ostream &os) const

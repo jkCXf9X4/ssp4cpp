@@ -43,6 +43,9 @@ namespace ssp4cpp::sim::analysis::graph
 
         AnalysisModel *model;
 
+        bool forward_derivatives = false;
+        int forward_derivatives_order = 0;
+
         AnalysisConnector()
         {
         }

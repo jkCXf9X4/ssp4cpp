@@ -11,7 +11,7 @@
         "thread_pool_workers": 5,
         "jacobi":
         {
-            "parallel": true,
+            "parallel": false,
             "method" : 1
         },
         "seidel":

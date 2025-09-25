@@ -1,4 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 
 #include "common_log.hpp"
 
@@ -27,7 +28,7 @@ TEST_CASE("RingStorage constructor")
 TEST_CASE("RingStorage add and allocate")
 {
     RingStorage storage(10, "");
-    storage.add("test", DataType::real);
+    storage.add("test", DataType::real, 0);
     storage.allocate();
 }
 
@@ -44,7 +45,7 @@ TEST_CASE("RingStorage push empty")
 TEST_CASE("RingStorage push")
 {
     RingStorage storage(3, "");
-    storage.add("test", DataType::real);
+    storage.add("test", DataType::real, 0);
     storage.allocate();
 
     storage.push(100);
@@ -65,7 +66,7 @@ TEST_CASE("RingStorage push")
 TEST_CASE("RingStorage get_item")
 {
     RingStorage storage(2, "");
-    auto index = storage.add("test", DataType::integer);
+    auto index = storage.add("test", DataType::integer, 1);
     storage.allocate();
 
     auto area1 = storage.push(100);
@@ -97,7 +98,7 @@ TEST_CASE("RingStorage get_item")
 TEST_CASE("RingStorage get_valid_item")
 {
     RingStorage storage(2, "");
-    storage.add("test", DataType::real);
+    storage.add("test", DataType::real, 1);
     storage.allocate();
 
     storage.push(100);
@@ -112,4 +113,43 @@ TEST_CASE("RingStorage get_valid_item")
     REQUIRE(storage.get_valid_item(250, 0) != nullptr);
     REQUIRE(storage.get_valid_item(300, 0) != nullptr);
     REQUIRE(storage.get_valid_item(350, 0) != nullptr);
+}
+
+TEST_CASE("RingStorage stores derivatives with samples")
+{
+    RingStorage storage(2, "");
+    auto index = storage.add("derivative", DataType::real, 3);
+    storage.allocate();
+
+    auto first_area = storage.push(100);
+    auto first_order_first_area = storage.get_derivative(first_area, index, 1);
+    auto second_order_first_area = storage.get_derivative(first_area, index, 2);
+
+    REQUIRE(first_order_first_area != nullptr);
+    REQUIRE(second_order_first_area != nullptr);
+    REQUIRE(first_order_first_area != second_order_first_area);
+
+    auto stride = reinterpret_cast<std::byte *>(second_order_first_area) - reinterpret_cast<std::byte *>(first_order_first_area);
+    REQUIRE(stride == static_cast<std::ptrdiff_t>(sizeof(double)));
+
+    *reinterpret_cast<double *>(first_order_first_area) = -1.0;
+    *reinterpret_cast<double *>(second_order_first_area) = 1.0;
+    storage.flag_new_data(first_area);
+
+    auto second_area = storage.push(200);
+    auto first_order_second_area = storage.get_derivative(second_area, index, 1);
+    *reinterpret_cast<double *>(first_order_second_area) = 2.0;
+    storage.flag_new_data(second_area);
+
+    auto valid_area = storage.get_valid_area(250);
+    REQUIRE(valid_area == static_cast<int64_t>(second_area));
+    REQUIRE(*reinterpret_cast<double *>(storage.get_derivative(valid_area, index, 1)) == Catch::Approx(2.0));
+    REQUIRE(*reinterpret_cast<double *>(storage.get_derivative(first_area, index, 2)) == Catch::Approx(1.0));
+
+    auto third_area = storage.push(300);
+    storage.flag_new_data(third_area);
+    REQUIRE(third_area == first_area);
+
+    REQUIRE(storage.get_valid_area(150) == -1);
+    REQUIRE(storage.get_valid_area(250) == static_cast<int64_t>(second_area));
 }

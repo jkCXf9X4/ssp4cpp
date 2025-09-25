@@ -4,6 +4,7 @@
 #include "common_time.hpp"
 
 #include "data_storage.hpp"
+#include "config.hpp"
 
 #include <fstream>
 #include <mutex>
@@ -52,6 +53,8 @@ namespace ssp4cpp::sim::utils
         std::map<std::uint64_t, std::uint64_t> time_row_map;
         std::unique_ptr<std::byte[]> data;
         std::vector<std::vector<bool>> updated_tracker; // [row][tracker] bool to signify if the tracker is updated
+
+        double recording_interval = 1.0;
 
         DataRecorder(const std::string &filename)
             : file(filename, std::ios::out)
@@ -188,6 +191,8 @@ namespace ssp4cpp::sim::utils
 
         void print_row(uint16_t row)
         {
+         // @todo add some logic to only print in certain intervals
+
             log.trace("[{}] Row: {}", __func__, row);
             file << (double)row_time_map[row] / common::time::nanoseconds_per_second;
             for (const auto &tracker : trackers)

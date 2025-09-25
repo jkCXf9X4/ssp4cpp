@@ -9,6 +9,8 @@
 
 #include "fmu_handler.hpp"
 
+#include "data_type.hpp"
+
 #include "analysis_connection.hpp"
 #include "analysis_model.hpp"
 #include "analysis_connector.hpp"
@@ -48,6 +50,11 @@ namespace ssp4cpp::sim::analysis::graph
             {
                 auto fmu = fmu_handler->fmu_info_map[ssp_resource_name].get();
                 auto m = make_unique<AnalysisModel>(ssp_resource_name, local_resource_name, fmu);
+                if (fmu->model_description->CoSimulation)
+                {
+                    auto co_sim = *fmu->model_description->CoSimulation;
+                    m->set_interpolation_data(co_sim.canInterpolateInputs.value_or(false), co_sim.maxOutputDerivativeOrder.value_or(0));
+                }
 
                 log.trace("[{}] New Model: {}", __func__, m->name);
                 models[m->name] = std::move(m);
@@ -210,6 +217,16 @@ namespace ssp4cpp::sim::analysis::graph
 
                 source_connector->add_child(connection.get());
                 connection->add_child(target_connector);
+
+                // map if input outut derivatives should be forwarded
+
+                if (target_model->canInterpolateInputs && source_model->maxOutputDerivativeOrder > 0 && source_connector->type == utils::DataType::real)
+                {
+                    source_connector->forward_derivatives = true;
+                    source_connector->forward_derivatives_order = source_model->maxOutputDerivativeOrder;
+                    target_connector->forward_derivatives = true;
+                    target_connector->forward_derivatives_order = source_model->maxOutputDerivativeOrder;
+                }
             }
 
             // possible to add internal connections as well

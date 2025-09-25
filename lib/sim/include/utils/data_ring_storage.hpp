@@ -54,9 +54,9 @@ namespace ssp4cpp::sim::utils
             data = make_unique<DataStorage>(capacity, name);
         }
 
-        uint64_t add(std::string name, utils::DataType type)
+        uint64_t add(std::string name, utils::DataType type, int max_interpolation_order)
         {
-            return data->add(name, type);
+            return data->add(name, type, max_interpolation_order);
         }
         void allocate()
         {
@@ -69,10 +69,31 @@ namespace ssp4cpp::sim::utils
             data->set_time(area, time);
             return area;
         }
+    
+        /** Retrieve the most recent element with timestamp before @p time. */
+        int64_t get_valid_area(uint64_t time)
+        {
+            log.ext_trace("[{}] init", __func__);
+            for (std::size_t i = 0; i < size; ++i)
+            {
+                int pos = get_pos_rev(i);
+                if (data->timestamps[pos] <= time)
+                {
+                    log.ext_trace("[{}] found valid area, {}", __func__, pos);
+                    return pos;
+                }
+            }
+            return -1;
+        }
 
         byte *get_item(std::size_t area, std::size_t index)
         {
             return data->get_item(area, index);
+        }
+
+        byte *get_derivative(std::size_t area, std::size_t index, std::size_t order)
+        {
+            return data->get_derivative(area, index, order);
         }
 
         byte *get_valid_item(uint64_t time, std::size_t index)
@@ -131,21 +152,7 @@ namespace ssp4cpp::sim::utils
             return head;
         }
 
-        /** Retrieve the most recent element with timestamp before @p time. */
-        int64_t get_valid_area(uint64_t time)
-        {
-            log.ext_trace("[{}] init", __func__);
-            for (std::size_t i = 0; i < size; ++i)
-            {
-                int pos = get_pos_rev(i);
-                if (data->timestamps[pos] <= time)
-                {
-                    log.ext_trace("[{}] found valid area, {}", __func__, pos);
-                    return pos;
-                }
-            }
-            return -1;
-        }
+
 
         /* Return element at logical position `index` from the tail (oldest)     */
         inline uint64_t get_pos(int index)

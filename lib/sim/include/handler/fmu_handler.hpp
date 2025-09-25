@@ -24,13 +24,12 @@ namespace ssp4cpp::sim::handler
 
         // Borrowing
         ssp4cpp::Fmu *fmu;
-        ssp4cpp::fmi2::md::fmi2ModelDescription*  model_description;
+        ssp4cpp::fmi2::md::fmi2ModelDescription *model_description;
 
         // Owning
         std::unique_ptr<fmi4cpp::fmi2::fmu> fmi4cpp_fmu;
         std::unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
         std::unique_ptr<fmi4cpp::fmi2::cs_slave> model;
-
 
         FmuInfo(std::string name, ssp4cpp::Fmu *fmu)
         {
@@ -71,10 +70,10 @@ namespace ssp4cpp::sim::handler
             {
                 log.debug("[{}] - FMU: {} - ", __func__, fmu_name, fmu->to_string());
             }
-            
+
             // create a non owning variant to be passed around
             fmu_ref_map = common::map_ns::map_unique_to_ref(fmu_map);
-            
+
             log.debug("[{}] Creating FMU Info map", __func__);
             for (auto &[name, fmu] : fmu_ref_map)
             {
@@ -92,5 +91,4 @@ namespace ssp4cpp::sim::handler
             log.trace("[{}] Model init completed", __func__);
         }
     };
-
 }

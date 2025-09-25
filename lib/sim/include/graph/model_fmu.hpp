@@ -34,6 +34,9 @@ namespace ssp4cpp::sim::graph
 
         std::unique_ptr<std::byte[]> initial_value;
 
+        bool forward_derivatives = false;
+        int forward_derivatives_order = 0;
+
         virtual void print(std::ostream &os) const
         {
             os << "ConnectorInfo { "
@@ -42,6 +45,7 @@ namespace ssp4cpp::sim::graph
                << ", size: " << size
                << ", index: " << index
                << ", value_ref: " << value_ref
+               << ", forward_derivatives: " << forward_derivatives_order
                << " }";
         }
     };
@@ -56,6 +60,9 @@ namespace ssp4cpp::sim::graph
         uint32_t source_index;
         uint32_t target_index;
 
+        bool forward_derivatives = false;
+        int forward_derivatives_order = 0;
+
         virtual void print(std::ostream &os) const
         {
             os << "ConnectionInfo { "
@@ -65,6 +72,7 @@ namespace ssp4cpp::sim::graph
                << ", target_storage: " << target_storage
                << ", source_index: " << source_index
                << ", target_index: " << target_index
+               << ", forward_derivatives: " << forward_derivatives_order
                << " }";
         }
     };
@@ -76,7 +84,7 @@ namespace ssp4cpp::sim::graph
         uint64_t _end_time = 0;
 
     public:
-        common::Logger log = common::Logger("FmuModel", common::LogLevel::info);
+        common::Logger log = common::Logger("FmuModel", common::LogLevel::ext_trace);
 
         handler::FmuInfo *fmu;
 
@@ -203,10 +211,10 @@ namespace ssp4cpp::sim::graph
         void pre(uint64_t model_start_time, uint64_t valid_input_time)
         {
 
-            auto area = input_area->push(model_start_time);
+            auto target_area = input_area->push(model_start_time);
 #ifndef NDEBUG
             log.trace("[{}] Init, Retrieve inputs, and prepare the model", __func__);
-            log.ext_trace("[{}] Fetch valid data to input area. Area {}", __func__, area);
+            log.ext_trace("[{}] Fetch valid data to input target_area. Area {}", __func__, target_area);
 
             log.trace("[{}] Copy connections", __func__);
 #endif
@@ -215,20 +223,35 @@ namespace ssp4cpp::sim::graph
 #ifndef NDEBUG
                 log.ext_trace("[{}] Fetch valid data connection {}", __func__, connection.to_string());
 #endif
-                auto output_item = connection.source_storage->get_valid_item(valid_input_time, connection.source_index);
-                if (output_item)
+                auto source_area = connection.source_storage->get_valid_area(valid_input_time);
+                if (source_area != -1)
                 {
+                    auto source_item = connection.source_storage->get_item(source_area, connection.source_index);
 #ifndef NDEBUG
-                    auto data_type_str = fmi2::ext::enums::data_type_to_string(connection.type, output_item);
-                    log.debug("[{}] Found valid item, copying data to storage area: {}",
+                    auto data_type_str = fmi2::ext::enums::data_type_to_string(connection.type, source_item);
+                    log.debug("[{}] Found valid item, copying data to target area: {}",
                               __func__, data_type_str);
 #endif
 
-                    auto input_item = input_area->get_item(area, connection.target_index);
-                    memcpy(input_item, output_item, connection.size);
+                    auto target_item = input_area->get_item(target_area, connection.target_index);
+                    memcpy(target_item, source_item, connection.size);
+
+                    if (connection.forward_derivatives)
+                    {
+#ifndef NDEBUG
+                        log.ext_trace("[{}] Copying derivatives {}", __func__, connection.to_string());
+#endif
+                        for (int order = 1; order <= connection.forward_derivatives_order; ++order)
+                        {
+                            auto source_der = connection.source_storage->get_derivative(source_area, connection.source_index, order);
+                            auto target_der = connection.target_storage->get_derivative(target_area, connection.target_index, order);
+
+                            // memcpy(target_der, source_der, sizeof(double));
+                        }
+                    }
                 }
             }
-            input_area->flag_new_data(area);
+            input_area->flag_new_data(target_area);
             recorder->update();
 
 #ifndef NDEBUG
@@ -236,7 +259,7 @@ namespace ssp4cpp::sim::graph
 #endif
             for (auto &[_, input] : inputs)
             {
-                auto input_item = input_area->get_item(area, input.index);
+                auto input_item = input_area->get_item(target_area, input.index);
 
 #ifndef NDEBUG
                 auto data_type_str = fmi2::ext::enums::data_type_to_string(input.type, input_item);
@@ -244,9 +267,14 @@ namespace ssp4cpp::sim::graph
 #endif
 
                 utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void *)input_item);
+#ifndef NDEBUG
+                log.ext_trace("[{}] Applying input derivatives", __func__);
+#endif
+
+                // apply_input_derivatives(target_area);
             }
 #ifndef NDEBUG
-            log.debug("[{}] Input area after pre: {}", __func__, input_area->data->export_area(area));
+            log.debug("[{}] Input area after pre: {}", __func__, input_area->data->export_area(target_area));
 #endif
         }
 
@@ -293,13 +321,18 @@ namespace ssp4cpp::sim::graph
             auto area = output_area->push(time);
             for (auto &[_, output] : outputs)
             {
+                auto item = output_area->get_item(area, output.index);
 #ifndef NDEBUG
-                log.ext_trace("[{}] Copying ref {} ({}) to index {}", __func__, output.value_ref, output.type.to_string(), output.index);
+                log.ext_trace("[{}] Copying ref {} ({}) to index {} ", __func__, output.value_ref, output.type.to_string(), output.index, (int64_t)item) ;
 #endif
 
-                auto item = output_area->get_item(area, output.index);
                 utils::read_from_model_(output.type, *fmu->model, output.value_ref, (void *)item);
                 // fib output data
+
+#ifndef NDEBUG
+                log.ext_trace("[{}] Store output_derivatives ", __func__);
+#endif
+                // fetch_output_derivatives(area);
             }
             output_area->flag_new_data(area);
             recorder->update();

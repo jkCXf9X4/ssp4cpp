@@ -69,8 +69,8 @@ TEST_CASE("DataRecorder configures trackers and headers", "[DataRecorder]")
     DataRecorder recorder(test_filename);
 
     DataStorage storage(2, "signals");
-    storage.add("signals.real", DataType::real);
-    storage.add("signals.int", DataType::integer);
+    storage.add("signals.real", DataType::real, 1);
+    storage.add("signals.int", DataType::integer, 1);
     storage.allocate();
 
     recorder.add_storage(&storage);
@@ -99,8 +99,8 @@ TEST_CASE("DataRecorder writes new rows when storages provide data", "[DataRecor
     DataRecorder recorder(test_filename);
 
     DataStorage storage(2, "signals");
-    storage.add("signals.temperature", DataType::real);
-    storage.add("signals.mode", DataType::integer);
+    storage.add("signals.temperature", DataType::real, 1);
+    storage.add("signals.mode", DataType::integer, 0);
     storage.allocate();
 
     recorder.add_storage(&storage);
@@ -138,13 +138,13 @@ TEST_CASE("DataRecorder coalesces updates from multiple storages", "[DataRecorde
     DataRecorder recorder(test_filename);
 
     DataStorage primary(2, "primary");
-    primary.add("primary.temperature", DataType::real);
-    primary.add("primary.mode", DataType::integer);
+    primary.add("primary.temperature", DataType::real, 1);
+    primary.add("primary.mode", DataType::integer, 0);
     primary.allocate();
 
     DataStorage secondary(2, "secondary");
-    secondary.add("secondary.pressure", DataType::real);
-    secondary.add("secondary.index", DataType::integer);
+    secondary.add("secondary.pressure", DataType::real, 1);
+    secondary.add("secondary.index", DataType::integer, 2);
     secondary.allocate();
 
     recorder.add_storage(&primary);

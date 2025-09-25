@@ -32,26 +32,33 @@ namespace ssp4cpp::sim::utils
 
         // all data
         std::unique_ptr<std::byte[]> data;
+        std::unique_ptr<std::byte[]> der_data;
 
         // these are the same for each timestamp area
         std::vector<std::size_t> positions; // data position relative to start; 0, 4,...
+        std::vector<size_t> der_positions; // data position relative to start; 0, 4,...
+
         std::vector<utils::DataType> types;
         std::vector<std::string> names;
         std::vector<size_t> sizes;
+        std::vector<size_t> max_interpolation_orders;
 
         // for retrieval of index from name
         std::map<std::string, std::size_t> index_name_map;
 
         std::vector<std::uint64_t> timestamps;
         std::vector<std::vector<std::byte *>> locations; // absolute location in memory
+        std::vector<std::vector<std::byte *>> der_locations; // absolute location in memory
         std::vector<bool> new_data_flags;
 
         std::size_t areas = 1;
         std::size_t pos = 0;
+        std::size_t der_pos = 0;
         std::size_t total_size = 0;
         std::int32_t index = -1;
         std::size_t items = 0;
         std::string name;
+        size_t derivative_size = sizeof(double);
 
         bool allocated = false;
 
@@ -66,20 +73,23 @@ namespace ssp4cpp::sim::utils
             this->name = name;
         }
 
-        uint32_t add(std::string name, utils::DataType type)
+        uint32_t add(std::string name, utils::DataType type, int max_interpolation_order)
         {
             index += 1;
             items += 1;
-
-            names.push_back(name);
-            positions.push_back(pos);
-            types.push_back(type);
-
+            auto size = fmi2::ext::enums::get_data_type_size(type);
             index_name_map[name] = index;
 
-            auto size = fmi2::ext::enums::get_data_type_size(type);
-            pos += size;
+            names.push_back(name);
+            types.push_back(type);
             sizes.push_back(size);
+            max_interpolation_orders.push_back(max_interpolation_order);
+            
+            positions.push_back(pos);
+            this->der_positions.push_back(der_pos);
+
+            pos += size;
+            der_pos += max_interpolation_order * derivative_size;
 
             return index;
         }
@@ -87,20 +97,33 @@ namespace ssp4cpp::sim::utils
         void allocate()
         {
             locations.clear();
+            der_locations.clear();
+
             total_size = pos * areas;
             data = std::make_unique<std::byte[]>(total_size);
             std::memset(data.get(), 0, total_size);
 
+            auto der_size = der_pos * areas;
+            der_data = std::make_unique<std::byte[]>(der_size);
+            std::memset(der_data.get(), 0, der_size);
+
             timestamps.resize(areas);
             locations.resize(areas);
+            der_locations.resize(areas);
 
             for (int i = 0; i < areas; i++)
             {
                 locations[i].reserve(positions.size());
+                der_locations[i].reserve(der_positions.size());
 
-                for (auto p : positions)
+                for (auto p_pos : positions)
                 {
-                    locations[i].push_back(&data[i * pos + p]);
+                    locations[i].push_back(&data[i * pos + p_pos]);
+                }
+
+                for (auto d_pos : der_positions)
+                {
+                    der_locations[i].push_back(&der_data[i * pos + d_pos]);
                 }
                 new_data_flags.push_back(false);
             }
@@ -112,6 +135,15 @@ namespace ssp4cpp::sim::utils
             if (allocated) [[likely]]
             {
                 return locations[area][index];
+            }
+            return nullptr;
+        }
+
+        inline std::byte *get_derivative(std::size_t area, std::size_t index, std::size_t order) noexcept
+        {
+            if (allocated) [[likely]]
+            {
+                return der_locations[area][index] + (order-1)*derivative_size;
             }
             return nullptr;
         }
