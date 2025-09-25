@@ -87,7 +87,7 @@ namespace ssp4cpp::sim::handler
             log.trace("[{}] Model init ", __func__);
             for (auto &[_, fmu] : this->fmu_info_map)
             {
-                fmu->model = fmu->cs_fmu->new_instance();
+                fmu->model = fmu->cs_fmu->new_instance(false, false);
             }
             log.trace("[{}] Model init completed", __func__);
         }

@@ -20,6 +20,16 @@ namespace ssp4cpp::common::time
     uint64_t constexpr seconds_per_hour = 3600;
     uint64_t constexpr hours_per_day = 24;
 
+    inline double ns_to_s(uint64_t t)
+    {
+        return static_cast<double>(t) / common::time::nanoseconds_per_second;
+    }
+
+    inline uint64_t s_to_ns(double t)
+    {
+        return static_cast<uint64_t>(t * common::time::nanoseconds_per_second);
+    }
+
     class ScopeTimer
     {
     public:

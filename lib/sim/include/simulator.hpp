@@ -32,20 +32,20 @@ namespace ssp4cpp::sim
         /**
          * @brief Constructs a new Simulator object.
          *
-         * @param ssp_path The path to the SSP file to be simulated.
-         * @param props_path The path to the simulation configuration file.
+         * @param config_path The path to the simulation configuration file.
          */
-        Simulator(const std::string &ssp_path,
-                  const std::string &props_path)
+        Simulator(const std::string &config_path)
         {
             log.info("[{}] Creating Simulator\n", __func__);
-            log.debug("[{}] - Importing SSP", __func__);
-            ssp = std::make_unique<ssp4cpp::Ssp>(ssp_path);
-            log.debug("[{}] -- SSP: {}", __func__, ssp->to_string());
             
             log.debug("[{}] - Loading config", __func__);
-            utils::Config::loadFromFile(props_path);
+            utils::Config::loadFromFile(config_path);
             log.debug("[{}] -- Config:\n{}\n", __func__, utils::Config::as_string());
+
+            log.debug("[{}] - Importing SSP", __func__);
+            auto ssp_path = utils::Config::get<std::string>("simulation.ssp");
+            ssp = std::make_unique<ssp4cpp::Ssp>(ssp_path);
+            log.debug("[{}] -- SSP: {}", __func__, ssp->to_string());
             
             log.debug("[{}] - Creating simulation\n", __func__);
             sim = std::make_unique<Simulation>(ssp.get());

@@ -1,20 +1,25 @@
 {
     "simulation" :
     {
-        "ssp": "",
+        "ssp": "./resources/embrace/embrace_scen.ssp",
         "start_time":0.0,
-        "end_time":700,
+        "stop_time":700.0,
         "timestep": 0.1,
         "tolerance": 1e-4,
 
         "executor": "jacobi",
+        "thread_pool_workers": 5,
         "jacobi":
         {
-            "parallel": true
+            "parallel": true,
+            "method" : 1
         },
         "seidel":
         {
             "parallel": true
-        }
+        },
+
+        "result_file": "./results/result.csv",
+        "result_interval": 1.0
     }
 }

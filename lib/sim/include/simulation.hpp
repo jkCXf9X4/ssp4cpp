@@ -14,6 +14,7 @@
 #include "SSP_Ext.hpp"
 #include "ssp.hpp"
 #include "fmu.hpp"
+#include "config.hpp"
 
 #include <vector>
 #include <algorithm>
@@ -42,7 +43,7 @@ namespace ssp4cpp::sim
         std::unique_ptr<utils::DataRecorder> recorder;
         std::unique_ptr<graph::Graph> sim_graph;
 
-        std::string result_file = "results/result.csv";
+        std::string result_file = utils::Config::get<std::string>("simulation.result_file");
 
         /**
          * @brief Constructs a new Simulation object.
@@ -96,15 +97,15 @@ namespace ssp4cpp::sim
             recorder->start_recording();
             log.info("[{}] Starting simulation", __func__);
 
-            uint64_t start_time = utils::Config::get<float>("simulation.start_time") * common::time::nanoseconds_per_second;
-            uint64_t end_time = utils::Config::get<float>("simulation.end_time") * common::time::nanoseconds_per_second;
-            uint64_t timestep = utils::Config::get<float>("simulation.timestep") * common::time::nanoseconds_per_second;
+            uint64_t start_time = common::time::s_to_ns(utils::Config::get<float>("simulation.start_time"));
+            uint64_t end_time = common::time::s_to_ns(utils::Config::get<float>("simulation.stop_time"));
+            uint64_t timestep = common::time::s_to_ns(utils::Config::get<float>("simulation.timestep"));
 
             auto sim_timer = common::time::Timer();
             sim_graph->invoke(sim::graph::StepData(start_time, end_time, timestep));
             auto sim_wall_time = sim_timer.stop();
-            auto sim_wall_time_s = ((double)sim_wall_time) / common::time::nanoseconds_per_second;
-            log.info("[{}] Total walltime: {} ", __func__, sim_wall_time_s);
+
+            log.info("[{}] Total walltime: {} ", __func__, common::time::ns_to_s(sim_wall_time));
 
             recorder->stop_recording();
             log.info("[{}] Simulation completed\n", __func__);
@@ -117,8 +118,7 @@ namespace ssp4cpp::sim
                 log.info("[{}] Model {} walltime: {}", __func__, node->invocable_obj->name, model_walltime);
                 total_model_time += model_walltime;
             }
-            auto total_model_time_s = ((double)total_model_time) / common::time::nanoseconds_per_second;
-            log.info("[{}] Model walltime: {}", __func__, total_model_time_s);
+            log.info("[{}] Model walltime: {}", __func__, common::time::ns_to_s(total_model_time));
 #endif
         }
     };

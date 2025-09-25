@@ -10,6 +10,7 @@
 #include "data_ring_storage.hpp"
 #include "data_recorder.hpp"
 #include "invocable.hpp"
+#include "config.hpp"
 
 #include "fmu_handler.hpp"
 
@@ -164,8 +165,12 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] FmuModel init {}", __func__, name);
 
+            auto start_time = utils::Config::get<float>("simulation.start_time");
+            auto end_time = utils::Config::get<float>("simulation.stop_time") + 10;
+            auto tolerance = utils::Config::get<float>("simulation.tolerance");
+
             log.debug("[{}] setup_experiment: {} ", __func__, name);
-            if (!fmu->model->setup_experiment(0, 10000, 1e-4))
+            if (!fmu->model->setup_experiment(start_time, end_time, tolerance))
                 log.error("[{}] setup_experiment failed ", __func__);
 
             log.debug("[{}] enter_initialization_mode: {} ", __func__, name);
@@ -246,28 +251,35 @@ namespace ssp4cpp::sim::graph
         }
 
         // hot path
-        void take_step(uint64_t timestep)
+        uint64_t step_until(uint64_t stop_time_ns)
         {
-            auto step_double = (double)timestep / common::time::nanoseconds_per_second;
-#ifndef NDEBUG
-            log.debug("[{}] FmuModel {} ", __func__, step_double);
-            auto model_timer = common::time::Timer();
-#endif
+            auto stop_time_s = common::time::ns_to_s(stop_time_ns);
 
-            if (fmu->model->step(step_double) == false)
+            auto sim_time_s = fmu->model->get_simulation_time();
+            while (sim_time_s < stop_time_s)
             {
-                int status = (int)fmu->model->last_status();
-                log.error("Error! step() returned with status: {}", std::to_string(status));
-                if (status == 3)
+                auto step = stop_time_s - sim_time_s;
+#ifndef NDEBUG
+                log.debug("[{}] FmuModel {} ", __func__, step);
+                auto model_timer = common::time::Timer();
+#endif
+                if (fmu->model->step(step) == false)
                 {
-                    throw std::runtime_error("Execution failed");
+                    int status = (int)fmu->model->last_status();
+                    log.error("Error! step() returned with status: {}", std::to_string(status));
+                    if (status == 3)
+                    {
+                        throw std::runtime_error("Execution failed");
+                    }
                 }
-            }
+                sim_time_s = fmu->model->get_simulation_time();
 
 #ifndef NDEBUG
-            this->invocation_walltime_ns += model_timer.stop();
-            log.trace("[{}], sim time {}", __func__, fmu->model->get_simulation_time());
+                this->invocation_walltime_ns += model_timer.stop();
+                log.trace("[{}], sim time {}", __func__, sim_time_s);
 #endif
+            }
+            return common::time::s_to_ns(sim_time_s);
         }
 
         // hot path
@@ -308,20 +320,19 @@ namespace ssp4cpp::sim::graph
             _end_time = step_data.end_time;
             auto _timestep = _end_time - _start_time;
 
-            auto delayed_time = _end_time - delay;
 #ifndef NDEBUG
-            log.trace("[{}] {} start_time: {} valid_input_time: {} timestep: {} end_time: {}, delayed_time {}",
-                      __func__, this->name.c_str(), _start_time, step_data.valid_input_time, _timestep, _end_time, delayed_time);
+            log.trace("[{}] {} start_time: {} valid_input_time: {} timestep: {} end_time: {}",
+                      __func__, this->name.c_str(), _start_time, step_data.valid_input_time, _timestep, _end_time);
 #endif
 
             pre(_start_time, step_data.valid_input_time);
 
-            take_step(_timestep);
-            // this should return the new endtime if we have early return
+            _end_time = step_until(_end_time);
 
+            auto delayed_time = _end_time - delay;
             post(delayed_time);
 #ifndef NDEBUG
-            log.ext_trace("[{}] Completed", __func__, step_data.to_string());
+            log.ext_trace("[{}] Completed, delayed_time:", __func__, delayed_time);
 #endif
             return delayed_time;
         }

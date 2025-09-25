@@ -1,7 +1,7 @@
 {
     "model_dir": ".",
     "publish_dir": "../../../results/test2",
-    "config": "aircraft",
+    "config": "aircraft_no_ssv",
     "sequential": [
         {
             "action": "preset_bc",
@@ -11,7 +11,7 @@
         },
         {
             "action": "sim",
-            "step_size": 0.1,
+            "step_size": 0.01,
             "stop_time": 1200,
             "run_as_process": true,
             "timeout": 600
@@ -21,3 +21,5 @@
         }
     ]
 }
+
+walltime: 48.012559968
