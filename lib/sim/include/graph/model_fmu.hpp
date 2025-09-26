@@ -335,6 +335,7 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Store output_derivatives ", __func__);
 #endif
             fetch_output_derivatives(area);
+
             output_area->flag_new_data(area);
             recorder->update();
 #ifndef NDEBUG
@@ -375,7 +376,7 @@ namespace ssp4cpp::sim::graph
         {
             for (auto &[_, connector] : inputs)
             {
-                if (connector.forward_derivatives_order <= 0 || connector.type != utils::DataType::real)
+                if (!connector.forward_derivatives)
                 {
                     continue;
                 }
@@ -405,14 +406,15 @@ namespace ssp4cpp::sim::graph
         {
             for (auto &[_, connector] : outputs)
             {
-                if (connector.forward_derivatives)
+                // dont run at time 0.0
+                if (!connector.forward_derivatives || _end_time == 0)
                 {
                     continue;
                 }
 
                 for (int order = 1; order <= connector.forward_derivatives_order; ++order)
                 {
-                    log.trace("[{}] get_derivative position for {} order: {}", __func__, connector.name, order);
+                    log.trace("[{}] get_derivative position for vr:{} name: {} order: {}", __func__, connector.value_ref, connector.name, order);
                     auto der_ptr = output_area->get_derivative(area, connector.index, order);
                     if (der_ptr == nullptr)
                     {

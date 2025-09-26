@@ -250,9 +250,7 @@ namespace ssp4cpp::sim::handler
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Integer order = static_cast<fmi2Integer>(derivative_order);
             fmi2Real value = 0.0;
-            log.warning("[{}]aaa", __func__);
             last_status_ = fmi2_getRealOutputDerivatives(instance_.raw(), &vr, 1, &order, &value);
-            log.warning("[{}]aab", __func__);
             if (status_ok(last_status_))
             {
                 out = static_cast<double>(value);

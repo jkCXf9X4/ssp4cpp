@@ -116,7 +116,7 @@ namespace ssp4cpp::sim
             for (auto &node : sim_graph->nodes)
             {
                 auto model_walltime = node->invocable_obj->invocation_walltime_ns;
-                log.info("[{}] Model {} walltime: {}", __func__, node->invocable_obj->name, model_walltime);
+                log.info("[{}] Model {} walltime: {}", __func__, node->invocable_obj->name, common::time::ns_to_s(model_walltime));
                 total_model_time += model_walltime;
             }
             log.info("[{}] Model walltime: {}", __func__, common::time::ns_to_s(total_model_time));
