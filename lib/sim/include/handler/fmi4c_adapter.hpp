@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <format>
+#include <mutex>
 #include <span>
 #include <stdexcept>
 #include <string>
@@ -15,6 +16,40 @@
 
 namespace ssp4cpp::sim::handler
 {
+    namespace detail
+    {
+        inline std::once_flag fmi4c_message_flag;
+        inline thread_local std::string last_fmi4c_message;
+
+        inline void fmi4c_message_callback(const char *message)
+        {
+            if (message != nullptr)
+            {
+                last_fmi4c_message = message;
+            }
+        }
+
+        inline void ensure_message_callback_registered()
+        {
+            std::call_once(fmi4c_message_flag, []()
+            {
+                fmi4c_setMessageFunction(&fmi4c_message_callback);
+            });
+        }
+
+        inline void clear_last_message()
+        {
+            last_fmi4c_message.clear();
+        }
+
+        inline std::string consume_last_message()
+        {
+            auto message = last_fmi4c_message;
+            last_fmi4c_message.clear();
+            return message;
+        }
+    }
+
     class FmuInstance
     {
     public:
@@ -26,11 +61,13 @@ namespace ssp4cpp::sim::handler
             instance_name_ = std::move(instance_name);
 
             log.debug("[{}] Loading FMU {}", __func__, fmu_path_);
+            detail::ensure_message_callback_registered();
+            detail::clear_last_message();
             handle_ = fmi4c_loadFmu(fmu_path_.c_str(), instance_name_.c_str());
             if (handle_ == nullptr)
             {
-                auto message = fmi4c_getErrorMessages();
-                throw std::runtime_error(std::format("Failed to load FMU '{}': {}", fmu_path_, message ? message : "unknown error"));
+                auto message = detail::consume_last_message();
+                throw std::runtime_error(std::format("Failed to load FMU '{}': {}", fmu_path_, message.empty() ? "unknown error" : message));
             }
 
             version_ = fmi4c_getFmiVersion(handle_);
@@ -58,7 +95,7 @@ namespace ssp4cpp::sim::handler
             return fmi2_getSupportsCoSimulation(handle_) == true;
         }
 
-        fmiHandle *raw()
+        fmuHandle *raw()
         {
             return handle_;
         }
@@ -81,7 +118,7 @@ namespace ssp4cpp::sim::handler
     private:
         std::string fmu_path_;
         std::string instance_name_;
-        fmiHandle *handle_ = nullptr;
+        fmuHandle *handle_ = nullptr;
         fmiVersion_t version_ = fmiVersionUnknown;
     };
 
@@ -114,6 +151,8 @@ namespace ssp4cpp::sim::handler
         CoSimulationModel(const CoSimulationModel &) = delete;
         CoSimulationModel &operator=(const CoSimulationModel &) = delete;
 
+        fmi2InstanceHandle *handle;
+
         bool instantiate(bool visible, bool logging_on)
         {
             if (instantiated_)
@@ -132,24 +171,27 @@ namespace ssp4cpp::sim::handler
             }
 
             log.debug("[{}] Instantiating FMU {}", __func__, instance_.path());
-            auto success = fmi2_instantiate(instance_.raw(),
-                                            fmi2CoSimulation,
-                                            nullptr,
-                                            ::calloc,
-                                            ::free,
-                                            nullptr,
-                                            nullptr,
-                                            visible ? fmi2True : fmi2False,
-                                            logging_on ? fmi2True : fmi2False);
+            detail::ensure_message_callback_registered();
+            detail::clear_last_message();
+            handle = fmi2_instantiate(instance_.raw(),
+                                           fmi2CoSimulation,
+                                           nullptr,
+                                           ::calloc,
+                                           ::free,
+                                           nullptr,
+                                           nullptr,
+                                           visible ? fmi2True : fmi2False,
+                                           logging_on ? fmi2True : fmi2False);
 
+            bool success = handle != nullptr;
             instantiated_ = success;
             last_status_ = success ? fmi2OK : fmi2Error;
             current_time_ = 0.0;
 
             if (!success)
             {
-                auto message = fmi4c_getErrorMessages();
-                throw std::runtime_error(std::format("Failed to instantiate FMU '{}': {}", instance_.path(), message ? message : "unknown error"));
+                auto message = detail::consume_last_message();
+                throw std::runtime_error(std::format("Failed to instantiate FMU '{}': {}", instance_.path(), message.empty() ? "unknown error" : message));
             }
 
             return success;
@@ -166,7 +208,7 @@ namespace ssp4cpp::sim::handler
             auto tolerance_defined = tolerance > 0.0 ? fmi2True : fmi2False;
             auto stop_defined = stop_time > start_time ? fmi2True : fmi2False;
 
-            last_status_ = fmi2_setupExperiment(instance_.raw(), tolerance_defined, tolerance, start_time, stop_defined, stop_time);
+            last_status_ = fmi2_setupExperiment(handle, tolerance_defined, tolerance, start_time, stop_defined, stop_time);
             if (status_ok(last_status_))
             {
                 current_time_ = start_time;
@@ -181,7 +223,7 @@ namespace ssp4cpp::sim::handler
                 throw std::logic_error("enter_initialization_mode called before instantiate");
             }
 
-            last_status_ = fmi2_enterInitializationMode(instance_.raw());
+            last_status_ = fmi2_enterInitializationMode(handle);
             return status_ok(last_status_);
         }
 
@@ -192,7 +234,7 @@ namespace ssp4cpp::sim::handler
                 throw std::logic_error("exit_initialization_mode called before instantiate");
             }
 
-            last_status_ = fmi2_exitInitializationMode(instance_.raw());
+            last_status_ = fmi2_exitInitializationMode(handle);
             return status_ok(last_status_);
         }
 
@@ -203,7 +245,7 @@ namespace ssp4cpp::sim::handler
                 throw std::logic_error("step called before instantiate");
             }
 
-            last_status_ = fmi2_doStep(instance_.raw(), current_time_, step_size, fmi2True);
+            last_status_ = fmi2_doStep(handle, current_time_, step_size, fmi2True);
             if (status_ok(last_status_))
             {
                 current_time_ += step_size;
@@ -220,8 +262,8 @@ namespace ssp4cpp::sim::handler
             }
 
             log.debug("[{}] Terminating FMU {}", __func__, instance_.path());
-            last_status_ = fmi2_terminate(instance_.raw());
-            fmi2_freeInstance(instance_.raw());
+            last_status_ = fmi2_terminate(handle);
+            fmi2_freeInstance(handle);
             instantiated_ = false;
             return status_ok(last_status_);
         }
@@ -241,7 +283,7 @@ namespace ssp4cpp::sim::handler
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Integer order = static_cast<fmi2Integer>(derivative_order);
             fmi2Real data = static_cast<fmi2Real>(value);
-            last_status_ = fmi2_setRealInputDerivatives(instance_.raw(), &vr, 1, &order, &data);
+            last_status_ = fmi2_setRealInputDerivatives(handle, &vr, 1, &order, &data);
             return status_ok(last_status_);
         }
 
@@ -250,7 +292,7 @@ namespace ssp4cpp::sim::handler
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Integer order = static_cast<fmi2Integer>(derivative_order);
             fmi2Real value = 0.0;
-            last_status_ = fmi2_getRealOutputDerivatives(instance_.raw(), &vr, 1, &order, &value);
+            last_status_ = fmi2_getRealOutputDerivatives(handle, &vr, 1, &order, &value);
             if (status_ok(last_status_))
             {
                 out = static_cast<double>(value);
@@ -263,7 +305,7 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Real value = 0.0;
-            last_status_ = fmi2_getReal(instance_.raw(), &vr, 1, &value);
+            last_status_ = fmi2_getReal(handle, &vr, 1, &value);
             if (status_ok(last_status_))
             {
                 out = value;
@@ -276,7 +318,7 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Integer value = 0;
-            last_status_ = fmi2_getInteger(instance_.raw(), &vr, 1, &value);
+            last_status_ = fmi2_getInteger(handle, &vr, 1, &value);
             if (status_ok(last_status_))
             {
                 out = value;
@@ -289,7 +331,7 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Boolean value = fmi2False;
-            last_status_ = fmi2_getBoolean(instance_.raw(), &vr, 1, &value);
+            last_status_ = fmi2_getBoolean(handle, &vr, 1, &value);
             if (status_ok(last_status_))
             {
                 out = value;
@@ -302,7 +344,7 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Real data = value;
-            last_status_ = fmi2_setReal(instance_.raw(), &vr, 1, &data);
+            last_status_ = fmi2_setReal(handle, &vr, 1, &data);
             return status_ok(last_status_);
         }
 
@@ -310,7 +352,7 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Integer data = value;
-            last_status_ = fmi2_setInteger(instance_.raw(), &vr, 1, &data);
+            last_status_ = fmi2_setInteger(handle, &vr, 1, &data);
             return status_ok(last_status_);
         }
 
@@ -318,7 +360,7 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Boolean data = value ? fmi2True : fmi2False;
-            last_status_ = fmi2_setBoolean(instance_.raw(), &vr, 1, &data);
+            last_status_ = fmi2_setBoolean(handle, &vr, 1, &data);
             return status_ok(last_status_);
         }
 
@@ -326,7 +368,7 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2String data = value.c_str();
-            last_status_ = fmi2_setString(instance_.raw(), &vr, 1, &data);
+            last_status_ = fmi2_setString(handle, &vr, 1, &data);
             return status_ok(last_status_);
         }
     };
