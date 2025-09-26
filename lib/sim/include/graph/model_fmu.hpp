@@ -84,7 +84,7 @@ namespace ssp4cpp::sim::graph
         uint64_t _end_time = 0;
 
     public:
-        common::Logger log = common::Logger("FmuModel", common::LogLevel::ext_trace);
+        common::Logger log = common::Logger("FmuModel", common::LogLevel::info);
 
         handler::FmuInfo *fmu;
 
@@ -246,7 +246,7 @@ namespace ssp4cpp::sim::graph
                             auto source_der = connection.source_storage->get_derivative(source_area, connection.source_index, order);
                             auto target_der = connection.target_storage->get_derivative(target_area, connection.target_index, order);
 
-                             log.ext_trace("[{}] Copying derivatives {} -> {}", __func__, (uint64_t)source_der, (uint64_t)target_der);
+                            log.ext_trace("[{}] Copying derivatives {} -> {}", __func__, (uint64_t)source_der, (uint64_t)target_der);
 
                             // this line is causing an error when
                             memcpy(target_der, source_der, sizeof(double));
@@ -270,12 +270,11 @@ namespace ssp4cpp::sim::graph
 #endif
 
                 utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void *)input_item);
-#ifndef NDEBUG
-                log.ext_trace("[{}] Applying input derivatives", __func__);
-#endif
-
-                // apply_input_derivatives(target_area);
             }
+#ifndef NDEBUG
+            log.ext_trace("[{}] Applying input derivatives", __func__);
+#endif
+            apply_input_derivatives(target_area);
 #ifndef NDEBUG
             log.debug("[{}] Input area after pre: {}", __func__, input_area->data->export_area(target_area));
 #endif
@@ -326,17 +325,16 @@ namespace ssp4cpp::sim::graph
             {
                 auto item = output_area->get_item(area, output.index);
 #ifndef NDEBUG
-                log.ext_trace("[{}] Copying ref {} ({}) to index {} ", __func__, output.value_ref, output.type.to_string(), output.index, (int64_t)item) ;
+                log.ext_trace("[{}] Copying ref {} ({}) to index {} ", __func__, output.value_ref, output.type.to_string(), output.index, (int64_t)item);
 #endif
 
                 utils::read_from_model_(output.type, *fmu->model, output.value_ref, (void *)item);
-                // fib output data
+            }
 
 #ifndef NDEBUG
-                log.ext_trace("[{}] Store output_derivatives ", __func__);
+            log.ext_trace("[{}] Store output_derivatives ", __func__);
 #endif
-                // fetch_output_derivatives(area);
-            }
+            fetch_output_derivatives(area);
             output_area->flag_new_data(area);
             recorder->update();
 #ifndef NDEBUG
@@ -371,6 +369,74 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] Completed, delayed_time:", __func__, delayed_time);
 #endif
             return delayed_time;
+        }
+
+        inline void apply_input_derivatives(std::size_t area)
+        {
+            for (auto &[_, connector] : inputs)
+            {
+                if (connector.forward_derivatives_order <= 0 || connector.type != utils::DataType::real)
+                {
+                    continue;
+                }
+
+                for (int order = 1; order <= connector.forward_derivatives_order; ++order)
+                {
+                    auto der_ptr = input_area->get_derivative(area, connector.index, order);
+                    if (der_ptr == nullptr)
+                    {
+                        continue;
+                    }
+
+                    double value = *reinterpret_cast<double *>(der_ptr);
+                    if (!fmu->model->set_real_input_derivative(connector.value_ref, order, value))
+                    {
+                        log.warning("[{}] Failed to set input derivative order {} for {} (status {})",
+                                    __func__,
+                                    order,
+                                    connector.name,
+                                    static_cast<int>(fmu->model->last_status()));
+                    }
+                }
+            }
+        }
+
+        inline void fetch_output_derivatives(std::size_t area)
+        {
+            for (auto &[_, connector] : outputs)
+            {
+                if (connector.forward_derivatives)
+                {
+                    continue;
+                }
+
+                for (int order = 1; order <= connector.forward_derivatives_order; ++order)
+                {
+                    log.trace("[{}] get_derivative position for {} order: {}", __func__, connector.name, order);
+                    auto der_ptr = output_area->get_derivative(area, connector.index, order);
+                    if (der_ptr == nullptr)
+                    {
+                        log.warning("[{}] Failed to find derivate item for {}", __func__, connector.name);
+                        continue;
+                    }
+
+                    log.trace("[{}] get_derivative for {} ", __func__, connector.name);
+                    double value = 0.0;
+                    if (!fmu->model->get_real_output_derivative(connector.value_ref, order, value))
+                    {
+                        log.warning("[{}] Failed to get output derivative order {} for {} (status {})",
+                                    __func__,
+                                    order,
+                                    connector.name,
+                                    static_cast<int>(fmu->model->last_status()));
+                        continue;
+                    }
+
+                    log.trace("[{}] storing derivate for {} ", __func__, connector.name);
+
+                    *reinterpret_cast<double *>(der_ptr) = value;
+                }
+            }
         }
     };
 }

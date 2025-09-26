@@ -32,9 +32,8 @@ class Simulation {
     +model_name: std::string
     +fmu: ssp4cpp::Fmu*
     +model_description: ssp4cpp::fmi2::md::fmi2ModelDescription*
-    +fmi4cpp_fmu: std::unique_ptr<fmi4cpp::fmi2::fmu>
-    +cs_fmu: std::unique_ptr<fmi4cpp::fmi2::cs_fmu>
-    +model: std::unique_ptr<fmi4cpp::fmi2::cs_slave>
+    +fmi_instance: std::unique_ptr<handler::FmuInstance>
+    +model: std::unique_ptr<handler::CoSimulationModel>
     +FmuInfo(name, fmu)
   }
 

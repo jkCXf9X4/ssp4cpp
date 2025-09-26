@@ -5,13 +5,15 @@
 
 #include "ssp.hpp"
 #include "fmu.hpp"
-#include <fmi4cpp/fmi4cpp.hpp>
+
+#include "fmi4c_adapter.hpp"
 
 #include <vector>
 #include <algorithm>
 #include <map>
 #include <set>
 #include <list>
+#include <format>
 
 namespace ssp4cpp::sim::handler
 {
@@ -27,9 +29,8 @@ namespace ssp4cpp::sim::handler
         ssp4cpp::fmi2::md::fmi2ModelDescription *model_description;
 
         // Owning
-        std::unique_ptr<fmi4cpp::fmi2::fmu> fmi4cpp_fmu;
-        std::unique_ptr<fmi4cpp::fmi2::cs_fmu> cs_fmu;
-        std::unique_ptr<fmi4cpp::fmi2::cs_slave> model;
+        std::unique_ptr<FmuInstance> fmi_instance;
+        std::unique_ptr<CoSimulationModel> model;
 
         FmuInfo(std::string name, ssp4cpp::Fmu *fmu)
         {
@@ -38,8 +39,12 @@ namespace ssp4cpp::sim::handler
 
             this->fmu = fmu;
 
-            this->fmi4cpp_fmu = std::make_unique<fmi4cpp::fmi2::fmu>(this->fmu->original_file);
-            this->cs_fmu = this->fmi4cpp_fmu->as_cs_fmu();
+            this->fmi_instance = std::make_unique<FmuInstance>(this->fmu->original_file, this->system_name);
+            if (!this->fmi_instance->supports_co_simulation())
+            {
+                throw std::runtime_error(std::format("FMU '{}' does not support co-simulation", this->system_name));
+            }
+            this->model = std::make_unique<CoSimulationModel>(*this->fmi_instance);
 
             this->model_description = fmu->md.get();
         }
@@ -86,7 +91,7 @@ namespace ssp4cpp::sim::handler
             log.trace("[{}] Model init ", __func__);
             for (auto &[_, fmu] : this->fmu_info_map)
             {
-                fmu->model = fmu->cs_fmu->new_instance(false, false);
+                fmu->model->instantiate(false, false);
             }
             log.trace("[{}] Model init completed", __func__);
         }

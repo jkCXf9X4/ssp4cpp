@@ -220,7 +220,10 @@ namespace ssp4cpp::sim::analysis::graph
 
                 // map if input outut derivatives should be forwarded
 
-                if (target_model->canInterpolateInputs && source_model->maxOutputDerivativeOrder > 0 && source_connector->type == utils::DataType::real)
+                if (source_model->maxOutputDerivativeOrder > 0 &&
+                    target_model->canInterpolateInputs &&
+                    source_connector->type == utils::DataType::real &&
+                    target_connector->type == utils::DataType::real)
                 {
                     source_connector->forward_derivatives = true;
                     source_connector->forward_derivatives_order = source_model->maxOutputDerivativeOrder;

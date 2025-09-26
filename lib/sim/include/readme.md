@@ -7,7 +7,7 @@ Simulator
 
 Simulation
 - handles resources related to single simulation
-  - analysis graph, simulation graph, fmi4cpp::fmu, 
+  - analysis graph, simulation graph, fmi4c co-simulation resources
 
 
 

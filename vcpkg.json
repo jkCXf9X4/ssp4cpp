@@ -2,7 +2,6 @@
   "dependencies": [
     "libzip",
     "pugixml",
-    "fmi4cpp",
     "nlohmann-json",
     "catch2",
     "tbb",

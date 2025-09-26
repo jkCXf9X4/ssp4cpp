@@ -2,6 +2,7 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 #include <iostream>
 #include <format>
 #include <chrono>
@@ -38,6 +39,7 @@ namespace ssp4cpp::common
     public:
         static inline bool enabled = false;
         static inline bool include_time = false;
+        static inline bool use_color = true;
         static inline LogLevel static_level = LogLevel::debug;
         static inline std::mutex print_mutex;
 
@@ -134,13 +136,16 @@ namespace ssp4cpp::common
 
                 {
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);
+                    const std::string_view color_prefix = Logger::use_color ? log_level_to_color(Level) : std::string_view{};
+                    const std::string_view color_suffix = Logger::use_color ? color_reset() : std::string_view{};
+
                     if constexpr (Level < LogLevel::error)
                     {
-                        std::cout << out << "\n";
+                        std::cout << color_prefix << out << color_suffix << "\n";
                     }
                     else
                     {
-                        std::cerr << out << "\n";
+                        std::cerr << color_prefix << out << color_suffix << "\n";
                     }
                 }
             }
@@ -163,13 +168,16 @@ namespace ssp4cpp::common
 
                 {
                     std::unique_lock<std::mutex> lock(Logger::print_mutex);
+                    const std::string_view color_prefix = Logger::use_color ? log_level_to_color(Level) : std::string_view{};
+                    const std::string_view color_suffix = Logger::use_color ? color_reset() : std::string_view{};
+
                     if constexpr (Level < LogLevel::error)
                     {
-                        std::cout << out << "\n";
+                        std::cout << color_prefix << out << color_suffix << "\n";
                     }
                     else
                     {
-                        std::cerr << out << "\n";
+                        std::cerr << color_prefix << out << color_suffix << "\n";
                     }
                 }
             }
@@ -203,6 +211,37 @@ namespace ssp4cpp::common
             default:
                 return "unknown";
             }
+        }
+
+        // https://i.sstatic.net/9UVnC.png
+        static constexpr std::string_view log_level_to_color(LogLevel level)
+        {
+            switch (level)
+            {
+            case LogLevel::ext_trace:
+                return "\033[90m"; // Bright black
+            case LogLevel::trace:
+                return "\033[36m"; // Cyan
+            case LogLevel::debug:
+                return "\033[94m"; // Blue
+            case LogLevel::info:
+                return "\033[97m"; // White
+            case LogLevel::success:
+                return "\033[32m"; // Green
+            case LogLevel::warning:
+                return "\033[33m"; // Yellow
+            case LogLevel::error:
+                return "\033[31m"; // Red
+            case LogLevel::fatal:
+                return "\033[95m"; // Bright magenta
+            default:
+                return "\033[0m";
+            }
+        }
+
+        static constexpr std::string_view color_reset()
+        {
+            return "\033[0m";
         }
 
         /**

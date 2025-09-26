@@ -30,5 +30,4 @@ target_link_libraries(sim PRIVATE nlohmann_json::nlohmann_json)
 find_package(TBB CONFIG REQUIRED)
 target_link_libraries(sim PRIVATE TBB::tbb TBB::tbbmalloc)
 
-find_package(fmi4cpp REQUIRED CONFIG)
-target_link_libraries(sim PRIVATE fmi4cpp::fmi4cpp)
+target_link_libraries(sim PUBLIC ssp4cpp::3rd::fmi4c)

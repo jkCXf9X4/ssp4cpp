@@ -9,6 +9,7 @@
 
         "executor": "jacobi",
         "thread_pool_workers": 5,
+        "exploit_output_derivatives": true,
         "jacobi":
         {
             "parallel": false,
