@@ -56,7 +56,7 @@ namespace ssp4cpp::sim::handler
     class FmuHandler
     {
     public:
-        common::Logger log = common::Logger("FmuHandler", common::LogLevel::debug);
+        common::Logger log = common::Logger("FmuHandler", common::LogLevel::info);
 
         Ssp *ssp;
 
