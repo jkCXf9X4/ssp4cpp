@@ -15,7 +15,9 @@ from pathlib import Path
 
 from OMSimulator import OMSimulator
 
-REPO_ROOT = Path(os.environ.get("SSP4CPP_PROJECT_ROOT", Path(__file__).resolve().parents[2]))
+REPO_ROOT = Path(
+    os.environ.get("SSP4CPP_PROJECT_ROOT", Path(__file__).resolve().parents[2])
+)
 FMU_PATH = REPO_ROOT / "resources" / "embrace" / "atmos" / "0004_Atmos.fmu"
 
 MODEL_NAME = "model"
@@ -26,6 +28,12 @@ ALT_PATH = f"{SUBMODEL_PATH}.Alt"
 MACH_PATH = f"{SUBMODEL_PATH}.Ma"
 DTISA_PATH = f"{SUBMODEL_PATH}.DTisa"
 EVENT_COUNTER_PATH = f"{SUBMODEL_PATH}.EventCounter"
+
+step = 1e-3
+tolerance: float = 1e-4
+stop_time = 10
+alt_der = 10
+mach_der = 1
 
 
 def run_oms_reference() -> None:
@@ -51,31 +59,30 @@ def run_oms_reference() -> None:
         oms.addSystem(SYSTEM_PATH, oms.system_wc)
         oms.addSubModel(SUBMODEL_PATH, str(FMU_PATH))
 
-        tolerance: float = 1e-4
-        step = 0.1
-        oms.setStartTime(MODEL_NAME, 0.0)
-        oms.setStopTime(MODEL_NAME, 1000.0)
+        oms.setStartTime(MODEL_NAME, float(0.0))
+        oms.setStopTime(MODEL_NAME, stop_time)
         oms.setTolerance(SYSTEM_PATH, tolerance, tolerance)
         oms.setResultFile(MODEL_NAME, "")  # disable result file generation
         oms.setFixedStepSize(SYSTEM_PATH, step)
 
         oms.instantiate(MODEL_NAME)
 
-        oms.initialize(MODEL_NAME)
         oms.setReal(DTISA_PATH, 0.0)
         oms.setReal(ALT_PATH, 0.0)
         oms.setReal(MACH_PATH, 0.0)
+
+        oms.initialize(MODEL_NAME)
 
         initial_counter = oms.getReal(EVENT_COUNTER_PATH)
         print(f"Initial EventCounter: {initial_counter}")
 
         counter = initial_counter
-        alt_der = 10
-        mach_der = 1
 
-        for step_index in range(1000):
-            new_altitude = alt_der * step_index *step
-            new_mach = mach_der * step_index *step
+        for step_index in range(int(stop_time / step)):
+            time = step_index * step
+
+            new_altitude = alt_der * time
+            new_mach = mach_der * time
 
             oms.setReal(ALT_PATH, new_altitude)
             oms.setReal(MACH_PATH, new_mach)
@@ -86,11 +93,10 @@ def run_oms_reference() -> None:
             except Exception as exc:
                 print(f"setRealInputDerivative not supported: {exc}")
 
-            oms.doStep(MODEL_NAME)
-            # oms.stepUntil(MODEL_NAME, step_index*step)
+            status = oms.doStep(MODEL_NAME)
 
-            counter = oms.getReal(EVENT_COUNTER_PATH)
 
+        counter = oms.getReal(EVENT_COUNTER_PATH)
         if counter > initial_counter:
             print(f"EventCounter ({counter[0]}) did increase during the experiment")
 
@@ -104,7 +110,6 @@ def run_oms_reference() -> None:
 
 
 def run_oms_reference2() -> None:
-
     print("\n\n-------------\nrun_oms_reference2")
     if not FMU_PATH.exists():
         raise FileNotFoundError(f"Expected FMU at {FMU_PATH}")
@@ -127,14 +132,12 @@ def run_oms_reference2() -> None:
         oms.addSystem(SYSTEM_PATH, oms.system_wc)
         oms.addSubModel(SUBMODEL_PATH, str(FMU_PATH))
 
-        tolerance: float = 1e-4
-        stop_time = 10
         res_file = tmp_dir / "res.csv"
         oms.setStartTime(MODEL_NAME, float(0.0))
         oms.setStopTime(MODEL_NAME, stop_time)
         oms.setTolerance(SYSTEM_PATH, tolerance, tolerance)
         oms.setResultFile(MODEL_NAME, res_file.as_posix())
-        oms.setFixedStepSize(SYSTEM_PATH, 1e-3)
+        oms.setFixedStepSize(SYSTEM_PATH, step)
 
         oms.instantiate(MODEL_NAME)
 
@@ -143,14 +146,12 @@ def run_oms_reference2() -> None:
         initial_counter = oms.getReal(EVENT_COUNTER_PATH)
         print(f"Initial EventCounter: {initial_counter}")
 
-        alt_der = 10
-        mach_der = 1
         bc_file = tmp_dir / "bc.csv"
 
         with open(bc_file, "w") as f:
-            f.write ("time,alt,ma\n")
+            f.write("time,alt,ma\n")
             for i in range(int(stop_time)):
-                f.write(f"{i}, {alt_der*i}, {mach_der*i}\n")
+                f.write(f"{i}, {alt_der * i}, {mach_der * i}\n")
 
         with open(bc_file, "r") as f:
             print(f.readlines())
@@ -166,7 +167,8 @@ def run_oms_reference2() -> None:
         print(f"EventCounter after sim: {counter}")
 
         with open(tmp_dir / "res.csv", "r") as f:
-            print(f.readlines()[0:4])
+            pass
+            # print(f.readlines()[0:4])
 
         if counter == initial_counter:
             print(f"EventCounter ({counter[0]}) did not increase during the experiment")
