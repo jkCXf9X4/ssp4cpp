@@ -22,6 +22,8 @@ target_link_libraries(test_1 PRIVATE schema_lib)
 target_link_libraries(test_1 PRIVATE common)
 target_link_libraries(test_1 PRIVATE sim)
 
+target_compile_definitions(test_1 PRIVATE SSP4CPP_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+
 
 include(CTest)
 

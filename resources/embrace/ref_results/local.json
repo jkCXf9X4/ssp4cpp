@@ -22,4 +22,5 @@
     ]
 }
 
-walltime: 48.012559968
+walltime: 40.012559968
+walltime: 32 with self.OMS.setCommandLineOption("--inputExtrapolation=true")
