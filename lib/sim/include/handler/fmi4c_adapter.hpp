@@ -32,9 +32,7 @@ namespace ssp4cpp::sim::handler
         inline void ensure_message_callback_registered()
         {
             std::call_once(fmi4c_message_flag, []()
-            {
-                fmi4c_setMessageFunction(&fmi4c_message_callback);
-            });
+                           { fmi4c_setMessageFunction(&fmi4c_message_callback); });
         }
 
         inline void clear_last_message()
@@ -128,7 +126,13 @@ namespace ssp4cpp::sim::handler
     private:
         static bool status_ok(fmi2Status status)
         {
-            return status == fmi2OK || status == fmi2Warning;
+            if (status == fmi2OK)
+            {
+                return true;
+            }
+
+            throw std::runtime_error("Failed status check");
+            // return status == fmi2OK; // || status == fmi2Warning;
         }
 
         FmuInstance &instance_;
@@ -174,14 +178,14 @@ namespace ssp4cpp::sim::handler
             detail::ensure_message_callback_registered();
             detail::clear_last_message();
             handle = fmi2_instantiate(instance_.raw(),
-                                           fmi2CoSimulation,
-                                           nullptr,
-                                           ::calloc,
-                                           ::free,
-                                           nullptr,
-                                           nullptr,
-                                           visible ? fmi2True : fmi2False,
-                                           logging_on ? fmi2True : fmi2False);
+                                      fmi2CoSimulation,
+                                      nullptr,
+                                      ::calloc,
+                                      ::free,
+                                      nullptr,
+                                      nullptr,
+                                      visible ? fmi2True : fmi2False,
+                                      logging_on ? fmi2True : fmi2False);
 
             bool success = handle != nullptr;
             instantiated_ = success;
@@ -345,6 +349,12 @@ namespace ssp4cpp::sim::handler
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Real data = value;
             last_status_ = fmi2_setReal(handle, &vr, 1, &data);
+
+            // There must be a read after the last write for some fmus...
+            // Or there is a solver restart
+            // can be seen as an event
+            fmi2_getReal(handle, &vr, 1, &data);
+
             return status_ok(last_status_);
         }
 

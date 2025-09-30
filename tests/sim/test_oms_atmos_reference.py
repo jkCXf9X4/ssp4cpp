@@ -19,9 +19,12 @@ REPO_ROOT = Path(
     os.environ.get("SSP4CPP_PROJECT_ROOT", Path(__file__).resolve().parents[2])
 )
 FMU_PATH = REPO_ROOT / "resources" / "embrace" / "atmos" / "0004_Atmos.fmu"
+# FMU_PATH = Path(".") / "atmos/0004_Atmos.fmu"
+FMU_PATH = Path(".") / "atmos/atmos_no_state.fmu"
 
 MODEL_NAME = "model"
 SYSTEM_PATH = f"{MODEL_NAME}.root"
+
 SUBMODEL_PATH = f"{SYSTEM_PATH}.atmos"
 
 ALT_PATH = f"{SUBMODEL_PATH}.Alt"
@@ -97,13 +100,13 @@ def run_oms_reference() -> None:
 
             final_time =  input_time+step
             status = oms.stepUntil(MODEL_NAME, final_time)
-            print (f"{input_time} - {oms.getTime(MODEL_NAME)[0]}")
+            # print (f"{input_time} - {oms.getTime(MODEL_NAME)[0]}")
 
             current_counter = oms.getReal(EVENT_COUNTER_PATH)
             if current_counter != counter:
                 pass
-                print("new event triggered")
-                print(f"input_time: {input_time}, input_altitude: {input_altitude}, input_mach: {input_mach}, final_time: {final_time}")
+                # print("new event triggered")
+                # print(f"input_time: {input_time}, input_altitude: {input_altitude}, input_mach: {input_mach}, final_time: {final_time}")
 
             input_time = oms.getTime(MODEL_NAME)[0]
             counter = current_counter
@@ -153,29 +156,32 @@ def run_oms_reference2() -> None:
         oms.setTolerance(SYSTEM_PATH, tolerance, tolerance)
         oms.setResultFile(MODEL_NAME, res_file.as_posix())
         oms.setFixedStepSize(SYSTEM_PATH, step)
-
-        oms.instantiate(MODEL_NAME)
-
-        oms.initialize(MODEL_NAME)
-
-        initial_counter = oms.getReal(EVENT_COUNTER_PATH)
-        print(f"Initial EventCounter: {initial_counter}")
+        oms.setLogFile(Path("./log_log.log").as_posix())
+        oms.setLoggingLevel(2)
 
         bc_file = tmp_dir / "bc.csv"
 
         with open(bc_file, "w") as f:
             f.write("time,alt,ma\n")
-            for i in range(int(stop_time / step)):
-                i = i*step
-                f.write(f"{i}, {alt_der * i}, {mach_der * i}\n")
+            samples = int(stop_time / step) + 2  # include one point beyond stop time for derivative lookup
+            for idx in range(samples):
+                t = idx * step
+                f.write(f"{t}, {alt_der * t}, {mach_der * t}\n")
 
         with open(bc_file, "r") as f:
             print(f.readlines()[:5])
 
         oms.addSubModel("model.root.bc", bc_file.as_posix())
-
         oms.addConnection("model.root.bc.alt", ALT_PATH)
         oms.addConnection("model.root.bc.ma", MACH_PATH)
+
+        oms.instantiate(MODEL_NAME)
+
+        oms.initialize(MODEL_NAME)
+
+
+        initial_counter = oms.getReal(EVENT_COUNTER_PATH)
+        print(f"Initial EventCounter: {initial_counter}")
 
         print(f"Solver: {oms.getSolver(MODEL_NAME)}")
 
@@ -197,7 +203,7 @@ def run_oms_reference2() -> None:
         except Exception:
             pass
         oms.delete(MODEL_NAME)
-        shutil.rmtree(tmp_dir, ignore_errors=True)
+        # shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":

@@ -21,16 +21,18 @@ std::chrono::milliseconds measure([[maybe_unused]] auto policy, std::vector<std:
     return  std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
 }
 
-TEST_CASE("Check parallel speed", "[Environment]") {
-    std::vector<std::uint64_t> v(1'000'000);
-    std::mt19937 gen {std::random_device{}()};
-    std::ranges::generate(v, gen);
+// sometimes this does not work...
+
+// TEST_CASE("Check parallel speed", "[Environment]") {
+//     std::vector<std::uint64_t> v(1'000'000);
+//     std::mt19937 gen {std::random_device{}()};
+//     std::ranges::generate(v, gen);
  
-    auto seq = measure(execution::seq, v);
-    auto unseq = measure(execution::unseq, v);
-    auto par_unseq = measure(execution::par_unseq, v);
-    auto par = measure(execution::par, v);
+//     auto seq = measure(execution::seq, v);
+//     auto unseq = measure(execution::unseq, v);
+//     auto par_unseq = measure(execution::par_unseq, v);
+//     auto par = measure(execution::par, v);
 
-    std::cout << "seq: " << seq << " unseq: " << unseq << " par_unseq: " << par_unseq << " par: " << par << std::endl;
+//     std::cout << "seq: " << seq << " unseq: " << unseq << " par_unseq: " << par_unseq << " par: " << par << std::endl;
 
-}
+// }

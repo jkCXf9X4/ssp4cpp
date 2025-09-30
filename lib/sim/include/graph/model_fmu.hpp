@@ -245,8 +245,9 @@ namespace ssp4cpp::sim::graph
                         {
                             auto source_der = connection.source_storage->get_derivative(source_area, connection.source_index, order);
                             auto target_der = connection.target_storage->get_derivative(target_area, connection.target_index, order);
-
+#ifndef NDEBUG
                             log.ext_trace("[{}] Copying derivatives {} -> {}", __func__, (uint64_t)source_der, (uint64_t)target_der);
+#endif
 
                             // this line is causing an error when
                             memcpy(target_der, source_der, sizeof(double));
@@ -414,15 +415,18 @@ namespace ssp4cpp::sim::graph
 
                 for (int order = 1; order <= connector.forward_derivatives_order; ++order)
                 {
+#ifndef NDEBUG
                     log.trace("[{}] get_derivative position for vr:{} name: {} order: {}", __func__, connector.value_ref, connector.name, order);
+#endif
                     auto der_ptr = output_area->get_derivative(area, connector.index, order);
                     if (der_ptr == nullptr)
                     {
                         log.warning("[{}] Failed to find derivate item for {}", __func__, connector.name);
                         continue;
                     }
-
+#ifndef NDEBUG
                     log.trace("[{}] get_derivative for {} ", __func__, connector.name);
+#endif
                     double value = 0.0;
                     if (!fmu->model->get_real_output_derivative(connector.value_ref, order, value))
                     {
@@ -433,8 +437,9 @@ namespace ssp4cpp::sim::graph
                                     static_cast<int>(fmu->model->last_status()));
                         continue;
                     }
-
+#ifndef NDEBUG
                     log.trace("[{}] storing derivate for {} ", __func__, connector.name);
+#endif
 
                     *reinterpret_cast<double *>(der_ptr) = value;
                 }

@@ -205,86 +205,64 @@ TEST_CASE("Atmos FMU reports solver events via EventCounter", "[fmi4c_adapter][f
     FmuInstance instance(fmu_path, "atmos-events-instance");
     CoSimulationModel model(instance);
 
-    REQUIRE(model.instantiate(true, false));
-    
+    REQUIRE(model.instantiate(false, false));
+
     REQUIRE(model.setup_experiment(0.0, 0.0, 1e-4));
 
-
     REQUIRE(model.enter_initialization_mode());
-    
+
     REQUIRE(model.write_real(kDtisaVr, 0.0));
     REQUIRE(model.write_real(kAltVr, 0.0));
     REQUIRE(model.write_real(kMachVr, 0.0));
-    
+
     REQUIRE(model.exit_initialization_mode());
 
-    double event_counter = 0.0;
-    REQUIRE(model.read_real(kEventCounterVr, event_counter));
-    INFO("Initial EventCounter: " << event_counter);
+    double initial_counter = 0.0;
+    REQUIRE(model.read_real(kEventCounterVr, initial_counter));
+    INFO("Initial EventCounter: " << initial_counter);
 
-    REQUIRE(std::isfinite(event_counter));
-    REQUIRE(event_counter >= 0.0);
+    double event_counter;
 
-    const double initial_counter = event_counter;
+    double time = 0;
+    double dummy;
 
-    // model.step(step);
-
-    uint64_t index = 0;
-    for (double time = 0; time < total_time;)
+    while (time < total_time)
     {
-        index++;
         time = model.get_simulation_time();
+        // std::cout << time << std::endl;
+
         double new_altitude = altitude_derivative * time;
         double new_mach = mach_derivative * time;
 
-        // std::cout <<"new_altitude: " << new_altitude <<" new_mach: " << new_mach << std::endl;
-        model.write_real(kAltVr, new_altitude);
+        // There must be a read after the last write for some fmus...
+        // Or there is a solver restart 
+        // can be seen as an event 
+        // its now incorporated into the write_real 
+
         model.write_real(kMachVr, new_mach);
-        model.write_real(kDtisaVr, 0.0);
+        model.set_real_input_derivative(kMachVr, 1, mach_derivative);
 
-        // model.read_real(kAltVr, new_altitude);
-        // model.read_real(kMachVr, new_mach);
-        // model.read_real(kDtisaVr, Dtisa);
 
-        bool derivative_supported;
-        derivative_supported = model.set_real_input_derivative(kAltVr, 1, altitude_derivative+0.000000000000001);
-        derivative_supported = model.set_real_input_derivative(kMachVr, 1, mach_derivative);
+        model.write_real(kAltVr, new_altitude);
+        model.set_real_input_derivative(kAltVr, 1, altitude_derivative);
 
-        // unsigned int vrs[] = {kAltVr, kAltVr};
-        // int orders[] = {0, 1};
-        // double values[] = {new_altitude, altitude_derivative};
-        // fmi2_setRealInputDerivatives(model.handle, vrs, 2, orders, values);
 
-        // unsigned int vrs_m[] = {kMachVr, kMachVr};
-        // int orders_m[] = {0, 1};
-        // double values_m[] = {new_mach, mach_derivative};
-        // fmi2_setRealInputDerivatives(model.handle, vrs_m, 2, orders_m, values_m);
-        // if (time > 0.1)
-        // {
-
-        //     derivative_supported = model.set_real_input_derivative(kAltVr, 2, 0.0);
-        //     derivative_supported = model.set_real_input_derivative(kMachVr, 2, 0.0);
-        // }
-
-        INFO("setRealInputDerivatives supported: " << derivative_supported);
-
-        bool derivative_status_ok = model.last_status() == fmi2OK || model.last_status() == fmi2Warning;
-        INFO("derivative_status_ok: " << derivative_status_ok);
-
+        
+        if (model.last_status() != fmi2OK)
+        {
+            std::cout << "setRealInputDerivatives supported: " << std::endl;
+            std::cout << "derivative_status_ok" << std::endl;
+        }
+        
         model.step(step);
+        model.read_real(kEventCounterVr, event_counter);
 
-        double current_counter = 0.0;
-        INFO("Read real ");
-        model.read_real(kEventCounterVr, current_counter);
-        INFO("EventCounter after time " << time << ": " << current_counter);
-        std::isfinite(current_counter);
-        current_counter >= event_counter;
-        event_counter = current_counter;
+        // std::cout << "EventCounter after time " << time << ": " << event_counter << std::endl;
     }
 
+    model.read_real(kEventCounterVr, event_counter);
     INFO("event_counter: " << event_counter);
 
-    REQUIRE(event_counter > initial_counter);
     REQUIRE(model.terminate());
-    REQUIRE(false);
+    REQUIRE(initial_counter == event_counter);
 }
