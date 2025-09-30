@@ -29,6 +29,12 @@ set(CMAKE_C_FLAGS_DEBUG   "-O3 -g" CACHE STRING "" FORCE)
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -ffp-contract=fast -fno-math-errno -fno-trapping-math")
 
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_definitions(_LOG_)
+endif()
+
+#add_compile_definitions(_PROFILING_)
+
 # Status
 
 message("CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}\n")

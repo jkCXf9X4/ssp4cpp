@@ -97,7 +97,7 @@ namespace ssp4cpp::sim::graph
             log.info("[{}] Starting async node thread, {}", __func__, this->name);
             while (true)
             {
-#ifndef NDEBUG
+#ifdef _LOG_
                 log.trace("[{}] Holding node {}", __func__, this->name);
 #endif
                 sem.acquire();
@@ -108,13 +108,13 @@ namespace ssp4cpp::sim::graph
 
                 // if (status == ModelStatus::ready)
                 {
-#ifndef NDEBUG
+#ifdef _LOG_
                     log.trace("[{}] Executing, node {}", __func__, this->name);
 #endif
                     status = ModelStatus::running;
 
                     output = invoke(input);
-#ifndef NDEBUG
+#ifdef _LOG_
                     log.trace("[{}] Execution completed, node {}", __func__, this->name);
 #endif
                     status = ModelStatus::completed;
@@ -126,7 +126,7 @@ namespace ssp4cpp::sim::graph
                     status = ModelStatus::ready;
                 }
             }
-            log.trace("[{}] Exiting async node thread, node {}", __func__, this->name);
+            log.debug("[{}] Exiting async node thread, node {}", __func__, this->name);
             status = ModelStatus::exit;
         }
 
@@ -146,7 +146,7 @@ namespace ssp4cpp::sim::graph
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifndef NDEBUG
+#ifdef _LOG_
             log.ext_trace("[{}] Invoking, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
 #endif
 
@@ -156,7 +156,7 @@ namespace ssp4cpp::sim::graph
         // hot path
         void async_invoke(StepData step_data)
         {
-#ifndef NDEBUG
+#ifdef _LOG_
             log.trace("[{}] Invoking async, model {} start time {}", __func__, this->name, step_data.start_time);
 #endif
             input = step_data;

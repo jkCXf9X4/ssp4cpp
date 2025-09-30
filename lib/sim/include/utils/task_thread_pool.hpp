@@ -78,8 +78,9 @@ namespace ssp4cpp::common
         auto enqueue(F &&f)
         {
             using return_type = std::invoke_result_t<F>;
-
-            // log.debug("[{}] Enqueueing task", __func__);
+#ifdef _LOG_
+            log.debug("[{}] Enqueueing task", __func__);
+#endif
             auto task = std::make_shared<std::packaged_task<return_type()>>(std::forward<F>(f));
             std::future<return_type> res = task->get_future();
 
@@ -91,8 +92,9 @@ namespace ssp4cpp::common
 
             // notify a worker that one task is available
             task_semaphore.release();
-
-            // log.debug("[{}] Task queued", __func__);
+#ifdef _LOG_
+            log.debug("[{}] Task queued", __func__);
+#endif
             return res;
         }
 
@@ -116,14 +118,18 @@ namespace ssp4cpp::common
                     std::unique_lock<std::mutex> lock(queue_mutex);
                     if (!tasks.empty())
                     {
-                        // log.debug("[{}] Task starting", __func__);
+#ifdef _LOG_
+                        log.debug("[{}] Task starting", __func__);
+#endif
                         task = std::move(tasks.front());
                         tasks.pop();
                     }
                 }
 
                 task();
-                // log.debug("[{}] Task completed", __func__);
+#ifdef _LOG_
+                log.debug("[{}] Task completed", __func__);
+#endif
             }
 
             log.debug("[{}] Thread finished", __func__);

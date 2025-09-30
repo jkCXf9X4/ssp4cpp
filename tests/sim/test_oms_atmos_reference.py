@@ -1,4 +1,18 @@
-"""Reference script demonstrating the Atmos FMU event counter flow with OMSimulator.
+"""
+
+
+
+
+
+This was used for testing dymola fmus and solver restarts,
+
+They sometimes restart the solver if all values are not read from the fmu
+
+
+
+
+
+Reference script demonstrating the Atmos FMU event counter flow with OMSimulator.
 
 This mirrors the Catch2 test "Atmos FMU reports solver events via EventCounter"
 and the FMPy reference script. It assumes OMSimulator's Python bindings are

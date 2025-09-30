@@ -16,28 +16,27 @@
 namespace ssp4cpp::sim::utils
 {
     using namespace std;
-    
+
     /**
      * @brief Small ring buffer implementation used for timestamped data.
      * When full it will continuously overwrite the oldest data
      * The buffer is not designed to store all data of the simulation but will continuously overwrite old data
-     * 
+     *
      */
     class RingStorage : public common::str::IString
     {
 
         common::Logger log = common::Logger("RingStorage", common::LogLevel::debug);
-        public:
 
-        
+    public:
         std::unique_ptr<DataStorage> data;
 
         size_t head; /* next position to write             */
         size_t tail; /* first data position      */
 
-        size_t capacity; /* total usable slots                 */
-        size_t size;     /* current number of elements stored  */
-        uint64_t access_counter; // how many times has new data been added
+        size_t capacity;         /* total usable slots                 */
+        size_t size;             /* current number of elements stored  */
+        uint64_t overwrite_counter; // how many times has new data been added
 
         std::string name;
 
@@ -69,17 +68,21 @@ namespace ssp4cpp::sim::utils
             data->set_time(area, time);
             return area;
         }
-    
+
         /** Retrieve the most recent element with timestamp before @p time. */
         int64_t get_valid_area(uint64_t time)
         {
+#ifdef _LOG_
             log.ext_trace("[{}] init", __func__);
+#endif
             for (std::size_t i = 0; i < size; ++i)
             {
                 int pos = get_pos_rev(i);
                 if (data->timestamps[pos] <= time)
                 {
+#ifdef _LOG_
                     log.ext_trace("[{}] found valid area, {}", __func__, pos);
+#endif
                     return pos;
                 }
             }
@@ -98,11 +101,15 @@ namespace ssp4cpp::sim::utils
 
         byte *get_valid_item(uint64_t time, std::size_t index)
         {
+#ifdef _LOG_
             log.ext_trace("[{}] Init", __func__);
+#endif
             auto valid_area = get_valid_area(time);
             if (valid_area != -1)
             {
+#ifdef _LOG_
                 log.ext_trace("[{}] Valid area found, returning the pointer", __func__);
+#endif
                 return data->get_item(valid_area, index);
             }
             return nullptr;
@@ -124,11 +131,12 @@ namespace ssp4cpp::sim::utils
             return size == capacity;
         }
 
-
         // create new, if full it will overwrite the oldest data
         int push()
         {
+#ifdef _LOG_
             log.ext_trace("[{}] init", __func__);
+#endif
 
             if (is_full()) [[likely]]
             {
@@ -143,16 +151,13 @@ namespace ssp4cpp::sim::utils
             head = (head + 1) % capacity;
 
             // Fix sometime when you need to feel more sad ;)
-            if(data->new_data_flags[head] == true)
+            if (data->new_data_flags[head] == true)
             {
-                usleep(10);
+                overwrite_counter += 1;
             }
 
-            access_counter += 1;
             return head;
         }
-
-
 
         /* Return element at logical position `index` from the tail (oldest)     */
         inline uint64_t get_pos(int index)
@@ -174,7 +179,7 @@ namespace ssp4cpp::sim::utils
                << ", size: " << size
                << ", head: " << head
                << ", tail: " << tail
-               << ", access_counter: " << access_counter
+               << ", overwrite_counter: " << overwrite_counter
                << "\n  " << *data
                << "\n}";
         }

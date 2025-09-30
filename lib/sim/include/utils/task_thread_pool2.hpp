@@ -91,7 +91,9 @@ namespace ssp4cpp::sim::utils
 
         void ready(int nodes)
         {
-            // log.debug("[{}] Ready", __func__);
+#ifdef _LOG_
+            log.debug("[{}] Ready", __func__);
+#endif
             for (int i = 0; i < workers.size(); ++i)
             {
                 dones[i] = false;
@@ -113,13 +115,16 @@ namespace ssp4cpp::sim::utils
          */
         void enqueue(task_info &task)
         {
-
-            // log.debug("[{}] Enqueueing task: {}", __func__, task.node->name);
+#ifdef _LOG_
+            log.debug("[{}] Enqueueing task: {}", __func__, task.node->name);
+#endif
             {
                 std::scoped_lock lock(queue_mutex);
                 tasks.emplace(std::move(task));
             }
-            // log.debug("[{}] Task queued: {}", __func__, task.node->name);
+#ifdef _LOG_
+            log.debug("[{}] Task queued: {}", __func__, task.node->name);
+#endif
         }
 
     private:
@@ -153,7 +158,9 @@ namespace ssp4cpp::sim::utils
 
                         if (!tasks.empty())
                         {
-                            // log.debug("[{}] Found new task, que {}", __func__, que);
+#ifdef _LOG_
+                            log.debug("[{}] Found new task, que {}", __func__, que);
+#endif
                             task = std::move(tasks.top());
                             tasks.pop();
                             --que;
@@ -163,9 +170,13 @@ namespace ssp4cpp::sim::utils
                     if (task)
                     {
                         auto &t = task.value();
-                        // log.debug("[{}] Invoking {} {}", __func__, t.node->name, t.step.to_string());
+#ifdef _LOG_
+                        log.debug("[{}] Invoking {} {}", __func__, t.node->name, t.step.to_string());
+#endif
                         t.node->invoke(t.step);
-                        // log.debug("[{}] Task completed {}", __func__, t.node->name);
+#ifdef _LOG_
+                        log.debug("[{}] Task completed {}", __func__, t.node->name);
+#endif
                     }
                 }
                 done = true;

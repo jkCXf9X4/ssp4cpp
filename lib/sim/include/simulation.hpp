@@ -57,7 +57,6 @@ namespace ssp4cpp::sim
             log.info("[{}] Creating simulation", __func__);
             fmu_handler = std::make_unique<handler::FmuHandler>(this->ssp);
             recorder = std::make_unique<utils::DataRecorder>(result_file);
-            recorder->recording_interval = utils::Config::get<float>("simulation.result_interval");
         }
 
         /**
@@ -111,7 +110,6 @@ namespace ssp4cpp::sim
             recorder->stop_recording();
             log.info("[{}] Simulation completed\n", __func__);
 
-#ifndef NDEBUG
             uint64_t total_model_time = 0;
             for (auto &node : sim_graph->nodes)
             {
@@ -120,7 +118,6 @@ namespace ssp4cpp::sim
                 total_model_time += model_walltime;
             }
             log.info("[{}] Model walltime: {}", __func__, common::time::ns_to_s(total_model_time));
-#endif
         }
     };
 

@@ -168,7 +168,7 @@ namespace ssp4cpp::sim::graph
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifndef NDEBUG
+#ifdef _LOG_
             log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
 #endif
 
