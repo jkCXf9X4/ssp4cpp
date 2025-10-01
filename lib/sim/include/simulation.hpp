@@ -43,6 +43,7 @@ namespace ssp4cpp::sim
         std::unique_ptr<utils::DataRecorder> recorder;
         std::unique_ptr<graph::Graph> sim_graph;
 
+        bool enable_recording = utils::Config::getOr<bool>("simulation.enable_recording", true);
         std::string result_file = utils::Config::get<std::string>("simulation.result_file");
 
         /**
@@ -94,7 +95,11 @@ namespace ssp4cpp::sim
          */
         void simulate()
         {
-            recorder->start_recording();
+            if (enable_recording)
+            {
+                recorder->start_recording();
+            }
+
             log.info("[{}] Starting simulation", __func__);
 
             uint64_t start_time = common::time::s_to_ns(utils::Config::get<float>("simulation.start_time"));

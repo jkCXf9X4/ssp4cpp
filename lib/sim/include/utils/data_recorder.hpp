@@ -31,10 +31,10 @@ namespace ssp4cpp::sim::utils
     class DataRecorder
     {
     public:
-        common::Logger log = common::Logger("DataRecorder", common::LogLevel::debug);
+        common::Logger log = common::Logger("DataRecorder", common::LogLevel::info);
 
         std::ofstream file;
-        std::thread worker;
+        std::unique_ptr<std::thread> worker;
 
         std::atomic<bool> running;
         std::mutex event_mutex;
@@ -145,7 +145,7 @@ namespace ssp4cpp::sim::utils
         {
             log.info("[{}] Starting recording", __func__);
             running = true; // must be set before the start of the thread, otherwise it wont start
-            worker = std::thread([this]()
+            worker = std::make_unique<std::thread>([this]()
                                  { loop(); });
             usleep(100); // wait for thread to start
         }
@@ -153,14 +153,19 @@ namespace ssp4cpp::sim::utils
         void stop_recording()
         {
             log.info("[{}] Stop recording", __func__);
+            if (!running)
+            {
+                return;
+            }
+
             running = false; // to end the loop
 
             usleep(100); // wait to complete eventual current runs
             update();
 
-            if (worker.joinable())
+            if (worker->joinable())
             {
-                worker.join();
+                worker->join();
             }
 
             // flush the rest of the memory to file
@@ -264,11 +269,7 @@ namespace ssp4cpp::sim::utils
 #ifdef _LOG_
                             log.trace("[{}] Found new data; area: {}", __func__, area);
 #endif
-
-// dont print anything in profiling mode, hard to find other tight spots
-#ifndef _PROFILING_
                             process_new_data(tracker, storage, area);
-#endif
                             // reset the status after processing the row
                             storage->new_data_flags[area] = false;
                         }

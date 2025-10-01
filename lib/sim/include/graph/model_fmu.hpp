@@ -258,7 +258,6 @@ namespace ssp4cpp::sim::graph
                 }
             }
             input_area->flag_new_data(target_area);
-            recorder->update();
 
 #ifdef _LOG_
             log.trace("[{}] Copy data to model", __func__);
@@ -274,6 +273,7 @@ namespace ssp4cpp::sim::graph
 
                 utils::write_to_model_(input.type, *fmu->model, input.value_ref, (void *)input_item);
             }
+
             if (forward_derivatives)
             {
 #ifdef _LOG_
@@ -297,8 +297,8 @@ namespace ssp4cpp::sim::graph
                 auto step = stop_time_s - sim_time_s;
 #ifdef _LOG_
                 log.debug("[{}] FmuModel {} ", __func__, step);
-                auto model_timer = common::time::Timer();
 #endif
+                auto model_timer = common::time::Timer();
                 if (fmu->model->step(step) == false)
                 {
                     int status = (int)fmu->model->last_status();
@@ -309,9 +309,8 @@ namespace ssp4cpp::sim::graph
                     }
                 }
                 sim_time_s = fmu->model->get_simulation_time();
-
-#ifdef _LOG_
                 this->invocation_walltime_ns += model_timer.stop();
+#ifdef _LOG_
                 log.trace("[{}], sim time {}", __func__, sim_time_s);
 #endif
             }

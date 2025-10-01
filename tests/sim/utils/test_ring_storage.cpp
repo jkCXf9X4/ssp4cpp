@@ -21,7 +21,6 @@ TEST_CASE("RingStorage constructor")
     SECTION("capacity > 0")
     {
         RingStorage storage(10, "");
-        REQUIRE(storage.access_counter == 0);
     }
 }
 
@@ -49,16 +48,12 @@ TEST_CASE("RingStorage push")
     storage.allocate();
 
     storage.push(100);
-    REQUIRE(storage.access_counter == 1);
 
     storage.push(200);
-    REQUIRE(storage.access_counter == 2);
 
     storage.push(300);
-    REQUIRE(storage.access_counter == 3);
 
     storage.push(400);
-    REQUIRE(storage.access_counter == 4);
 
     std::cout << storage << std::endl;
 }

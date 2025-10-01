@@ -31,12 +31,12 @@ namespace ssp4cpp::sim::utils
     public:
         std::unique_ptr<DataStorage> data;
 
-        size_t head; /* next position to write             */
-        size_t tail; /* first data position      */
+        size_t head = 0; /* next position to write             */
+        size_t tail = 0; /* first data position      */
 
-        size_t capacity;         /* total usable slots                 */
-        size_t size;             /* current number of elements stored  */
-        uint64_t overwrite_counter; // how many times has new data been added
+        size_t capacity = 0;         /* total usable slots                 */
+        size_t size = 0;             /* current number of elements stored  */
+        uint64_t overwrite_counter = 0; // how many times has new data been added
 
         std::string name;
 
@@ -48,7 +48,6 @@ namespace ssp4cpp::sim::utils
                 throw runtime_error("[RingBuffer] buffer_size != 0");
             }
             this->capacity = capacity;
-            head = tail = size = access_counter = 0;
 
             data = make_unique<DataStorage>(capacity, name);
         }

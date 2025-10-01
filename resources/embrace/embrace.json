@@ -20,6 +20,7 @@
             "parallel": true
         },
 
+        "enable_recording": true,
         "result_file": "./results/result.csv",
         "result_interval": 1.0
     }
