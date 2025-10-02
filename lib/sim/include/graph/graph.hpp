@@ -5,7 +5,9 @@
 #include "common_vector.hpp"
 
 #include "invocable.hpp"
-#include "execution.hpp"
+#include "jacobi.hpp"
+#include "seidel.hpp"
+
 #include "config.hpp"
 
 #include <vector>
