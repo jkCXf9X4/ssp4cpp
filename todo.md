@@ -1,4 +1,7 @@
 
+Write tests for strings...
+
+
 
 Analyze internal connections, this can be used for:
 

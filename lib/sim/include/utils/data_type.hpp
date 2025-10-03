@@ -21,39 +21,37 @@ namespace ssp4cpp::sim::utils
         {
         case DataType::real:
         {
-            double value = 0.0;
-            if (!model.read_real(value_reference, value))
+            if (!model.read_real(value_reference, *(double *)out))
             {
                 throw std::runtime_error("Failed to read real value from FMU");
             }
-            *(double *)out = value;
             return;
         }
         case DataType::boolean:
         {
-            int value = 0;
-            if (!model.read_boolean(value_reference, value))
+            if (!model.read_boolean(value_reference, *(int *)out))
             {
                 throw std::runtime_error("Failed to read boolean value from FMU");
             }
-            *(int *)out = value;
             return;
         }
         case DataType::integer:
         case DataType::enumeration:
         {
-            int value = 0;
-            if (!model.read_integer(value_reference, value))
+            if (!model.read_integer(value_reference, *(int *)out))
             {
                 throw std::runtime_error("Failed to read integer value from FMU");
             }
-            *(int *)out = value;
             return;
         }
         case DataType::string:
-            throw std::invalid_argument("String not supported");
-        //     model.read_string(value_reference, *(const char *)out);
+        {
+            if (!model.read_string(value_reference, *(std::string *)out))
+            {
+                throw std::runtime_error("Failed to read string value from FMU");
+            }
             return;
+        }
         case DataType::unknown:
             return;
         }
@@ -69,8 +67,7 @@ namespace ssp4cpp::sim::utils
         {
         case DataType::real:
         {
-            auto value = *(double *)data;
-            if (!model.write_real(value_reference, value))
+            if (!model.write_real(value_reference, *(double *)data))
             {
                 throw std::runtime_error("Failed to write real value to FMU");
             }
@@ -78,8 +75,7 @@ namespace ssp4cpp::sim::utils
         }
         case DataType::boolean:
         {
-            auto value = *(int *)data;
-            if (!model.write_boolean(value_reference, value))
+            if (!model.write_boolean(value_reference, *(int *)data))
             {
                 throw std::runtime_error("Failed to write boolean value to FMU");
             }
@@ -88,8 +84,7 @@ namespace ssp4cpp::sim::utils
         case DataType::integer:
         case DataType::enumeration:
         {
-            auto value = *(int *)data;
-            if (!model.write_integer(value_reference, value))
+            if (!model.write_integer(value_reference, *(int *)data))
             {
                 throw std::runtime_error("Failed to write integer value to FMU");
             }
@@ -97,8 +92,7 @@ namespace ssp4cpp::sim::utils
         }
         case DataType::string:
         {
-            auto s = (std::string *)data;
-            if (!model.write_string(value_reference, *s))
+            if (!model.write_string(value_reference, *(std::string *)data))
             {
                 throw std::runtime_error("Failed to write string value to FMU");
             }
@@ -109,6 +103,5 @@ namespace ssp4cpp::sim::utils
         }
         throw std::invalid_argument("Unknown DataType");
     }
-
 
 }

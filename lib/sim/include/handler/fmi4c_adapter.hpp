@@ -282,12 +282,13 @@ namespace ssp4cpp::sim::handler
             return last_status_;
         }
 
+        // Its important that the input type corresponds to the same fmi2 type, else there must be a cast
+
         bool set_real_input_derivative(uint64_t value_reference, int derivative_order, double value)
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Integer order = static_cast<fmi2Integer>(derivative_order);
-            fmi2Real data = static_cast<fmi2Real>(value);
-            last_status_ = fmi2_setRealInputDerivatives(handle, &vr, 1, &order, &data);
+            last_status_ = fmi2_setRealInputDerivatives(handle, &vr, 1, &order, &value);
             return status_ok(last_status_);
         }
 
@@ -295,50 +296,39 @@ namespace ssp4cpp::sim::handler
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
             fmi2Integer order = static_cast<fmi2Integer>(derivative_order);
-            fmi2Real value = 0.0;
-            last_status_ = fmi2_getRealOutputDerivatives(handle, &vr, 1, &order, &value);
-            if (status_ok(last_status_))
-            {
-                out = static_cast<double>(value);
-                return true;
-            }
-            return false;
+            last_status_ = fmi2_getRealOutputDerivatives(handle, &vr, 1, &order, &out);
+            return status_ok(last_status_);
         }
 
         bool read_real(uint64_t value_reference, double &out)
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
-            fmi2Real value = 0.0;
-            last_status_ = fmi2_getReal(handle, &vr, 1, &value);
-            if (status_ok(last_status_))
-            {
-                out = value;
-                return true;
-            }
-            return false;
+            last_status_ = fmi2_getReal(handle, &vr, 1, &out);
+            return status_ok(last_status_);
         }
 
         bool read_integer(uint64_t value_reference, int &out)
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
-            fmi2Integer value = 0;
-            last_status_ = fmi2_getInteger(handle, &vr, 1, &value);
-            if (status_ok(last_status_))
-            {
-                out = value;
-                return true;
-            }
-            return false;
+            last_status_ = fmi2_getInteger(handle, &vr, 1, &out);
+            return status_ok(last_status_);
         }
 
         bool read_boolean(uint64_t value_reference, int &out)
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
-            fmi2Boolean value = fmi2False;
-            last_status_ = fmi2_getBoolean(handle, &vr, 1, &value);
+            last_status_ = fmi2_getBoolean(handle, &vr, 1, &out);
+            return status_ok(last_status_);
+        }
+
+        bool read_string(uint64_t value_reference, std::string &out)
+        {
+            fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
+            fmi2String value = 0;
+            last_status_ = fmi2_getString(handle, &vr, 1, &value);
             if (status_ok(last_status_))
             {
-                out = value;
+                out = std::string(value);
                 return true;
             }
             return false;
@@ -347,30 +337,27 @@ namespace ssp4cpp::sim::handler
         bool write_real(uint64_t value_reference, double value)
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
-            fmi2Real data = value;
-            last_status_ = fmi2_setReal(handle, &vr, 1, &data);
+            last_status_ = fmi2_setReal(handle, &vr, 1, &value);
 
             // There must be a read after the last write for some fmus...
             // Or there is a solver restart
             // can be seen as an event
+            fmi2Real data = 0.0;
             fmi2_getReal(handle, &vr, 1, &data);
-
             return status_ok(last_status_);
         }
 
         bool write_integer(uint64_t value_reference, int value)
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
-            fmi2Integer data = value;
-            last_status_ = fmi2_setInteger(handle, &vr, 1, &data);
+            last_status_ = fmi2_setInteger(handle, &vr, 1, &value);
             return status_ok(last_status_);
         }
 
         bool write_boolean(uint64_t value_reference, int value)
         {
             fmi2ValueReference vr = static_cast<fmi2ValueReference>(value_reference);
-            fmi2Boolean data = value ? fmi2True : fmi2False;
-            last_status_ = fmi2_setBoolean(handle, &vr, 1, &data);
+            last_status_ = fmi2_setBoolean(handle, &vr, 1, &value);
             return status_ok(last_status_);
         }
 

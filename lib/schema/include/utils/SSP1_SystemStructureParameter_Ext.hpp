@@ -96,12 +96,14 @@ namespace ssp4cpp::ssp1::ext::ssv
             if (this->type == DataType::string)
             {
                 log.ext_trace("[{}] Storing value {}", __func__, *(string *)value);
+                
                 auto s = (string *)this->value.get();
                 *s = *(string *)value;
-                // log.ext_trace("[{}] Value stored {}", __func__, *(string *)this->value.get());
-                return;
             }
-            memcpy((void *)this->value.get(), value, this->size);
+            else
+            {
+                memcpy((void *)this->value.get(), value, this->size);
+            }
         }
     };
 

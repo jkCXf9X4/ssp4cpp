@@ -25,7 +25,6 @@ namespace ssp4cpp::fmi2::ext
             switch (t)
             {
             case DataType::boolean:
-                return sizeof(bool); // typically 1
             case DataType::integer:
             case DataType::enumeration:
                 return sizeof(int); // typically 4
@@ -50,7 +49,6 @@ namespace ssp4cpp::fmi2::ext
             case DataType::real:
                 return std::format("{}" , *(double *)data);
             case DataType::boolean:
-                return std::format("{}" , (*(bool *)data ? 1 : 0));
             case DataType::integer:
             case DataType::enumeration:
                 return std::format("{}" , *(int *)data);

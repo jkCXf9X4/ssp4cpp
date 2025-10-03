@@ -134,7 +134,19 @@ namespace ssp4cpp::sim::utils
                     
                 }
                 new_data_flags.push_back(false);
+
+                // Initialize all strings with an empty string
+                for (int index = 0; index < types.size(); index++)
+                {
+                    if (types[index] == utils::DataType::string)
+                    {
+                        log.debug("[{}] Setting string {}:{} - {}", __func__, index, names[index], types[index].to_string());
+                        auto s = (std::string*)locations[area][index];
+                        *s = std::string("");
+                    }
+                }
             }
+
             allocated = true;
         }
 

@@ -146,20 +146,21 @@ namespace ssp4cpp::sim::graph
                 if (input.initial_value)
                 {
                     auto data_ptr = (void *)input.initial_value.get();
+                    auto item = input_area->get_item(area, input.index);
 
                     auto data_type_str = fmi2::ext::enums::data_type_to_string(input.type, data_ptr);
                     log.debug("[{}] Set initial input value for {}, {} : {}",
                               __func__, name, input.type.to_string(), data_type_str);
 
                     // set input area to reflect the data to ensure that next iteration correct data will be used
-                    if (input.type != DataType::string)
+                    if (input.type == DataType::string)
                     {
-                        auto item = input_area->get_item(area, input.index);
-                        memcpy(item, data_ptr, input.size);
+                        // Move the internal string rep, not the std::string itself
+                        *(std::string*)item = *(std::string*)data_ptr;
                     }
                     else
                     {
-                        log.warning("[{}] Input area does not support initial value for strings yet", __func__);
+                        memcpy(item, data_ptr, input.size);
                     }
                 }
             }
@@ -251,7 +252,6 @@ namespace ssp4cpp::sim::graph
                             log.ext_trace("[{}] Copying derivatives {} -> {}", __func__, (uint64_t)source_der, (uint64_t)target_der);
 #endif
 
-                            // this line is causing an error when
                             memcpy(target_der, source_der, sizeof(double));
                         }
                     }
