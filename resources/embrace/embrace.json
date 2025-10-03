@@ -7,17 +7,17 @@
         "timestep": 0.01,
         "tolerance": 1e-4,
 
-        "executor": "jacobi",
+        "executor": "seidel",
         "thread_pool_workers": 5,
         "forward_derivatives": true,
         "jacobi":
         {
-            "parallel": false,
-            "method" : 1
+            "parallel": true,
+            "method" : 3
         },
         "seidel":
         {
-            "parallel": true
+            "parallel": false
         },
 
         "enable_recording": true,

@@ -34,6 +34,7 @@ namespace ssp4cpp::sim::graph
         uint64_t time;
     };
 
+    // This is shared across all threads
     struct SharedState
     {
         std::mutex mtx;
@@ -86,10 +87,10 @@ namespace ssp4cpp::sim::graph
                << "Name: " << name
                << "\n}\n";
         }
-        void set_shared_state(int worker_id, SharedState *ss)
+        void set_shared_state(size_t id, SharedState *ss)
         {
-            this->worker_id = worker_id;
             this->shared_state = ss;
+            this->worker_id = id;
         }
 
         void loop()

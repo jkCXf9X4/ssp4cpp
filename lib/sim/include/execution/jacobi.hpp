@@ -15,27 +15,19 @@
 namespace ssp4cpp::sim::graph
 {
 
-    class Jacobi final : public ExecutionBase
+    class JacobiSerial final : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("Jacobi", common::LogLevel::info);
+        common::Logger log = common::Logger("JacobiSerial", common::LogLevel::info);
 
-        bool parallelize;
-
-        common::ThreadPool pool{5};
-        std::vector<std::future<void>> futures;
-
-        utils::ThreadPool2 pool2{5};
-
-        Jacobi(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
+        JacobiSerial(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
-            parallelize = utils::Config::get<bool>("simulation.jacobi.parallel");
-            log.info("[{}] Parallel: {}", __func__, parallelize);
+            log.info("[{}] ", __func__);
         }
 
         virtual void print(std::ostream &os) const
         {
-            os << "Jacobi:\n{}\n";
+            os << "JacobiSerial:\n{}\n";
         }
 
         void init() override
@@ -49,74 +41,136 @@ namespace ssp4cpp::sim::graph
             log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
 #endif
 
-            // If models execute in less than 10-15 microseconds then use sequence
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
-            if (parallelize)
+
+            for (auto &model : this->nodes)
             {
-                switch (3)
-                {
-
-                case 1:
-                {
-                    std::for_each(std::execution::par, nodes.begin(), nodes.end(),
-                                  [&](auto &model)
-                                  {
-                                      model->invoke(step);
-                                  });
-                    break;
-                }
-                case 2:
-                {
-                    for (auto &node : nodes)
-                    {
-                        futures.push_back(pool.enqueue([&]()
-                                                       { node->invoke(step); }));
-                    }
-                    for (auto &f : futures)
-                        f.get();
-                    futures.clear();
-                    break;
-                }
-                case 3:
-                {
-                    // pool2
-                    // log.info("[{}] New step: {}", __func__, step_data.to_string());
-
-                    pool2.ready(nodes.size());
-
-                    for (auto &node : this->nodes)
-                    {
-                        auto ti = sim::utils::task_info{node, step};
-                        pool2.enqueue(ti);
-                    }
-
-                    // log.info("[{}] Spinning", __func__);
-                    // spin until done
-                    bool all_done = false;
-                    while (!all_done)
-                    {
-                        all_done = true;
-                        for (int i = 0; i < pool2.dones.size(); ++i)
-                        {
-                            if (!pool2.dones[i])
-                            {
-                                all_done = false;
-                                break;
-                            }
-                        }
-                    }
-                    // log.info("[{}] All done", __func__);
-                }
-                }
-            }
-            else
-            {
-                for (auto &model : this->nodes)
-                {
-                    model->invoke(step);
-                }
+                model->invoke(step);
             }
 
+            return step_data.end_time;
+        }
+    };
+
+    class JacobiParallelFutures final : public ExecutionBase
+    {
+    public:
+        common::Logger log = common::Logger("JacobiParallelFutures", common::LogLevel::info);
+
+        common::ThreadPool pool;
+        std::vector<std::future<void>> futures;
+
+        JacobiParallelFutures(std::vector<AsyncNode *> nodes, int threads) : ExecutionBase(std::move(nodes)), pool(threads)
+        {
+            log.info("[{}] JacobiParallelFutures", __func__);
+        }
+
+        void init() override
+        {
+        }
+
+        // hot path
+        uint64_t invoke(StepData step_data) override final
+        {
+#ifdef _LOG_
+            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+#endif
+            auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
+
+            for (auto &node : nodes)
+            {
+                futures.push_back(pool.enqueue([&]()
+                                               { node->invoke(step); }));
+            }
+            for (auto &f : futures)
+                f.get();
+            futures.clear();
+
+            return step_data.end_time;
+        }
+    };
+
+    class JacobiParallelTBB final : public ExecutionBase
+    {
+    public:
+        common::Logger log = common::Logger("JacobiParallelTBB", common::LogLevel::info);
+
+        JacobiParallelTBB(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
+        {
+            log.info("[{}] JacobiParallelTBB", __func__);
+        }
+
+        void init() override
+        {
+        }
+
+        // hot path
+        uint64_t invoke(StepData step_data) override final
+        {
+#ifdef _LOG_
+            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+#endif
+            auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
+
+            std::for_each(std::execution::par, nodes.begin(), nodes.end(),
+                          [&](auto &model)
+                          {
+                              model->invoke(step);
+                          });
+            return step_data.end_time;
+        }
+    };
+
+    class JacobiParallelSpin final : public ExecutionBase
+    {
+    public:
+        common::Logger log = common::Logger("JacobiParallelSpin", common::LogLevel::info);
+
+        utils::ThreadPool2 pool;
+
+        JacobiParallelSpin(std::vector<AsyncNode *> nodes, int threads) : ExecutionBase(std::move(nodes)), pool(threads)
+        {
+            log.info("[{}] JacobiParallelSpin", __func__);
+        }
+
+        void init() override
+        {
+        }
+
+        // hot path
+        uint64_t invoke(StepData step_data) override final
+        {
+#ifdef _LOG_
+            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+#endif
+            auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
+
+            pool.ready(nodes.size());
+
+            for (auto &node : nodes)
+            {
+                auto ti = sim::utils::task_info{node, step};
+                pool.enqueue(ti);
+            }
+#ifdef _LOG_
+            log.info("[{}] Spinning until all threads are done", __func__);
+#endif
+            bool all_done = false;
+            while (!all_done)
+            {
+                all_done = true;
+                for (int i = 0; i < pool.dones.size(); ++i)
+                {
+                    if (!pool.dones[i])
+                    {
+                        all_done = false;
+                        break;
+                    }
+                }
+            }
+#ifdef _LOG_
+            log.info("[{}] All threads completed", __func__);
+#endif
             return step_data.end_time;
         }
     };

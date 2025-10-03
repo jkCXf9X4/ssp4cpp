@@ -14,7 +14,6 @@ namespace ssp4cpp::sim::graph
         common::Logger log = common::Logger("ExecutionBase", common::LogLevel::info);
         std::vector<AsyncNode *> nodes;
 
-        bool parallelize;
         std::unique_ptr<SharedState> shared_state;
 
         ExecutionBase(std::vector<AsyncNode *> nodes) : nodes(std::move(nodes))

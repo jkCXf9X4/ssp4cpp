@@ -15,30 +15,151 @@
 
 namespace ssp4cpp::sim::graph
 {
-    class Seidel final : public ExecutionBase
+    struct SeidelNode
+    {
+        int id;
+        AsyncNode *node;
+        std::size_t nr_parents;
+        std::size_t nr_parents_counter;
+        SeidelNode() {}
+    };
+
+    class SeidelBase : public ExecutionBase
+    {
+    public:
+        common::Logger log = common::Logger("SeidelBase", common::LogLevel::info);
+
+        const int nr_of_nodes = 0;
+        std::vector<SeidelNode> seidel_nodes;
+        std::vector<SeidelNode *> start_nodes;
+
+        SeidelBase(std::vector<AsyncNode *> _nodes_) : ExecutionBase(std::move(_nodes_)), nr_of_nodes(nodes.size()), seidel_nodes(nr_of_nodes)
+        {
+            log.info("[{}] ", __func__);
+            log.trace("[{}] nr_of_nodes {}, seidel_nodes {}", __func__, nr_of_nodes, seidel_nodes.size());
+
+            for (auto &node : this->nodes)
+            {
+                auto id = node->worker_id;
+
+                auto &n = seidel_nodes[id];
+                n.id = id;
+                n.node = node;
+                n.nr_parents = node->parents.size();
+                n.nr_parents_counter = n.nr_parents;
+
+                log.ext_trace("[{}] Assigning SeidelNode {}", __func__, id);
+            }
+
+            log.info("[{}] Evaluating start nodes", __func__);
+            for (auto &node : this->seidel_nodes)
+            {
+                if (node.node->nr_parents() == 0)
+                {
+                    start_nodes.push_back(&node);
+                }
+            }
+        }
+
+        inline void reset_counters()
+        {
+            for (auto &n : seidel_nodes)
+            {
+                n.nr_parents_counter = n.nr_parents;
+            }
+        }
+    };
+
+    class SerialSeidel final : public SeidelBase
     {
     public:
         common::Logger log = common::Logger("Seidel", common::LogLevel::info);
-        std::vector<std::size_t> nr_parents;
-        std::vector<std::size_t> nr_parents_counter;
 
-        Seidel(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
+        SerialSeidel(std::vector<AsyncNode *> nodes) : SeidelBase(std::move(nodes))
         {
-            parallelize = utils::Config::get<bool>("simulation.seidel.parallel");
-            log.info("[{}] Parallel: {}", __func__, parallelize);
-
-            log.trace("[{}] Setting up counters, {}pc", __func__, this->nodes.size());
-            for (auto &node : this->nodes)
-            {
-                log.ext_trace("[{}] {} nr_parents {}", __func__, node->name, node->parents.size());
-                nr_parents.push_back(node->parents.size());
-                nr_parents_counter.push_back(node->parents.size());
-            }
+            log.info("[{}] ", __func__);
         }
 
         virtual void print(std::ostream &os) const
         {
-            os << "Seidel:\n{}\n";
+            os << "SerialSeidel:\n{}\n";
+        }
+
+        void init() override
+        {
+        }
+
+        // some idea that this might be more effective than looping over all items
+        // Not used at the moment
+        inline void invoke_node(SeidelNode &node, StepData step_data)
+        {
+            node.node->invoke(step_data);
+            for (auto c : node.node->children)
+            {
+                auto &child = seidel_nodes[((AsyncNode *)c)->worker_id];
+                child.nr_parents_counter -= 1;
+                if (child.nr_parents_counter == 0)
+                {
+                    invoke_node(child, step_data);
+                }
+            }
+        }
+
+        /**
+         * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
+         * [hot path]
+         */
+        uint64_t invoke(StepData step_data) override final
+        {
+#ifdef _LOG_
+            log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
+#endif
+            step_data.valid_input_time = step_data.end_time;
+
+            int completed = 0;
+            reset_counters();
+#ifdef _LOG_
+            log.trace("[{}] Invoking nodes", __func__);
+#endif
+            while (nr_of_nodes != completed)
+            {
+                for (auto &node : seidel_nodes)
+                {
+                    if (node.nr_parents_counter == 0)
+                    {
+#ifdef _LOG_
+                        log.trace("[{}] Starting", __func__, node.id);
+#endif
+                        node.node->invoke(step_data);
+                        for (auto c : node.node->children)
+                        {
+                            auto &child = seidel_nodes[((AsyncNode *)c)->worker_id];
+                            child.nr_parents_counter -= 1;
+                        }
+                    }
+                }
+            }
+
+#ifdef _LOG_
+            log.trace("[{}] End. completed  {}", __func__, completed);
+#endif
+            return step_data.end_time;
+        }
+    };
+
+    class ParallelSeidel final : public SeidelBase
+    {
+    public:
+        common::Logger log = common::Logger("Seidel", common::LogLevel::info);
+
+        ParallelSeidel(std::vector<AsyncNode *> nodes) : SeidelBase(std::move(nodes))
+        {
+            log.info("[{}]", __func__);
+        }
+
+        virtual void print(std::ostream &os) const
+        {
+            os << "ParallelSeidel:\n{}\n";
         }
 
         void init() override
@@ -47,37 +168,35 @@ namespace ssp4cpp::sim::graph
 
         /**
          * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
+         * [hot path]
          */
-        void invoke_graph(StepData step)
+        uint64_t invoke(StepData step_data) override final
         {
-            log.trace("[{}] step data: {}", __func__, step.to_string());
+#ifdef _LOG_
+            log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
+#endif
+            step_data.valid_input_time = step_data.end_time;
+
+            reset_counters();
+
             // track how many are currently running
             int launched = 0;
             int completed = 0;
 
-            // start from ancestor nodes (no parents)
-            log.trace("[{}] Reseting counters", __func__);
-            for (int i = 0; i < nodes.size(); i++)
+#ifdef _LOG_
+            log.trace("[{}] Invoking all start nodes", __func__);
+#endif
+            for (auto &sn : start_nodes)
             {
-                this->nr_parents_counter[i] = this->nr_parents[i]; // ensure no allocation
+                sn->node->async_invoke(step_data);
+                launched += 1;
             }
 
-            log.trace("[{}] starting all models without parents", __func__);
-            for (int i = 0; i < nodes.size(); i++)
-            {
-                auto node = nodes[i];
-                if (this->nr_parents_counter[i] == 0)
-                {
-                    log.debug("[{}] Invoking: {}", __func__, node->name);
-                    node->async_invoke(step);
-                    launched += 1;
-                }
-            }
-
-            log.trace("[{}] launched {}, completed  {}", __func__, launched, completed);
             while (launched != completed)
             {
-                log.trace("[{}] Waiting for nodes to finish", __func__);
+#ifdef _LOG_
+                log.trace("[{}] Waiting for nodes to finish. launched {}, completed  {}", __func__, launched, completed);
+#endif
                 shared_state->sem.acquire();
                 completed += 1;
 
@@ -87,32 +206,30 @@ namespace ssp4cpp::sim::graph
                     msg = std::move(shared_state->inbox.front());
                     shared_state->inbox.pop();
                 }
-                auto finished_node = nodes[msg.worker_id];
+                auto finished_node = seidel_nodes[msg.worker_id];
+#ifdef _LOG_
                 log.trace("[{}] Node finished: {}", __func__, finished_node->name);
+#endif
 
                 // enqueue children whose all parents are invoked
-                for (auto n : finished_node->children)
+                for (auto c : finished_node.node->children)
                 {
-                    AsyncNode *node = (AsyncNode *)n;
-                    log.ext_trace("[{}] Evaluating child node: {}", __func__, node->name);
-                    this->nr_parents_counter[node->worker_id] -= 1;
-                    if (this->nr_parents_counter[node->worker_id] == 0)
+                    auto &child = seidel_nodes[((AsyncNode *)c)->worker_id];
+
+                    child.nr_parents_counter -= 1;
+                    if (child.nr_parents_counter == 0)
                     {
+#ifdef _LOG_
                         log.debug("[{}] Node ready, invoking: {}", __func__, node->name);
-                        node->async_invoke(step);
+#endif
+                        child.node->async_invoke(step_data);
                         launched += 1;
                     }
                 }
             }
-            log.trace("[{}] completed", __func__, launched, completed);
-        }
-
-        uint64_t invoke(StepData step_data) override final
-        {
-            log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
-            step_data.valid_input_time = step_data.end_time;
-
-            invoke_graph(step_data);
+#ifdef _LOG_
+            log.trace("[{}] End. launched {}, completed  {}", __func__, launched, completed);
+#endif
             return step_data.end_time;
         }
     };
