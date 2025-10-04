@@ -2,6 +2,8 @@
 
 #include "common_log.hpp"
 
+#include "common_definitions.hpp"
+
 #include "execution.hpp"
 
 #include "async_node.hpp"
@@ -111,25 +113,30 @@ namespace ssp4cpp::sim::graph
          */
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
-#endif
+            IF_LOG({
+                log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
+            });
+
             step_data.valid_input_time = step_data.end_time;
 
             int completed = 0;
             reset_counters();
-#ifdef _LOG_
-            log.trace("[{}] Invoking nodes", __func__);
-#endif
+
+            IF_LOG({
+                log.trace("[{}] Invoking nodes", __func__);
+            });
+
             while (nr_of_nodes != completed)
             {
                 for (auto &node : seidel_nodes)
                 {
                     if (node.nr_parents_counter == 0)
                     {
-#ifdef _LOG_
-                        log.trace("[{}] Starting", __func__, node.id);
-#endif
+
+                        IF_LOG({
+                            log.trace("[{}] Starting", __func__, node.id);
+                        });
+
                         node.node->invoke(step_data);
                         for (auto c : node.node->children)
                         {
@@ -140,9 +147,10 @@ namespace ssp4cpp::sim::graph
                 }
             }
 
-#ifdef _LOG_
-            log.trace("[{}] End. completed  {}", __func__, completed);
-#endif
+            IF_LOG({
+                log.trace("[{}] End. completed  {}", __func__, completed);
+            });
+
             return step_data.end_time;
         }
     };
@@ -172,9 +180,10 @@ namespace ssp4cpp::sim::graph
          */
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
-#endif
+            IF_LOG({
+                log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
+            });
+
             step_data.valid_input_time = step_data.end_time;
 
             reset_counters();
@@ -183,9 +192,10 @@ namespace ssp4cpp::sim::graph
             int launched = 0;
             int completed = 0;
 
-#ifdef _LOG_
-            log.trace("[{}] Invoking all start nodes", __func__);
-#endif
+            IF_LOG({
+                log.trace("[{}] Invoking all start nodes", __func__);
+            });
+
             for (auto &sn : start_nodes)
             {
                 sn->node->async_invoke(step_data);
@@ -194,9 +204,10 @@ namespace ssp4cpp::sim::graph
 
             while (launched != completed)
             {
-#ifdef _LOG_
-                log.trace("[{}] Waiting for nodes to finish. launched {}, completed  {}", __func__, launched, completed);
-#endif
+                IF_LOG({
+                    log.trace("[{}] Waiting for nodes to finish. launched {}, completed  {}", __func__, launched, completed);
+                });
+
                 shared_state->sem.acquire();
                 completed += 1;
 
@@ -207,9 +218,10 @@ namespace ssp4cpp::sim::graph
                     shared_state->inbox.pop();
                 }
                 auto finished_node = seidel_nodes[msg.worker_id];
-#ifdef _LOG_
-                log.trace("[{}] Node finished: {}", __func__, finished_node->name);
-#endif
+
+                IF_LOG({
+                    log.trace("[{}] Node finished: {}", __func__, finished_node->name);
+                });
 
                 // enqueue children whose all parents are invoked
                 for (auto c : finished_node.node->children)
@@ -219,17 +231,19 @@ namespace ssp4cpp::sim::graph
                     child.nr_parents_counter -= 1;
                     if (child.nr_parents_counter == 0)
                     {
-#ifdef _LOG_
-                        log.debug("[{}] Node ready, invoking: {}", __func__, node->name);
-#endif
+                        IF_LOG({
+                            log.debug("[{}] Node ready, invoking: {}", __func__, node->name);
+                        });
+
                         child.node->async_invoke(step_data);
                         launched += 1;
                     }
                 }
             }
-#ifdef _LOG_
-            log.trace("[{}] End. launched {}, completed  {}", __func__, launched, completed);
-#endif
+            IF_LOG({
+                log.trace("[{}] End. launched {}, completed  {}", __func__, launched, completed);
+            });
+
             return step_data.end_time;
         }
     };

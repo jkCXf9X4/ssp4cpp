@@ -2,6 +2,8 @@
 
 #include "common_log.hpp"
 
+#include "common_definitions.hpp"
+
 #include "execution.hpp"
 
 #include "task_thread_pool.hpp"
@@ -41,14 +43,14 @@ namespace ssp4cpp::sim::graph
         //     auto end_t = model.step(step.end_time);
 
         //     model.post(end_t);
-        // } 
+        // }
 
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
-#endif
+            IF_LOG({
+                log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+            });
 
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
 
@@ -81,9 +83,10 @@ namespace ssp4cpp::sim::graph
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
-#endif
+            IF_LOG({
+                log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+            });
+
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
 
             for (auto &node : nodes)
@@ -116,9 +119,10 @@ namespace ssp4cpp::sim::graph
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
-#endif
+            IF_LOG({
+                log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+            });
+
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
 
             std::for_each(std::execution::par, nodes.begin(), nodes.end(),
@@ -149,9 +153,10 @@ namespace ssp4cpp::sim::graph
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
-#endif
+            IF_LOG({
+                log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+            });
+
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
 
             pool.ready(nodes.size());
@@ -161,9 +166,11 @@ namespace ssp4cpp::sim::graph
                 auto ti = sim::utils::task_info{node, step};
                 pool.enqueue(ti);
             }
-#ifdef _LOG_
-            log.info("[{}] Spinning until all threads are done", __func__);
-#endif
+
+            IF_LOG({
+                log.info("[{}] Spinning until all threads are done", __func__);
+            });
+
             bool all_done = false;
             while (!all_done)
             {
@@ -177,9 +184,11 @@ namespace ssp4cpp::sim::graph
                     }
                 }
             }
-#ifdef _LOG_
-            log.info("[{}] All threads completed", __func__);
-#endif
+
+            IF_LOG({
+                log.info("[{}] All threads completed", __func__);
+            });
+
             return step_data.end_time;
         }
     };

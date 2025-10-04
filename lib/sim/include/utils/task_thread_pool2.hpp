@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "common_definitions.hpp"
+
 #include <atomic>
 #include <cstdint>
 #include <condition_variable>
@@ -91,9 +93,10 @@ namespace ssp4cpp::sim::utils
 
         void ready(int nodes)
         {
-#ifdef _LOG_
-            log.debug("[{}] Ready", __func__);
-#endif
+            IF_LOG({
+                log.debug("[{}] Ready", __func__);
+            });
+
             for (int i = 0; i < workers.size(); ++i)
             {
                 dones[i] = false;
@@ -115,16 +118,17 @@ namespace ssp4cpp::sim::utils
          */
         void enqueue(task_info &task)
         {
-#ifdef _LOG_
-            log.debug("[{}] Enqueueing task: {}", __func__, task.node->name);
-#endif
+            IF_LOG({
+                log.debug("[{}] Enqueueing task: {}", __func__, task.node->name);
+            });
+
             {
                 std::scoped_lock lock(queue_mutex);
                 tasks.emplace(std::move(task));
             }
-#ifdef _LOG_
-            log.debug("[{}] Task queued: {}", __func__, task.node->name);
-#endif
+            IF_LOG({
+                log.debug("[{}] Task queued: {}", __func__, task.node->name);
+            });
         }
 
     private:
@@ -158,9 +162,10 @@ namespace ssp4cpp::sim::utils
 
                         if (!tasks.empty())
                         {
-#ifdef _LOG_
-                            log.debug("[{}] Found new task, que {}", __func__, que);
-#endif
+                            IF_LOG({
+                                log.debug("[{}] Found new task, que {}", __func__, que);
+                            });
+
                             task = std::move(tasks.top());
                             tasks.pop();
                             --que;
@@ -170,13 +175,14 @@ namespace ssp4cpp::sim::utils
                     if (task)
                     {
                         auto &t = task.value();
-#ifdef _LOG_
-                        log.debug("[{}] Invoking {} {}", __func__, t.node->name, t.step.to_string());
-#endif
+                        IF_LOG({
+                            log.debug("[{}] Invoking {} {}", __func__, t.node->name, t.step.to_string());
+                        });
+
                         t.node->invoke(t.step);
-#ifdef _LOG_
-                        log.debug("[{}] Task completed {}", __func__, t.node->name);
-#endif
+                        IF_LOG({
+                            log.debug("[{}] Task completed {}", __func__, t.node->name);
+                        });
                     }
                 }
                 done = true;

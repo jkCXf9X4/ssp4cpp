@@ -3,6 +3,8 @@
 #include "common_node.hpp"
 #include "common_log.hpp"
 
+#include "common_definitions.hpp"
+
 #include "invocable.hpp"
 
 #include <string>
@@ -98,9 +100,9 @@ namespace ssp4cpp::sim::graph
             log.info("[{}] Starting async node thread, {}", __func__, this->name);
             while (true)
             {
-#ifdef _LOG_
-                log.trace("[{}] Holding node {}", __func__, this->name);
-#endif
+                IF_LOG({
+                    log.trace("[{}] Holding node {}", __func__, this->name);
+                });
                 sem.acquire();
                 if (!running)
                 {
@@ -109,15 +111,17 @@ namespace ssp4cpp::sim::graph
 
                 // if (status == ModelStatus::ready)
                 {
-#ifdef _LOG_
-                    log.trace("[{}] Executing, node {}", __func__, this->name);
-#endif
+                    IF_LOG({
+                        log.trace("[{}] Executing, node {}", __func__, this->name);
+                    });
+
                     status = ModelStatus::running;
 
                     output = invoke(input);
-#ifdef _LOG_
-                    log.trace("[{}] Execution completed, node {}", __func__, this->name);
-#endif
+                    IF_LOG({
+                        log.trace("[{}] Execution completed, node {}", __func__, this->name);
+                    });
+
                     status = ModelStatus::completed;
                     {
                         std::lock_guard<std::mutex> lock(shared_state->mtx);
@@ -147,9 +151,9 @@ namespace ssp4cpp::sim::graph
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.ext_trace("[{}] Invoking, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
-#endif
+            IF_LOG({
+                log.ext_trace("[{}] Invoking, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
+            });
 
             return invocable_obj->invoke(step_data);
         }
@@ -157,9 +161,10 @@ namespace ssp4cpp::sim::graph
         // hot path
         void async_invoke(StepData step_data)
         {
-#ifdef _LOG_
-            log.trace("[{}] Invoking async, model {} start time {}", __func__, this->name, step_data.start_time);
-#endif
+            IF_LOG({
+                log.trace("[{}] Invoking async, model {} start time {}", __func__, this->name, step_data.start_time);
+            });
+
             input = step_data;
             if (status == ModelStatus::ready)
             {

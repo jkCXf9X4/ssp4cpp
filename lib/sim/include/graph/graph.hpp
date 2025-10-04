@@ -4,6 +4,8 @@
 #include "common_map.hpp"
 #include "common_vector.hpp"
 
+#include "common_definitions.hpp"
+
 #include "invocable.hpp"
 #include "jacobi.hpp"
 #include "seidel.hpp"
@@ -70,17 +72,19 @@ namespace ssp4cpp::sim::graph
         // hot path
         uint64_t invoke(StepData step_data) override final
         {
-#ifdef _LOG_
-            log.trace("[{}] Invoking Graph, full step: {}", __func__, step_data.to_string());
-#endif
+            IF_LOG({
+                log.trace("[{}] Invoking Graph, full step: {}", __func__, step_data.to_string());
+            });
 
             auto t = step_data.start_time;
             while (t < step_data.end_time)
             {
                 auto s = StepData(t, t + step_data.timestep, step_data.timestep);
-#ifdef _LOG_
-                log.ext_trace("[{}] Graph executing step: {}", __func__, s.to_string());
-#endif
+
+                IF_LOG({
+                    log.ext_trace("[{}] Graph executing step: {}", __func__, s.to_string());
+                });
+                
                 executor->invoke(s);
 
                 t += step_data.timestep;

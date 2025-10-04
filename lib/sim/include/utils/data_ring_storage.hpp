@@ -3,6 +3,8 @@
 #include "common_string.hpp"
 #include "common_log.hpp"
 
+#include "common_definitions.hpp"
+
 #include "data_storage.hpp"
 
 #include <string>
@@ -34,8 +36,8 @@ namespace ssp4cpp::sim::utils
         size_t head = 0; /* next position to write             */
         size_t tail = 0; /* first data position      */
 
-        size_t capacity = 0;         /* total usable slots                 */
-        size_t size = 0;             /* current number of elements stored  */
+        size_t capacity = 0;            /* total usable slots                 */
+        size_t size = 0;                /* current number of elements stored  */
         uint64_t overwrite_counter = 0; // how many times has new data been added
 
         std::string name;
@@ -71,17 +73,19 @@ namespace ssp4cpp::sim::utils
         /** Retrieve the most recent element with timestamp before @p time. */
         int64_t get_valid_area(uint64_t time)
         {
-#ifdef _LOG_
-            log.ext_trace("[{}] init", __func__);
-#endif
+            IF_LOG({
+                log.ext_trace("[{}] init", __func__);
+            });
+
             for (std::size_t i = 0; i < size; ++i)
             {
                 int pos = get_pos_rev(i);
                 if (data->timestamps[pos] <= time)
                 {
-#ifdef _LOG_
-                    log.ext_trace("[{}] found valid area, {}", __func__, pos);
-#endif
+                    IF_LOG({
+                        log.ext_trace("[{}] found valid area, {}", __func__, pos);
+                    });
+
                     return pos;
                 }
             }
@@ -100,15 +104,17 @@ namespace ssp4cpp::sim::utils
 
         byte *get_valid_item(uint64_t time, std::size_t index)
         {
-#ifdef _LOG_
-            log.ext_trace("[{}] Init", __func__);
-#endif
+            IF_LOG({
+                log.ext_trace("[{}] Init", __func__);
+            });
+
             auto valid_area = get_valid_area(time);
             if (valid_area != -1)
             {
-#ifdef _LOG_
-                log.ext_trace("[{}] Valid area found, returning the pointer", __func__);
-#endif
+                IF_LOG({
+                    log.ext_trace("[{}] Valid area found, returning the pointer", __func__);
+                });
+
                 return data->get_item(valid_area, index);
             }
             return nullptr;
@@ -133,9 +139,9 @@ namespace ssp4cpp::sim::utils
         // create new, if full it will overwrite the oldest data
         int push()
         {
-#ifdef _LOG_
-            log.ext_trace("[{}] init", __func__);
-#endif
+            IF_LOG({
+                log.ext_trace("[{}] init", __func__);
+            });
 
             if (is_full()) [[likely]]
             {
