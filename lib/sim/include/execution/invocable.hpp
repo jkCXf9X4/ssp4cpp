@@ -57,11 +57,16 @@ namespace ssp4cpp::sim::graph
     };
 
 
+
+
+
     class Invocable : public common::graph::Node, public virtual common::str::IString
     {
     public:
         uint64_t walltime_ns = 0;
         // bool support_async = false;
+
+        // SharedState* shared_state = 0;
 
         virtual void init() = 0;
         virtual uint64_t invoke(StepData data) = 0;
@@ -74,16 +79,7 @@ namespace ssp4cpp::sim::graph
     };
 
 
-    // enum class ModelState
-    // {
-    //     initialization,
-    //     ready,     // waiting for execution
-    //     running,   // executing
-    //     completed, // completed execution, can go to ready again or exit
-    //     exit       //
-    // };
-
-    // struct DoneMsg
+        // struct DoneMsg
     // {
     //     uint32_t worker_id;
     //     uint64_t time;

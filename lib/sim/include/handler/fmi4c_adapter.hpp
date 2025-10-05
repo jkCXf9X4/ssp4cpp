@@ -1,6 +1,9 @@
 #pragma once
 
 #include "common_log.hpp"
+#include "common_time.hpp"
+
+#include "common_definitions.hpp"
 
 #include <fmi4c.h>
 
@@ -137,7 +140,7 @@ namespace ssp4cpp::sim::handler
 
         FmuInstance &instance_;
         bool instantiated_ = false;
-        double current_time_ = 0.0;
+        uint64_t current_time_ = 0;
         fmi2Status last_status_ = fmi2OK;
 
     public:
@@ -190,7 +193,7 @@ namespace ssp4cpp::sim::handler
             bool success = handle != nullptr;
             instantiated_ = success;
             last_status_ = success ? fmi2OK : fmi2Error;
-            current_time_ = 0.0;
+            current_time_ = 0;
 
             if (!success)
             {
@@ -207,15 +210,14 @@ namespace ssp4cpp::sim::handler
             {
                 throw std::logic_error("setup_experiment called before instantiate");
             }
-
             log.debug("[{}] setup_experiment start:{} stop:{} tolerance:{}", __func__, start_time, stop_time, tolerance);
-            auto tolerance_defined = tolerance > 0.0 ? fmi2True : fmi2False;
+            
             auto stop_defined = stop_time > start_time ? fmi2True : fmi2False;
-
+            auto tolerance_defined = tolerance > 0.0 ? fmi2True : fmi2False;
             last_status_ = fmi2_setupExperiment(handle, tolerance_defined, tolerance, start_time, stop_defined, stop_time);
             if (status_ok(last_status_))
             {
-                current_time_ = start_time;
+                current_time_ = common::time::s_to_ns(start_time);
             }
             return status_ok(last_status_);
         }
@@ -242,14 +244,50 @@ namespace ssp4cpp::sim::handler
             return status_ok(last_status_);
         }
 
-        bool step(double step_size)
+        uint64_t step_until(uint64_t stop_time)
+        {
+            auto sim_time = get_simulation_time();
+            while (sim_time < stop_time)
+            {
+                auto step_time = stop_time - sim_time;
+
+                IF_LOG({
+                    log.debug("[{}] step_time {}s ", __func__, common::time::ns_to_s(step_time));
+                });
+
+                if (this->step(step_time) == false)
+                {
+                    int status = last_status();
+                    log.error("Error! step() returned with status: {}", std::to_string(status));
+                    if (status == 3)
+                    {
+                        throw std::runtime_error("Execution failed");
+                    }
+                }
+                sim_time = get_simulation_time();
+
+                IF_LOG({
+                    log.trace("[{}], sim time {}", __func__, sim_time);
+                });
+            }
+            return sim_time;
+        }
+
+        bool step(uint64_t step_size)
         {
             if (!instantiated_)
             {
                 throw std::logic_error("step called before instantiate");
             }
 
-            last_status_ = fmi2_doStep(handle, current_time_, step_size, fmi2True);
+            double current = common::time::ns_to_s(current_time_);
+            double step = common::time::ns_to_s(step_size);
+
+            IF_LOG({
+                log.debug("[{}] current {} step {}", __func__, current, step);
+            });
+
+            last_status_ = fmi2_doStep(handle, current, step, fmi2True);
             if (status_ok(last_status_))
             {
                 current_time_ += step_size;
@@ -272,7 +310,7 @@ namespace ssp4cpp::sim::handler
             return status_ok(last_status_);
         }
 
-        [[nodiscard]] double get_simulation_time() const
+        [[nodiscard]] uint64_t get_simulation_time() const
         {
             return current_time_;
         }

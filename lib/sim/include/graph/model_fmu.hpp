@@ -176,9 +176,9 @@ namespace ssp4cpp::sim::graph
         {
             log.trace("[{}] FmuModel init {}", __func__, name);
 
-            auto start_time = utils::Config::get<float>("simulation.start_time");
-            auto end_time = utils::Config::get<float>("simulation.stop_time") + 10;
-            auto tolerance = utils::Config::get<float>("simulation.tolerance");
+            double start_time = utils::Config::get<double>("simulation.start_time");
+            double end_time = utils::Config::get<double>("simulation.stop_time") + 10;
+            double tolerance = utils::Config::get<double>("simulation.tolerance");
 
             log.debug("[{}] setup_experiment: {} ", __func__, name);
             if (!fmu->model->setup_experiment(start_time, end_time, tolerance))
@@ -301,40 +301,6 @@ namespace ssp4cpp::sim::graph
             });
         }
 
-        // hot path
-        uint64_t step_until(uint64_t stop_time_ns)
-        {
-            auto stop_time_s = common::time::ns_to_s(stop_time_ns);
-
-            auto sim_time_s = fmu->model->get_simulation_time();
-            while (sim_time_s < stop_time_s)
-            {
-                auto step = stop_time_s - sim_time_s;
-
-                IF_LOG({
-                    log.debug("[{}] FmuModel {} ", __func__, step);
-                });
-
-                auto model_timer = common::time::Timer();
-                if (fmu->model->step(step) == false)
-                {
-                    int status = (int)fmu->model->last_status();
-                    log.error("Error! step() returned with status: {}", std::to_string(status));
-                    if (status == 3)
-                    {
-                        throw std::runtime_error("Execution failed");
-                    }
-                }
-                sim_time_s = fmu->model->get_simulation_time();
-                this->walltime_ns += model_timer.stop();
-
-                IF_LOG({
-                    log.trace("[{}], sim time {}", __func__, sim_time_s);
-                });
-            }
-            return common::time::s_to_ns(sim_time_s);
-        }
-
         inline void read_values_from_model(int area)
         {
             IF_LOG({
@@ -395,7 +361,7 @@ namespace ssp4cpp::sim::graph
 
             pre(_start_time, step_data.valid_input_time);
 
-            _end_time = step_until(_end_time);
+            _end_time = fmu->model->step_until(_end_time);
 
             auto delayed_time = _end_time - delay;
             post(delayed_time);
