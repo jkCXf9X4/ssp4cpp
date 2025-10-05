@@ -68,6 +68,8 @@ namespace ssp4cpp::sim::graph
                     info.index = index;
                     info.value_ref = connector->value_reference;
 
+                    info.fmu = model->fmu;
+
                     if (connector->initial_value)
                     {
                         info.initial_value = connector->initial_value->get_value();
@@ -76,9 +78,15 @@ namespace ssp4cpp::sim::graph
                     }
 
                     if (connector->causality == Causality::input)
+                    {
+                        info.storage = model->input_area.get();
                         model->inputs[name] = std::move(info);
+                    }
                     else if (connector->causality == Causality::output)
+                    {
+                        info.storage = model->output_area.get();
                         model->outputs[name] = std::move(info);
+                    }
                     else if (connector->causality == Causality::parameter)
                         model->parameters[name] = std::move(info);
                 }
