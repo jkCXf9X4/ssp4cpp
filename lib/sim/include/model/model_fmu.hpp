@@ -15,6 +15,8 @@
 #include "config.hpp"
 
 #include "fmu_handler.hpp"
+#include "model_connection.hpp"
+#include "model_connector.hpp"
 
 #include <string>
 #include <vector>
@@ -22,62 +24,6 @@
 
 namespace ssp4cpp::sim::graph
 {
-    // forward declaration
-    class FmuModel;
-
-    struct ConnectorInfo : public common::str::IString
-    {
-        utils::DataType type;
-        size_t size;
-        std::string name; // for debug
-
-        uint32_t index;
-        uint64_t value_ref;
-
-        std::unique_ptr<std::byte[]> initial_value;
-
-        bool forward_derivatives = false;
-        int forward_derivatives_order = 0;
-
-        virtual void print(std::ostream &os) const
-        {
-            os << "ConnectorInfo { "
-               << "name: " << name
-               << ", type: " << type
-               << ", size: " << size
-               << ", index: " << index
-               << ", value_ref: " << value_ref
-               << ", forward_derivatives: " << forward_derivatives_order
-               << " }";
-        }
-    };
-
-    struct ConnectionInfo : public common::str::IString
-    {
-        utils::DataType type;
-        size_t size;
-
-        utils::RingStorage *source_storage;
-        utils::RingStorage *target_storage;
-        uint32_t source_index;
-        uint32_t target_index;
-
-        bool forward_derivatives = false;
-        int forward_derivatives_order = 0;
-
-        virtual void print(std::ostream &os) const
-        {
-            os << "ConnectionInfo { "
-               << "type: " << type
-               << ", size: " << size
-               << ", source_storage: " << source_storage
-               << ", target_storage: " << target_storage
-               << ", source_index: " << source_index
-               << ", target_index: " << target_index
-               << ", forward_derivatives: " << forward_derivatives_order
-               << " }";
-        }
-    };
 
     class FmuModel final : public Invocable
     {

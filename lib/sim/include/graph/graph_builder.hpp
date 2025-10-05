@@ -7,7 +7,7 @@
 #include "analysis_graph.hpp"
 #include "data_recorder.hpp"
 
-#include "async_node.hpp"
+#include "model_async.hpp"
 #include "model_fmu.hpp"
 #include "graph.hpp"
 

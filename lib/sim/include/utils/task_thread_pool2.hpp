@@ -20,7 +20,7 @@
 
 #include "common_log.hpp"
 
-#include "async_node.hpp"
+#include "model_async.hpp"
 
 namespace ssp4cpp::sim::utils
 {
