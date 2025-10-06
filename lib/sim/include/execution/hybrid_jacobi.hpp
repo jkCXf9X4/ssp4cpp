@@ -39,7 +39,7 @@ namespace ssp4cpp::sim::graph
         }
 
         // hot path
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
         }
     };

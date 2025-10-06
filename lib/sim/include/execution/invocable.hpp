@@ -69,7 +69,7 @@ namespace ssp4cpp::sim::graph
         // SharedState* shared_state = 0;
 
         virtual void init() = 0;
-        virtual uint64_t invoke(StepData data) = 0;
+        virtual uint64_t invoke(StepData data, const bool only_feedthrough = false) = 0;
         // virtual uint64_t invoke_async(StepData data) = 0;
 
         virtual void print(std::ostream &os) const

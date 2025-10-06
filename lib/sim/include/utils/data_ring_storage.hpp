@@ -58,6 +58,7 @@ namespace ssp4cpp::sim::utils
         {
             return data->add(name, type, max_interpolation_order);
         }
+
         void allocate()
         {
             data->allocate();
@@ -68,6 +69,42 @@ namespace ssp4cpp::sim::utils
             auto area = push();
             data->set_time(area, time);
             return area;
+        }
+
+        int get_or_push(uint64_t time)
+        {
+            auto area = get_area(time);
+            if (area != -1)
+            {
+                return area;
+            }
+            else
+            {
+                auto area = push();
+                data->set_time(area, time);
+                return area;
+            }
+        }
+
+        int64_t get_area(uint64_t time)
+        {
+            IF_LOG({
+                log.ext_trace("[{}] init", __func__);
+            });
+
+            for (std::size_t i = 0; i < size; ++i)
+            {
+                int pos = get_pos_rev(i);
+                if (data->timestamps[pos] == time)
+                {
+                    IF_LOG({
+                        log.ext_trace("[{}] found valid area, {}", __func__, pos);
+                    });
+
+                    return pos;
+                }
+            }
+            return -1;
         }
 
         /** Retrieve the most recent element with timestamp before @p time. */

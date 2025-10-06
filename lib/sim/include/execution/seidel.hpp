@@ -111,7 +111,7 @@ namespace ssp4cpp::sim::graph
          * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
          * [hot path]
          */
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());
@@ -178,7 +178,7 @@ namespace ssp4cpp::sim::graph
          * Traverse the connection graph and invoke nodes when all parents have been invoked for this timestep.
          * [hot path]
          */
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.ext_trace("[{}] step data: {}", __func__, step_data.to_string());

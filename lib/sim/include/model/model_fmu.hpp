@@ -106,10 +106,8 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] FmuModel init completed", __func__);
         }
 
-
-
         // hot path
-        void pre(uint64_t model_start_time, uint64_t valid_input_time)
+        inline void pre(uint64_t model_start_time, uint64_t valid_input_time)
         {
             IF_LOG({
                 log.ext_trace("[{}] Init", __func__);
@@ -135,10 +133,12 @@ namespace ssp4cpp::sim::graph
             });
         }
 
-
         // hot path
-        void post(uint64_t time)
+        inline void post(uint64_t time)
         {
+            // save the time to one ns befor endtime
+            // this to enable direct feedthrough to operate on the start time and not overwrite values
+            time -= 1;
             IF_LOG({
                 log.ext_trace("[{}] Init {}", __func__, time);
             });
@@ -151,18 +151,17 @@ namespace ssp4cpp::sim::graph
             {
                 auto model_timer = common::time::Timer();
                 ConnectorInfo::fetch_output_derivatives(outputs, area);
-                 this->walltime_ns += model_timer.stop();
+                this->walltime_ns += model_timer.stop();
             }
             output_area->flag_new_data(area);
-            recorder->update();
             IF_LOG({
                 log.debug("[{}] Output area after post: {}", __func__, output_area->data->export_area(area));
             });
         }
 
-        // hot path
-        uint64_t invoke(StepData step_data) override final
+        inline uint64_t step(StepData step_data)
         {
+
             IF_LOG({
                 log.debug("[{}] Init {}, stepdata: {}", __func__, name, step_data.to_string());
             });
@@ -191,6 +190,32 @@ namespace ssp4cpp::sim::graph
             return delayed_time;
         }
 
+        inline uint64_t direct_feedthrough(StepData step_data)
+        {
+            auto start = step_data.start_time;
+            auto target_area = input_area->get_or_push(start);
 
+            ConnectionInfo::retrieve_model_inputs(connections, target_area, start);
+
+            ConnectorInfo::write_data_to_model(inputs, target_area);
+
+            auto area = output_area->get_or_push(start);
+
+            ConnectorInfo::read_values_from_model(outputs, area);
+            return start;
+        }
+
+        // hot path
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
+        {
+            if (only_feedthrough)
+            {
+                return this->direct_feedthrough(step_data);
+            }
+            else
+            {
+                return step(step_data);
+            }
+        }
     };
 }

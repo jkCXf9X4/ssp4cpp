@@ -36,17 +36,8 @@ namespace ssp4cpp::sim::graph
         {
         }
 
-        // static void run(IModel &model, StepData &step)
-        // {
-        //     model.pre(step.start_time ,data.valid_input_time);
-
-        //     auto end_t = model.step(step.end_time);
-
-        //     model.post(end_t);
-        // }
-
         // hot path
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
@@ -81,7 +72,7 @@ namespace ssp4cpp::sim::graph
         }
 
         // hot path
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
@@ -117,7 +108,7 @@ namespace ssp4cpp::sim::graph
         }
 
         // hot path
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
@@ -151,7 +142,7 @@ namespace ssp4cpp::sim::graph
         }
 
         // hot path
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
@@ -184,11 +175,10 @@ namespace ssp4cpp::sim::graph
                     }
                 }
             }
-
+            
             IF_LOG({
                 log.info("[{}] All threads completed", __func__);
             });
-
             return step_data.end_time;
         }
     };

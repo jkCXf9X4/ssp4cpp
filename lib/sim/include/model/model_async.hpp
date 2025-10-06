@@ -149,7 +149,7 @@ namespace ssp4cpp::sim::graph
         }
 
         // hot path
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.ext_trace("[{}] Invoking, model: {} stepdata: {}", __func__, this->name, step_data.to_string());

@@ -70,7 +70,7 @@ namespace ssp4cpp::sim::graph
         }
 
         // hot path
-        uint64_t invoke(StepData step_data) override final
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
             IF_LOG({
                 log.trace("[{}] Invoking Graph, full step: {}", __func__, step_data.to_string());
