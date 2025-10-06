@@ -27,7 +27,7 @@ namespace ssp4cpp::sim::graph
     {
     public:
         common::Logger log = common::Logger("ConnectorInfo", common::LogLevel::info);
-        static inline common::Logger s_log = common::Logger("ConnectorInfo_s", common::LogLevel::debug);
+        static inline common::Logger s_log = common::Logger("ConnectorInfo_s", common::LogLevel::info);
 
         utils::DataType type;
         size_t size;

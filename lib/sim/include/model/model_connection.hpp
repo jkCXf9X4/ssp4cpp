@@ -25,7 +25,7 @@ namespace ssp4cpp::sim::graph
     struct ConnectionInfo : public common::str::IString
     {
         common::Logger log = common::Logger("ConnectionInfo", common::LogLevel::info);
-        static inline common::Logger s_log = common::Logger("ConnectionInfo", common::LogLevel::debug);
+        static inline common::Logger s_log = common::Logger("ConnectionInfo", common::LogLevel::info);
 
         utils::DataType type;
         size_t size;
@@ -102,7 +102,7 @@ namespace ssp4cpp::sim::graph
                 }
                 else
                 {
-                    if (valid_input_time != 0)
+                    if (valid_input_time > 1)
                     {
                         s_log.warning("[{}] No valid data for t {}, connection", __func__, valid_input_time, connection.to_string());
                     }

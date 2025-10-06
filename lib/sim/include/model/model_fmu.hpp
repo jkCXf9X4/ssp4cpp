@@ -32,7 +32,7 @@ namespace ssp4cpp::sim::graph
         uint64_t _end_time = 0;
 
     public:
-        common::Logger log = common::Logger("FmuModel", common::LogLevel::trace);
+        common::Logger log = common::Logger("FmuModel", common::LogLevel::info);
 
         handler::FmuInfo *fmu;
 
@@ -226,6 +226,7 @@ namespace ssp4cpp::sim::graph
                 // The direct feedthru loop will be stored in start +1ns
                 // valid_input_time need to be increased by one to take this into account
                 // work but is not allowed according to standard
+                // causes a hard time for the solvers leading to massive walltime increase 10x
                 return this->direct_feedthrough(step_data.start_time + 1);
             }
             else
