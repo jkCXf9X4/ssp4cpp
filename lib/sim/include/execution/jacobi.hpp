@@ -22,9 +22,11 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("JacobiSerial", common::LogLevel::info);
 
+        const bool feedthrough = utils::Config::getOr<bool>("simulation.jacobi.feedthrough", false);
+
         JacobiSerial(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
-            log.info("[{}] ", __func__);
+            log.info("[{}] Feedthrough {}", __func__, feedthrough);
         }
 
         virtual void print(std::ostream &os) const
@@ -36,19 +38,41 @@ namespace ssp4cpp::sim::graph
         {
         }
 
-        // hot path
-        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
+        inline void direct_feedthrough(StepData step_data)
         {
             IF_LOG({
                 log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
             });
+            
+            for (int i = 0; i < 4; i++)
+            {
+                for (auto &model : this->nodes)
+                {
+                    model->invoke(step_data, true);
+                }
+            }
+        }
 
+        // hot path
+        uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
+        {
             auto step = StepData(step_data.start_time, step_data.end_time, step_data.timestep, step_data.start_time);
+
+            IF_LOG({
+                log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
+            });
+
+            if (feedthrough)
+            {
+                direct_feedthrough(step);
+            }
+
 
             for (auto &model : this->nodes)
             {
                 model->invoke(step);
             }
+            
 
             return step_data.end_time;
         }
@@ -175,7 +199,7 @@ namespace ssp4cpp::sim::graph
                     }
                 }
             }
-            
+
             IF_LOG({
                 log.info("[{}] All threads completed", __func__);
             });

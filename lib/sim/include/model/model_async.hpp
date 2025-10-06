@@ -155,7 +155,7 @@ namespace ssp4cpp::sim::graph
                 log.ext_trace("[{}] Invoking, model: {} stepdata: {}", __func__, this->name, step_data.to_string());
             });
 
-            return invocable_obj->invoke(step_data);
+            return invocable_obj->invoke(step_data, only_feedthrough);
         }
 
         // hot path

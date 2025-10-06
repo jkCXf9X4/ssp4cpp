@@ -13,6 +13,7 @@
         "jacobi":
         {
             "parallel": false,
+            "feedthrough" : true,
             "method" : 1
         },
         "seidel":

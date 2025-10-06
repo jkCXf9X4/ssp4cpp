@@ -138,7 +138,7 @@ namespace ssp4cpp::sim::graph
         {
             // save the time to one ns befor endtime
             // this to enable direct feedthrough to operate on the start time and not overwrite values
-            time -= 1;
+            // time -= 1;
             IF_LOG({
                 log.ext_trace("[{}] Init {}", __func__, time);
             });
@@ -154,6 +154,7 @@ namespace ssp4cpp::sim::graph
                 this->walltime_ns += model_timer.stop();
             }
             output_area->flag_new_data(area);
+            
             IF_LOG({
                 log.debug("[{}] Output area after post: {}", __func__, output_area->data->export_area(area));
             });
@@ -190,9 +191,14 @@ namespace ssp4cpp::sim::graph
             return delayed_time;
         }
 
+        // Not optimized at all... need to only propagate the direct feedthru signals
         inline uint64_t direct_feedthrough(StepData step_data)
         {
             auto start = step_data.start_time;
+            IF_LOG({
+            log.ext_trace("[{}] Init start_time {}", __func__, start);
+            });
+
             auto target_area = input_area->get_or_push(start);
 
             ConnectionInfo::retrieve_model_inputs(connections, target_area, start);
