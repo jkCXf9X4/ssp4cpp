@@ -82,7 +82,7 @@ namespace ssp4cpp::sim::graph
                 auto s = StepData(t, t + step_data.timestep, step_data.timestep);
 
                 IF_LOG({
-                    log.ext_trace("[{}] Graph executing step: {}", __func__, s.to_string());
+                    log.debug("[{}] Graph executing step: {}", __func__, s.to_string());
                 });
                 
                 executor->invoke(s);

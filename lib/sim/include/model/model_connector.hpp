@@ -27,7 +27,7 @@ namespace ssp4cpp::sim::graph
     {
     public:
         common::Logger log = common::Logger("ConnectorInfo", common::LogLevel::info);
-        static inline common::Logger s_log = common::Logger("ConnectorInfo_s", common::LogLevel::info);
+        static inline common::Logger s_log = common::Logger("ConnectorInfo_s", common::LogLevel::debug);
 
         utils::DataType type;
         size_t size;
@@ -103,19 +103,19 @@ namespace ssp4cpp::sim::graph
             }
             input_area->flag_new_data(area);
 
-            s_log.debug("[{}] Input area after initialization: {}", __func__, input_area->data->export_area(area));
+            s_log.ext_trace("[{}] Input area after initialization: {}", __func__, input_area->data->export_area(area));
         }
 
 
-        static inline void write_data_to_model(std::map<std::string, ConnectorInfo> &inputs, int target_area)
+        static inline void write_data_to_model(std::map<std::string, ConnectorInfo> &inputs, ssp4cpp::sim::utils::RingStorage *storage, int area)
         {
             IF_LOG({
-                s_log.trace("[{}] Write data to model", __func__);
+                s_log.debug("[{}] Write data to model, time: {}", __func__, storage->data->timestamps[area]);
             });
 
             for (auto &[_, input] : inputs)
             {
-                auto input_item = input.storage->get_item(target_area, input.index);
+                auto input_item = storage->get_item(area, input.index);
 
                 IF_LOG({
                     auto data_type_str = fmi2::ext::enums::data_type_to_string(input.type, input_item);
@@ -126,23 +126,28 @@ namespace ssp4cpp::sim::graph
             }
         }
 
-        static inline void read_values_from_model(std::map<std::string, ConnectorInfo> &outputs, int area)
+        static inline void read_values_from_model(std::map<std::string, ConnectorInfo> &outputs, ssp4cpp::sim::utils::RingStorage *storage, int area)
         {
             IF_LOG({
-                s_log.trace("[{}] Init, area {}", __func__, area);
+                s_log.debug("[{}] Init, area {}, time {}", __func__, area, storage->data->timestamps[area]);
             });
 
             for (auto &[_, output] : outputs)
             {
-                auto item = output.storage->get_item(area, output.index);
+                auto item = storage->get_item(area, output.index);
                 IF_LOG({
                     s_log.ext_trace("[{}] Copying ref {} ({}) to index {} ", __func__, output.value_ref, output.type.to_string(), output.index, (int64_t)item);
                 });
 
                 utils::read_from_model_(output.type, *output.fmu->model, output.value_ref, (void *)item);
+
+                IF_LOG({
+                    auto data_type_str = fmi2::ext::enums::data_type_to_string(output.type, item);
+                    s_log.debug("[{}] Copying output from model. {}, data: {}", __func__, output.to_string(), data_type_str);
+                });
             }
             IF_LOG({
-                s_log.trace("[{}] Completed copy from model", __func__);
+                s_log.ext_trace("[{}] Completed copy from model", __func__);
             });
         }
 
@@ -150,10 +155,9 @@ namespace ssp4cpp::sim::graph
         static inline void apply_input_derivatives(std::map<std::string, ConnectorInfo> &inputs, std::size_t area)
         {
             IF_LOG({
-                log.trace("[{}] Init area {} ", __func__, area);
+                s_log.trace("[{}] Init area {} ", __func__, area);
             });
 
-            
             for (auto &[_, connector] : inputs)
             {
                 if (!connector.forward_derivatives)
@@ -190,7 +194,6 @@ namespace ssp4cpp::sim::graph
                 s_log.trace("[{}] Init area {} ", __func__, area);
             });
 
-        
             for (auto &[_, connector] : outputs)
             {
                 // dont run at time 0.0
@@ -212,7 +215,7 @@ namespace ssp4cpp::sim::graph
                         continue;
                     }
                     IF_LOG({
-                        s_log.trace("[{}] get_derivative for {} ", __func__, connector.name);
+                        s_log.ext_trace("[{}] get_derivative for {} ", __func__, connector.name);
                     });
 
                     double value = 0.0;

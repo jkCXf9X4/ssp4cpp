@@ -62,7 +62,7 @@ namespace ssp4cpp::sim::graph
                 log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
             });
 
-            if (feedthrough)
+            if (step_data.start_time != 0 && feedthrough)
             {
                 direct_feedthrough(step);
             }

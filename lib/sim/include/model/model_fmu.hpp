@@ -32,7 +32,7 @@ namespace ssp4cpp::sim::graph
         uint64_t _end_time = 0;
 
     public:
-        common::Logger log = common::Logger("FmuModel", common::LogLevel::info);
+        common::Logger log = common::Logger("FmuModel", common::LogLevel::trace);
 
         handler::FmuInfo *fmu;
 
@@ -77,7 +77,7 @@ namespace ssp4cpp::sim::graph
             double tolerance = utils::Config::get<double>("simulation.tolerance");
 
             log.debug("[{}] setup_experiment: {} ", __func__, name);
-            if (!fmu->model->setup_experiment(start_time, end_time, tolerance))
+            if (!fmu->model->setup_experiment(common::time::s_to_ns(start_time), common::time::s_to_ns(end_time), tolerance))
                 log.error("[{}] setup_experiment failed ", __func__);
 
             log.debug("[{}] enter_initialization_mode: {} ", __func__, name);
@@ -110,7 +110,7 @@ namespace ssp4cpp::sim::graph
         inline void pre(uint64_t model_start_time, uint64_t valid_input_time)
         {
             IF_LOG({
-                log.ext_trace("[{}] Init", __func__);
+                log.trace("[{}] Init. model_start_time {}, valid_input_time {}", __func__, model_start_time, valid_input_time);
             });
 
             auto target_area = input_area->push(model_start_time);
@@ -119,7 +119,7 @@ namespace ssp4cpp::sim::graph
 
             input_area->flag_new_data(target_area);
 
-            ConnectorInfo::write_data_to_model(inputs, target_area);
+            ConnectorInfo::write_data_to_model(inputs, input_area.get(), target_area);
 
             if (forward_derivatives)
             {
@@ -129,23 +129,20 @@ namespace ssp4cpp::sim::graph
             }
 
             IF_LOG({
-                log.debug("[{}] Input area after pre: {}", __func__, input_area->data->export_area(target_area));
+                log.ext_trace("[{}] Input area after pre: {}", __func__, input_area->data->export_area(target_area));
             });
         }
 
         // hot path
         inline void post(uint64_t time)
         {
-            // save the time to one ns befor endtime
-            // this to enable direct feedthrough to operate on the start time and not overwrite values
-            // time -= 1;
             IF_LOG({
-                log.ext_trace("[{}] Init {}", __func__, time);
+                log.trace("[{}] Store results, timestamp: {}", __func__, time);
             });
 
             auto area = output_area->push(time);
 
-            ConnectorInfo::read_values_from_model(outputs, area);
+            ConnectorInfo::read_values_from_model(outputs, output_area.get(), area);
 
             if (forward_derivatives && _end_time != 0)
             {
@@ -154,9 +151,9 @@ namespace ssp4cpp::sim::graph
                 this->walltime_ns += model_timer.stop();
             }
             output_area->flag_new_data(area);
-            
+
             IF_LOG({
-                log.debug("[{}] Output area after post: {}", __func__, output_area->data->export_area(area));
+                log.ext_trace("[{}] Output area after post: {}", __func__, output_area->data->export_area(area));
             });
         }
 
@@ -179,6 +176,9 @@ namespace ssp4cpp::sim::graph
             pre(_start_time, step_data.valid_input_time);
 
             auto model_timer = common::time::Timer();
+            IF_LOG({
+                log.debug("[{}] Step until {}", __func__, _end_time);
+            });
             _end_time = fmu->model->step_until(_end_time);
             this->walltime_ns += model_timer.stop();
 
@@ -192,22 +192,29 @@ namespace ssp4cpp::sim::graph
         }
 
         // Not optimized at all... need to only propagate the direct feedthru signals
-        inline uint64_t direct_feedthrough(StepData step_data)
+        // This is now allowed...
+        // there need to be a step between the set and get....
+        inline uint64_t direct_feedthrough(uint64_t start)
         {
-            auto start = step_data.start_time;
-            IF_LOG({
-            log.ext_trace("[{}] Init start_time {}", __func__, start);
-            });
-
             auto target_area = input_area->get_or_push(start);
+
+            IF_LOG({
+                log.info("[{}] Propagating at start_time {}, input_area {} timestamp {}", __func__, start,target_area, input_area->data->timestamps[target_area]);
+            });
 
             ConnectionInfo::retrieve_model_inputs(connections, target_area, start);
 
-            ConnectorInfo::write_data_to_model(inputs, target_area);
+            ConnectorInfo::write_data_to_model(inputs, input_area.get(), target_area);
+
+            // _end_time = fmu->model->step();
 
             auto area = output_area->get_or_push(start);
 
-            ConnectorInfo::read_values_from_model(outputs, area);
+            IF_LOG({
+                log.info("[{}] Propagating at start_time {}, output area {} timestamp {}", __func__, start, area, output_area->data->timestamps[area]);
+            });
+
+            ConnectorInfo::read_values_from_model(outputs, output_area.get(), area);
             return start;
         }
 
@@ -216,10 +223,14 @@ namespace ssp4cpp::sim::graph
         {
             if (only_feedthrough)
             {
-                return this->direct_feedthrough(step_data);
+                // The direct feedthru loop will be stored in start +1ns
+                // valid_input_time need to be increased by one to take this into account
+                // work but is not allowed according to standard
+                return this->direct_feedthrough(step_data.start_time + 1);
             }
             else
             {
+                step_data.valid_input_time += 1;
                 return step(step_data);
             }
         }

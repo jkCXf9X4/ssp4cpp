@@ -204,20 +204,32 @@ namespace ssp4cpp::sim::handler
             return success;
         }
 
-        bool setup_experiment(double start_time, double stop_time, double tolerance)
+        bool setup_experiment(uint64_t start_time, uint64_t stop_time, double tolerance)
         {
             if (!instantiated_)
             {
                 throw std::logic_error("setup_experiment called before instantiate");
             }
-            log.debug("[{}] setup_experiment start:{} stop:{} tolerance:{}", __func__, start_time, stop_time, tolerance);
+
+            // if start is close to 0, set it to zero
+            if (start_time < 1000)
+            {
+                start_time = 0;
+            }
             
             auto stop_defined = stop_time > start_time ? fmi2True : fmi2False;
             auto tolerance_defined = tolerance > 0.0 ? fmi2True : fmi2False;
-            last_status_ = fmi2_setupExperiment(handle, tolerance_defined, tolerance, start_time, stop_defined, stop_time);
+
+            double start = common::time::ns_to_s (start_time);
+            double stop = common::time::ns_to_s (stop_time);
+
+            log.debug("[{}] setup_experiment start:{} stop:{} tolerance:{}", __func__, start, stop, tolerance);
+
+            last_status_ = fmi2_setupExperiment(handle, tolerance_defined, tolerance, start, stop_defined, stop);
             if (status_ok(last_status_))
             {
-                current_time_ = common::time::s_to_ns(start_time);
+                current_time_ = start_time;
+                log.info("[{}] start:{}", __func__, current_time_);
             }
             return status_ok(last_status_);
         }

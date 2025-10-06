@@ -102,9 +102,9 @@ namespace ssp4cpp::sim
 
             log.info("[{}] Starting simulation", __func__);
 
-            uint64_t start_time = common::time::s_to_ns(utils::Config::get<float>("simulation.start_time"));
-            uint64_t end_time = common::time::s_to_ns(utils::Config::get<float>("simulation.stop_time"));
-            uint64_t timestep = common::time::s_to_ns(utils::Config::get<float>("simulation.timestep"));
+            uint64_t start_time = common::time::s_to_ns(utils::Config::get<double>("simulation.start_time"));
+            uint64_t end_time = common::time::s_to_ns(utils::Config::get<double>("simulation.stop_time"));
+            uint64_t timestep = common::time::s_to_ns(utils::Config::get<double>("simulation.timestep"));
 
             auto sim_timer = common::time::Timer();
             sim_graph->invoke(sim::graph::StepData(start_time, end_time, timestep));

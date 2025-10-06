@@ -30,6 +30,13 @@ namespace ssp4cpp::sim::utils
         uint64_t timestamp = 0;
     };
 
+
+/*
+* Solution build upon that both input and outputs are stored in the same row, if not then the output file will be incomplete....
+
+* new solution is needed later....
+*/
+
     class DataRecorder
     {
     public:
@@ -202,7 +209,6 @@ namespace ssp4cpp::sim::utils
 
         void print_row(uint16_t row)
         {
-            // @todo add some logic to only print in certain intervals
             IF_LOG({
                 log.trace("[{}] Row: {}", __func__, row);
             });

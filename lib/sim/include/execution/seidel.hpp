@@ -217,10 +217,10 @@ namespace ssp4cpp::sim::graph
                     msg = std::move(shared_state->inbox.front());
                     shared_state->inbox.pop();
                 }
-                auto finished_node = seidel_nodes[msg.worker_id];
+                auto &finished_node = seidel_nodes[msg.worker_id];
 
                 IF_LOG({
-                    log.trace("[{}] Node finished: {}", __func__, finished_node->name);
+                    log.trace("[{}] Node finished: {}", __func__, finished_node.node->name);
                 });
 
                 // enqueue children whose all parents are invoked
@@ -232,7 +232,7 @@ namespace ssp4cpp::sim::graph
                     if (child.nr_parents_counter == 0)
                     {
                         IF_LOG({
-                            log.debug("[{}] Node ready, invoking: {}", __func__, node->name);
+                            log.debug("[{}] Node ready, invoking: {}", __func__, child.node->name);
                         });
 
                         child.node->async_invoke(step_data);
