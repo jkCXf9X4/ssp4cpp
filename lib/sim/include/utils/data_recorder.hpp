@@ -35,6 +35,8 @@ namespace ssp4cpp::sim::utils
 * Solution build upon that both input and outputs are stored in the same row, if not then the output file will be incomplete....
 
 * new solution is needed later....
+
+* @todo: Log everything that is between +-2 steps from the print time to ensure that no data is lost but still avoiding to log everything
 */
 
     class DataRecorder
