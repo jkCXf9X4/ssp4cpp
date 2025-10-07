@@ -40,7 +40,7 @@ namespace ssp4cpp::common
         switch (level)
         {
         case LogLevel::ext_trace:
-            return "ext trace";
+            return "ext_trace";
         case LogLevel::trace:
             return "trace";
         case LogLevel::debug:
@@ -60,61 +60,61 @@ namespace ssp4cpp::common
         }
     }
 
-            // https://i.sstatic.net/9UVnC.png
-        static constexpr std::string_view log_level_to_color(LogLevel level)
+    // https://i.sstatic.net/9UVnC.png
+    static constexpr std::string_view log_level_to_color(LogLevel level)
+    {
+        switch (level)
         {
-            switch (level)
-            {
-            case LogLevel::ext_trace:
-                return "\033[90m"; // Bright black
-            case LogLevel::trace:
-                return "\033[36m"; // Cyan
-            case LogLevel::debug:
-                return "\033[94m"; // Blue
-            case LogLevel::info:
-                return "\033[97m"; // White
-            case LogLevel::success:
-                return "\033[32m"; // Green
-            case LogLevel::warning:
-                return "\033[33m"; // Yellow
-            case LogLevel::error:
-                return "\033[31m"; // Red
-            case LogLevel::fatal:
-                return "\033[95m"; // Bright magenta
-            default:
-                return "\033[0m";
-            }
-        }
-
-        static constexpr std::string_view color_reset()
-        {
+        case LogLevel::ext_trace:
+            return "\033[90m"; // Bright black
+        case LogLevel::trace:
+            return "\033[36m"; // Cyan
+        case LogLevel::debug:
+            return "\033[94m"; // Blue
+        case LogLevel::info:
+            return "\033[97m"; // White
+        case LogLevel::success:
+            return "\033[32m"; // Green
+        case LogLevel::warning:
+            return "\033[33m"; // Yellow
+        case LogLevel::error:
+            return "\033[31m"; // Red
+        case LogLevel::fatal:
+            return "\033[95m"; // Bright magenta
+        default:
             return "\033[0m";
         }
+    }
 
-        /**
-         * @brief Parse a string representation of a log level.
-         */
-        static LogLevel str_to_log_level(std::string string)
-        {
-            if (string == "ext_trace")
-                return LogLevel::ext_trace;
-            else if (string == "trace")
-                return LogLevel::trace;
-            else if (string == "debug")
-                return LogLevel::debug;
-            else if (string == "info")
-                return LogLevel::info;
-            else if (string == "success")
-                return LogLevel::success;
-            else if (string == "warning")
-                return LogLevel::warning;
-            else if (string == "error")
-                return LogLevel::error;
-            else if (string == "fatal")
-                return LogLevel::fatal;
-            else
-                return LogLevel::info;
-        }
+    static constexpr std::string_view color_reset()
+    {
+        return "\033[0m";
+    }
+
+    /**
+     * @brief Parse a string representation of a log level.
+     */
+    static LogLevel str_to_log_level(std::string string)
+    {
+        if (string == "ext_trace")
+            return LogLevel::ext_trace;
+        else if (string == "trace")
+            return LogLevel::trace;
+        else if (string == "debug")
+            return LogLevel::debug;
+        else if (string == "info")
+            return LogLevel::info;
+        else if (string == "success")
+            return LogLevel::success;
+        else if (string == "warning")
+            return LogLevel::warning;
+        else if (string == "error")
+            return LogLevel::error;
+        else if (string == "fatal")
+            return LogLevel::fatal;
+        else
+            return LogLevel::info;
+    }
 
     /**
      * @brief Simple logger implementation used throughout the library.
@@ -125,6 +125,8 @@ namespace ssp4cpp::common
      */
     class Logger
     {
+        // using LogLevel::debug as debug;
+
     public:
         static inline bool file_sink_enabled = false;
         static inline std::ofstream file_sink_stream;
@@ -257,11 +259,13 @@ namespace ssp4cpp::common
             {
                 Logger::write_to_console<Level>(name, str);
             }
-            Logger::write_to_file(name, Level, str);
+            if (Level > LogLevel::ext_trace)
+            {
+                Logger::write_to_file(name, Level, str);
+            }
         }
 
     private:
-
         template <LogLevel Level>
         static void write_to_console(const std::string name, const std::string &message)
         {
@@ -293,37 +297,61 @@ namespace ssp4cpp::common
             const auto time = std::chrono::system_clock::now();
             const auto str_time = std::format("{}", time);
 
-            Logger::file_sink_stream << build_logfmt_entry(str_time, logger_name, level, message) << '\n';
+            Logger::file_sink_stream << '{';
+            Logger::file_sink_stream << "\"ts\":\"" << escape_json_string(str_time) << "\", ";
+            Logger::file_sink_stream << "\"level\":\"" << escape_json_string(log_level_to_str(level)) << "\", ";
+            Logger::file_sink_stream << "\"logger\":\"" << escape_json_string(logger_name) << "\", ";
+            Logger::file_sink_stream << "\"msg\":\"" << escape_json_string(message) << "\"";
+            Logger::file_sink_stream << "}\n";
+
             Logger::file_sink_stream.flush();
         }
 
-        static std::string build_logfmt_entry(const std::string &time,
-                                              const std::string &logger_name,
-                                              LogLevel level,
-                                              const std::string &message)
-        {
-            std::ostringstream entry;
-            entry << "ts=" << time
-                  << " level=\"" << escape_logfmt_component(log_level_to_str(level)) << "\""
-                  << " logger=\"" << escape_logfmt_component(logger_name) << "\""
-                  << " msg=\"" << escape_logfmt_component(message) << "\"";
-
-            return entry.str();
-        }
-
-        static std::string escape_logfmt_component(std::string_view component)
+        static std::string escape_json_string(std::string_view component)
         {
             std::string escaped;
             escaped.reserve(component.size());
 
             for (const char c : component)
             {
-                if (c == '"' || c == '\\')
+                switch (c)
                 {
-                    escaped.push_back('\\');
+                case '"':
+                    escaped.append("\\\"");
+                    break;
+                case '\\':
+                    escaped.append("\\\\");
+                    break;
+                case '\b':
+                    escaped.append("\\b");
+                    break;
+                case '\f':
+                    escaped.append("\\f");
+                    break;
+                case '\n':
+                    escaped.append("\\n");
+                    break;
+                case '\r':
+                    escaped.append("\\r");
+                    break;
+                case '\t':
+                    escaped.append("\\t");
+                    break;
+                default:
+                    if (static_cast<unsigned char>(c) < 0x20)
+                    {
+                        const unsigned char uc = static_cast<unsigned char>(c);
+                        constexpr char hex_digits[] = "0123456789ABCDEF";
+                        escaped.append("\\u00");
+                        escaped.push_back(hex_digits[(uc >> 4) & 0x0F]);
+                        escaped.push_back(hex_digits[uc & 0x0F]);
+                    }
+                    else
+                    {
+                        escaped.push_back(c);
+                    }
+                    break;
                 }
-
-                escaped.push_back(c);
             }
 
             return escaped;
