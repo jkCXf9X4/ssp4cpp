@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <kissnet.hpp>
+
 #include <chrono>
 #include <ctime>
 #include <format>
@@ -132,6 +134,9 @@ namespace ssp4cpp::common
         static inline std::ofstream file_sink_stream;
         static inline std::string file_sink_path;
 
+        static inline bool socket_sink_enabled = false;
+        static inline std::unique_ptr<kissnet::tcp_socket> socket;
+
         static inline std::mutex print_mutex;
 
         std::string name;
@@ -151,8 +156,6 @@ namespace ssp4cpp::common
 
         static void enable_file_sink(const std::string &path, bool append = true)
         {
-            std::unique_lock<std::mutex> lock(Logger::print_mutex);
-
             std::ios_base::openmode mode = std::ios::out;
             mode |= append ? std::ios::app : std::ios::trunc;
 
@@ -176,8 +179,6 @@ namespace ssp4cpp::common
 
         static void disable_file_sink()
         {
-            std::unique_lock<std::mutex> lock(Logger::print_mutex);
-
             Logger::file_sink_enabled = false;
             Logger::file_sink_path.clear();
 
@@ -190,8 +191,27 @@ namespace ssp4cpp::common
 
         static bool is_file_sink_enabled()
         {
-            std::unique_lock<std::mutex> lock(Logger::print_mutex);
             return Logger::file_sink_enabled && Logger::file_sink_stream.is_open();
+        }
+
+        static void enable_socket_sink(const std::string &adress)
+        {
+            Logger::socket = std::make_unique<kissnet::tcp_socket>(kissnet::endpoint(adress));
+            if (Logger::socket->connect() == kissnet::socket_status::valid)
+            {
+                Logger::socket_sink_enabled = true;
+                auto payload = make_cutelog_payload("!!cutelog!!format=json");
+                Logger::socket->send((std::byte*)payload.data(), payload.size());
+            }
+            else
+            {
+                std::cout << "Failed to set up socket connection" << std::endl;
+            }
+        }
+
+        static bool is_socket_sink_enabled()
+        {
+            return Logger::socket_sink_enabled && Logger::socket != nullptr && Logger::socket->is_valid();
         }
 
         template <typename... Args>
@@ -261,7 +281,10 @@ namespace ssp4cpp::common
             }
             if (Level > LogLevel::ext_trace)
             {
-                Logger::write_to_file(name, Level, str);
+                if (Logger::is_file_sink_enabled())
+                    Logger::write_to_file(name, Level, str);
+                if (Logger::is_socket_sink_enabled())
+                    Logger::write_to_socket(name, Level, str);
             }
         }
 
@@ -294,17 +317,46 @@ namespace ssp4cpp::common
                 return;
             }
 
+            Logger::file_sink_stream << build_json_entry(logger_name, level, message);
+            Logger::file_sink_stream.flush();
+        }
+
+        static std::vector<uint8_t> make_cutelog_payload(const std::string &json)
+        {
+            uint32_t len = static_cast<uint32_t>(json.size());
+            uint32_t be = htonl(len); // convert to big-endian
+
+            std::vector<uint8_t> out(4 + json.size());
+            std::memcpy(out.data(), &be, 4);
+            std::memcpy(out.data() + 4, json.data(), json.size());
+            return out;
+        }
+
+        static void write_to_socket(const std::string &logger_name,
+                                    LogLevel level,
+                                    const std::string &message)
+        {
+            auto payload = make_cutelog_payload(build_json_entry(logger_name, level, message));
+            Logger::socket->send((std::byte*)payload.data(), payload.size());
+        }
+
+        static std::string build_json_entry(const std::string &logger_name,
+                                            LogLevel level,
+                                            const std::string &message)
+        {
+
             const auto time = std::chrono::system_clock::now();
             const auto str_time = std::format("{}", time);
 
-            Logger::file_sink_stream << '{';
-            Logger::file_sink_stream << "\"ts\":\"" << escape_json_string(str_time) << "\", ";
-            Logger::file_sink_stream << "\"level\":\"" << escape_json_string(log_level_to_str(level)) << "\", ";
-            Logger::file_sink_stream << "\"logger\":\"" << escape_json_string(logger_name) << "\", ";
-            Logger::file_sink_stream << "\"msg\":\"" << escape_json_string(message) << "\"";
-            Logger::file_sink_stream << "}\n";
+            std::ostringstream entry;
+            entry << '{';
+            entry << "\"time\":\"" << str_time << "\", ";
+            entry << "\"level\":\"" << log_level_to_str(level) << "\", ";
+            entry << "\"name\":\"" << logger_name << "\", ";
+            entry << "\"msg\":\"" << message << "\"";
+            entry << "}\n";
 
-            Logger::file_sink_stream.flush();
+            return entry.str();
         }
 
         static std::string escape_json_string(std::string_view component)

@@ -21,3 +21,6 @@ target_link_libraries(common PRIVATE libzip::zip)
 
 find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(common PRIVATE nlohmann_json::nlohmann_json)
+
+find_path(KISSNET_INCLUDE_DIRS "kissnet.hpp")
+target_include_directories(common PRIVATE ${KISSNET_INCLUDE_DIRS})

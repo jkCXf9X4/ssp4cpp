@@ -5,6 +5,7 @@
     "nlohmann-json",
     "catch2",
     "tbb",
-    "pybind11"
+    "pybind11",
+    "kissnet"
   ]
 }
