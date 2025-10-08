@@ -26,7 +26,7 @@ namespace ssp4cpp::common
     class ThreadPool
     {
     private:
-        Logger log = Logger("common::ThreadPool", LogLevel::info);
+        Logger log = Logger("ssp4sim.utils.ThreadPool", LogLevel::info);
 
         std::mutex queue_mutex;
         std::vector<std::thread> workers;

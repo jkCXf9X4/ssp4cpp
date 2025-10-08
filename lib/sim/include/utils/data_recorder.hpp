@@ -42,7 +42,7 @@ namespace ssp4cpp::sim::utils
     class DataRecorder
     {
     public:
-        common::Logger log = common::Logger("DataRecorder", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.utils.DataRecorder", common::LogLevel::info);
 
         std::ofstream file;
         std::unique_ptr<std::thread> worker;

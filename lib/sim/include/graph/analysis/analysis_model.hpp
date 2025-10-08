@@ -19,7 +19,7 @@ namespace ssp4cpp::sim::analysis::graph
         uint64_t delay = 0;
 
     public:
-        common::Logger log = common::Logger("AnalysisModel", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.graph.AnalysisModel", common::LogLevel::info);
 
         std::string fmu_name;
         handler::FmuInfo *fmu;

@@ -22,7 +22,7 @@ namespace ssp4cpp::sim::graph
     class Graph final : public Invocable
     {
     public:
-        common::Logger log = common::Logger("Graph", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.graph.Graph", common::LogLevel::info);
 
         std::map<std::string, std::unique_ptr<AsyncNode>> models;
         std::vector<AsyncNode *> nodes;

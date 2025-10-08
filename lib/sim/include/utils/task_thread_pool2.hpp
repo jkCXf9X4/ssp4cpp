@@ -36,7 +36,7 @@ namespace ssp4cpp::sim::utils
     class ThreadPool2
     {
     private:
-        common::Logger log = common::Logger("ThreadPool2", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.utils.ThreadPool2", common::LogLevel::info);
 
         std::mutex mtx;
         std::condition_variable cv;

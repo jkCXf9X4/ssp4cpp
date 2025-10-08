@@ -19,7 +19,7 @@ namespace ssp4cpp::sim::analysis::graph
         uint64_t delay = 0;
 
     public:
-        common::Logger log = common::Logger("AnalysisModelVariable", common::LogLevel::debug);
+        common::Logger log = common::Logger("ssp4sim.graph.AnalysisModelVariable", common::LogLevel::debug);
         std::string component;
         std::string variable_name;
 

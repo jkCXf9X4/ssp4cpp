@@ -28,7 +28,7 @@ namespace ssp4cpp::sim::utils
     class RingStorage : public common::str::IString
     {
 
-        common::Logger log = common::Logger("RingStorage", common::LogLevel::debug);
+        common::Logger log = common::Logger("ssp4sim.utils.RingStorage", common::LogLevel::debug);
 
     public:
         std::unique_ptr<DataStorage> data;

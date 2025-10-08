@@ -20,7 +20,7 @@ namespace ssp4cpp::sim::graph
     class JacobiSerial final : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("JacobiSerial", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.JacobiSerial", common::LogLevel::info);
 
         const bool feedthrough = utils::Config::getOr<bool>("simulation.jacobi.feedthrough", false);
 
@@ -81,7 +81,7 @@ namespace ssp4cpp::sim::graph
     class JacobiParallelFutures final : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("JacobiParallelFutures", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.JacobiParallelFutures", common::LogLevel::info);
 
         common::ThreadPool pool;
         std::vector<std::future<void>> futures;
@@ -120,7 +120,7 @@ namespace ssp4cpp::sim::graph
     class JacobiParallelTBB final : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("JacobiParallelTBB", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.JacobiParallelTBB", common::LogLevel::info);
 
         JacobiParallelTBB(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
         {
@@ -152,7 +152,7 @@ namespace ssp4cpp::sim::graph
     class JacobiParallelSpin final : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("JacobiParallelSpin", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.JacobiParallelSpin", common::LogLevel::info);
 
         utils::ThreadPool2 pool;
 

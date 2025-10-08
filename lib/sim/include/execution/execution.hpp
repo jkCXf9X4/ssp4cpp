@@ -11,7 +11,7 @@ namespace ssp4cpp::sim::graph
     class ExecutionBase : public Invocable
     {
     public:
-        common::Logger log = common::Logger("ExecutionBase", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.ExecutionBase", common::LogLevel::info);
         std::vector<AsyncNode *> nodes;
 
         std::unique_ptr<SharedState> shared_state;

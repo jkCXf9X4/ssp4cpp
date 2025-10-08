@@ -17,7 +17,8 @@ namespace ssp4cpp
 {
     Fmu::Fmu(const std::filesystem::path &file) : Archive(file, "fmi_")
     {
-        log = common::Logger("Fmu", common::LogLevel::debug);
+        log = common::Logger("ssp4cpp.fmu", common::LogLevel::debug);
+
         md = common::xml::parse_file<fmi2::md::fmi2ModelDescription>((dir / "modelDescription.xml").string(), "fmiModelDescription");
     }
 

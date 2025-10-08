@@ -28,7 +28,7 @@ namespace ssp4cpp::sim::utils
     class DataStorage : public common::str::IString
     {
     public:
-        common::Logger log = common::Logger("DataStorage", common::LogLevel::debug);
+        common::Logger log = common::Logger("ssp4sim.utils.DataStorage", common::LogLevel::debug);
 
         // all data
         std::unique_ptr<std::byte[]> data;

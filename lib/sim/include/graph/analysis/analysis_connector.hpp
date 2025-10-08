@@ -26,7 +26,7 @@ namespace ssp4cpp::sim::analysis::graph
         uint64_t delay = 0;
 
     public:
-        common::Logger log = common::Logger("AnalysisConnector", common::LogLevel::debug);
+        common::Logger log = common::Logger("ssp4sim.graph.AnalysisConnector", common::LogLevel::debug);
 
         std::string component_name;
         std::string connector_name;

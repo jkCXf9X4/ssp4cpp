@@ -20,7 +20,7 @@ namespace ssp4cpp::sim::graph
     class GraphBuilder
     {
     public:
-        static inline auto log = common::Logger("GraphBuilder", common::LogLevel::info);
+        static inline auto log = common::Logger("ssp4sim.graph.GraphBuilder", common::LogLevel::info);
 
         AnalysisGraph *analysis_graph;
         utils::DataRecorder *recorder;

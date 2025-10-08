@@ -19,7 +19,7 @@ namespace ssp4cpp::sim::analysis::graph
     class AnalysisGraph : public common::str::IString
     {
     public:
-        common::Logger log = common::Logger("AnalysisGraph", common::LogLevel::debug);
+        common::Logger log = common::Logger("ssp4sim.graph.AnalysisGraph", common::LogLevel::debug);
 
         std::map<std::string, std::unique_ptr<AnalysisModel>> models;
         std::map<std::string, std::unique_ptr<AnalysisConnector>> connectors;

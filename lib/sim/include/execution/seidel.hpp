@@ -29,7 +29,7 @@ namespace ssp4cpp::sim::graph
     class SeidelBase : public ExecutionBase
     {
     public:
-        common::Logger log = common::Logger("SeidelBase", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.SeidelBase", common::LogLevel::info);
 
         const int nr_of_nodes = 0;
         std::vector<SeidelNode> seidel_nodes;
@@ -75,7 +75,7 @@ namespace ssp4cpp::sim::graph
     class SerialSeidel final : public SeidelBase
     {
     public:
-        common::Logger log = common::Logger("Seidel", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.SerialSeidel", common::LogLevel::info);
 
         SerialSeidel(std::vector<AsyncNode *> nodes) : SeidelBase(std::move(nodes))
         {
@@ -158,7 +158,7 @@ namespace ssp4cpp::sim::graph
     class ParallelSeidel final : public SeidelBase
     {
     public:
-        common::Logger log = common::Logger("Seidel", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.execution.ParallelSeidel", common::LogLevel::info);
 
         ParallelSeidel(std::vector<AsyncNode *> nodes) : SeidelBase(std::move(nodes))
         {

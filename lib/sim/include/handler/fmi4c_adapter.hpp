@@ -54,7 +54,7 @@ namespace ssp4cpp::sim::handler
     class FmuInstance
     {
     public:
-        common::Logger log = common::Logger("FmuInstance", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.handler.FmuInstance", common::LogLevel::info);
 
         FmuInstance(const std::filesystem::path &path, std::string instance_name)
         {
@@ -144,7 +144,7 @@ namespace ssp4cpp::sim::handler
         fmi2Status last_status_ = fmi2OK;
 
     public:
-        common::Logger log = common::Logger("CoSimulationModel", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.handler.CoSimulationModel", common::LogLevel::info);
 
         explicit CoSimulationModel(FmuInstance &instance) : instance_(instance)
         {

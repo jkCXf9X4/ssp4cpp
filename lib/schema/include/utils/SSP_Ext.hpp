@@ -9,7 +9,7 @@
 
 namespace ssp4cpp::ssp::ext
 {
-    inline auto log = common::Logger("ssp.ext", common::LogLevel::info);
+    inline auto log = common::Logger("ssp4cpp.ssp.ext", common::LogLevel::info);
 
     std::map<std::string, std::string> get_resource_map(ssp4cpp::Ssp &ssp);
 

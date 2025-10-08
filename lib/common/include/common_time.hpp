@@ -35,7 +35,7 @@ namespace ssp4cpp::common::time
     public:
         using clock = std::chrono::steady_clock;
 
-        common::Logger log = common::Logger("ScopeTimer", common::LogLevel::debug);
+        common::Logger log = common::Logger("ssp4cpp.common.ScopeTimer", common::LogLevel::debug);
 
         ScopeTimer(std::string label) : label_(label), start_(clock::now()) {}
 

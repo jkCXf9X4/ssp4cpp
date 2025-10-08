@@ -18,7 +18,7 @@
 
 namespace ssp4cpp::ssp1::ext::ssv
 {
-    inline auto log = common::Logger("ssp1.ext.ssv", common::LogLevel::info);
+    inline auto log = common::Logger("ssp4cpp.ssp1.ext.ssv", common::LogLevel::info);
 
     using namespace ssp4cpp::ssp1::ssv;
     using namespace ssp4cpp::ssp1::ssm;

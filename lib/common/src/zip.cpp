@@ -26,7 +26,7 @@ namespace ssp4cpp::common::zip_ns
 
     namespace fs = std::filesystem;
 
-    Logger log = Logger("common.zip", LogLevel::info);
+    Logger log = Logger("ssp4cpp.common.zip", LogLevel::info);
 
     std::string random_generator(size_t length = 16)
     {

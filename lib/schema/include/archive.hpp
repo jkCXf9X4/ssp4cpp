@@ -15,7 +15,7 @@ namespace ssp4cpp
     class Archive : public common::str::IString
     {
     public:
-        common::Logger log = common::Logger("Archive", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4cpp.Archive", common::LogLevel::info);
         bool using_tmp_dir = false;
         std::filesystem::path original_file;
         std::filesystem::path dir;

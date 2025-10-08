@@ -24,7 +24,7 @@ namespace ssp4cpp::sim
     class Simulator
     {
     public:
-        common::Logger log = common::Logger("Simulator", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.Simulator", common::LogLevel::info);
 
         std::unique_ptr<Ssp> ssp;
         std::unique_ptr<Simulation> sim;

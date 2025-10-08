@@ -35,7 +35,7 @@ namespace ssp4cpp::sim
     class Simulation
     {
     public:
-        common::Logger log = common::Logger("Simulation", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.Simulation", common::LogLevel::info);
 
         Ssp *ssp;
 

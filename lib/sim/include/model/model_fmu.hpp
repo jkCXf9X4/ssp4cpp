@@ -32,7 +32,7 @@ namespace ssp4cpp::sim::graph
         uint64_t _end_time = 0;
 
     public:
-        common::Logger log = common::Logger("FmuModel", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.model.FmuModel", common::LogLevel::info);
 
         handler::FmuInfo *fmu;
 

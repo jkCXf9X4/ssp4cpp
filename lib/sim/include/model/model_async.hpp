@@ -48,7 +48,7 @@ namespace ssp4cpp::sim::graph
     {
 
     public:
-        common::Logger log = common::Logger("AsyncNode", common::LogLevel::info);
+        common::Logger log = common::Logger("ssp4sim.model.AsyncNode", common::LogLevel::info);
 
         std::thread worker;
         int worker_id;
