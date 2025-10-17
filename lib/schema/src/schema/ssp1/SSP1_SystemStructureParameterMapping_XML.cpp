@@ -21,7 +21,7 @@ namespace ssp4cpp::ssp1::ssm
     void from_xml(const xml_node &node, TMappingEntry &obj)
     {
         log.ext_trace("Parsing TMappingEntry");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                                , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description                       , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.source                            , "source");
@@ -40,7 +40,7 @@ namespace ssp4cpp::ssp1::ssm
     void from_xml(const xml_node &node, ParameterMapping &obj)
     {
         log.ext_trace("Parsing ParameterMapping");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.version                , "version");
         ssp4cpp::common::xml::parse_xml(node, obj.id                     , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description            , "description");

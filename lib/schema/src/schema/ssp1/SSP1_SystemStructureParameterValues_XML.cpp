@@ -21,7 +21,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, Real &obj)
     {
         log.ext_trace("Parsing Real");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
         ssp4cpp::common::xml::parse_xml(node, obj.unit   , "unit");
 
@@ -32,7 +32,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, Integer &obj)
     {
         log.ext_trace("Parsing Integer");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
 
         log.ext_trace("Completed Integer");
@@ -42,7 +42,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, Boolean &obj)
     {
         log.ext_trace("Parsing Boolean");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
 
         log.ext_trace("Completed Boolean");
@@ -52,7 +52,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, String &obj)
     {
         log.ext_trace("Parsing String");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
 
         log.ext_trace("Completed String");
@@ -62,7 +62,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, Enumeration &obj)
     {
         log.ext_trace("Parsing Enumeration");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
         ssp4cpp::common::xml::parse_xml(node, obj.name   , "name");
 
@@ -73,7 +73,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, Binary &obj)
     {
         log.ext_trace("Parsing Binary");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.value      , "value");
         ssp4cpp::common::xml::parse_xml(node, obj.mime_type  , "mime-type");
 
@@ -84,7 +84,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, TParameter &obj)
     {
         log.ext_trace("Parsing TParameter");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
@@ -103,7 +103,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, TParameters &obj)
     {
         log.ext_trace("Parsing TParameters");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.Parameters  , "ssv:Parameter");
 
         log.ext_trace("Completed TParameters");
@@ -113,7 +113,7 @@ namespace ssp4cpp::ssp1::ssv
     void from_xml(const xml_node &node, ParameterSet &obj)
     {
         log.ext_trace("Parsing ParameterSet");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.version                , "version");
         ssp4cpp::common::xml::parse_xml(node, obj.name                   , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.id                     , "id");

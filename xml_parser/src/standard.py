@@ -42,7 +42,7 @@ class Attribute(ABC_Node):
         list=False,
         namespace=None,
         xml_tag=None,
-        custom=None,
+        experimental=None, # Non std complient, will warn during parsing if these are used
     ):
         super().__init__(name)
         self.type = type
@@ -50,12 +50,12 @@ class Attribute(ABC_Node):
         self.list = list
         self.namespace = namespace
         self.xml_tag = xml_tag
-        self.custom = custom
+        self.experimental = experimental
 
         self.is_primitive = type in self.primitives
 
     def __str__(self):
-        return f"{self.name} ({self.type}, optional={self.optional}, list={self.list}, namespace={self.namespace}, xml_tag={self.xml_tag}, custom={self.custom})"
+        return f"{self.name} ({self.type}, optional={self.optional}, list={self.list}, namespace={self.namespace}, xml_tag={self.xml_tag}, experimental={self.experimental})"
 
 
 class Standard:

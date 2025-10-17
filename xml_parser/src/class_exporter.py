@@ -20,7 +20,6 @@ class NodeDeclarationExporter:
         variables = [
             self.variable_to_string(v)
             for v in self.variable_nodes
-            if not v.custom == "function"
         ]
         variables = "\n".join(variables)
         variables = indent_strings("           ", variables)
@@ -48,24 +47,9 @@ std::string {self.class_node.name}::to_string(void) const
         variables = [
             self.generate_variable_declaration(v)
             for v in self.variable_nodes
-            if not v.custom
         ]
         variables = "\n".join(variables)
         variables = indent_strings(self.indent, variables)
-
-        custom_variables = [
-            self.generate_variable_declaration(v)
-            for v in self.variable_nodes
-            if v.custom == "type"
-        ]
-        custom_variables = "\n".join(custom_variables)
-        custom_variables = indent_strings(self.indent, custom_variables)
-
-        custom_functions = [
-            v.type for v in self.variable_nodes if v.custom == "function"
-        ]
-        custom_functions = "\n".join(custom_functions)
-        custom_functions = indent_strings(self.indent, custom_functions)
 
         class_template = f"""
 class {self.class_node.name} : public IXmlNode

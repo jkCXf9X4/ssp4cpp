@@ -21,7 +21,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, Annotation &obj)
     {
         log.ext_trace("Parsing Annotation");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.type  , "type");
         ssp4cpp::common::xml::parse_xml(node, obj.any   , "any");
 
@@ -32,7 +32,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, TAnnotations &obj)
     {
         log.ext_trace("Parsing TAnnotations");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "Annotation");
 
         log.ext_trace("Completed TAnnotations");
@@ -42,7 +42,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, LinearTransformation &obj)
     {
         log.ext_trace("Parsing LinearTransformation");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.factor  , "factor");
         ssp4cpp::common::xml::parse_xml(node, obj.offset  , "offset");
 
@@ -53,7 +53,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, BooleanMapEntry &obj)
     {
         log.ext_trace("Parsing BooleanMapEntry");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
         ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
 
@@ -64,7 +64,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, BooleanMappingTransformation &obj)
     {
         log.ext_trace("Parsing BooleanMappingTransformation");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
         log.ext_trace("Completed BooleanMappingTransformation");
@@ -74,7 +74,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, IntegerMapEntry &obj)
     {
         log.ext_trace("Parsing IntegerMapEntry");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
         ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
 
@@ -85,7 +85,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, IntegerMappingTransformation &obj)
     {
         log.ext_trace("Parsing IntegerMappingTransformation");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
         log.ext_trace("Completed IntegerMappingTransformation");
@@ -95,7 +95,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, EnumerationMapEntry &obj)
     {
         log.ext_trace("Parsing EnumerationMapEntry");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
         ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
 
@@ -106,7 +106,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, EnumerationMappingTransformation &obj)
     {
         log.ext_trace("Parsing EnumerationMappingTransformation");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
         log.ext_trace("Completed EnumerationMappingTransformation");
@@ -116,7 +116,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, Item &obj)
     {
         log.ext_trace("Parsing Item");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.name   , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
 
@@ -127,7 +127,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, TEnumeration &obj)
     {
         log.ext_trace("Parsing TEnumeration");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
@@ -141,7 +141,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, TEnumerations &obj)
     {
         log.ext_trace("Parsing TEnumerations");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.Enumerations  , "ssc:TEnumeration");
 
         log.ext_trace("Completed TEnumerations");
@@ -151,7 +151,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, BaseUnit &obj)
     {
         log.ext_trace("Parsing BaseUnit");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.kg      , "kg");
         ssp4cpp::common::xml::parse_xml(node, obj.m       , "m");
         ssp4cpp::common::xml::parse_xml(node, obj.s       , "s");
@@ -170,7 +170,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, TUnit &obj)
     {
         log.ext_trace("Parsing TUnit");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
@@ -184,7 +184,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, TUnits &obj)
     {
         log.ext_trace("Parsing TUnits");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.Units  , "Unit");
 
         log.ext_trace("Completed TUnits");
@@ -194,7 +194,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, GTypeReal &obj)
     {
         log.ext_trace("Parsing GTypeReal");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.unit  , "unit");
 
         log.ext_trace("Completed GTypeReal");
@@ -204,7 +204,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, GTypeInteger &obj)
     {
         log.ext_trace("Parsing GTypeInteger");
-
+        
 
 
         log.ext_trace("Completed GTypeInteger");
@@ -214,7 +214,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, GTypeBoolean &obj)
     {
         log.ext_trace("Parsing GTypeBoolean");
-
+        
 
 
         log.ext_trace("Completed GTypeBoolean");
@@ -224,7 +224,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, GTypeString &obj)
     {
         log.ext_trace("Parsing GTypeString");
-
+        
 
 
         log.ext_trace("Completed GTypeString");
@@ -234,7 +234,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, GTypeEnumeration &obj)
     {
         log.ext_trace("Parsing GTypeEnumeration");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.name  , "name");
 
         log.ext_trace("Completed GTypeEnumeration");
@@ -244,7 +244,7 @@ namespace ssp4cpp::ssp1::ssc
     void from_xml(const xml_node &node, GTypeBinary &obj)
     {
         log.ext_trace("Parsing GTypeBinary");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.mime_type  , "mime-type");
 
         log.ext_trace("Completed GTypeBinary");

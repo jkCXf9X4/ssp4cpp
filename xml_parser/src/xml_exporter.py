@@ -51,16 +51,21 @@ class NodeXmlExporter:
         variables = [
             self.generate_variable_declaration(v)
             for v in self.variable_nodes
-            if not v.custom
         ]
         variables = "\n".join(variables)
         variables = indent_strings(self.indent, variables)
+
+    
+        experimental_nodes = [v.name for v in self.variable_nodes if v.experimental]
+        warning_text = ""
+        if experimental_nodes:
+            warning_text = f"log.warning(\"Experimental feature {','.join(experimental_nodes)} used\");\n"
 
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
 {{
     log.ext_trace("Parsing {self.class_node.name}");
-
+    {warning_text}
 {variables}
 
     log.ext_trace("Completed {self.class_node.name}");

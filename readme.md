@@ -96,8 +96,8 @@ Make sure to use the same version of python as you build for. First build the py
 cmake -B build -S . -DSSP4CPP_BUILD_PYTHON=ON
 cmake --build build
 
-python3 -m venv .venv
-. ./.venv/bin/activate
+python3 -m venv venv
+. ./venv/bin/activate
 pip install -r requirements.txt
 pip install -e build/lib/python
 ```

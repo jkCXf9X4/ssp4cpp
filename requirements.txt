@@ -1,4 +1,5 @@
 pysspstandard
--e ./build/lib/python
-
 omsimulator
+tomli
+
+-e ./build/lib/python

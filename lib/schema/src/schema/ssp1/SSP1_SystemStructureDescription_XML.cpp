@@ -23,7 +23,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, SystemGeometry &obj)
     {
         log.ext_trace("Parsing SystemGeometry");
-
+        
 
 
         log.ext_trace("Completed SystemGeometry");
@@ -33,7 +33,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, ConnectorGeometry &obj)
     {
         log.ext_trace("Parsing ConnectorGeometry");
-
+        
 
 
         log.ext_trace("Completed ConnectorGeometry");
@@ -43,7 +43,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, ElementGeometry &obj)
     {
         log.ext_trace("Parsing ElementGeometry");
-
+        
 
 
         log.ext_trace("Completed ElementGeometry");
@@ -53,7 +53,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, ConnectionGeometry &obj)
     {
         log.ext_trace("Parsing ConnectionGeometry");
-
+        
 
 
         log.ext_trace("Completed ConnectionGeometry");
@@ -63,7 +63,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, SignalDictionary &obj)
     {
         log.ext_trace("Parsing SignalDictionary");
-
+        
 
 
         log.ext_trace("Completed SignalDictionary");
@@ -73,7 +73,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TSignalDictionaries &obj)
     {
         log.ext_trace("Parsing TSignalDictionaries");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionary");
 
         log.ext_trace("Completed TSignalDictionaries");
@@ -83,7 +83,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, ParameterMapping &obj)
     {
         log.ext_trace("Parsing ParameterMapping");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description       , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.type              , "type");
@@ -98,7 +98,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, ParameterBinding &obj)
     {
         log.ext_trace("Parsing ParameterBinding");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description       , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.type              , "type");
@@ -115,7 +115,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TParameterBindings &obj)
     {
         log.ext_trace("Parsing TParameterBindings");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBinding");
 
         log.ext_trace("Completed TParameterBindings");
@@ -125,7 +125,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, GraphicalElements &obj)
     {
         log.ext_trace("Parsing GraphicalElements");
-
+        
 
 
         log.ext_trace("Completed GraphicalElements");
@@ -135,7 +135,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TDefaultExperiment &obj)
     {
         log.ext_trace("Parsing TDefaultExperiment");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.startTime    , "startTime");
         ssp4cpp::common::xml::parse_xml(node, obj.stopTime     , "stopTime");
         ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
@@ -147,7 +147,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, Connection &obj)
     {
         log.ext_trace("Parsing Connection");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                                , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description                       , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.startElement                      , "startElement");
@@ -169,7 +169,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, Connections &obj)
     {
         log.ext_trace("Parsing Connections");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.Connections  , "ssd:Connection");
 
         log.ext_trace("Completed Connections");
@@ -179,7 +179,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, Connector &obj)
     {
         log.ext_trace("Parsing Connector");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name               , "name");
@@ -200,7 +200,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TConnectors &obj)
     {
         log.ext_trace("Parsing TConnectors");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.Connectors  , "ssd:Connector");
 
         log.ext_trace("Completed TConnectors");
@@ -210,7 +210,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TComponent &obj)
     {
         log.ext_trace("Parsing TComponent");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name               , "name");
@@ -229,7 +229,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TSignalDictionaryReference &obj)
     {
         log.ext_trace("Parsing TSignalDictionaryReference");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name               , "name");
@@ -246,7 +246,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, Elements &obj)
     {
         log.ext_trace("Parsing Elements");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.Components                  , "ssd:Component");
         ssp4cpp::common::xml::parse_xml(node, obj.SignalDictionaryReferences  , "ssd:SignalDictionaryReference");
         ssp4cpp::common::xml::parse_xml(node, obj.Systems                     , "ssd:System");
@@ -258,7 +258,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TSystem &obj)
     {
         log.ext_trace("Parsing TSystem");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.id                  , "id");
         ssp4cpp::common::xml::parse_xml(node, obj.description         , "description");
         ssp4cpp::common::xml::parse_xml(node, obj.name                , "name");
@@ -279,7 +279,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, SystemStructureDescription &obj)
     {
         log.ext_trace("Parsing SystemStructureDescription");
-
+        
         ssp4cpp::common::xml::parse_xml(node, obj.version                , "version");
         ssp4cpp::common::xml::parse_xml(node, obj.name                   , "name");
         ssp4cpp::common::xml::parse_xml(node, obj.id                     , "id");
