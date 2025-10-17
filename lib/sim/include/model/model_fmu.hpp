@@ -106,6 +106,29 @@ namespace ssp4cpp::sim::graph
             log.ext_trace("[{}] FmuModel init completed", __func__);
         }
 
+                // Only allowed during initialization 
+        inline uint64_t direct_feedthrough(uint64_t start)
+        {
+            auto target_area = input_area->get_or_push(start);
+
+            IF_LOG({
+                log.info("[{}] Propagating at start_time {}, input_area {} timestamp {}", __func__, start,target_area, input_area->data->timestamps[target_area]);
+            });
+
+            ConnectionInfo::retrieve_model_inputs(connections, target_area, start);
+
+            ConnectorInfo::write_data_to_model(inputs, input_area.get(), target_area);
+
+            auto area = output_area->get_or_push(start);
+
+            IF_LOG({
+                log.info("[{}] Propagating at start_time {}, output area {} timestamp {}", __func__, start, area, output_area->data->timestamps[area]);
+            });
+
+            ConnectorInfo::read_values_from_model(outputs, output_area.get(), area);
+            return start;
+        }
+
         // hot path
         inline void pre(uint64_t model_start_time, uint64_t valid_input_time)
         {
@@ -184,6 +207,7 @@ namespace ssp4cpp::sim::graph
 
             auto delayed_time = _end_time - delay;
             post(delayed_time);
+
             IF_LOG({
                 log.ext_trace("[{}] Completed, delayed_time:", __func__, delayed_time);
             });
@@ -191,48 +215,21 @@ namespace ssp4cpp::sim::graph
             return delayed_time;
         }
 
-        // Not optimized at all... need to only propagate the direct feedthru signals
-        // This is now allowed...
-        // there need to be a step between the set and get....
-        inline uint64_t direct_feedthrough(uint64_t start)
-        {
-            auto target_area = input_area->get_or_push(start);
-
-            IF_LOG({
-                log.info("[{}] Propagating at start_time {}, input_area {} timestamp {}", __func__, start,target_area, input_area->data->timestamps[target_area]);
-            });
-
-            ConnectionInfo::retrieve_model_inputs(connections, target_area, start);
-
-            ConnectorInfo::write_data_to_model(inputs, input_area.get(), target_area);
-
-            // _end_time = fmu->model->step();
-
-            auto area = output_area->get_or_push(start);
-
-            IF_LOG({
-                log.info("[{}] Propagating at start_time {}, output area {} timestamp {}", __func__, start, area, output_area->data->timestamps[area]);
-            });
-
-            ConnectorInfo::read_values_from_model(outputs, output_area.get(), area);
-            return start;
-        }
-
         // hot path
         uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
-            if (only_feedthrough)
-            {
-                // The direct feedthru loop will be stored in start +1ns
-                // valid_input_time need to be increased by one to take this into account
-                // work but is not allowed according to standard
-                // causes a hard time for the solvers leading to massive walltime increase 10x
-                return this->direct_feedthrough(step_data.start_time + 1);
-            }
-            else
+            if (!only_feedthrough) [[likely]]
             {
                 step_data.valid_input_time += 1;
                 return step(step_data);
+            }
+            else [[unlikely]]
+            {
+                // The direct feedthrough loop will be stored in start +1ns
+                // valid_input_time need to be increased by one to take this into account
+                // this is only allowed during initialization
+                // causes a hard time for the solvers leading to massive walltime increase 10x if used during step mode
+                return this->direct_feedthrough(step_data.start_time + 1);
             }
         }
     };

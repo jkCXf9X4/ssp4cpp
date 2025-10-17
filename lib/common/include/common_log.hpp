@@ -199,9 +199,9 @@ namespace ssp4cpp::common
             Logger::socket = std::make_unique<kissnet::tcp_socket>(kissnet::endpoint(adress));
             if (Logger::socket->connect() == kissnet::socket_status::valid)
             {
-                Logger::socket_sink_enabled = true;
                 auto payload = make_cutelog_payload("!!cutelog!!format=json");
                 Logger::socket->send((std::byte*)payload.data(), payload.size());
+                Logger::socket_sink_enabled = true;
             }
             else
             {

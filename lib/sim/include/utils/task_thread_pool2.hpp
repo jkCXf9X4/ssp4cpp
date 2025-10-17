@@ -20,15 +20,14 @@
 
 #include "common_log.hpp"
 
-#include "model_async.hpp"
+#include "invocable.hpp"
 
 namespace ssp4cpp::sim::utils
 {
     struct task_info
     {
-        graph::AsyncNode *node;
+        graph::Invocable *node;
         graph::StepData step;
-        // uint64_t result;
     };
     /**
      * @brief Simple thread pool for executing queued tasks.

@@ -56,66 +56,18 @@ namespace ssp4cpp::sim::graph
         }
     };
 
-
-
-
-
     class Invocable : public common::graph::Node, public virtual common::str::IString
     {
     public:
         uint64_t walltime_ns = 0;
-        // bool support_async = false;
-
-        // SharedState* shared_state = 0;
+        uint64_t id = 0;
 
         virtual void init() = 0;
         virtual uint64_t invoke(StepData data, const bool only_feedthrough = false) = 0;
-        // virtual uint64_t invoke_async(StepData data) = 0;
 
         virtual void print(std::ostream &os) const
         {
             os << "Invocable:\n{}\n";
         }
     };
-
-
-        // struct DoneMsg
-    // {
-    //     uint32_t worker_id;
-    //     uint64_t time;
-    // };
-
-    // // This is shared across all threads
-    // struct SharedState
-    // {
-    //     std::mutex mtx;
-    //     std::queue<DoneMsg> inbox;
-    //     std::counting_semaphore<> sem{0}; // initially zero permits
-    // };
-
-
-    // class IModel : public common::graph::Node, public virtual common::str::IString
-    // {
-    // public:
-    //     uint64_t walltime_ns = 0;
-    //     bool support_async = false;
-
-    //     SharedState *shared_state;
-    //     uint32_t worker_id = 0;
-
-    //     ModelState state = ModelState::initialization;
-
-    //     virtual void init() = 0;
-
-    //     virtual void pre(StepData data) = 0;
-    //     virtual uint64_t step(StepData data) = 0;
-    //     virtual uint64_t step_async(StepData data) = 0;
-    //     virtual void post(StepData data) = 0;
-
-    //     virtual void print(std::ostream &os) const
-    //     {
-    //         os << "IModel:\n{}\n";
-    //     }
-    // };
-
 }

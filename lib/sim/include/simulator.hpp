@@ -46,8 +46,15 @@ namespace ssp4cpp::sim
             log.enable_file_sink(log_file, false);
             log.info("[{}] File log enabled, {}", __func__, log_file);
             
-            log.enable_socket_sink("127.0.0.1:19996");
-            log.info("[{}] Socket log enabled", __func__);
+            try
+            {
+                log.enable_socket_sink("127.0.0.1:19996");
+                log.info("[{}] Socket log enabled", __func__);
+            }
+            catch(const std::exception& e)
+            {
+                log.warning("[{}] Socket log disabled", __func__);
+            }
 
             log.debug("[{}] - Importing SSP", __func__);
             auto ssp_path = utils::Config::get<std::string>("simulation.ssp");

@@ -7,7 +7,6 @@
 #include "analysis_graph.hpp"
 #include "data_recorder.hpp"
 
-#include "model_async.hpp"
 #include "model_fmu.hpp"
 #include "graph.hpp"
 
@@ -34,7 +33,7 @@ namespace ssp4cpp::sim::graph
         std::unique_ptr<Graph> build()
         {
             log.trace("[{}] init", __func__);
-            std::map<std::string, std::unique_ptr<FmuModel>> models;
+            std::map<std::string, std::unique_ptr<Invocable>> models;
 
             log.trace("[{}] - Create the fmu models", __func__);
             for (auto &[ssp_resource_name, analysis_model] : analysis_graph->models)
@@ -48,7 +47,7 @@ namespace ssp4cpp::sim::graph
             log.trace("[{}] - Create the data storage areas within the model", __func__);
             for (auto &[_, analysis_model] : analysis_graph->models)
             {
-                auto model = models[analysis_model->name].get();
+                auto model = static_cast<FmuModel*>(models[analysis_model->name].get());
                 for (auto &[name, connector] : analysis_model->connectors)
                 {
                     int index = -1;
@@ -95,8 +94,8 @@ namespace ssp4cpp::sim::graph
             log.trace("[{}] - Hand the information regarding the connections over to the model", __func__);
             for (auto &[_, connection] : analysis_graph->connections)
             {
-                auto source_model = models[connection->source_model->name].get();
-                auto target_model = models[connection->target_model->name].get();
+                auto source_model = static_cast<FmuModel*>(models[connection->source_model->name].get());
+                auto target_model = static_cast<FmuModel*>(models[connection->target_model->name].get());
 
                 auto &source_connector = source_model->outputs[connection->get_source_connector_name()];
                 auto &target_connector = target_model->inputs[connection->get_target_connector_name()];
@@ -120,18 +119,11 @@ namespace ssp4cpp::sim::graph
             log.trace("[{}] - Allocate the input/output areas", __func__);
             for (auto &[ssp_resource_name, model] : models)
             {
-                model->input_area->allocate();
-                model->output_area->allocate();
-                recorder->add_storage(model->input_area->data.get());
-                recorder->add_storage(model->output_area->data.get());
-            }
-
-            log.trace("[{}] - Wrap models in async", __func__);
-            std::map<std::string, std::unique_ptr<AsyncNode>> async_models;
-            for (auto &[n, m] : models)
-            {
-                auto name = m->name;
-                async_models[name] = std::make_unique<AsyncNode>(name, std::move(m));
+                auto m = static_cast<FmuModel*>(model.get());
+                m->input_area->allocate();
+                m->output_area->allocate();
+                recorder->add_storage(m->input_area->data.get());
+                recorder->add_storage(m->output_area->data.get());
             }
 
             log.trace("[{}] - Create connections between models", __func__);
@@ -139,17 +131,15 @@ namespace ssp4cpp::sim::graph
             {
                 for (auto &child : analysis_model->children)
                 {
-                    async_models[analysis_model->name]->add_child(async_models[child->name].get());
+                    models[analysis_model->name]->add_child(models[child->name].get());
                 }
             }
 
-            // break algebraic loops here... or before they are connected....
-            // Add a delay of a minor time amount to make sure that the broken loop cant use data that is to new
-
-            // do something fancy with the graph
+            // Do not break algebraic loops here, do it in the executor. It depending on additional information
+            // This enables runtime breaking of loops
 
             log.ext_trace("[{}] exit", __func__);
-            return std::make_unique<Graph>(std::move(async_models));
+            return std::make_unique<Graph>(std::move(models));
         }
     };
 

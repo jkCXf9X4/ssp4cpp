@@ -118,8 +118,8 @@ namespace ssp4cpp::sim
             uint64_t total_model_time = 0;
             for (auto &node : sim_graph->nodes)
             {
-                auto model_walltime = node->invocable_obj->walltime_ns;
-                log.info("[{}] Model {} walltime: {}", __func__, node->invocable_obj->name, common::time::ns_to_s(model_walltime));
+                auto model_walltime = node->walltime_ns;
+                log.info("[{}] Model {} walltime: {}", __func__, node->name, common::time::ns_to_s(model_walltime));
                 total_model_time += model_walltime;
             }
             log.info("[{}] Model walltime: {}", __func__, common::time::ns_to_s(total_model_time));

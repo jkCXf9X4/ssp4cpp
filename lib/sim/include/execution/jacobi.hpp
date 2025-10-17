@@ -5,6 +5,7 @@
 #include "common_definitions.hpp"
 
 #include "execution.hpp"
+#include "invocable.hpp"
 
 #include "task_thread_pool.hpp"
 #include "task_thread_pool2.hpp"
@@ -24,7 +25,7 @@ namespace ssp4cpp::sim::graph
 
         const bool feedthrough = utils::Config::getOr<bool>("simulation.jacobi.feedthrough", false);
 
-        JacobiSerial(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
+        JacobiSerial(std::vector<Invocable *> nodes) : ExecutionBase(std::move(nodes))
         {
             log.info("[{}] Feedthrough {}", __func__, feedthrough);
         }
@@ -32,10 +33,6 @@ namespace ssp4cpp::sim::graph
         virtual void print(std::ostream &os) const
         {
             os << "JacobiSerial:\n{}\n";
-        }
-
-        void init() override
-        {
         }
 
         inline void direct_feedthrough(StepData step_data)
@@ -53,6 +50,11 @@ namespace ssp4cpp::sim::graph
             }
         }
 
+        void init() override
+        {
+            // direct_feedthrough();
+        }
+
         // hot path
         uint64_t invoke(StepData step_data, const bool only_feedthrough = false) override final
         {
@@ -61,12 +63,6 @@ namespace ssp4cpp::sim::graph
             IF_LOG({
                 log.debug("[{}] stepdata: {}", __func__, step_data.to_string());
             });
-
-            if (step_data.start_time != 0 && feedthrough)
-            {
-                direct_feedthrough(step);
-            }
-
 
             for (auto &model : this->nodes)
             {
@@ -86,7 +82,7 @@ namespace ssp4cpp::sim::graph
         common::ThreadPool pool;
         std::vector<std::future<void>> futures;
 
-        JacobiParallelFutures(std::vector<AsyncNode *> nodes, int threads) : ExecutionBase(std::move(nodes)), pool(threads)
+        JacobiParallelFutures(std::vector<Invocable *> nodes, int threads) : ExecutionBase(std::move(nodes)), pool(threads)
         {
             log.info("[{}] JacobiParallelFutures", __func__);
         }
@@ -122,7 +118,7 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("ssp4sim.execution.JacobiParallelTBB", common::LogLevel::info);
 
-        JacobiParallelTBB(std::vector<AsyncNode *> nodes) : ExecutionBase(std::move(nodes))
+        JacobiParallelTBB(std::vector<Invocable *> nodes) : ExecutionBase(std::move(nodes))
         {
             log.info("[{}] JacobiParallelTBB", __func__);
         }
@@ -156,7 +152,7 @@ namespace ssp4cpp::sim::graph
 
         utils::ThreadPool2 pool;
 
-        JacobiParallelSpin(std::vector<AsyncNode *> nodes, int threads) : ExecutionBase(std::move(nodes)), pool(threads)
+        JacobiParallelSpin(std::vector<Invocable *> nodes, int threads) : ExecutionBase(std::move(nodes)), pool(threads)
         {
             log.info("[{}] JacobiParallelSpin", __func__);
         }

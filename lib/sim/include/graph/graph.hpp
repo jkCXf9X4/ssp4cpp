@@ -24,14 +24,14 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("ssp4sim.graph.Graph", common::LogLevel::info);
 
-        std::map<std::string, std::unique_ptr<AsyncNode>> models;
-        std::vector<AsyncNode *> nodes;
+        std::map<std::string, std::unique_ptr<Invocable>> models;
+        std::vector<Invocable *> nodes;
 
         std::unique_ptr<ExecutionBase> executor;
 
         Graph() = default;
 
-        Graph(std::map<std::string, std::unique_ptr<AsyncNode>> models_)
+        Graph(std::map<std::string, std::unique_ptr<Invocable>> models_)
             : models(std::move(models_))
         {
             auto m = common::map_ns::map_unique_to_ref(models);

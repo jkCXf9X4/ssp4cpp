@@ -6,7 +6,7 @@
 
 #include "execution.hpp"
 
-#include "model_async.hpp"
+#include "invocable.hpp"
 #include "task_thread_pool.hpp"
 #include "task_thread_pool2.hpp"
 
@@ -20,7 +20,7 @@ namespace ssp4cpp::sim::graph
     struct SeidelNode
     {
         int id;
-        AsyncNode *node;
+        Invocable *node;
         std::size_t nr_parents;
         std::size_t nr_parents_counter;
         SeidelNode() {}
@@ -35,14 +35,14 @@ namespace ssp4cpp::sim::graph
         std::vector<SeidelNode> seidel_nodes;
         std::vector<SeidelNode *> start_nodes;
 
-        SeidelBase(std::vector<AsyncNode *> _nodes_) : ExecutionBase(std::move(_nodes_)), nr_of_nodes(nodes.size()), seidel_nodes(nr_of_nodes)
+        SeidelBase(std::vector<Invocable *> _nodes_) : ExecutionBase(std::move(_nodes_)), nr_of_nodes(nodes.size()), seidel_nodes(nr_of_nodes)
         {
             log.info("[{}] ", __func__);
             log.trace("[{}] nr_of_nodes {}, seidel_nodes {}", __func__, nr_of_nodes, seidel_nodes.size());
 
             for (auto &node : this->nodes)
             {
-                auto id = node->worker_id;
+                auto id = node->id;
 
                 auto &n = seidel_nodes[id];
                 n.id = id;
@@ -61,6 +61,9 @@ namespace ssp4cpp::sim::graph
                     start_nodes.push_back(&node);
                 }
             }
+
+            // break algebraic loops here?
+            // Add a delay of a minor time amount to make sure that the broken loop cant use data that is to new
         }
 
         inline void reset_counters()
@@ -77,7 +80,7 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("ssp4sim.execution.SerialSeidel", common::LogLevel::info);
 
-        SerialSeidel(std::vector<AsyncNode *> nodes) : SeidelBase(std::move(nodes))
+        SerialSeidel(std::vector<Invocable *> nodes) : SeidelBase(std::move(nodes))
         {
             log.info("[{}] ", __func__);
         }
@@ -98,7 +101,7 @@ namespace ssp4cpp::sim::graph
             node.node->invoke(step_data);
             for (auto c : node.node->children)
             {
-                auto &child = seidel_nodes[((AsyncNode *)c)->worker_id];
+                auto &child = seidel_nodes[((Invocable *)c)->id];
                 child.nr_parents_counter -= 1;
                 if (child.nr_parents_counter == 0)
                 {
@@ -140,7 +143,7 @@ namespace ssp4cpp::sim::graph
                         node.node->invoke(step_data);
                         for (auto c : node.node->children)
                         {
-                            auto &child = seidel_nodes[((AsyncNode *)c)->worker_id];
+                            auto &child = seidel_nodes[((Invocable *)c)->id];
                             child.nr_parents_counter -= 1;
                         }
                     }
@@ -160,7 +163,7 @@ namespace ssp4cpp::sim::graph
     public:
         common::Logger log = common::Logger("ssp4sim.execution.ParallelSeidel", common::LogLevel::info);
 
-        ParallelSeidel(std::vector<AsyncNode *> nodes) : SeidelBase(std::move(nodes))
+        ParallelSeidel(std::vector<Invocable *> nodes) : SeidelBase(std::move(nodes))
         {
             log.info("[{}]", __func__);
         }
@@ -186,63 +189,65 @@ namespace ssp4cpp::sim::graph
 
             step_data.valid_input_time = step_data.end_time;
 
-            reset_counters();
+            throw std::runtime_error("THis is not imlemented");
 
-            // track how many are currently running
-            int launched = 0;
-            int completed = 0;
+            // reset_counters();
 
-            IF_LOG({
-                log.trace("[{}] Invoking all start nodes", __func__);
-            });
+            // // track how many are currently running
+            // int launched = 0;
+            // int completed = 0;
 
-            for (auto &sn : start_nodes)
-            {
-                sn->node->async_invoke(step_data);
-                launched += 1;
-            }
+            // IF_LOG({
+            //     log.trace("[{}] Invoking all start nodes", __func__);
+            // });
 
-            while (launched != completed)
-            {
-                IF_LOG({
-                    log.trace("[{}] Waiting for nodes to finish. launched {}, completed  {}", __func__, launched, completed);
-                });
+            // for (auto &sn : start_nodes)
+            // {
+            //     sn->node->async_invoke(step_data);
+            //     launched += 1;
+            // }
 
-                shared_state->sem.acquire();
-                completed += 1;
+            // while (launched != completed)
+            // {
+            //     IF_LOG({
+            //         log.trace("[{}] Waiting for nodes to finish. launched {}, completed  {}", __func__, launched, completed);
+            //     });
 
-                DoneMsg msg;
-                {
-                    std::lock_guard<std::mutex> lock(shared_state->mtx);
-                    msg = std::move(shared_state->inbox.front());
-                    shared_state->inbox.pop();
-                }
-                auto &finished_node = seidel_nodes[msg.worker_id];
+            //     shared_state->sem.acquire();
+            //     completed += 1;
 
-                IF_LOG({
-                    log.trace("[{}] Node finished: {}", __func__, finished_node.node->name);
-                });
+            //     DoneMsg msg;
+            //     {
+            //         std::lock_guard<std::mutex> lock(shared_state->mtx);
+            //         msg = std::move(shared_state->inbox.front());
+            //         shared_state->inbox.pop();
+            //     }
+            //     auto &finished_node = seidel_nodes[msg.worker_id];
 
-                // enqueue children whose all parents are invoked
-                for (auto c : finished_node.node->children)
-                {
-                    auto &child = seidel_nodes[((AsyncNode *)c)->worker_id];
+            //     IF_LOG({
+            //         log.trace("[{}] Node finished: {}", __func__, finished_node.node->name);
+            //     });
 
-                    child.nr_parents_counter -= 1;
-                    if (child.nr_parents_counter == 0)
-                    {
-                        IF_LOG({
-                            log.debug("[{}] Node ready, invoking: {}", __func__, child.node->name);
-                        });
+            //     // enqueue children whose all parents are invoked
+            //     for (auto c : finished_node.node->children)
+            //     {
+            //         auto &child = seidel_nodes[((AsyncNode *)c)->worker_id];
 
-                        child.node->async_invoke(step_data);
-                        launched += 1;
-                    }
-                }
-            }
-            IF_LOG({
-                log.trace("[{}] End. launched {}, completed  {}", __func__, launched, completed);
-            });
+            //         child.nr_parents_counter -= 1;
+            //         if (child.nr_parents_counter == 0)
+            //         {
+            //             IF_LOG({
+            //                 log.debug("[{}] Node ready, invoking: {}", __func__, child.node->name);
+            //             });
+
+            //             child.node->async_invoke(step_data);
+            //             launched += 1;
+            //         }
+            //     }
+            // }
+            // IF_LOG({
+            //     log.trace("[{}] End. launched {}, completed  {}", __func__, launched, completed);
+            // });
 
             return step_data.end_time;
         }
