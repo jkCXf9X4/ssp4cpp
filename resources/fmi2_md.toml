@@ -1,0 +1,217 @@
+aaa_standard = "FMI2"
+aaa_namespace = "md"
+aaa_name = "modelDescription"
+aaa_headers = ["FMI2_Enums.hpp"]
+
+[BaseUnit]
+kg = { type = "int", optional = true }
+m = { type = "int", optional = true }
+s = { type = "int", optional = true }
+a = { type = "int", optional = true }
+k = { type = "int", optional = true }
+mol = { type = "int", optional = true }
+cd = { type = "int", optional = true }
+rad = { type = "int", optional = true }
+factor = { type = "double", optional = true }
+offset = { type = "double", optional = true }
+
+
+[DisplayUnit]
+name = { type = "string" }
+factor = { type = "double", optional = true }
+offset = { type = "double", optional = true }
+
+
+[fmi2Unit]
+name = { type = "string" }
+BaseUnit = { type = "fmi2::md::BaseUnit", optional = true }
+DisplayUnit = { type = "fmi2::md::DisplayUnit", list = true }
+
+
+[UnitDefinitions]
+Units = { type = "fmi2::md::fmi2Unit", list = true, xml_tag="Unit"}
+
+
+[Boolean]
+declaredType = { type = "string", optional = true }
+start = { type = "bool", optional = true }
+
+
+[Integer]
+declaredType = { type = "string", optional = true }
+start = { type = "int", optional = true }
+quantity = { type = "string", optional = true }
+min = { type = "int", optional = true }
+max = { type = "int", optional = true }
+
+
+[String]
+declaredType = { type = "string", optional = true }
+start = { type = "string", optional = true }
+
+
+[Real]
+declaredType = { type = "string", optional = true }
+quantity = { type = "string", optional = true }
+unit = { type = "string", optional = true }
+displayUnit = { type = "string", optional = true }
+relativeQuantity = { type = "bool", optional = true }
+min = { type = "double", optional = true }
+max = { type = "double", optional = true }
+nominal = { type = "double", optional = true }
+unbounded = { type = "bool", optional = true }
+start = { type = "double", optional = true }
+derivative = { type = "unsigned int", optional = true }
+reinit = { type = "bool", optional = true }
+
+
+[Enumeration]
+declaredType = { type = "string" }
+quantity = { type = "string", optional = true }
+min = { type = "int", optional = true }
+max = { type = "int", optional = true }
+start = { type = "int", optional = true }
+
+
+[SimpleTypeEnumerationItem]
+name = { type = "string" }
+value = { type = "int" }
+description = { type = "string", optional = true }
+
+
+[SimpleTypeEnumeration]
+quantity = { type = "string", optional = true }
+Items = { type = "fmi2::md::SimpleTypeEnumerationItem", list = true, xml_tag="Item" }
+
+
+[fmi2SimpleType]
+name = { type = "string" }
+description = { type = "string", optional = true }
+Real = { type = "fmi2::md::Real", optional = true }
+Integer = { type = "fmi2::md::Integer", optional = true }
+Boolean = { type = "fmi2::md::Boolean", optional = true }
+String = { type = "fmi2::md::String", optional = true }
+Enumeration = { type = "fmi2::md::SimpleTypeEnumeration", optional = true }
+
+
+[TypeDefinitions]
+SimpleTypes = { type = "fmi2::md::fmi2SimpleType", list = true, xml_tag="SimpleType"}
+
+
+[Category]
+name = { type = "string" }
+description = { type = "string", optional = true }
+
+
+[LogCategories]
+Categories = { type = "fmi2::md::Category", list = true, xml_tag="Category"}
+
+
+[fmi2Annotation]
+annotation = { type = "string" }
+
+
+[VendorAnnotations]
+Annotations = { type = "fmi2::md::fmi2Annotation", list = true , xml_tag="Annotation"}
+
+
+[DefaultExperiment]
+startTime = { type = "double", optional = true }
+stopTime = { type = "double", optional = true }
+tolerance = { type = "double", optional = true }
+stepSize = { type = "double", optional = true }
+
+
+[fmi2ScalarVariable]
+name = { type = "string" }
+valueReference = { type = "unsigned int", optional = true }
+description = { type = "string", optional = true }
+causality = { type = "fmi2::md::Causality", optional = true }
+variability = { type = "fmi2::md::Variability", optional = true }
+initial = { type = "fmi2::md::Initial", optional = true }
+canHandleMultipleSetPerTimeInstant = { type = "bool", optional = true }
+Real = { type = "fmi2::md::Real", optional = true }
+Integer = { type = "fmi2::md::Integer", optional = true }
+Boolean = { type = "fmi2::md::Boolean", optional = true }
+String = { type = "fmi2::md::String", optional = true }
+Enumeration = { type = "fmi2::md::Enumeration", optional = true }
+Annotations = { type = "fmi2::md::fmi2Annotation", list = true , xml_tag="Annotation"}
+
+[Unknown]
+index = { type = "int" }
+dependencies = { type = "IntXmlList", optional = true }
+dependenciesKind = { type = "fmi2::md::DependenciesKindList", optional = true }
+
+[Outputs]
+Unknowns = { type = "fmi2::md::Unknown", list = true, xml_tag="Unknown" }
+
+[Derivatives]
+Unknowns = { type = "fmi2::md::Unknown", list = true, xml_tag="Unknown" }
+
+[InitialUnknowns]
+Unknowns = { type = "fmi2::md::Unknown", list = true, xml_tag="Unknown" }
+
+[ModelStructure]
+Outputs = { type = "fmi2::md::Outputs", optional = true }
+Derivatives = { type = "fmi2::md::Derivatives", optional = true }
+InitialUnknowns = { type = "fmi2::md::InitialUnknowns", optional = true }
+
+[ModelVariables]
+ScalarVariable = { type = "fmi2::md::fmi2ScalarVariable", list = true }
+
+[File]
+name = { type = "string" }
+
+[SourceFiles]
+Files = { type = "fmi2::md::File", list = true, xml_tag="File" }
+
+[ModelExchange]
+modelIdentifier = { type = "string" }
+needsExecutionTool = { type = "bool", optional = true }
+completedIntegratorStepNotNeeded = { type = "bool", optional = true }
+canBeInstantiatedOnlyOncePerProcess = { type = "bool", optional = true }
+canNotUseMemoryManagementFunctions = { type = "bool", optional = true }
+canGetAndSetFMUstate = { type = "bool", optional = true }
+canSerializeFMUstate = { type = "bool", optional = true }
+providesDirectionalDerivatives = { type = "bool", optional = true }
+SourceFiles = { type = "fmi2::md::SourceFiles", optional = true }
+
+
+[CoSimulation]
+modelIdentifier = { type = "string" }
+needsExecutionTool = { type = "bool", optional = true }
+canHandleVariableCommunicationStepSize = { type = "bool", optional = true }
+canInterpolateInputs = { type = "bool", optional = true }
+maxOutputDerivativeOrder = { type = "bool", optional = true }
+canRunAsynchronuously = { type = "bool", optional = true }
+canBeInstantiatedOnlyOncePerProcess = { type = "bool", optional = true }
+canNotUseMemoryManagementFunctions = { type = "bool", optional = true }
+canGetAndSetFMUstate = { type = "bool", optional = true }
+canSerializeFMUstate = { type = "bool", optional = true }
+providesDirectionalDerivatives = { type = "bool", optional = true }
+SourceFiles = { type = "fmi2::md::SourceFiles", optional = true }
+
+
+[fmi2ModelDescription]
+fmiVersion = { type = "string" }
+modelName = { type = "string" }
+guid = { type = "string" }
+description = { type = "string", optional = true }
+author = { type = "string", optional = true }
+version = { type = "string", optional = true }
+copyright = { type = "string", optional = true }
+license = { type = "string", optional = true }
+generationTool = { type = "string", optional = true }
+generationDateAndTime = { type = "string", optional = true }
+variableNamingConvention = { type = "string", optional = true }
+numberOfEventIndicators = { type = "string", optional = true }
+ModelExchange = { type = "fmi2::md::ModelExchange", optional = true }
+CoSimulation = { type = "fmi2::md::CoSimulation", optional = true }
+UnitDefinitions = { type = "fmi2::md::UnitDefinitions", optional = true }
+TypeDefinitions = { type = "fmi2::md::TypeDefinitions", optional = true }
+LogCategories = { type = "fmi2::md::LogCategories", optional = true }
+DefaultExperiment = { type = "fmi2::md::DefaultExperiment", optional = true }
+VendorAnnotations = { type = "fmi2::md::VendorAnnotations", optional = true }
+ModelVariables = { type = "fmi2::md::ModelVariables" }
+ModelStructure = { type = "fmi2::md::ModelStructure" }
+# delay = { type = "double", optional = true, experimental = true }

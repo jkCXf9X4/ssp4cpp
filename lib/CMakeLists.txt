@@ -24,3 +24,7 @@ target_compile_options(schema_lib PRIVATE -Wfatal-errors)
 
 find_package(pugixml CONFIG REQUIRED)
 target_link_libraries(schema_lib PRIVATE pugixml::static pugixml::pugixml)
+
+
+find_package(libzip CONFIG REQUIRED)
+target_link_libraries(schema_lib PRIVATE libzip::zip)

@@ -1,0 +1,252 @@
+fmi2ModelDescription { 
+fmiVersion                : 2.0
+modelName                 : scenario
+guid                      : fe98943d-65c1-4761-9378-458c1319dd28
+description               : null
+author                    : scenario_fmu
+version                   : 0.1.0
+copyright                 : null
+license                   : null
+generationTool            : scenario_fmu
+generationDateAndTime     : null
+variableNamingConvention  : structured
+numberOfEventIndicators   : 0
+ModelExchange             : null
+CoSimulation              : CoSimulation { 
+modelIdentifier                         : scenario
+needsExecutionTool                      : false
+canHandleVariableCommunicationStepSize  : true
+canInterpolateInputs                    : false
+maxOutputDerivativeOrder                : true
+canRunAsynchronuously                   : null
+canBeInstantiatedOnlyOncePerProcess     : false
+canNotUseMemoryManagementFunctions      : true
+canGetAndSetFMUstate                    : null
+canSerializeFMUstate                    : null
+providesDirectionalDerivatives          : null
+SourceFiles                             : null
+}
+UnitDefinitions           : null
+TypeDefinitions           : null
+LogCategories             : null
+DefaultExperiment         : DefaultExperiment { 
+startTime  : 0.000000
+stopTime   : 10.000000
+tolerance  : 0.000100
+stepSize   : null
+}
+VendorAnnotations         : null
+ModelVariables            : ModelVariables { 
+ScalarVariable  : {
+fmi2ScalarVariable { 
+name                                : scenario_input
+valueReference                      : 0
+description                         : null
+causality                           : parameter
+variability                         : tunable
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : null
+Integer                             : null
+Boolean                             : null
+String                              : String { 
+declaredType  : null
+start         : Alt;L;0.0,0.0;300.0,10000.0
+Mach;L;0.0,0.0;300.0,1.2
+heat_load;ZOH;0.0,50.0;150.0,4000.0
+Wgt_On_Whl;ZOH;0.0,1.0;150.0,0.0
+Aircraft_state;ZOH;0.0,0.0;150.0,4.0
+}
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Alt
+valueReference                      : 1
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Mach
+valueReference                      : 2
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : heat_load
+valueReference                      : 3
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Wgt_On_Whl
+valueReference                      : 4
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : Aircraft_state
+valueReference                      : 5
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+}
+
+}
+ModelStructure            : ModelStructure { 
+Outputs          : Outputs { 
+Unknowns  : {
+Unknown { 
+index             : 2
+dependencies      : null
+dependenciesKind  : null
+}
+Unknown { 
+index             : 3
+dependencies      : null
+dependenciesKind  : null
+}
+Unknown { 
+index             : 4
+dependencies      : null
+dependenciesKind  : null
+}
+Unknown { 
+index             : 5
+dependencies      : null
+dependenciesKind  : null
+}
+Unknown { 
+index             : 6
+dependencies      : null
+dependenciesKind  : null
+}
+}
+
+}
+Derivatives      : null
+InitialUnknowns  : null
+}
+}

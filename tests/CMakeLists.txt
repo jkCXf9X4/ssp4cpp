@@ -1,7 +1,11 @@
 find_package(Catch2 3 CONFIG REQUIRED)
 
+file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
+
+# message(ALL_SRC schema_lib ="${ALL_SRC}")
+
 add_executable(logger_tests
-    logger_tests.cpp
+    ${ALL_SRC}
 )
 
 target_link_libraries(logger_tests

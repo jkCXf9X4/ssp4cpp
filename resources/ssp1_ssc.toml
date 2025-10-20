@@ -1,0 +1,95 @@
+aaa_standard = "SSP1"
+aaa_namespace = "ssc"
+aaa_name = "SystemStructureCommon"
+aaa_headers = ["SSP1_Enums.hpp"]
+
+[Annotation]
+type = {type = "string"}
+any = {type = "string", optional=true}
+
+[TAnnotations]
+Annotations = {type = "Annotation", list = true, xml_tag="Annotation"}
+
+[LinearTransformation]
+factor = {type = "double", optional=true}
+offset = {type = "double", optional=true}
+
+[BooleanMapEntry]
+source = {type = "bool"}
+target = {type = "bool"}
+
+[BooleanMappingTransformation]
+MapEntrys = {type = "ssc::BooleanMapEntry", list = true, namespace="ssc", xml_tag="MapEntry"}
+
+[IntegerMapEntry]
+source = {type = "int"}
+target = {type = "int"}
+
+[IntegerMappingTransformation]
+MapEntrys = {type = "ssc::IntegerMapEntry", list = true, namespace="ssc", xml_tag="MapEntry"}
+
+[EnumerationMapEntry]
+source = {type = "string"}
+target = {type = "string"}
+
+[EnumerationMappingTransformation]
+MapEntrys = {type = "ssc::EnumerationMapEntry", list = true, namespace="ssc", xml_tag="MapEntry"}
+
+[Item]
+name = {type = "string"}
+value = {type = "int"}
+
+[TEnumeration]
+id = {type = "string", optional=true}
+description = {type = "string", optional=true}
+name = {type = "string"}
+Item = {type = "ssc::Item", list=true, namespace="ssc"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
+
+
+[TEnumerations]
+Enumerations = {type = "ssc::TEnumeration", list = true, namespace="ssc", xml_tag="TEnumeration"}
+
+[BaseUnit]
+kg = {type = "double", optional=true}
+m = {type = "double", optional=true}
+s = {type = "double", optional=true}
+a = {type = "double", optional=true}
+k = {type = "double", optional=true}
+mol = {type = "double", optional=true}
+cd = {type = "double", optional=true}
+rad = {type = "double", optional=true}
+factor = {type = "double", optional=true}
+offset = {type = "double", optional=true}
+
+[TUnit]
+id = {type = "string", optional=true}
+description = {type = "string", optional=true}
+name = {type = "string"}
+# ssv uses BaseUnit without namespace. evaluate if this is true everywhere
+BaseUnit = {type = "ssc::BaseUnit"}
+Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
+
+[TUnits]
+# ssv uses unit without namespace. evaluate if this is true everywhere
+Units = {type = "ssc::TUnit", list = true, xml_tag="Unit"} 
+
+[GTypeReal]
+unit = {type = "string", optional=true}
+
+[GTypeInteger]
+# No fields defined, empty struct
+
+[GTypeBoolean]
+# No fields defined, empty struct
+
+[GTypeString]
+# No fields defined, empty struct
+
+[GTypeEnumeration]
+name = {type = "string", optional=true}
+
+[GTypeBinary]
+mime_type = {type = "string", optional=true, xml_tag="mime-type"}
+
+
