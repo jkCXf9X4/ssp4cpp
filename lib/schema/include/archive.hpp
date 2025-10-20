@@ -1,6 +1,6 @@
 #pragma once
-#include "common_log.hpp"
-#include "common_string.hpp"
+#include "utils/log.hpp"
+#include "utils/string.hpp"
 
 #include <filesystem>
 #include <string>

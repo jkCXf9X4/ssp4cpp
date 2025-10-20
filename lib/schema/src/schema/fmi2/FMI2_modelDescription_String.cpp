@@ -4,7 +4,7 @@
 // it is based on fmi2_md.toml
 
 #include "FMI2_modelDescription.hpp"
-#include "common_string.hpp"
+#include "utils/string.hpp"
 
 #include <string>
 

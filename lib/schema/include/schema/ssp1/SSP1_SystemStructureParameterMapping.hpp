@@ -4,8 +4,8 @@
 // it is based on ssp1_ssm.toml
 #pragma once
 
-#include "common_interface.hpp"
-#include "common_xml.hpp"
+#include "utils/interface.hpp"
+#include "utils/xml.hpp"
 
 
 #include "SSP1_SystemStructureCommon.hpp"

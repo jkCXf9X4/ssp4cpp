@@ -4,8 +4,8 @@
 // it is based on fmi2_md.toml
 #pragma once
 
-#include "common_interface.hpp"
-#include "common_xml.hpp"
+#include "utils/interface.hpp"
+#include "utils/xml.hpp"
 
 #include "FMI2_Enums.hpp"
 

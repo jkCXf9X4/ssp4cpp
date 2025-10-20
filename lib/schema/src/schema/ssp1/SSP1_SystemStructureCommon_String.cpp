@@ -4,7 +4,7 @@
 // it is based on ssp1_ssc.toml
 
 #include "SSP1_SystemStructureCommon.hpp"
-#include "common_string.hpp"
+#include "utils/string.hpp"
 
 #include <string>
 

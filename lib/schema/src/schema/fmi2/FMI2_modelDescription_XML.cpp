@@ -8,7 +8,7 @@
 
 #include "xml_deserialize.hpp"
 
-#include "common_log.hpp"
+#include "utils/log.hpp"
 
 namespace ssp4cpp::fmi2::md
 {

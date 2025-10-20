@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "common_interface.hpp"
+#include "utils/interface.hpp"
 
 #include <string>
 #include <vector>
