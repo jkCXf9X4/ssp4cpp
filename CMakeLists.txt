@@ -41,3 +41,5 @@ message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 
 add_subdirectory(lib/schema)
 
+enable_testing()
+add_subdirectory(tests)

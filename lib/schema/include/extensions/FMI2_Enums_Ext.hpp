@@ -12,7 +12,7 @@ namespace ssp4cpp::fmi2::ext
 
     namespace enums
     {
-        inline auto log = utils::Logger("ssp4cpp.fmi2.ext.enums", utils::LogLevel::debug);
+        inline auto log = Logger("ssp4cpp.fmi2.ext.enums", LogLevel::debug);
 
         using DataType = ssp4cpp::fmi2::md::Type;
 
@@ -43,7 +43,7 @@ namespace ssp4cpp::fmi2::ext
 
         inline constexpr std::string data_type_to_string(DataType type, void *data)
         {
-            log.ext_trace("[{}] init", __func__);
+            log(ext_trace)("[{}] init", __func__);
             switch (type)
             {
             case DataType::real:

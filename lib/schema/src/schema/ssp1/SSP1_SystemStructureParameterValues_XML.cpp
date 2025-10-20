@@ -14,81 +14,81 @@ namespace ssp4cpp::ssp1::ssv
 {
     using namespace pugi;
 
-    auto log = utils::Logger("ssp4cpp.ssp1.ssv", utils::LogLevel::info);
+    auto log = Logger("ssp4cpp.ssp1.ssv", LogLevel::info);
 
 
     void from_xml(const xml_node &node, Real &obj)
     {
-        log.ext_trace("Parsing Real");
+        log(ext_trace)("Parsing Real");
         
 
         utils::xml::parse_xml(node, obj.value  , "value");
         utils::xml::parse_xml(node, obj.unit   , "unit");
 
-        log.ext_trace("Completed Real");
+        log(ext_trace)("Completed Real");
     }
 
 
     void from_xml(const xml_node &node, Integer &obj)
     {
-        log.ext_trace("Parsing Integer");
+        log(ext_trace)("Parsing Integer");
         
 
         utils::xml::parse_xml(node, obj.value  , "value");
 
-        log.ext_trace("Completed Integer");
+        log(ext_trace)("Completed Integer");
     }
 
 
     void from_xml(const xml_node &node, Boolean &obj)
     {
-        log.ext_trace("Parsing Boolean");
+        log(ext_trace)("Parsing Boolean");
         
 
         utils::xml::parse_xml(node, obj.value  , "value");
 
-        log.ext_trace("Completed Boolean");
+        log(ext_trace)("Completed Boolean");
     }
 
 
     void from_xml(const xml_node &node, String &obj)
     {
-        log.ext_trace("Parsing String");
+        log(ext_trace)("Parsing String");
         
 
         utils::xml::parse_xml(node, obj.value  , "value");
 
-        log.ext_trace("Completed String");
+        log(ext_trace)("Completed String");
     }
 
 
     void from_xml(const xml_node &node, Enumeration &obj)
     {
-        log.ext_trace("Parsing Enumeration");
+        log(ext_trace)("Parsing Enumeration");
         
 
         utils::xml::parse_xml(node, obj.value  , "value");
         utils::xml::parse_xml(node, obj.name   , "name");
 
-        log.ext_trace("Completed Enumeration");
+        log(ext_trace)("Completed Enumeration");
     }
 
 
     void from_xml(const xml_node &node, Binary &obj)
     {
-        log.ext_trace("Parsing Binary");
+        log(ext_trace)("Parsing Binary");
         
 
         utils::xml::parse_xml(node, obj.value      , "value");
         utils::xml::parse_xml(node, obj.mime_type  , "mime-type");
 
-        log.ext_trace("Completed Binary");
+        log(ext_trace)("Completed Binary");
     }
 
 
     void from_xml(const xml_node &node, TParameter &obj)
     {
-        log.ext_trace("Parsing TParameter");
+        log(ext_trace)("Parsing TParameter");
         
 
         utils::xml::parse_xml(node, obj.id           , "id");
@@ -102,24 +102,24 @@ namespace ssp4cpp::ssp1::ssv
         utils::xml::parse_xml(node, obj.Binary       , "ssv:Binary");
         utils::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
-        log.ext_trace("Completed TParameter");
+        log(ext_trace)("Completed TParameter");
     }
 
 
     void from_xml(const xml_node &node, TParameters &obj)
     {
-        log.ext_trace("Parsing TParameters");
+        log(ext_trace)("Parsing TParameters");
         
 
         utils::xml::parse_xml(node, obj.Parameters  , "ssv:Parameter");
 
-        log.ext_trace("Completed TParameters");
+        log(ext_trace)("Completed TParameters");
     }
 
 
     void from_xml(const xml_node &node, ParameterSet &obj)
     {
-        log.ext_trace("Parsing ParameterSet");
+        log(ext_trace)("Parsing ParameterSet");
         
 
         utils::xml::parse_xml(node, obj.version                , "version");
@@ -137,7 +137,7 @@ namespace ssp4cpp::ssp1::ssv
         utils::xml::parse_xml(node, obj.Units                  , "Units");
         utils::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
 
-        log.ext_trace("Completed ParameterSet");
+        log(ext_trace)("Completed ParameterSet");
     }
 
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utils/log.hpp"
+
 #include "ssp.hpp"
 #include "fmu.hpp"
 
@@ -9,7 +11,7 @@
 
 namespace ssp4cpp::ssp::ext
 {
-    inline auto log = utils::Logger("ssp4cpp.ssp.ext", utils::LogLevel::info);
+    inline auto log = Logger("ssp4cpp.ssp.ext", LogLevel::info);
 
     std::map<std::string, std::string> get_resource_map(ssp4cpp::Ssp &ssp);
 

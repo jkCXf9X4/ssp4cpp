@@ -66,6 +66,18 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 Possible dependencies
 sudo apt install ninja-build
 
+## Tests
+
+```bash
+cmake --build build --target logger_tests
+
+
+cmake --build build --target logger_tests && ./build/tests/logger_tests
+or
+ctest --test-dir build --output-on-failure
+```
+
+
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or suggestions.
 

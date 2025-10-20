@@ -15,6 +15,7 @@
 
 namespace ssp4cpp
 {
+    
     /**
      * @brief Represents an SSP archive and its parsed SystemStructureDescription.
      */

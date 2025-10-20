@@ -5,9 +5,9 @@
 #include <filesystem>
 #include <string>
 
-
 namespace ssp4cpp
 {
+    using namespace utils::log;
 
     /**
      * @brief Base class for archives extracted to a temporary directory.
@@ -15,12 +15,12 @@ namespace ssp4cpp
     class Archive : public utils::str::IString
     {
     public:
-        utils::Logger log = utils::Logger("ssp4cpp.Archive", utils::LogLevel::info);
+        Logger log = Logger("ssp4cpp.Archive", LogLevel::info);
         bool using_tmp_dir = false;
         std::filesystem::path original_file;
         std::filesystem::path dir;
 
-        // Makes no sense to have a archive not associated with a file 
+        // Makes no sense to have a archive not associated with a file
         Archive() = delete;
 
         // No move or copy to avoid ownership issues to files

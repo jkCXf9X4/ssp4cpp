@@ -2,6 +2,7 @@
 #pragma once
 
 #include <kissnet.hpp>
+#include <utils/log_level.hpp>
 
 #include <chrono>
 #include <ctime>
@@ -14,109 +15,13 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <source_location>
 
-namespace ssp4cpp::utils
+// If you import this file you will get the namespace
+using namespace ssp4cpp::utils::log;
+
+namespace ssp4cpp::utils::log
 {
-
-    /**
-     * @brief Severity levels used by the ::Logger class.
-     */
-    enum class LogLevel : int
-    {
-        ext_trace, /**< Extremely verbose trace messages */
-        trace,     /**< Verbose tracing information */
-        debug,     /**< Debug information */
-        info,      /**< General information */
-        success,   /**< Successful operations */
-        warning,   /**< Warnings */
-        error,     /**< Error conditions */
-        fatal      /**< Fatal errors */
-    };
-
-    /**
-     * @brief Convert a LogLevel to its human readable string
-     *        representation.
-     */
-    static std::string log_level_to_str(LogLevel level)
-    {
-        switch (level)
-        {
-        case LogLevel::ext_trace:
-            return "ext_trace";
-        case LogLevel::trace:
-            return "trace";
-        case LogLevel::debug:
-            return "debug";
-        case LogLevel::info:
-            return "info";
-        case LogLevel::success:
-            return "success";
-        case LogLevel::warning:
-            return "warning";
-        case LogLevel::error:
-            return "error";
-        case LogLevel::fatal:
-            return "fatal";
-        default:
-            return "unknown";
-        }
-    }
-
-    // https://i.sstatic.net/9UVnC.png
-    static constexpr std::string_view log_level_to_color(LogLevel level)
-    {
-        switch (level)
-        {
-        case LogLevel::ext_trace:
-            return "\033[90m"; // Bright black
-        case LogLevel::trace:
-            return "\033[36m"; // Cyan
-        case LogLevel::debug:
-            return "\033[94m"; // Blue
-        case LogLevel::info:
-            return "\033[97m"; // White
-        case LogLevel::success:
-            return "\033[32m"; // Green
-        case LogLevel::warning:
-            return "\033[33m"; // Yellow
-        case LogLevel::error:
-            return "\033[31m"; // Red
-        case LogLevel::fatal:
-            return "\033[95m"; // Bright magenta
-        default:
-            return "\033[0m";
-        }
-    }
-
-    static constexpr std::string_view color_reset()
-    {
-        return "\033[0m";
-    }
-
-    /**
-     * @brief Parse a string representation of a log level.
-     */
-    static LogLevel str_to_log_level(std::string string)
-    {
-        if (string == "ext_trace")
-            return LogLevel::ext_trace;
-        else if (string == "trace")
-            return LogLevel::trace;
-        else if (string == "debug")
-            return LogLevel::debug;
-        else if (string == "info")
-            return LogLevel::info;
-        else if (string == "success")
-            return LogLevel::success;
-        else if (string == "warning")
-            return LogLevel::warning;
-        else if (string == "error")
-            return LogLevel::error;
-        else if (string == "fatal")
-            return LogLevel::fatal;
-        else
-            return LogLevel::info;
-    }
 
     /**
      * @brief Simple logger implementation used throughout the library.
@@ -125,8 +30,12 @@ namespace ssp4cpp::utils
      * log levels. Each function ultimately forwards to the templated
      * log() method which handles formatting and output.
      */
+
+    using enum LogLevel;
+
     class Logger
     {
+        // namespace warning = LogLevel::
         // using LogLevel::debug as debug;
 
     public:
@@ -140,17 +49,17 @@ namespace ssp4cpp::utils
         static inline std::mutex print_mutex;
 
         std::string name;
-        LogLevel level;
+        LogLevel console_level;
 
         Logger()
         {
-            level = LogLevel::debug;
+            console_level = LogLevel::debug;
             name = "null";
         }
 
         Logger(std::string name_, LogLevel lvl)
         {
-            level = lvl;
+            console_level = lvl;
             name = name_;
         }
 
@@ -200,7 +109,7 @@ namespace ssp4cpp::utils
             if (Logger::socket->connect() == kissnet::socket_status::valid)
             {
                 auto payload = make_cutelog_payload("!!cutelog!!format=json");
-                Logger::socket->send((std::byte*)payload.data(), payload.size());
+                Logger::socket->send((std::byte *)payload.data(), payload.size());
                 Logger::socket_sink_enabled = true;
             }
             else
@@ -214,102 +123,56 @@ namespace ssp4cpp::utils
             return Logger::socket_sink_enabled && Logger::socket != nullptr && Logger::socket->is_valid();
         }
 
-        template <typename... Args>
-        void ext_trace(std::format_string<Args...> s, Args &&...args)
+        auto operator()(LogLevel level, std::source_location loc = std::source_location::current())
         {
-            log<LogLevel::ext_trace>(s, std::forward<Args>(args)...);
+            return [=,this]<class... Args>(std::format_string<Args...> fmt, Args &&...args)
+            {
+                auto message = std::format(fmt, std::forward<Args>(args)...);
+                // std::cout << message << std::endl;
+                this->ll(level, loc, message);
+            };
         }
 
-        template <typename... Args>
-        void trace(std::format_string<Args...> s, Args &&...args)
-        {
-            log<LogLevel::trace>(s, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        void debug(std::format_string<Args...> s, Args &&...args)
-        {
-            log<LogLevel::debug>(s, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        void info(std::format_string<Args...> s, Args &&...args)
-        {
-            log<LogLevel::info>(s, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        void success(std::format_string<Args...> s, Args &&...args)
-        {
-            log<LogLevel::success>(s, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        void warning(std::format_string<Args...> s, Args &&...args)
-        {
-            log<LogLevel::warning>(s, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        void error(std::format_string<Args...> s, Args &&...args)
-        {
-            log<LogLevel::error>(s, std::forward<Args>(args)...);
-        }
-
-        template <typename... Args>
-        void fatal(std::format_string<Args...> s, Args &&...args)
-        {
-            log<LogLevel::fatal>(s, std::forward<Args>(args)...);
-        }
-
-        /**
-         * @brief Generic logging function invoked by the level specific helpers.
-         *
-         * @tparam Level   Compile time log level.
-         * @tparam Args    Argument pack for std::format.
-         * @param s        Format string.
-         * @param args     Arguments to format into the message.
-         */
-        template <LogLevel Level, typename... Args>
-        void log(std::format_string<Args...> s, Args &&...args)
+        // Long log
+        void ll(LogLevel level, std::source_location loc, std::string_view message) const
         {
             std::unique_lock<std::mutex> lock(Logger::print_mutex);
-            auto str = std::format(s, std::forward<Args>(args)...);
-            if (Level >= level)
+            auto log_level = log_level_to_str(level);
+
+            if (level >= this->console_level)
             {
-                Logger::write_to_console<Level>(name, str);
+                auto formatted_msg = std::format("[{}][{}] {}", loc.function_name(), log_level, message);
+                Logger::write_to_console(level, formatted_msg);
             }
-            if (Level > LogLevel::ext_trace)
+            if (level > LogLevel::ext_trace)
             {
+                auto json_str = build_json_entry(
+                    this->name, log_level, message, loc.file_name(), loc.line(), loc.function_name());
+
                 if (Logger::is_file_sink_enabled())
-                    Logger::write_to_file(name, Level, str);
+                    Logger::write_to_file(json_str);
                 if (Logger::is_socket_sink_enabled())
-                    Logger::write_to_socket(name, Level, str);
+                    Logger::write_to_socket(json_str);
             }
         }
 
     private:
-        template <LogLevel Level>
-        static void write_to_console(const std::string name, const std::string &message)
+        static void write_to_console(LogLevel level, const std::string_view message)
         {
-            auto formated_msg = std::format("[{}][{}] {}", name, log_level_to_str(Level), message);
-
-            const std::string_view color_prefix = log_level_to_color(Level);
+            const std::string_view color_prefix = log_level_to_color(level);
             const std::string_view color_suffix = color_reset();
 
-            if constexpr (Level < LogLevel::error)
+            if (level < LogLevel::error)
             {
-                std::cout << color_prefix << formated_msg << color_suffix << "\n";
+                std::cout << color_prefix << message << color_suffix << "\n";
             }
             else
             {
-                std::cerr << color_prefix << formated_msg << color_suffix << "\n";
+                std::cerr << color_prefix << message << color_suffix << "\n";
             }
         }
 
-        static void write_to_file(const std::string &logger_name,
-                                  LogLevel level,
-                                  const std::string &message)
+        static void write_to_file(const std::string_view message)
         {
             if (!Logger::file_sink_stream.is_open())
             {
@@ -317,11 +180,11 @@ namespace ssp4cpp::utils
                 return;
             }
 
-            Logger::file_sink_stream << build_json_entry(logger_name, level, message);
+            Logger::file_sink_stream << message;
             Logger::file_sink_stream.flush();
         }
 
-        static std::vector<uint8_t> make_cutelog_payload(const std::string &json)
+        static std::vector<uint8_t> make_cutelog_payload(const std::string_view json)
         {
             uint32_t len = static_cast<uint32_t>(json.size());
             uint32_t be = htonl(len); // convert to big-endian
@@ -332,17 +195,18 @@ namespace ssp4cpp::utils
             return out;
         }
 
-        static void write_to_socket(const std::string &logger_name,
-                                    LogLevel level,
-                                    const std::string &message)
+        static void write_to_socket(const std::string_view message)
         {
-            auto payload = make_cutelog_payload(build_json_entry(logger_name, level, message));
-            Logger::socket->send((std::byte*)payload.data(), payload.size());
+            auto payload = make_cutelog_payload(message);
+            Logger::socket->send((std::byte *)payload.data(), payload.size());
         }
 
-        static std::string build_json_entry(const std::string &logger_name,
-                                            LogLevel level,
-                                            const std::string &message)
+        static std::string build_json_entry(const std::string_view logger_name,
+                                            const std::string_view level,
+                                            const std::string_view message,
+                                            const std::string_view file,
+                                            const uint32_t line,
+                                            const std::string_view function)
         {
 
             const auto time = std::chrono::system_clock::now();
@@ -351,9 +215,12 @@ namespace ssp4cpp::utils
             std::ostringstream entry;
             entry << '{';
             entry << "\"time\":\"" << str_time << "\", ";
-            entry << "\"level\":\"" << log_level_to_str(level) << "\", ";
             entry << "\"name\":\"" << logger_name << "\", ";
-            entry << "\"msg\":\"" << message << "\"";
+            entry << "\"level\":\"" << level << "\", ";
+            entry << "\"msg\":\"" << std::format("[{}] {}", function, message) << "\", ";
+            entry << "\"file\":\"" << file << "\", ";
+            entry << "\"line\":\"" << line << "\", ";
+            entry << "\"function\":\"" << function << "\"";
             entry << "}\n";
 
             return entry.str();

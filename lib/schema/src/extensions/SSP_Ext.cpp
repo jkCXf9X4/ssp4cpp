@@ -11,7 +11,7 @@ namespace ssp4cpp::ssp::ext
         for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(*ssp.ssd))
         {
             auto name = resource->name.value_or("null");
-            log.trace("Resource {} : {}", name, resource->source);
+            log(trace)("Resource {} : {}", name, resource->source);
 
             resources[name] = resource->source;
         }
@@ -28,16 +28,16 @@ namespace ssp4cpp::ssp::ext
         for (auto &resource : ssp4cpp::ssp1::ext::ssd::get_resources(*ssp.ssd))
         {
             auto name = resource->name.value_or("null");
-            log.trace("Resource {}", name);
+            log(trace)("Resource {}", name);
 
             auto fmu = std::make_unique<ssp4cpp::Fmu>(ssp.dir / resource->source);
             items[name] = std::move(fmu);
         }
 
-        log.trace("FMUs");
+        log(trace)("FMUs");
         for (auto &[name, fmu] : items)
         {
-            log.trace("{} : {}", name, fmu->to_string());
+            log(trace)("{} : {}", name, fmu->to_string());
         }
         return items;
     }

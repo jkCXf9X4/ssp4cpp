@@ -23,10 +23,9 @@
 
 namespace ssp4cpp::utils::zip_ns
 {
-
     namespace fs = std::filesystem;
 
-    Logger log = utils::Logger("ssp4cpp.common.zip", utils::LogLevel::info);
+    Logger log = Logger("ssp4cpp.common.zip", LogLevel::info);
 
     std::string random_generator(size_t length = 16)
     {
@@ -49,7 +48,7 @@ namespace ssp4cpp::utils::zip_ns
 
     bool unzip(fs::path file, const fs::path tmp_path)
     {
-        log.trace("[unzip] File {}", file.string());
+        log(trace)("[unzip] File {}", file.string());
 
         int *err = nullptr;
         zip *za = zip_open(absolute(file).string().c_str(), 0, err);
@@ -88,7 +87,7 @@ namespace ssp4cpp::utils::zip_ns
                     zf = zip_fopen_index(za, i, 0);
 
                     std::ofstream file_;
-                    log.trace("[unzip] Newfile {}", newFile.string());
+                    log(trace)("[unzip] Newfile {}", newFile.string());
 
                     file_.open(newFile, std::ios::out | std::ios::binary);
 
@@ -109,7 +108,7 @@ namespace ssp4cpp::utils::zip_ns
         }
         zip_close(za);
 
-        log.trace("[unzip] Completed {}", file.string());
+        log(trace)("[unzip] Completed {}", file.string());
 
         return true;
     }
@@ -123,7 +122,7 @@ namespace ssp4cpp::utils::zip_ns
 
         if (fs::create_directory(temp_dir))
         {
-            log.debug("[create_temp_dir]Temp dir {}", temp_dir.string()); 
+            log(debug)("[create_temp_dir]Temp dir {}", temp_dir.string()); 
         }
         else
         {

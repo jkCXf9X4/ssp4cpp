@@ -18,7 +18,7 @@
 
 namespace ssp4cpp::ssp1::ext::ssv
 {
-    inline auto log = utils::Logger("ssp4cpp.ssp1.ext.ssv", utils::LogLevel::info);
+    inline auto log = Logger("ssp4cpp.ssp1.ext.ssv", LogLevel::info);
 
     using namespace ssp4cpp::ssp1::ssv;
     using namespace ssp4cpp::ssp1::ssm;
@@ -95,7 +95,7 @@ namespace ssp4cpp::ssp1::ext::ssv
         {
             if (this->type == DataType::string)
             {
-                log.ext_trace("[{}] Storing value {}", __func__, *(std::string *)value);
+                log(ext_trace)("[{}] Storing value {}", __func__, *(std::string *)value);
                 
                 auto s = (std::string *)this->value.get();
                 *s = *(std::string *)value;

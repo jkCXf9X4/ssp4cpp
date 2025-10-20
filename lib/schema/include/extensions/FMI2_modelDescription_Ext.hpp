@@ -18,7 +18,7 @@ namespace ssp4cpp::fmi2::ext
     {
         using DataType = ssp4cpp::fmi2::md::Type;
 
-        inline auto log = utils::Logger("ssp4cpp.fmi2.ext.model_variables", utils::LogLevel::debug);
+        inline auto log = Logger("ssp4cpp.fmi2.ext.model_variables", debug);
         /** @brief Retrieve a variable by index from the model variables list. */
         fmi2ScalarVariable *get_variable(ModelVariables &mv, int index);
 
@@ -31,7 +31,7 @@ namespace ssp4cpp::fmi2::ext
 
     namespace dependency
     {
-        inline auto log = utils::Logger("ssp4cpp.fmi2.ext.dependency", utils::LogLevel::debug);
+        inline auto log = Logger("ssp4cpp.fmi2.ext.dependency", debug);
 
         using IndexDependencyCoupling = std::tuple<int, int, DependenciesKind>;
         using VariableDependencyCoupling = std::tuple<fmi2ScalarVariable *, fmi2ScalarVariable *, DependenciesKind>;

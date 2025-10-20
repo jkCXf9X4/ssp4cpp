@@ -14,12 +14,12 @@ namespace ssp4cpp::ssp1::ssm
 {
     using namespace pugi;
 
-    auto log = utils::Logger("ssp4cpp.ssp1.ssm", utils::LogLevel::info);
+    auto log = Logger("ssp4cpp.ssp1.ssm", LogLevel::info);
 
 
     void from_xml(const xml_node &node, TMappingEntry &obj)
     {
-        log.ext_trace("Parsing TMappingEntry");
+        log(ext_trace)("Parsing TMappingEntry");
         
 
         utils::xml::parse_xml(node, obj.id                                , "id");
@@ -33,13 +33,13 @@ namespace ssp4cpp::ssp1::ssm
         utils::xml::parse_xml(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation");
         utils::xml::parse_xml(node, obj.Annotations                       , "ssc:Annotations");
 
-        log.ext_trace("Completed TMappingEntry");
+        log(ext_trace)("Completed TMappingEntry");
     }
 
 
     void from_xml(const xml_node &node, ParameterMapping &obj)
     {
-        log.ext_trace("Parsing ParameterMapping");
+        log(ext_trace)("Parsing ParameterMapping");
         
 
         utils::xml::parse_xml(node, obj.version                , "version");
@@ -54,7 +54,7 @@ namespace ssp4cpp::ssp1::ssm
         utils::xml::parse_xml(node, obj.MappingEntry           , "ssm:MappingEntry");
         utils::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
 
-        log.ext_trace("Completed ParameterMapping");
+        log(ext_trace)("Completed ParameterMapping");
     }
 
 }

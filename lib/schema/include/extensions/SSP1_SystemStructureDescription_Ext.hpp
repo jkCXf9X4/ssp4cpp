@@ -11,18 +11,19 @@
 namespace ssp4cpp::ssp1::ext
 {
     using namespace ssp4cpp::ssp1::ssd;
-    inline auto log = utils::Logger("ssp1.ext", utils::LogLevel::debug);
+
+    inline auto log = Logger("ssp1.ext", LogLevel::debug);
 
     namespace ssd
     {
-        inline auto log = utils::Logger("ssp4cpp.ssp1.ext.ssd", utils::LogLevel::debug);
+        inline auto log = Logger("ssp4cpp.ssp1.ext.ssd", LogLevel::debug);
 
         std::vector<TComponent *> get_resources(const ssp1::ssd::SystemStructureDescription &ssd);
     }
 
     namespace elements
     {
-        inline auto log = utils::Logger("ssp4cpp.ssp1.ext.elements", utils::LogLevel::debug);
+        inline auto log = Logger("ssp4cpp.ssp1.ext.elements", LogLevel::debug);
 
         using IndexConnectorComponentTuple = tuple<int, Connector *, TComponent *>;
         using IndexConnectorComponentTuples = vector<IndexConnectorComponentTuple>;
