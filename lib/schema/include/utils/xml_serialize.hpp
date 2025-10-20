@@ -9,7 +9,7 @@
 
 // serialize object to xml
 
-namespace ssp4cpp::common::xml
+namespace ssp4cpp::utils::xml
 {
 
 

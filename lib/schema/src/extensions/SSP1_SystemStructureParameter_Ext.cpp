@@ -21,12 +21,12 @@ namespace ssp4cpp::ssp1::ext::ssv
                 if (binding.source.has_value())
                 {
                     log.debug("[{}] Parsing SSV {}", __func__, binding.source.value_or(""));
-                    b.ssv = common::xml::parse_file<ssp1::ssv::ParameterSet>((dir / binding.source.value()).string(), "ssv:ParameterSet");
+                    b.ssv = utils::xml::parse_file<ssp1::ssv::ParameterSet>((dir / binding.source.value()).string(), "ssv:ParameterSet");
 
                     if (binding.ParameterMapping.has_value() && binding.ParameterMapping.value().source.has_value())
                     {
                         auto pm = binding.ParameterMapping.value();
-                        b.ssm = common::xml::parse_file<ssp1::ssm::ParameterMapping>((dir / pm.source.value()).string(), "ssm:ParameterMapping");
+                        b.ssm = utils::xml::parse_file<ssp1::ssm::ParameterMapping>((dir / pm.source.value()).string(), "ssm:ParameterMapping");
                         log.debug("[{}] Parsing SSM {}", __func__, pm.source.value_or(""));
                     }
                     bindings.push_back(std::move(b));

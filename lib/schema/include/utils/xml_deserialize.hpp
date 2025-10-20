@@ -15,13 +15,13 @@
 
 // deserialize xml to object
 
-namespace ssp4cpp::common::xml
+namespace ssp4cpp::utils::xml
 {
     using namespace std;
     using namespace pugi;
 
-    using namespace ssp4cpp::common::interfaces;
-    using namespace ssp4cpp::common::types;
+    using namespace ssp4cpp::utils::interfaces;
+    using namespace ssp4cpp::utils::types;
 
     inline std::string parents_to_string(const xml_node &node)
     {

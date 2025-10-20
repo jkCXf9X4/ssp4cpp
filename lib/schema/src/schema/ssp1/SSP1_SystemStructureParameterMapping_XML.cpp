@@ -13,25 +13,25 @@
 namespace ssp4cpp::ssp1::ssm
 {
     using namespace pugi;
-    using namespace common;
 
-    auto log = Logger("ssp4cpp.ssp1.ssm", LogLevel::info);
+    auto log = utils::Logger("ssp4cpp.ssp1.ssm", utils::LogLevel::info);
 
 
     void from_xml(const xml_node &node, TMappingEntry &obj)
     {
         log.ext_trace("Parsing TMappingEntry");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                                , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description                       , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.source                            , "source");
-        ssp4cpp::common::xml::parse_xml(node, obj.target                            , "target");
-        ssp4cpp::common::xml::parse_xml(node, obj.suppressUnitConversion            , "suppressUnitConversion");
-        ssp4cpp::common::xml::parse_xml(node, obj.LinearTransformation              , "ssc:LinearTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.BooleanMappingTransformation      , "ssc:BooleanMappingTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.IntegerMappingTransformation      , "ssc:IntegerMappingTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations                       , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id                                , "id");
+        utils::xml::parse_xml(node, obj.description                       , "description");
+        utils::xml::parse_xml(node, obj.source                            , "source");
+        utils::xml::parse_xml(node, obj.target                            , "target");
+        utils::xml::parse_xml(node, obj.suppressUnitConversion            , "suppressUnitConversion");
+        utils::xml::parse_xml(node, obj.LinearTransformation              , "ssc:LinearTransformation");
+        utils::xml::parse_xml(node, obj.BooleanMappingTransformation      , "ssc:BooleanMappingTransformation");
+        utils::xml::parse_xml(node, obj.IntegerMappingTransformation      , "ssc:IntegerMappingTransformation");
+        utils::xml::parse_xml(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation");
+        utils::xml::parse_xml(node, obj.Annotations                       , "ssc:Annotations");
 
         log.ext_trace("Completed TMappingEntry");
     }
@@ -41,17 +41,18 @@ namespace ssp4cpp::ssp1::ssm
     {
         log.ext_trace("Parsing ParameterMapping");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.version                , "version");
-        ssp4cpp::common::xml::parse_xml(node, obj.id                     , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description            , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.author                 , "author");
-        ssp4cpp::common::xml::parse_xml(node, obj.fileversion            , "fileversion");
-        ssp4cpp::common::xml::parse_xml(node, obj.copyright              , "copyright");
-        ssp4cpp::common::xml::parse_xml(node, obj.license                , "license");
-        ssp4cpp::common::xml::parse_xml(node, obj.generationTool         , "generationTool");
-        ssp4cpp::common::xml::parse_xml(node, obj.generationDateAndTime  , "generationDateAndTime");
-        ssp4cpp::common::xml::parse_xml(node, obj.MappingEntry           , "ssm:MappingEntry");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.version                , "version");
+        utils::xml::parse_xml(node, obj.id                     , "id");
+        utils::xml::parse_xml(node, obj.description            , "description");
+        utils::xml::parse_xml(node, obj.author                 , "author");
+        utils::xml::parse_xml(node, obj.fileversion            , "fileversion");
+        utils::xml::parse_xml(node, obj.copyright              , "copyright");
+        utils::xml::parse_xml(node, obj.license                , "license");
+        utils::xml::parse_xml(node, obj.generationTool         , "generationTool");
+        utils::xml::parse_xml(node, obj.generationDateAndTime  , "generationDateAndTime");
+        utils::xml::parse_xml(node, obj.MappingEntry           , "ssm:MappingEntry");
+        utils::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
 
         log.ext_trace("Completed ParameterMapping");
     }

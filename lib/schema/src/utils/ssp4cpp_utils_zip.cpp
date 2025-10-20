@@ -21,12 +21,12 @@
 
 // from https://github.com/NTNU-IHB/FMI4cpp/blob/master/src/fmi4cpp/tools/unzipper.hpp
 
-namespace ssp4cpp::common::zip_ns
+namespace ssp4cpp::utils::zip_ns
 {
 
     namespace fs = std::filesystem;
 
-    Logger log = Logger("ssp4cpp.common.zip", LogLevel::info);
+    Logger log = utils::Logger("ssp4cpp.common.zip", utils::LogLevel::info);
 
     std::string random_generator(size_t length = 16)
     {

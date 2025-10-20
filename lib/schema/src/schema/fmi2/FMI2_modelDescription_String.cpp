@@ -10,7 +10,7 @@
 
 namespace ssp4cpp::fmi2::md
 {
-    using namespace ssp4cpp::common::str;
+    using namespace utils::str;
 
 
      // BaseUnit

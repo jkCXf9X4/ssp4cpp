@@ -13,17 +13,17 @@
 namespace ssp4cpp::ssp1::ssc
 {
     using namespace pugi;
-    using namespace common;
 
-    auto log = Logger("ssp4cpp.ssp1.ssc", LogLevel::info);
+    auto log = utils::Logger("ssp4cpp.ssp1.ssc", utils::LogLevel::info);
 
 
     void from_xml(const xml_node &node, Annotation &obj)
     {
         log.ext_trace("Parsing Annotation");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.type  , "type");
-        ssp4cpp::common::xml::parse_xml(node, obj.any   , "any");
+
+        utils::xml::parse_xml(node, obj.type  , "type");
+        utils::xml::parse_xml(node, obj.any   , "any");
 
         log.ext_trace("Completed Annotation");
     }
@@ -33,7 +33,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing TAnnotations");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "Annotation");
+
+        utils::xml::parse_xml(node, obj.Annotations  , "Annotation");
 
         log.ext_trace("Completed TAnnotations");
     }
@@ -43,8 +44,9 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing LinearTransformation");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.factor  , "factor");
-        ssp4cpp::common::xml::parse_xml(node, obj.offset  , "offset");
+
+        utils::xml::parse_xml(node, obj.factor  , "factor");
+        utils::xml::parse_xml(node, obj.offset  , "offset");
 
         log.ext_trace("Completed LinearTransformation");
     }
@@ -54,8 +56,9 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing BooleanMapEntry");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
-        ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
+
+        utils::xml::parse_xml(node, obj.source  , "source");
+        utils::xml::parse_xml(node, obj.target  , "target");
 
         log.ext_trace("Completed BooleanMapEntry");
     }
@@ -65,7 +68,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing BooleanMappingTransformation");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
+
+        utils::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
         log.ext_trace("Completed BooleanMappingTransformation");
     }
@@ -75,8 +79,9 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing IntegerMapEntry");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
-        ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
+
+        utils::xml::parse_xml(node, obj.source  , "source");
+        utils::xml::parse_xml(node, obj.target  , "target");
 
         log.ext_trace("Completed IntegerMapEntry");
     }
@@ -86,7 +91,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing IntegerMappingTransformation");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
+
+        utils::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
         log.ext_trace("Completed IntegerMappingTransformation");
     }
@@ -96,8 +102,9 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing EnumerationMapEntry");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.source  , "source");
-        ssp4cpp::common::xml::parse_xml(node, obj.target  , "target");
+
+        utils::xml::parse_xml(node, obj.source  , "source");
+        utils::xml::parse_xml(node, obj.target  , "target");
 
         log.ext_trace("Completed EnumerationMapEntry");
     }
@@ -107,7 +114,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing EnumerationMappingTransformation");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
+
+        utils::xml::parse_xml(node, obj.MapEntrys  , "ssc:MapEntry");
 
         log.ext_trace("Completed EnumerationMappingTransformation");
     }
@@ -117,8 +125,9 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing Item");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.name   , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.value  , "value");
+
+        utils::xml::parse_xml(node, obj.name   , "name");
+        utils::xml::parse_xml(node, obj.value  , "value");
 
         log.ext_trace("Completed Item");
     }
@@ -128,11 +137,12 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing TEnumeration");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.Item         , "ssc:Item");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id           , "id");
+        utils::xml::parse_xml(node, obj.description  , "description");
+        utils::xml::parse_xml(node, obj.name         , "name");
+        utils::xml::parse_xml(node, obj.Item         , "ssc:Item");
+        utils::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
         log.ext_trace("Completed TEnumeration");
     }
@@ -142,7 +152,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing TEnumerations");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.Enumerations  , "ssc:TEnumeration");
+
+        utils::xml::parse_xml(node, obj.Enumerations  , "ssc:TEnumeration");
 
         log.ext_trace("Completed TEnumerations");
     }
@@ -152,16 +163,17 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing BaseUnit");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.kg      , "kg");
-        ssp4cpp::common::xml::parse_xml(node, obj.m       , "m");
-        ssp4cpp::common::xml::parse_xml(node, obj.s       , "s");
-        ssp4cpp::common::xml::parse_xml(node, obj.a       , "a");
-        ssp4cpp::common::xml::parse_xml(node, obj.k       , "k");
-        ssp4cpp::common::xml::parse_xml(node, obj.mol     , "mol");
-        ssp4cpp::common::xml::parse_xml(node, obj.cd      , "cd");
-        ssp4cpp::common::xml::parse_xml(node, obj.rad     , "rad");
-        ssp4cpp::common::xml::parse_xml(node, obj.factor  , "factor");
-        ssp4cpp::common::xml::parse_xml(node, obj.offset  , "offset");
+
+        utils::xml::parse_xml(node, obj.kg      , "kg");
+        utils::xml::parse_xml(node, obj.m       , "m");
+        utils::xml::parse_xml(node, obj.s       , "s");
+        utils::xml::parse_xml(node, obj.a       , "a");
+        utils::xml::parse_xml(node, obj.k       , "k");
+        utils::xml::parse_xml(node, obj.mol     , "mol");
+        utils::xml::parse_xml(node, obj.cd      , "cd");
+        utils::xml::parse_xml(node, obj.rad     , "rad");
+        utils::xml::parse_xml(node, obj.factor  , "factor");
+        utils::xml::parse_xml(node, obj.offset  , "offset");
 
         log.ext_trace("Completed BaseUnit");
     }
@@ -171,11 +183,12 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing TUnit");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id           , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description  , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.name         , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.BaseUnit     , "BaseUnit");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id           , "id");
+        utils::xml::parse_xml(node, obj.description  , "description");
+        utils::xml::parse_xml(node, obj.name         , "name");
+        utils::xml::parse_xml(node, obj.BaseUnit     , "BaseUnit");
+        utils::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
         log.ext_trace("Completed TUnit");
     }
@@ -185,7 +198,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing TUnits");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.Units  , "Unit");
+
+        utils::xml::parse_xml(node, obj.Units  , "Unit");
 
         log.ext_trace("Completed TUnits");
     }
@@ -195,7 +209,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing GTypeReal");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.unit  , "unit");
+
+        utils::xml::parse_xml(node, obj.unit  , "unit");
 
         log.ext_trace("Completed GTypeReal");
     }
@@ -205,6 +220,7 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing GTypeInteger");
         
+
 
 
         log.ext_trace("Completed GTypeInteger");
@@ -217,6 +233,7 @@ namespace ssp4cpp::ssp1::ssc
         
 
 
+
         log.ext_trace("Completed GTypeBoolean");
     }
 
@@ -227,6 +244,7 @@ namespace ssp4cpp::ssp1::ssc
         
 
 
+
         log.ext_trace("Completed GTypeString");
     }
 
@@ -235,7 +253,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing GTypeEnumeration");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.name  , "name");
+
+        utils::xml::parse_xml(node, obj.name  , "name");
 
         log.ext_trace("Completed GTypeEnumeration");
     }
@@ -245,7 +264,8 @@ namespace ssp4cpp::ssp1::ssc
     {
         log.ext_trace("Parsing GTypeBinary");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.mime_type  , "mime-type");
+
+        utils::xml::parse_xml(node, obj.mime_type  , "mime-type");
 
         log.ext_trace("Completed GTypeBinary");
     }

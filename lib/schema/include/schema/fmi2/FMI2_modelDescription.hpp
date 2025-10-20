@@ -16,9 +16,8 @@
 
 namespace ssp4cpp::fmi2::md
 {
-    using namespace ssp4cpp::common::interfaces;
-    using namespace ssp4cpp::common::xml;
-    using namespace std;
+    using namespace utils::interfaces;
+    using namespace utils::xml;
 
 
 
@@ -26,16 +25,16 @@ namespace ssp4cpp::fmi2::md
     class BaseUnit : public IXmlNode
     {
     public:
-        optional<int> kg;
-        optional<int> m;
-        optional<int> s;
-        optional<int> a;
-        optional<int> k;
-        optional<int> mol;
-        optional<int> cd;
-        optional<int> rad;
-        optional<double> factor;
-        optional<double> offset;
+        std::optional<int> kg;
+        std::optional<int> m;
+        std::optional<int> s;
+        std::optional<int> a;
+        std::optional<int> k;
+        std::optional<int> mol;
+        std::optional<int> cd;
+        std::optional<int> rad;
+        std::optional<double> factor;
+        std::optional<double> offset;
 
         std::string to_string(void) const;
     };
@@ -43,9 +42,9 @@ namespace ssp4cpp::fmi2::md
     class DisplayUnit : public IXmlNode
     {
     public:
-        string name;
-        optional<double> factor;
-        optional<double> offset;
+        std::string name;
+        std::optional<double> factor;
+        std::optional<double> offset;
 
         std::string to_string(void) const;
     };
@@ -53,9 +52,9 @@ namespace ssp4cpp::fmi2::md
     class fmi2Unit : public IXmlNode
     {
     public:
-        string name;
-        optional<fmi2::md::BaseUnit> BaseUnit;
-        vector<fmi2::md::DisplayUnit> DisplayUnit;
+        std::string name;
+        std::optional<fmi2::md::BaseUnit> BaseUnit;
+        std::vector<fmi2::md::DisplayUnit> DisplayUnit;
 
         std::string to_string(void) const;
     };
@@ -63,7 +62,7 @@ namespace ssp4cpp::fmi2::md
     class UnitDefinitions : public IXmlNode
     {
     public:
-        vector<fmi2::md::fmi2Unit> Units;
+        std::vector<fmi2::md::fmi2Unit> Units;
 
         std::string to_string(void) const;
     };
@@ -71,8 +70,8 @@ namespace ssp4cpp::fmi2::md
     class Boolean : public IXmlNode
     {
     public:
-        optional<string> declaredType;
-        optional<bool> start;
+        std::optional<std::string> declaredType;
+        std::optional<bool> start;
 
         std::string to_string(void) const;
     };
@@ -80,11 +79,11 @@ namespace ssp4cpp::fmi2::md
     class Integer : public IXmlNode
     {
     public:
-        optional<string> declaredType;
-        optional<int> start;
-        optional<string> quantity;
-        optional<int> min;
-        optional<int> max;
+        std::optional<std::string> declaredType;
+        std::optional<int> start;
+        std::optional<std::string> quantity;
+        std::optional<int> min;
+        std::optional<int> max;
 
         std::string to_string(void) const;
     };
@@ -92,8 +91,8 @@ namespace ssp4cpp::fmi2::md
     class String : public IXmlNode
     {
     public:
-        optional<string> declaredType;
-        optional<string> start;
+        std::optional<std::string> declaredType;
+        std::optional<std::string> start;
 
         std::string to_string(void) const;
     };
@@ -101,18 +100,18 @@ namespace ssp4cpp::fmi2::md
     class Real : public IXmlNode
     {
     public:
-        optional<string> declaredType;
-        optional<string> quantity;
-        optional<string> unit;
-        optional<string> displayUnit;
-        optional<bool> relativeQuantity;
-        optional<double> min;
-        optional<double> max;
-        optional<double> nominal;
-        optional<bool> unbounded;
-        optional<double> start;
-        optional<unsigned int> derivative;
-        optional<bool> reinit;
+        std::optional<std::string> declaredType;
+        std::optional<std::string> quantity;
+        std::optional<std::string> unit;
+        std::optional<std::string> displayUnit;
+        std::optional<bool> relativeQuantity;
+        std::optional<double> min;
+        std::optional<double> max;
+        std::optional<double> nominal;
+        std::optional<bool> unbounded;
+        std::optional<double> start;
+        std::optional<unsigned int> derivative;
+        std::optional<bool> reinit;
 
         std::string to_string(void) const;
     };
@@ -120,11 +119,11 @@ namespace ssp4cpp::fmi2::md
     class Enumeration : public IXmlNode
     {
     public:
-        string declaredType;
-        optional<string> quantity;
-        optional<int> min;
-        optional<int> max;
-        optional<int> start;
+        std::string declaredType;
+        std::optional<std::string> quantity;
+        std::optional<int> min;
+        std::optional<int> max;
+        std::optional<int> start;
 
         std::string to_string(void) const;
     };
@@ -132,9 +131,9 @@ namespace ssp4cpp::fmi2::md
     class SimpleTypeEnumerationItem : public IXmlNode
     {
     public:
-        string name;
+        std::string name;
         int value;
-        optional<string> description;
+        std::optional<std::string> description;
 
         std::string to_string(void) const;
     };
@@ -142,8 +141,8 @@ namespace ssp4cpp::fmi2::md
     class SimpleTypeEnumeration : public IXmlNode
     {
     public:
-        optional<string> quantity;
-        vector<fmi2::md::SimpleTypeEnumerationItem> Items;
+        std::optional<std::string> quantity;
+        std::vector<fmi2::md::SimpleTypeEnumerationItem> Items;
 
         std::string to_string(void) const;
     };
@@ -151,13 +150,13 @@ namespace ssp4cpp::fmi2::md
     class fmi2SimpleType : public IXmlNode
     {
     public:
-        string name;
-        optional<string> description;
-        optional<fmi2::md::Real> Real;
-        optional<fmi2::md::Integer> Integer;
-        optional<fmi2::md::Boolean> Boolean;
-        optional<fmi2::md::String> String;
-        optional<fmi2::md::SimpleTypeEnumeration> Enumeration;
+        std::string name;
+        std::optional<std::string> description;
+        std::optional<fmi2::md::Real> Real;
+        std::optional<fmi2::md::Integer> Integer;
+        std::optional<fmi2::md::Boolean> Boolean;
+        std::optional<fmi2::md::String> String;
+        std::optional<fmi2::md::SimpleTypeEnumeration> Enumeration;
 
         std::string to_string(void) const;
     };
@@ -165,7 +164,7 @@ namespace ssp4cpp::fmi2::md
     class TypeDefinitions : public IXmlNode
     {
     public:
-        vector<fmi2::md::fmi2SimpleType> SimpleTypes;
+        std::vector<fmi2::md::fmi2SimpleType> SimpleTypes;
 
         std::string to_string(void) const;
     };
@@ -173,8 +172,8 @@ namespace ssp4cpp::fmi2::md
     class Category : public IXmlNode
     {
     public:
-        string name;
-        optional<string> description;
+        std::string name;
+        std::optional<std::string> description;
 
         std::string to_string(void) const;
     };
@@ -182,7 +181,7 @@ namespace ssp4cpp::fmi2::md
     class LogCategories : public IXmlNode
     {
     public:
-        vector<fmi2::md::Category> Categories;
+        std::vector<fmi2::md::Category> Categories;
 
         std::string to_string(void) const;
     };
@@ -190,7 +189,7 @@ namespace ssp4cpp::fmi2::md
     class fmi2Annotation : public IXmlNode
     {
     public:
-        string annotation;
+        std::string annotation;
 
         std::string to_string(void) const;
     };
@@ -198,7 +197,7 @@ namespace ssp4cpp::fmi2::md
     class VendorAnnotations : public IXmlNode
     {
     public:
-        vector<fmi2::md::fmi2Annotation> Annotations;
+        std::vector<fmi2::md::fmi2Annotation> Annotations;
 
         std::string to_string(void) const;
     };
@@ -206,10 +205,10 @@ namespace ssp4cpp::fmi2::md
     class DefaultExperiment : public IXmlNode
     {
     public:
-        optional<double> startTime;
-        optional<double> stopTime;
-        optional<double> tolerance;
-        optional<double> stepSize;
+        std::optional<double> startTime;
+        std::optional<double> stopTime;
+        std::optional<double> tolerance;
+        std::optional<double> stepSize;
 
         std::string to_string(void) const;
     };
@@ -217,19 +216,19 @@ namespace ssp4cpp::fmi2::md
     class fmi2ScalarVariable : public IXmlNode
     {
     public:
-        string name;
-        optional<unsigned int> valueReference;
-        optional<string> description;
-        optional<fmi2::md::Causality> causality;
-        optional<fmi2::md::Variability> variability;
-        optional<fmi2::md::Initial> initial;
-        optional<bool> canHandleMultipleSetPerTimeInstant;
-        optional<fmi2::md::Real> Real;
-        optional<fmi2::md::Integer> Integer;
-        optional<fmi2::md::Boolean> Boolean;
-        optional<fmi2::md::String> String;
-        optional<fmi2::md::Enumeration> Enumeration;
-        vector<fmi2::md::fmi2Annotation> Annotations;
+        std::string name;
+        std::optional<unsigned int> valueReference;
+        std::optional<std::string> description;
+        std::optional<fmi2::md::Causality> causality;
+        std::optional<fmi2::md::Variability> variability;
+        std::optional<fmi2::md::Initial> initial;
+        std::optional<bool> canHandleMultipleSetPerTimeInstant;
+        std::optional<fmi2::md::Real> Real;
+        std::optional<fmi2::md::Integer> Integer;
+        std::optional<fmi2::md::Boolean> Boolean;
+        std::optional<fmi2::md::String> String;
+        std::optional<fmi2::md::Enumeration> Enumeration;
+        std::vector<fmi2::md::fmi2Annotation> Annotations;
 
         std::string to_string(void) const;
     };
@@ -238,8 +237,8 @@ namespace ssp4cpp::fmi2::md
     {
     public:
         int index;
-        optional<IntXmlList> dependencies;
-        optional<fmi2::md::DependenciesKindList> dependenciesKind;
+        std::optional<IntXmlList> dependencies;
+        std::optional<fmi2::md::DependenciesKindList> dependenciesKind;
 
         std::string to_string(void) const;
     };
@@ -247,7 +246,7 @@ namespace ssp4cpp::fmi2::md
     class Outputs : public IXmlNode
     {
     public:
-        vector<fmi2::md::Unknown> Unknowns;
+        std::vector<fmi2::md::Unknown> Unknowns;
 
         std::string to_string(void) const;
     };
@@ -255,7 +254,7 @@ namespace ssp4cpp::fmi2::md
     class Derivatives : public IXmlNode
     {
     public:
-        vector<fmi2::md::Unknown> Unknowns;
+        std::vector<fmi2::md::Unknown> Unknowns;
 
         std::string to_string(void) const;
     };
@@ -263,7 +262,7 @@ namespace ssp4cpp::fmi2::md
     class InitialUnknowns : public IXmlNode
     {
     public:
-        vector<fmi2::md::Unknown> Unknowns;
+        std::vector<fmi2::md::Unknown> Unknowns;
 
         std::string to_string(void) const;
     };
@@ -271,9 +270,9 @@ namespace ssp4cpp::fmi2::md
     class ModelStructure : public IXmlNode
     {
     public:
-        optional<fmi2::md::Outputs> Outputs;
-        optional<fmi2::md::Derivatives> Derivatives;
-        optional<fmi2::md::InitialUnknowns> InitialUnknowns;
+        std::optional<fmi2::md::Outputs> Outputs;
+        std::optional<fmi2::md::Derivatives> Derivatives;
+        std::optional<fmi2::md::InitialUnknowns> InitialUnknowns;
 
         std::string to_string(void) const;
     };
@@ -281,7 +280,7 @@ namespace ssp4cpp::fmi2::md
     class ModelVariables : public IXmlNode
     {
     public:
-        vector<fmi2::md::fmi2ScalarVariable> ScalarVariable;
+        std::vector<fmi2::md::fmi2ScalarVariable> ScalarVariable;
 
         std::string to_string(void) const;
     };
@@ -289,7 +288,7 @@ namespace ssp4cpp::fmi2::md
     class File : public IXmlNode
     {
     public:
-        string name;
+        std::string name;
 
         std::string to_string(void) const;
     };
@@ -297,7 +296,7 @@ namespace ssp4cpp::fmi2::md
     class SourceFiles : public IXmlNode
     {
     public:
-        vector<fmi2::md::File> Files;
+        std::vector<fmi2::md::File> Files;
 
         std::string to_string(void) const;
     };
@@ -305,15 +304,15 @@ namespace ssp4cpp::fmi2::md
     class ModelExchange : public IXmlNode
     {
     public:
-        string modelIdentifier;
-        optional<bool> needsExecutionTool;
-        optional<bool> completedIntegratorStepNotNeeded;
-        optional<bool> canBeInstantiatedOnlyOncePerProcess;
-        optional<bool> canNotUseMemoryManagementFunctions;
-        optional<bool> canGetAndSetFMUstate;
-        optional<bool> canSerializeFMUstate;
-        optional<bool> providesDirectionalDerivatives;
-        optional<fmi2::md::SourceFiles> SourceFiles;
+        std::string modelIdentifier;
+        std::optional<bool> needsExecutionTool;
+        std::optional<bool> completedIntegratorStepNotNeeded;
+        std::optional<bool> canBeInstantiatedOnlyOncePerProcess;
+        std::optional<bool> canNotUseMemoryManagementFunctions;
+        std::optional<bool> canGetAndSetFMUstate;
+        std::optional<bool> canSerializeFMUstate;
+        std::optional<bool> providesDirectionalDerivatives;
+        std::optional<fmi2::md::SourceFiles> SourceFiles;
 
         std::string to_string(void) const;
     };
@@ -321,18 +320,18 @@ namespace ssp4cpp::fmi2::md
     class CoSimulation : public IXmlNode
     {
     public:
-        string modelIdentifier;
-        optional<bool> needsExecutionTool;
-        optional<bool> canHandleVariableCommunicationStepSize;
-        optional<bool> canInterpolateInputs;
-        optional<bool> maxOutputDerivativeOrder;
-        optional<bool> canRunAsynchronuously;
-        optional<bool> canBeInstantiatedOnlyOncePerProcess;
-        optional<bool> canNotUseMemoryManagementFunctions;
-        optional<bool> canGetAndSetFMUstate;
-        optional<bool> canSerializeFMUstate;
-        optional<bool> providesDirectionalDerivatives;
-        optional<fmi2::md::SourceFiles> SourceFiles;
+        std::string modelIdentifier;
+        std::optional<bool> needsExecutionTool;
+        std::optional<bool> canHandleVariableCommunicationStepSize;
+        std::optional<bool> canInterpolateInputs;
+        std::optional<bool> maxOutputDerivativeOrder;
+        std::optional<bool> canRunAsynchronuously;
+        std::optional<bool> canBeInstantiatedOnlyOncePerProcess;
+        std::optional<bool> canNotUseMemoryManagementFunctions;
+        std::optional<bool> canGetAndSetFMUstate;
+        std::optional<bool> canSerializeFMUstate;
+        std::optional<bool> providesDirectionalDerivatives;
+        std::optional<fmi2::md::SourceFiles> SourceFiles;
 
         std::string to_string(void) const;
     };
@@ -340,25 +339,25 @@ namespace ssp4cpp::fmi2::md
     class fmi2ModelDescription : public IXmlNode
     {
     public:
-        string fmiVersion;
-        string modelName;
-        string guid;
-        optional<string> description;
-        optional<string> author;
-        optional<string> version;
-        optional<string> copyright;
-        optional<string> license;
-        optional<string> generationTool;
-        optional<string> generationDateAndTime;
-        optional<string> variableNamingConvention;
-        optional<string> numberOfEventIndicators;
-        optional<fmi2::md::ModelExchange> ModelExchange;
-        optional<fmi2::md::CoSimulation> CoSimulation;
-        optional<fmi2::md::UnitDefinitions> UnitDefinitions;
-        optional<fmi2::md::TypeDefinitions> TypeDefinitions;
-        optional<fmi2::md::LogCategories> LogCategories;
-        optional<fmi2::md::DefaultExperiment> DefaultExperiment;
-        optional<fmi2::md::VendorAnnotations> VendorAnnotations;
+        std::string fmiVersion;
+        std::string modelName;
+        std::string guid;
+        std::optional<std::string> description;
+        std::optional<std::string> author;
+        std::optional<std::string> version;
+        std::optional<std::string> copyright;
+        std::optional<std::string> license;
+        std::optional<std::string> generationTool;
+        std::optional<std::string> generationDateAndTime;
+        std::optional<std::string> variableNamingConvention;
+        std::optional<std::string> numberOfEventIndicators;
+        std::optional<fmi2::md::ModelExchange> ModelExchange;
+        std::optional<fmi2::md::CoSimulation> CoSimulation;
+        std::optional<fmi2::md::UnitDefinitions> UnitDefinitions;
+        std::optional<fmi2::md::TypeDefinitions> TypeDefinitions;
+        std::optional<fmi2::md::LogCategories> LogCategories;
+        std::optional<fmi2::md::DefaultExperiment> DefaultExperiment;
+        std::optional<fmi2::md::VendorAnnotations> VendorAnnotations;
         fmi2::md::ModelVariables ModelVariables;
         fmi2::md::ModelStructure ModelStructure;
 

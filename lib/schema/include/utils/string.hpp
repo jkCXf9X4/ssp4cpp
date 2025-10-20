@@ -12,7 +12,7 @@
 #include <type_traits>
 
 // dont name this 'string', to many collisions
-namespace ssp4cpp::common::str
+namespace ssp4cpp::utils::str
 {
     using namespace interfaces;
 

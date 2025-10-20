@@ -19,9 +19,8 @@
 
 namespace ssp4cpp::ssp1::ssd
 {
-    using namespace ssp4cpp::common::interfaces;
-    using namespace ssp4cpp::common::xml;
-    using namespace std;
+    using namespace utils::interfaces;
+    using namespace utils::xml;
 
     class TSystem;
 
@@ -69,7 +68,7 @@ namespace ssp4cpp::ssp1::ssd
     class TSignalDictionaries : public IXmlNode
     {
     public:
-        vector<ssd::SignalDictionary> SignalDictionaries;
+        std::vector<ssd::SignalDictionary> SignalDictionaries;
 
         std::string to_string(void) const;
     };
@@ -77,12 +76,12 @@ namespace ssp4cpp::ssp1::ssd
     class ParameterMapping : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        optional<string> type;
-        optional<string> source;
-        optional<string> sourceBase;
-        optional<ssm::ParameterMapping> ParameterMapping;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> type;
+        std::optional<std::string> source;
+        std::optional<std::string> sourceBase;
+        std::optional<ssm::ParameterMapping> ParameterMapping;
 
         std::string to_string(void) const;
     };
@@ -90,14 +89,14 @@ namespace ssp4cpp::ssp1::ssd
     class ParameterBinding : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        optional<string> type;
-        optional<string> source;
-        optional<string> sourceBase;
-        optional<string> prefix;
-        optional<ssv::ParameterSet> ParameterValues;
-        optional<ssd::ParameterMapping> ParameterMapping;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> type;
+        std::optional<std::string> source;
+        std::optional<std::string> sourceBase;
+        std::optional<std::string> prefix;
+        std::optional<ssv::ParameterSet> ParameterValues;
+        std::optional<ssd::ParameterMapping> ParameterMapping;
 
         std::string to_string(void) const;
     };
@@ -105,7 +104,7 @@ namespace ssp4cpp::ssp1::ssd
     class TParameterBindings : public IXmlNode
     {
     public:
-        vector<ssd::ParameterBinding> ParameterBindings;
+        std::vector<ssd::ParameterBinding> ParameterBindings;
 
         std::string to_string(void) const;
     };
@@ -121,9 +120,9 @@ namespace ssp4cpp::ssp1::ssd
     class TDefaultExperiment : public IXmlNode
     {
     public:
-        optional<double> startTime;
-        optional<double> stopTime;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<double> startTime;
+        std::optional<double> stopTime;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -131,19 +130,19 @@ namespace ssp4cpp::ssp1::ssd
     class Connection : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        optional<string> startElement;
-        string startConnector;
-        optional<string> endElement;
-        string endConnector;
-        optional<bool> suppressUnitConversion;
-        optional<ssc::LinearTransformation> LinearTransformation;
-        optional<ssc::BooleanMappingTransformation> BooleanMappingTransformation;
-        optional<ssc::IntegerMappingTransformation> IntegerMappingTransformation;
-        optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
-        optional<ssd::ConnectionGeometry> ConnectionGeometry;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> startElement;
+        std::string startConnector;
+        std::optional<std::string> endElement;
+        std::string endConnector;
+        std::optional<bool> suppressUnitConversion;
+        std::optional<ssc::LinearTransformation> LinearTransformation;
+        std::optional<ssc::BooleanMappingTransformation> BooleanMappingTransformation;
+        std::optional<ssc::IntegerMappingTransformation> IntegerMappingTransformation;
+        std::optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
+        std::optional<ssd::ConnectionGeometry> ConnectionGeometry;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -151,7 +150,7 @@ namespace ssp4cpp::ssp1::ssd
     class Connections : public IXmlNode
     {
     public:
-        vector<ssd::Connection> Connections;
+        std::vector<ssd::Connection> Connections;
 
         std::string to_string(void) const;
     };
@@ -159,18 +158,18 @@ namespace ssp4cpp::ssp1::ssd
     class Connector : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        string name;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::string name;
         fmi2::md::Causality kind;
-        optional<ssc::GTypeReal> Real;
-        optional<ssc::GTypeInteger> Integer;
-        optional<ssc::GTypeBoolean> Boolean;
-        optional<ssc::GTypeString> String;
-        optional<ssc::GTypeEnumeration> Enumeration;
-        optional<ssc::GTypeBinary> Binary;
-        optional<ssd::ConnectorGeometry> ConnectorGeometry;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<ssc::GTypeReal> Real;
+        std::optional<ssc::GTypeInteger> Integer;
+        std::optional<ssc::GTypeBoolean> Boolean;
+        std::optional<ssc::GTypeString> String;
+        std::optional<ssc::GTypeEnumeration> Enumeration;
+        std::optional<ssc::GTypeBinary> Binary;
+        std::optional<ssd::ConnectorGeometry> ConnectorGeometry;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -178,7 +177,7 @@ namespace ssp4cpp::ssp1::ssd
     class TConnectors : public IXmlNode
     {
     public:
-        vector<ssd::Connector> Connectors;
+        std::vector<ssd::Connector> Connectors;
 
         std::string to_string(void) const;
     };
@@ -186,16 +185,16 @@ namespace ssp4cpp::ssp1::ssd
     class TComponent : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        optional<string> name;
-        optional<ssd::TConnectors> Connectors;
-        optional<ssd::ElementGeometry> ElementGeometry;
-        optional<ssd::TParameterBindings> ParameterBindings;
-        optional<ssd::ComponentType> type;
-        string source;
-        optional<string> implementation;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> name;
+        std::optional<ssd::TConnectors> Connectors;
+        std::optional<ssd::ElementGeometry> ElementGeometry;
+        std::optional<ssd::TParameterBindings> ParameterBindings;
+        std::optional<ssd::ComponentType> type;
+        std::string source;
+        std::optional<std::string> implementation;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -203,14 +202,14 @@ namespace ssp4cpp::ssp1::ssd
     class TSignalDictionaryReference : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        optional<string> name;
-        optional<ssd::TConnectors> Connectors;
-        optional<ssd::ElementGeometry> ElementGeometry;
-        optional<ssd::TParameterBindings> ParameterBindings;
-        string dictionary;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> name;
+        std::optional<ssd::TConnectors> Connectors;
+        std::optional<ssd::ElementGeometry> ElementGeometry;
+        std::optional<ssd::TParameterBindings> ParameterBindings;
+        std::string dictionary;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -218,9 +217,9 @@ namespace ssp4cpp::ssp1::ssd
     class Elements : public IXmlNode
     {
     public:
-        vector<ssd::TComponent> Components;
-        vector<ssd::TSignalDictionaryReference> SignalDictionaryReferences;
-        vector<ssd::TSystem> Systems;
+        std::vector<ssd::TComponent> Components;
+        std::vector<ssd::TSignalDictionaryReference> SignalDictionaryReferences;
+        std::vector<ssd::TSystem> Systems;
 
         std::string to_string(void) const;
     };
@@ -228,18 +227,18 @@ namespace ssp4cpp::ssp1::ssd
     class TSystem : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        optional<string> name;
-        optional<ssd::TConnectors> Connectors;
-        optional<ssd::ElementGeometry> ElementGeometry;
-        optional<ssd::TParameterBindings> ParameterBindings;
-        optional<ssd::Elements> Elements;
-        optional<ssd::Connections> Connections;
-        optional<ssd::TSignalDictionaries> SignalDictionaries;
-        optional<ssd::SystemGeometry> SystemGeometry;
-        optional<ssd::GraphicalElements> GraphicalElements;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> name;
+        std::optional<ssd::TConnectors> Connectors;
+        std::optional<ssd::ElementGeometry> ElementGeometry;
+        std::optional<ssd::TParameterBindings> ParameterBindings;
+        std::optional<ssd::Elements> Elements;
+        std::optional<ssd::Connections> Connections;
+        std::optional<ssd::TSignalDictionaries> SignalDictionaries;
+        std::optional<ssd::SystemGeometry> SystemGeometry;
+        std::optional<ssd::GraphicalElements> GraphicalElements;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -247,21 +246,21 @@ namespace ssp4cpp::ssp1::ssd
     class SystemStructureDescription : public IXmlNode
     {
     public:
-        string version;
-        string name;
-        optional<string> id;
-        optional<string> description;
-        optional<string> author;
-        optional<string> fileversion;
-        optional<string> copyright;
-        optional<string> license;
-        optional<string> generationTool;
-        optional<string> generationDateAndTime;
+        std::string version;
+        std::string name;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> author;
+        std::optional<std::string> fileversion;
+        std::optional<std::string> copyright;
+        std::optional<std::string> license;
+        std::optional<std::string> generationTool;
+        std::optional<std::string> generationDateAndTime;
         ssd::TSystem System;
-        optional<ssc::TEnumerations> Enumerations;
-        optional<ssc::TUnits> Units;
-        optional<ssd::TDefaultExperiment> DefaultExperiment;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<ssc::TEnumerations> Enumerations;
+        std::optional<ssc::TUnits> Units;
+        std::optional<ssd::TDefaultExperiment> DefaultExperiment;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };

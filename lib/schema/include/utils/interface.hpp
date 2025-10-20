@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace ssp4cpp::common::interfaces
+namespace ssp4cpp::utils::interfaces
 {
 
     /** @brief Interface for objects that can be converted to string. */

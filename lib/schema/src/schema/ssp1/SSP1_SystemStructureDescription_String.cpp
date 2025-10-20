@@ -10,7 +10,7 @@
 
 namespace ssp4cpp::ssp1::ssd
 {
-    using namespace ssp4cpp::common::str;
+    using namespace utils::str;
 
 
      // SystemGeometry

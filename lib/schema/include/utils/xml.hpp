@@ -11,28 +11,28 @@
 #include <algorithm>
 #include <map>
 
-namespace ssp4cpp::common::xml
+namespace ssp4cpp::utils::xml
 {
     /**
      * @brief Helper container implementing IXmlNodeList for simple types.
      */
     template <typename T>
-    class XmlNodeList : public ssp4cpp::common::interfaces::IXmlNodeList
+    class XmlNodeList : public utils::interfaces::IXmlNodeList
     {
     public:
         std::string to_string() const
         {
-            return ssp4cpp::common::str::to_str<T>(list);
+            return utils::str::to_str<T>(list);
         }
 
         void from_string(const std::string &str, const char del)
         {
-            list = ssp4cpp::common::str::from_strs<T>(str, del);
+            list = utils::str::from_strs<T>(str, del);
         }
 
         void from_string(const std::string &str)
         {
-            list = ssp4cpp::common::str::from_strs<T>(str);
+            list = utils::str::from_strs<T>(str);
         }
         std::vector<T> list;
     };

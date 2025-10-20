@@ -8,11 +8,11 @@ from xml_exporter import DocumentXmlExporter
 
 def main():
 
-    files = ["resource/ssp1_ssd.toml", 
-             "resource/ssp1_ssc.toml", 
-             "resource/ssp1_ssv.toml", 
-             "resource/ssp1_ssm.toml", 
-             "resource/fmi2_md.toml",
+    files = ["./resource/ssp1_ssd.toml", 
+             "./resource/ssp1_ssc.toml", 
+             "./resource/ssp1_ssv.toml", 
+             "./resource/ssp1_ssm.toml", 
+             "./resource/fmi2_md.toml",
              ]
 
     lib_path = Path("./lib/schema")

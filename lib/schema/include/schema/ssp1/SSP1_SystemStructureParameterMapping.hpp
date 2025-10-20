@@ -16,9 +16,8 @@
 
 namespace ssp4cpp::ssp1::ssm
 {
-    using namespace ssp4cpp::common::interfaces;
-    using namespace ssp4cpp::common::xml;
-    using namespace std;
+    using namespace utils::interfaces;
+    using namespace utils::xml;
 
 
 
@@ -26,16 +25,16 @@ namespace ssp4cpp::ssp1::ssm
     class TMappingEntry : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        string source;
-        string target;
-        optional<bool> suppressUnitConversion;
-        optional<ssc::LinearTransformation> LinearTransformation;
-        optional<ssc::BooleanMappingTransformation> BooleanMappingTransformation;
-        optional<ssc::IntegerMappingTransformation> IntegerMappingTransformation;
-        optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::string source;
+        std::string target;
+        std::optional<bool> suppressUnitConversion;
+        std::optional<ssc::LinearTransformation> LinearTransformation;
+        std::optional<ssc::BooleanMappingTransformation> BooleanMappingTransformation;
+        std::optional<ssc::IntegerMappingTransformation> IntegerMappingTransformation;
+        std::optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -43,17 +42,17 @@ namespace ssp4cpp::ssp1::ssm
     class ParameterMapping : public IXmlNode
     {
     public:
-        string version;
-        optional<string> id;
-        optional<string> description;
-        optional<string> author;
-        optional<string> fileversion;
-        optional<string> copyright;
-        optional<string> license;
-        optional<string> generationTool;
-        optional<string> generationDateAndTime;
-        vector<ssm::TMappingEntry> MappingEntry;
-        optional<ssc::TAnnotations> Annotations;
+        std::string version;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> author;
+        std::optional<std::string> fileversion;
+        std::optional<std::string> copyright;
+        std::optional<std::string> license;
+        std::optional<std::string> generationTool;
+        std::optional<std::string> generationDateAndTime;
+        std::vector<ssm::TMappingEntry> MappingEntry;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };

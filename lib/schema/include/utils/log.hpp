@@ -15,7 +15,7 @@
 #include <string>
 #include <string_view>
 
-namespace ssp4cpp::common
+namespace ssp4cpp::utils
 {
 
     /**

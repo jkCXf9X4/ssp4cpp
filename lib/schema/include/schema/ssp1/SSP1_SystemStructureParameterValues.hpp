@@ -16,9 +16,8 @@
 
 namespace ssp4cpp::ssp1::ssv
 {
-    using namespace ssp4cpp::common::interfaces;
-    using namespace ssp4cpp::common::xml;
-    using namespace std;
+    using namespace utils::interfaces;
+    using namespace utils::xml;
 
 
 
@@ -27,7 +26,7 @@ namespace ssp4cpp::ssp1::ssv
     {
     public:
         double value;
-        optional<string> unit;
+        std::optional<std::string> unit;
 
         std::string to_string(void) const;
     };
@@ -51,7 +50,7 @@ namespace ssp4cpp::ssp1::ssv
     class String : public IXmlNode
     {
     public:
-        string value;
+        std::string value;
 
         std::string to_string(void) const;
     };
@@ -59,8 +58,8 @@ namespace ssp4cpp::ssp1::ssv
     class Enumeration : public IXmlNode
     {
     public:
-        string value;
-        optional<string> name;
+        std::string value;
+        std::optional<std::string> name;
 
         std::string to_string(void) const;
     };
@@ -68,8 +67,8 @@ namespace ssp4cpp::ssp1::ssv
     class Binary : public IXmlNode
     {
     public:
-        string value;
-        optional<string> mime_type;
+        std::string value;
+        std::optional<std::string> mime_type;
 
         std::string to_string(void) const;
     };
@@ -77,16 +76,16 @@ namespace ssp4cpp::ssp1::ssv
     class TParameter : public IXmlNode
     {
     public:
-        optional<string> id;
-        optional<string> description;
-        string name;
-        optional<ssv::Real> Real;
-        optional<ssv::Integer> Integer;
-        optional<ssv::Boolean> Boolean;
-        optional<ssv::String> String;
-        optional<ssv::Enumeration> Enumeration;
-        optional<ssv::Binary> Binary;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::string name;
+        std::optional<ssv::Real> Real;
+        std::optional<ssv::Integer> Integer;
+        std::optional<ssv::Boolean> Boolean;
+        std::optional<ssv::String> String;
+        std::optional<ssv::Enumeration> Enumeration;
+        std::optional<ssv::Binary> Binary;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };
@@ -94,7 +93,7 @@ namespace ssp4cpp::ssp1::ssv
     class TParameters : public IXmlNode
     {
     public:
-        vector<ssv::TParameter> Parameters;
+        std::vector<ssv::TParameter> Parameters;
 
         std::string to_string(void) const;
     };
@@ -102,20 +101,20 @@ namespace ssp4cpp::ssp1::ssv
     class ParameterSet : public IXmlNode
     {
     public:
-        optional<string> version;
-        string name;
-        optional<string> id;
-        optional<string> description;
-        optional<string> author;
-        optional<string> fileversion;
-        optional<string> copyright;
-        optional<string> license;
-        optional<string> generationTool;
-        optional<string> generationDateAndTime;
+        std::optional<std::string> version;
+        std::string name;
+        std::optional<std::string> id;
+        std::optional<std::string> description;
+        std::optional<std::string> author;
+        std::optional<std::string> fileversion;
+        std::optional<std::string> copyright;
+        std::optional<std::string> license;
+        std::optional<std::string> generationTool;
+        std::optional<std::string> generationDateAndTime;
         ssv::TParameters Parameters;
-        optional<ssc::TEnumerations> Enumerations;
-        optional<ssc::TUnits> Units;
-        optional<ssc::TAnnotations> Annotations;
+        std::optional<ssc::TEnumerations> Enumerations;
+        std::optional<ssc::TUnits> Units;
+        std::optional<ssc::TAnnotations> Annotations;
 
         std::string to_string(void) const;
     };

@@ -15,15 +15,15 @@
 namespace ssp4cpp::ssp1::ssd
 {
     using namespace pugi;
-    using namespace common;
 
-    auto log = Logger("ssp4cpp.ssp1.ssd", LogLevel::info);
+    auto log = utils::Logger("ssp4cpp.ssp1.ssd", utils::LogLevel::info);
 
 
     void from_xml(const xml_node &node, SystemGeometry &obj)
     {
         log.ext_trace("Parsing SystemGeometry");
         
+
 
 
         log.ext_trace("Completed SystemGeometry");
@@ -36,6 +36,7 @@ namespace ssp4cpp::ssp1::ssd
         
 
 
+
         log.ext_trace("Completed ConnectorGeometry");
     }
 
@@ -44,6 +45,7 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing ElementGeometry");
         
+
 
 
         log.ext_trace("Completed ElementGeometry");
@@ -56,6 +58,7 @@ namespace ssp4cpp::ssp1::ssd
         
 
 
+
         log.ext_trace("Completed ConnectionGeometry");
     }
 
@@ -66,6 +69,7 @@ namespace ssp4cpp::ssp1::ssd
         
 
 
+
         log.ext_trace("Completed SignalDictionary");
     }
 
@@ -74,7 +78,8 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing TSignalDictionaries");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionary");
+
+        utils::xml::parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionary");
 
         log.ext_trace("Completed TSignalDictionaries");
     }
@@ -84,12 +89,13 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing ParameterMapping");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description       , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.type              , "type");
-        ssp4cpp::common::xml::parse_xml(node, obj.source            , "source");
-        ssp4cpp::common::xml::parse_xml(node, obj.sourceBase        , "sourceBase");
-        ssp4cpp::common::xml::parse_xml(node, obj.ParameterMapping  , "ssm:ParameterMapping");
+
+        utils::xml::parse_xml(node, obj.id                , "id");
+        utils::xml::parse_xml(node, obj.description       , "description");
+        utils::xml::parse_xml(node, obj.type              , "type");
+        utils::xml::parse_xml(node, obj.source            , "source");
+        utils::xml::parse_xml(node, obj.sourceBase        , "sourceBase");
+        utils::xml::parse_xml(node, obj.ParameterMapping  , "ssm:ParameterMapping");
 
         log.ext_trace("Completed ParameterMapping");
     }
@@ -99,14 +105,15 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing ParameterBinding");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description       , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.type              , "type");
-        ssp4cpp::common::xml::parse_xml(node, obj.source            , "source");
-        ssp4cpp::common::xml::parse_xml(node, obj.sourceBase        , "sourceBase");
-        ssp4cpp::common::xml::parse_xml(node, obj.prefix            , "prefix");
-        ssp4cpp::common::xml::parse_xml(node, obj.ParameterValues   , "ssv:ParameterValues");
-        ssp4cpp::common::xml::parse_xml(node, obj.ParameterMapping  , "ssd:ParameterMapping");
+
+        utils::xml::parse_xml(node, obj.id                , "id");
+        utils::xml::parse_xml(node, obj.description       , "description");
+        utils::xml::parse_xml(node, obj.type              , "type");
+        utils::xml::parse_xml(node, obj.source            , "source");
+        utils::xml::parse_xml(node, obj.sourceBase        , "sourceBase");
+        utils::xml::parse_xml(node, obj.prefix            , "prefix");
+        utils::xml::parse_xml(node, obj.ParameterValues   , "ssv:ParameterValues");
+        utils::xml::parse_xml(node, obj.ParameterMapping  , "ssd:ParameterMapping");
 
         log.ext_trace("Completed ParameterBinding");
     }
@@ -116,7 +123,8 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing TParameterBindings");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBinding");
+
+        utils::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBinding");
 
         log.ext_trace("Completed TParameterBindings");
     }
@@ -128,6 +136,7 @@ namespace ssp4cpp::ssp1::ssd
         
 
 
+
         log.ext_trace("Completed GraphicalElements");
     }
 
@@ -136,9 +145,10 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing TDefaultExperiment");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.startTime    , "startTime");
-        ssp4cpp::common::xml::parse_xml(node, obj.stopTime     , "stopTime");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.startTime    , "startTime");
+        utils::xml::parse_xml(node, obj.stopTime     , "stopTime");
+        utils::xml::parse_xml(node, obj.Annotations  , "ssc:Annotations");
 
         log.ext_trace("Completed TDefaultExperiment");
     }
@@ -148,19 +158,20 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing Connection");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                                , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description                       , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.startElement                      , "startElement");
-        ssp4cpp::common::xml::parse_xml(node, obj.startConnector                    , "startConnector");
-        ssp4cpp::common::xml::parse_xml(node, obj.endElement                        , "endElement");
-        ssp4cpp::common::xml::parse_xml(node, obj.endConnector                      , "endConnector");
-        ssp4cpp::common::xml::parse_xml(node, obj.suppressUnitConversion            , "suppressUnitConversion");
-        ssp4cpp::common::xml::parse_xml(node, obj.LinearTransformation              , "ssc:LinearTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.BooleanMappingTransformation      , "ssc:BooleanMappingTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.IntegerMappingTransformation      , "ssc:IntegerMappingTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation");
-        ssp4cpp::common::xml::parse_xml(node, obj.ConnectionGeometry                , "ssd:ConnectionGeometry");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations                       , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id                                , "id");
+        utils::xml::parse_xml(node, obj.description                       , "description");
+        utils::xml::parse_xml(node, obj.startElement                      , "startElement");
+        utils::xml::parse_xml(node, obj.startConnector                    , "startConnector");
+        utils::xml::parse_xml(node, obj.endElement                        , "endElement");
+        utils::xml::parse_xml(node, obj.endConnector                      , "endConnector");
+        utils::xml::parse_xml(node, obj.suppressUnitConversion            , "suppressUnitConversion");
+        utils::xml::parse_xml(node, obj.LinearTransformation              , "ssc:LinearTransformation");
+        utils::xml::parse_xml(node, obj.BooleanMappingTransformation      , "ssc:BooleanMappingTransformation");
+        utils::xml::parse_xml(node, obj.IntegerMappingTransformation      , "ssc:IntegerMappingTransformation");
+        utils::xml::parse_xml(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation");
+        utils::xml::parse_xml(node, obj.ConnectionGeometry                , "ssd:ConnectionGeometry");
+        utils::xml::parse_xml(node, obj.Annotations                       , "ssc:Annotations");
 
         log.ext_trace("Completed Connection");
     }
@@ -170,7 +181,8 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing Connections");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.Connections  , "ssd:Connection");
+
+        utils::xml::parse_xml(node, obj.Connections  , "ssd:Connection");
 
         log.ext_trace("Completed Connections");
     }
@@ -180,18 +192,19 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing Connector");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.name               , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.kind               , "kind");
-        ssp4cpp::common::xml::parse_xml(node, obj.Real               , "ssc:Real");
-        ssp4cpp::common::xml::parse_xml(node, obj.Integer            , "ssc:Integer");
-        ssp4cpp::common::xml::parse_xml(node, obj.Boolean            , "ssc:Boolean");
-        ssp4cpp::common::xml::parse_xml(node, obj.String             , "ssc:String");
-        ssp4cpp::common::xml::parse_xml(node, obj.Enumeration        , "ssc:Enumeration");
-        ssp4cpp::common::xml::parse_xml(node, obj.Binary             , "ssc:Binary");
-        ssp4cpp::common::xml::parse_xml(node, obj.ConnectorGeometry  , "ssd:ConnectorGeometry");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id                 , "id");
+        utils::xml::parse_xml(node, obj.description        , "description");
+        utils::xml::parse_xml(node, obj.name               , "name");
+        utils::xml::parse_xml(node, obj.kind               , "kind");
+        utils::xml::parse_xml(node, obj.Real               , "ssc:Real");
+        utils::xml::parse_xml(node, obj.Integer            , "ssc:Integer");
+        utils::xml::parse_xml(node, obj.Boolean            , "ssc:Boolean");
+        utils::xml::parse_xml(node, obj.String             , "ssc:String");
+        utils::xml::parse_xml(node, obj.Enumeration        , "ssc:Enumeration");
+        utils::xml::parse_xml(node, obj.Binary             , "ssc:Binary");
+        utils::xml::parse_xml(node, obj.ConnectorGeometry  , "ssd:ConnectorGeometry");
+        utils::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
         log.ext_trace("Completed Connector");
     }
@@ -201,7 +214,8 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing TConnectors");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.Connectors  , "ssd:Connector");
+
+        utils::xml::parse_xml(node, obj.Connectors  , "ssd:Connector");
 
         log.ext_trace("Completed TConnectors");
     }
@@ -211,16 +225,17 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing TComponent");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.name               , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.Connectors         , "ssd:Connectors");
-        ssp4cpp::common::xml::parse_xml(node, obj.ElementGeometry    , "ssd:ElementGeometry");
-        ssp4cpp::common::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBindings");
-        ssp4cpp::common::xml::parse_xml(node, obj.type               , "type");
-        ssp4cpp::common::xml::parse_xml(node, obj.source             , "source");
-        ssp4cpp::common::xml::parse_xml(node, obj.implementation     , "implementation");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id                 , "id");
+        utils::xml::parse_xml(node, obj.description        , "description");
+        utils::xml::parse_xml(node, obj.name               , "name");
+        utils::xml::parse_xml(node, obj.Connectors         , "ssd:Connectors");
+        utils::xml::parse_xml(node, obj.ElementGeometry    , "ssd:ElementGeometry");
+        utils::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBindings");
+        utils::xml::parse_xml(node, obj.type               , "type");
+        utils::xml::parse_xml(node, obj.source             , "source");
+        utils::xml::parse_xml(node, obj.implementation     , "implementation");
+        utils::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
         log.ext_trace("Completed TComponent");
     }
@@ -230,14 +245,15 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing TSignalDictionaryReference");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                 , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description        , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.name               , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.Connectors         , "ssd:Connectors");
-        ssp4cpp::common::xml::parse_xml(node, obj.ElementGeometry    , "ssd:ElementGeometry");
-        ssp4cpp::common::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBindings");
-        ssp4cpp::common::xml::parse_xml(node, obj.dictionary         , "dictionary");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id                 , "id");
+        utils::xml::parse_xml(node, obj.description        , "description");
+        utils::xml::parse_xml(node, obj.name               , "name");
+        utils::xml::parse_xml(node, obj.Connectors         , "ssd:Connectors");
+        utils::xml::parse_xml(node, obj.ElementGeometry    , "ssd:ElementGeometry");
+        utils::xml::parse_xml(node, obj.ParameterBindings  , "ssd:ParameterBindings");
+        utils::xml::parse_xml(node, obj.dictionary         , "dictionary");
+        utils::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
 
         log.ext_trace("Completed TSignalDictionaryReference");
     }
@@ -247,9 +263,10 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing Elements");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.Components                  , "ssd:Component");
-        ssp4cpp::common::xml::parse_xml(node, obj.SignalDictionaryReferences  , "ssd:SignalDictionaryReference");
-        ssp4cpp::common::xml::parse_xml(node, obj.Systems                     , "ssd:System");
+
+        utils::xml::parse_xml(node, obj.Components                  , "ssd:Component");
+        utils::xml::parse_xml(node, obj.SignalDictionaryReferences  , "ssd:SignalDictionaryReference");
+        utils::xml::parse_xml(node, obj.Systems                     , "ssd:System");
 
         log.ext_trace("Completed Elements");
     }
@@ -259,18 +276,19 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing TSystem");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.id                  , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description         , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.name                , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.Connectors          , "ssd:Connectors");
-        ssp4cpp::common::xml::parse_xml(node, obj.ElementGeometry     , "ssd:ElementGeometry");
-        ssp4cpp::common::xml::parse_xml(node, obj.ParameterBindings   , "ssd:ParameterBindings");
-        ssp4cpp::common::xml::parse_xml(node, obj.Elements            , "ssd:Elements");
-        ssp4cpp::common::xml::parse_xml(node, obj.Connections         , "ssd:Connections");
-        ssp4cpp::common::xml::parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionaries");
-        ssp4cpp::common::xml::parse_xml(node, obj.SystemGeometry      , "ssd:SystemGeometry");
-        ssp4cpp::common::xml::parse_xml(node, obj.GraphicalElements   , "ssd:GraphicalElements");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations         , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.id                  , "id");
+        utils::xml::parse_xml(node, obj.description         , "description");
+        utils::xml::parse_xml(node, obj.name                , "name");
+        utils::xml::parse_xml(node, obj.Connectors          , "ssd:Connectors");
+        utils::xml::parse_xml(node, obj.ElementGeometry     , "ssd:ElementGeometry");
+        utils::xml::parse_xml(node, obj.ParameterBindings   , "ssd:ParameterBindings");
+        utils::xml::parse_xml(node, obj.Elements            , "ssd:Elements");
+        utils::xml::parse_xml(node, obj.Connections         , "ssd:Connections");
+        utils::xml::parse_xml(node, obj.SignalDictionaries  , "ssd:SignalDictionaries");
+        utils::xml::parse_xml(node, obj.SystemGeometry      , "ssd:SystemGeometry");
+        utils::xml::parse_xml(node, obj.GraphicalElements   , "ssd:GraphicalElements");
+        utils::xml::parse_xml(node, obj.Annotations         , "ssc:Annotations");
 
         log.ext_trace("Completed TSystem");
     }
@@ -280,21 +298,22 @@ namespace ssp4cpp::ssp1::ssd
     {
         log.ext_trace("Parsing SystemStructureDescription");
         
-        ssp4cpp::common::xml::parse_xml(node, obj.version                , "version");
-        ssp4cpp::common::xml::parse_xml(node, obj.name                   , "name");
-        ssp4cpp::common::xml::parse_xml(node, obj.id                     , "id");
-        ssp4cpp::common::xml::parse_xml(node, obj.description            , "description");
-        ssp4cpp::common::xml::parse_xml(node, obj.author                 , "author");
-        ssp4cpp::common::xml::parse_xml(node, obj.fileversion            , "fileversion");
-        ssp4cpp::common::xml::parse_xml(node, obj.copyright              , "copyright");
-        ssp4cpp::common::xml::parse_xml(node, obj.license                , "license");
-        ssp4cpp::common::xml::parse_xml(node, obj.generationTool         , "generationTool");
-        ssp4cpp::common::xml::parse_xml(node, obj.generationDateAndTime  , "generationDateAndTime");
-        ssp4cpp::common::xml::parse_xml(node, obj.System                 , "ssd:System");
-        ssp4cpp::common::xml::parse_xml(node, obj.Enumerations           , "ssc:Enumerations");
-        ssp4cpp::common::xml::parse_xml(node, obj.Units                  , "ssc:Units");
-        ssp4cpp::common::xml::parse_xml(node, obj.DefaultExperiment      , "ssd:DefaultExperiment");
-        ssp4cpp::common::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
+
+        utils::xml::parse_xml(node, obj.version                , "version");
+        utils::xml::parse_xml(node, obj.name                   , "name");
+        utils::xml::parse_xml(node, obj.id                     , "id");
+        utils::xml::parse_xml(node, obj.description            , "description");
+        utils::xml::parse_xml(node, obj.author                 , "author");
+        utils::xml::parse_xml(node, obj.fileversion            , "fileversion");
+        utils::xml::parse_xml(node, obj.copyright              , "copyright");
+        utils::xml::parse_xml(node, obj.license                , "license");
+        utils::xml::parse_xml(node, obj.generationTool         , "generationTool");
+        utils::xml::parse_xml(node, obj.generationDateAndTime  , "generationDateAndTime");
+        utils::xml::parse_xml(node, obj.System                 , "ssd:System");
+        utils::xml::parse_xml(node, obj.Enumerations           , "ssc:Enumerations");
+        utils::xml::parse_xml(node, obj.Units                  , "ssc:Units");
+        utils::xml::parse_xml(node, obj.DefaultExperiment      , "ssd:DefaultExperiment");
+        utils::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
 
         log.ext_trace("Completed SystemStructureDescription");
     }

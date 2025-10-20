@@ -12,10 +12,10 @@ namespace ssp4cpp
     /**
      * @brief Base class for archives extracted to a temporary directory.
      */
-    class Archive : public common::str::IString
+    class Archive : public utils::str::IString
     {
     public:
-        common::Logger log = common::Logger("ssp4cpp.Archive", common::LogLevel::info);
+        utils::Logger log = utils::Logger("ssp4cpp.Archive", utils::LogLevel::info);
         bool using_tmp_dir = false;
         std::filesystem::path original_file;
         std::filesystem::path dir;

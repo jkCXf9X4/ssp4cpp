@@ -7,7 +7,7 @@
 #include <optional>
 #include <algorithm>
 
-namespace ssp4cpp::common::types
+namespace ssp4cpp::utils::types
 {
     /** @brief Helper trait to detect std::optional. */
     template <typename>

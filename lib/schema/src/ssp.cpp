@@ -12,9 +12,9 @@ namespace ssp4cpp
 {
     Ssp::Ssp(const std::filesystem::path &file) : Archive(file, "ssp_")
     {
-        log = common::Logger("ssp4cpp.ssp", common::LogLevel::debug);
+        log = utils::Logger("ssp4cpp.ssp", utils::LogLevel::debug);
 
-        this->ssd = common::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / "SystemStructure.ssd").string(), "ssd:SystemStructureDescription");
+        this->ssd = utils::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / "SystemStructure.ssd").string(), "ssd:SystemStructureDescription");
         log.info("SSP Imported, {}", ssd->name);
 
     }

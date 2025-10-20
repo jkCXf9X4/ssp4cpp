@@ -10,7 +10,7 @@
 
 namespace ssp4cpp::ssp1::ssm
 {
-    using namespace ssp4cpp::common::str;
+    using namespace utils::str;
 
 
      // TMappingEntry

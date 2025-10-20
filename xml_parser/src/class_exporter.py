@@ -36,12 +36,13 @@ std::string {self.class_node.name}::to_string(void) const
 
     @classmethod
     def generate_variable_declaration(cls, variable: Attribute):
+        t = "std::string" if variable.type == "string" else variable.type
         if variable.list:
-            return f"vector<{variable.type}> {variable.name};"
+            return f"std::vector<{t}> {variable.name};"
         elif variable.optional:
-            return f"optional<{variable.type}> {variable.name};"
+            return f"std::optional<{t}> {variable.name};"
         else:
-            return f"{variable.type} {variable.name};"
+            return f"{t} {variable.name};"
 
     def generate_class(self):
         variables = [
@@ -87,8 +88,8 @@ class DocumentDeclarationExporter:
 // it is based on {self.standard.filename }
 #pragma once
 
-#include "common_interface.hpp"
-#include "common_xml.hpp"
+#include "utils/interface.hpp"
+#include "utils/xml.hpp"
 
 {headers}
 {dependencies}
@@ -99,9 +100,8 @@ class DocumentDeclarationExporter:
 
 namespace {self.standard.long_namespece}
 {{
-{self.indent}using namespace ssp4cpp::common::interfaces;
-{self.indent}using namespace ssp4cpp::common::xml;
-{self.indent}using namespace std;
+{self.indent}using namespace utils::interfaces;
+{self.indent}using namespace utils::xml;
 
 {forward_declarations}
 
@@ -121,13 +121,13 @@ namespace {self.standard.long_namespece}
 // it is based on {self.standard.filename }
 
 #include "{self.standard.long_name}.hpp"
-#include "common_string.hpp"
+#include "utils/string.hpp"
 
 #include <string>
 
 namespace {self.standard.long_namespece}
 {{
-{self.indent}using namespace ssp4cpp::common::str;
+{self.indent}using namespace utils::str;
 
 
 {declarations}

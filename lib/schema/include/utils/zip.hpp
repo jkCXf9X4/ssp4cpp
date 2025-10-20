@@ -3,7 +3,7 @@
 #include <filesystem>
 
 // dont name this 'zip', collision between namespace and types makes life harder
-namespace ssp4cpp::common::zip_ns
+namespace ssp4cpp::utils::zip_ns
 {
     namespace fs = std::filesystem;
 

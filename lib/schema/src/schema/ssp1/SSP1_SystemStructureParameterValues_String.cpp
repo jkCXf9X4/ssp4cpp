@@ -10,7 +10,7 @@
 
 namespace ssp4cpp::ssp1::ssv
 {
-    using namespace ssp4cpp::common::str;
+    using namespace utils::str;
 
 
      // Real

@@ -14,8 +14,8 @@
 
 using namespace std;
 using namespace ssp4cpp::ssp1;
-using namespace ssp4cpp::common::str;
-using namespace ssp4cpp::common;
+using namespace ssp4cpp::utils::str;
+using namespace ssp4cpp::utils;
 namespace views = std::ranges::views;
 
 namespace ssp4cpp::ssp1::ext
@@ -81,7 +81,7 @@ namespace ssp4cpp::ssp1::ext
 
             std::copy_if(begin(in), end(in), std::back_inserter(out),
                          [causalities](IndexConnectorComponentTuple a)
-                         { return ssp4cpp::common::list::is_in_list(get<1>(a)->kind, causalities); });
+                         { return ssp4cpp::utils::list::is_in_list(get<1>(a)->kind, causalities); });
 
             reset_index(out);
 

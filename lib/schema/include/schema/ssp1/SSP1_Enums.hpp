@@ -13,7 +13,7 @@
 namespace ssp4cpp::ssp1::ssd
 {
     using namespace std;
-    using namespace ssp4cpp::common::interfaces;
+    using namespace ssp4cpp::utils::interfaces;
     class ComponentType : public IEnum
     {
     public:

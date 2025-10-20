@@ -18,7 +18,7 @@
 
 namespace ssp4cpp::ssp1::ext::ssv
 {
-    inline auto log = common::Logger("ssp4cpp.ssp1.ext.ssv", common::LogLevel::info);
+    inline auto log = utils::Logger("ssp4cpp.ssp1.ext.ssv", utils::LogLevel::info);
 
     using namespace ssp4cpp::ssp1::ssv;
     using namespace ssp4cpp::ssp1::ssm;
@@ -95,10 +95,10 @@ namespace ssp4cpp::ssp1::ext::ssv
         {
             if (this->type == DataType::string)
             {
-                log.ext_trace("[{}] Storing value {}", __func__, *(string *)value);
+                log.ext_trace("[{}] Storing value {}", __func__, *(std::string *)value);
                 
-                auto s = (string *)this->value.get();
-                *s = *(string *)value;
+                auto s = (std::string *)this->value.get();
+                *s = *(std::string *)value;
             }
             else
             {
@@ -137,7 +137,7 @@ namespace ssp4cpp::ssp1::ext::ssv
         }
         else
         {
-            throw runtime_error("Unknown type");
+            throw std::runtime_error("Unknown type");
         }
     }
 

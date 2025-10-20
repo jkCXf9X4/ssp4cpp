@@ -16,7 +16,7 @@ namespace ssp4cpp
 
         if (is_regular_file(file))
         {
-            dir = common::zip_ns::unzip_to_temp_dir(file.string(), tmp_prefix);
+            dir = utils::zip_ns::unzip_to_temp_dir(file.string(), tmp_prefix);
             using_tmp_dir = true;
         }
         else if (is_directory(file))

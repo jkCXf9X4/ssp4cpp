@@ -45,7 +45,7 @@ class NodeXmlExporter:
                 else f"{variable.namespace}:{variable.name}"
             )
 
-        return f'ssp4cpp::common::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, "{name}");'
+        return f'utils::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, "{name}");'
 
     def generate_parser(self):
         variables = [
@@ -66,6 +66,7 @@ void from_xml(const xml_node &node, {self.class_node.name} &obj)
 {{
     log.ext_trace("Parsing {self.class_node.name}");
     {warning_text}
+
 {variables}
 
     log.ext_trace("Completed {self.class_node.name}");
@@ -122,14 +123,13 @@ namespace {self.standard.long_namespece}
 
 #include "xml_deserialize.hpp"
 
-#include "common_log.hpp"
+#include "utils/log.hpp"
 
 namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace pugi;
-{self.indent}using namespace common;
 
-{self.indent}auto log = Logger("{self.standard.long_namespece.replace('::', '.')}", LogLevel::info);
+{self.indent}auto log = utils::Logger("{self.standard.long_namespece.replace('::', '.')}", utils::LogLevel::info);
 
 {parsers}
 }}
@@ -139,7 +139,7 @@ namespace {self.standard.long_namespece}
     def export(self, base_path):
         xml_declaration_path = (
             base_path
-            / "include_private"
+            / "include_private/schema"
             / self.standard.standard.lower()
             / f"{self.standard.long_name}_XML.hpp"
         )
