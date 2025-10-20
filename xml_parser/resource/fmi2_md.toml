@@ -214,3 +214,4 @@ DefaultExperiment = { type = "fmi2::md::DefaultExperiment", optional = true }
 VendorAnnotations = { type = "fmi2::md::VendorAnnotations", optional = true }
 ModelVariables = { type = "fmi2::md::ModelVariables" }
 ModelStructure = { type = "fmi2::md::ModelStructure" }
+# delay = { type = "double", optional = true, experimental = true }
