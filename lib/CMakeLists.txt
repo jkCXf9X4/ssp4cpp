@@ -26,6 +26,5 @@ target_compile_options(ssp4cpp PRIVATE -Wfatal-errors)
 find_package(pugixml CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE pugixml::static pugixml::pugixml)
 
-
 find_package(libzip CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE libzip::zip)

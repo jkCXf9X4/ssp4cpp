@@ -27,6 +27,13 @@
 // If you import this file you will get the namespace
 using namespace ssp4cpp::utils::log;
 
+// log_toggle.hpp
+#ifdef _LOG_
+  #define IF_LOG(stmt) do { stmt } while (0)
+#else
+  #define IF_LOG(stmt) do { } while (0)
+#endif
+
 namespace ssp4cpp::utils::log
 {
 
