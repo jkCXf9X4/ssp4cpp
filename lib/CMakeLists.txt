@@ -19,6 +19,7 @@ target_include_directories(ssp4cpp
     ${CMAKE_CURRENT_LIST_DIR}/include_private
     ${CMAKE_CURRENT_LIST_DIR}/include_private/schema/fmi2
     ${CMAKE_CURRENT_LIST_DIR}/include_private/schema/ssp1   
+    ${CMAKE_CURRENT_LIST_DIR}/include_private/utils   
 )
 target_compile_options(ssp4cpp PRIVATE -Wfatal-errors)
 

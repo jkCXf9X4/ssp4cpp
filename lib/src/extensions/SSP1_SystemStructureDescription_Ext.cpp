@@ -2,7 +2,6 @@
 #include "SSP1_SystemStructureDescription_Ext.hpp"
 
 #include "utils/string.hpp"
-#include "utils/vector.hpp"
 
 #include <vector>
 #include <tuple>
@@ -24,16 +23,16 @@ namespace ssp4cpp::ssp1::ext
 
     namespace ssd
     {
-        std::vector<TComponent*> get_resources(const ssp1::ssd::SystemStructureDescription& ssd)
+        std::vector<TComponent *> get_resources(const ssp1::ssd::SystemStructureDescription &ssd)
         {
-            auto resources = vector<TComponent*>();
+            auto resources = vector<TComponent *>();
 
             if (ssd.System.Elements.has_value())
             {
                 for (auto &comp : ssd.System.Elements.value().Components)
                 {
                     // Make sure that the object is cast as a non const
-                    resources.push_back(const_cast<TComponent*>(&comp));
+                    resources.push_back(const_cast<TComponent *>(&comp));
                 }
             }
             return resources;
@@ -72,6 +71,12 @@ namespace ssp4cpp::ssp1::ext
             }
         }
 
+        template <typename T, typename S>
+        bool is_in_list(T value, S list)
+        {
+            return std::find(list.begin(), list.end(), value) != list.end();
+        }
+
         IndexConnectorComponentTuples get_connectors(
             Elements &elements,
             std::initializer_list<fmi2::md::Causality> causalities)
@@ -81,7 +86,7 @@ namespace ssp4cpp::ssp1::ext
 
             std::copy_if(begin(in), end(in), std::back_inserter(out),
                          [causalities](IndexConnectorComponentTuple a)
-                         { return ssp4cpp::utils::list::is_in_list(get<1>(a)->kind, causalities); });
+                         { return is_in_list(get<1>(a)->kind, causalities); });
 
             reset_index(out);
 
