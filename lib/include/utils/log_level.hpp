@@ -1,20 +1,7 @@
 
 #pragma once
 
-#include <kissnet.hpp>
-
-#include <chrono>
-#include <ctime>
-#include <format>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <mutex>
-#include <sstream>
-#include <stdexcept>
 #include <string>
-#include <string_view>
-#include <source_location>
 
 namespace ssp4cpp::utils::log
 {

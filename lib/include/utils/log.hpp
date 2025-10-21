@@ -1,8 +1,9 @@
 
 #pragma once
 
-#include <kissnet.hpp>
+
 #include <utils/log_level.hpp>
+#include <utils/socket.hpp>
 
 #include <chrono>
 #include <ctime>
@@ -44,7 +45,7 @@ namespace ssp4cpp::utils::log
         static inline std::string file_sink_path;
 
         static inline bool socket_sink_enabled = false;
-        static inline std::unique_ptr<kissnet::tcp_socket> socket;
+        static inline std::unique_ptr<SocketWrapper> socket;
 
         static inline std::mutex print_mutex;
 
@@ -103,10 +104,10 @@ namespace ssp4cpp::utils::log
             return Logger::file_sink_enabled && Logger::file_sink_stream.is_open();
         }
 
-        static void enable_socket_sink(const std::string &adress)
+        static void enable_socket_sink(const std::string &address)
         {
-            Logger::socket = std::make_unique<kissnet::tcp_socket>(kissnet::endpoint(adress));
-            if (Logger::socket->connect() == kissnet::socket_status::valid)
+            Logger::socket = std::make_unique<SocketWrapper>(address);
+            if (Logger::socket->connect())
             {
                 auto payload = make_cutelog_payload("!!cutelog!!format=json");
                 Logger::socket->send((std::byte *)payload.data(), payload.size());
@@ -125,6 +126,8 @@ namespace ssp4cpp::utils::log
 
         auto operator()(LogLevel level, std::source_location loc = std::source_location::current())
         {
+            // This gives the option to return a function that does not do anything.
+            // May enable some optimization, we will see
             return [=,this]<class... Args>(std::format_string<Args...> fmt, Args &&...args)
             {
                 auto message = std::format(fmt, std::forward<Args>(args)...);
