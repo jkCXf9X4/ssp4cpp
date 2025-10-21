@@ -57,7 +57,7 @@ TEST_CASE("Logger writes formatted entry to the file sink")
     CHECK(content.find("\"name\":\"test.logger\"") != std::string::npos);
     CHECK(content.find("\"level\":\"info\"") != std::string::npos);
     CHECK(content.find("Test message") != std::string::npos);
-    CHECK(content.find("logger_tests.cpp") != std::string::npos);
+    CHECK(content.find("test_logger.cpp") != std::string::npos);
 }
 
 TEST_CASE("Logger appends multiple entries")
