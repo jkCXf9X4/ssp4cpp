@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "utils/interface.hpp"
-#include "utils/string.hpp"
+#include "ssp4cpp/utils/interface.hpp"
+#include "ssp4cpp/utils/string.hpp"
 
 #include <vector>
 

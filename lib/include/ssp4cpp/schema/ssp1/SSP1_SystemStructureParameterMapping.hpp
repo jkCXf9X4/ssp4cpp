@@ -4,11 +4,11 @@
 // it is based on ssp1_ssm.toml
 #pragma once
 
-#include "utils/interface.hpp"
-#include "utils/xml.hpp"
+#include "ssp4cpp/utils/interface.hpp"
+#include "ssp4cpp/utils/xml.hpp"
 
 
-#include "SSP1_SystemStructureCommon.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureCommon.hpp"
 
 #include <string>
 #include <vector>

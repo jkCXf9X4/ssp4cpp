@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "SSP1_SystemStructureCommon.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureCommon.hpp"
 #include <pugixml.hpp>
 
 namespace ssp4cpp::ssp1::ssc

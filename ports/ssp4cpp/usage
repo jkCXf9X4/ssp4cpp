@@ -3,3 +3,6 @@ ssp4cpp provides a CMake config package.
 CMake usage:
     find_package(ssp4cpp CONFIG REQUIRED)
     target_link_libraries(main PRIVATE ssp4cpp::ssp4cpp)
+
+Header usage:
+    #include <ssp4cpp/ssp.hpp>

@@ -2,9 +2,8 @@
 
 #include "cutecpp/log.hpp"
 
-#include "archive.hpp"
-
-#include "SSP1_SystemStructureDescription.hpp"
+#include "ssp4cpp/utils/archive.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureDescription.hpp"
 
 #include <string>
 #include <vector>

@@ -1,6 +1,6 @@
 
 
-#include "ssp.hpp"
+#include "ssp4cpp/ssp.hpp"
 
 #include "xml_deserialize.hpp"
 

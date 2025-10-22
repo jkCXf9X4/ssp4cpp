@@ -3,8 +3,8 @@
 // This is a generated file, do not alter
 // it is based on fmi2_md.toml
 
-#include "FMI2_modelDescription.hpp"
-#include "utils/string.hpp"
+#include "ssp4cpp/schema/fmi2/FMI2_modelDescription.hpp"
+#include "ssp4cpp/utils/string.hpp"
 
 #include <string>
 

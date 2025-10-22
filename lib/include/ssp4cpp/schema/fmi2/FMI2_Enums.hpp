@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/interface.hpp"
-#include "utils/xml.hpp"
+#include "ssp4cpp/utils/interface.hpp"
+#include "ssp4cpp/utils/xml.hpp"
 
 
 #include <string>

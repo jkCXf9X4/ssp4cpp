@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-Core C++ source lives under `lib/src` with public headers in `lib/include/ssp4spp` and internal headers in `lib/include_private`. Generated schema bindings reside in `lib/include/ssp4spp/schema` and `lib/src/schema`. Test fixtures and Catch2 cases are in `tests`, with sample SSP archives in `tests/resources`. Python helpers for regenerating schema code sit in `xml_parser/src`, and template metadata is collected under `resources`. Keep third-party submodules self-contained inside `3rdParty` and avoid modifying them directly.
+Core C++ source lives under `lib/src` with public headers in `lib/include/ssp4cpp` and internal headers in `lib/include_private`. Generated schema bindings reside in `lib/include/ssp4cpp/schema` and `lib/src/schema`. Test fixtures and Catch2 cases are in `tests`, with sample SSP archives in `tests/resources`. Python helpers for regenerating schema code sit in `xml_parser/src`, and template metadata is collected under `resources`. Keep third-party submodules self-contained inside `3rdParty` and avoid modifying them directly.
 
 ## Build, Test, and Development Commands
 Configure the toolchain with vcpkg-aware presets: `cmake --preset=vcpkg`. Build all targets with `cmake --build build` or specify the build type explicitly, e.g. `cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug`. Execute the full test suite using `cmake --build build --target ssp4cpp_tests && ./build/tests/ssp4cpp_tests`. When iterating on the XML generator, activate the virtual environment (`. ./venv/bin/activate`) before running Python modules.

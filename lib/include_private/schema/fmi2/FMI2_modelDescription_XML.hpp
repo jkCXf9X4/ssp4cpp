@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "FMI2_modelDescription.hpp"
+#include "ssp4cpp/schema/fmi2/FMI2_modelDescription.hpp"
 #include <pugixml.hpp>
 
 namespace ssp4cpp::fmi2::md

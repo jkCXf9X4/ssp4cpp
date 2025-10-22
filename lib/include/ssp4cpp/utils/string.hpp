@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utils/interface.hpp"
+#include "ssp4cpp/utils/interface.hpp"
 
 #include <string>
 #include <vector>

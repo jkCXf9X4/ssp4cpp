@@ -2,11 +2,10 @@
 
 #include "cutecpp/log.hpp"
 
-#include "fmu.hpp"
+#include "ssp4cpp/fmu.hpp"
+#include "ssp4cpp/schema/fmi2/FMI2_modelDescription.hpp"
 
-#include "FMI2_modelDescription.hpp"
 #include "FMI2_modelDescription_XML.hpp"
-
 #include "xml_deserialize.hpp"
 
 #include <filesystem>

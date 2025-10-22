@@ -1,8 +1,7 @@
 #pragma once
 
-#include "FMI2_modelDescription.hpp"
-
-#include "archive.hpp"
+#include "ssp4cpp/utils/archive.hpp"
+#include "ssp4cpp/schema/fmi2/FMI2_modelDescription.hpp"
 
 #include <string>
 #include <vector>

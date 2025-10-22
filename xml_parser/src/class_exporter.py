@@ -3,7 +3,7 @@ from typing import List
 
 from standard import Node, Attribute, Standard
 
-from misc import indent_strings, new_line
+from misc import indent_strings, new_line, format_schema_include
 
 
 class NodeDeclarationExporter:
@@ -14,13 +14,10 @@ class NodeDeclarationExporter:
 
     def variable_to_string(self, variable: Attribute):
         longest_name = max([len(v.name) for v in self.variable_nodes])
-        return f""""{variable.name.ljust(longest_name +2)}: " + to_str( {variable.name.ljust(longest_name + 1) } ) + "\\n" +"""
+        return f""""{variable.name.ljust(longest_name + 2)}: " + to_str( {variable.name.ljust(longest_name + 1)} ) + "\\n" +"""
 
     def generate_to_string_definitions(self):
-        variables = [
-            self.variable_to_string(v)
-            for v in self.variable_nodes
-        ]
+        variables = [self.variable_to_string(v) for v in self.variable_nodes]
         variables = "\n".join(variables)
         variables = indent_strings("           ", variables)
 
@@ -45,10 +42,7 @@ std::string {self.class_node.name}::to_string(void) const
             return f"{t} {variable.name};"
 
     def generate_class(self):
-        variables = [
-            self.generate_variable_declaration(v)
-            for v in self.variable_nodes
-        ]
+        variables = [self.generate_variable_declaration(v) for v in self.variable_nodes]
         variables = "\n".join(variables)
         variables = indent_strings(self.indent, variables)
 
@@ -73,23 +67,31 @@ class DocumentDeclarationExporter:
         classes = [n.generate_class() for n in self.nodes]
         classes = indent_strings(self.indent, new_line.join(classes))
 
-        headers = new_line.join([f'#include "{h}"' for h in self.standard.headers])
+        headers = new_line.join(
+            [
+                f'#include "{format_schema_include(h)}"'
+                for h in self.standard.headers
+            ]
+        )
         forward_declarations = new_line.join(
             [f"{self.indent}{d}" for d in self.standard.forward_declarations]
         )
 
         dependencies = new_line.join(
-            [f'#include "{h}.hpp"' for h in self.standard.dependencies]
+            [
+                f'#include "{format_schema_include(h)}.hpp"'
+                for h in self.standard.dependencies
+            ]
         )
 
         text = f"""
 
 // This is a generated file, do not alter
-// it is based on {self.standard.filename }
+// it is based on {self.standard.filename}
 #pragma once
 
-#include "utils/interface.hpp"
-#include "utils/xml.hpp"
+#include "ssp4cpp/utils/interface.hpp"
+#include "ssp4cpp/utils/xml.hpp"
 
 {headers}
 {dependencies}
@@ -118,10 +120,10 @@ namespace {self.standard.long_namespece}
         text = f"""
 
 // This is a generated file, do not alter
-// it is based on {self.standard.filename }
+// it is based on {self.standard.filename}
 
-#include "{self.standard.long_name}.hpp"
-#include "utils/string.hpp"
+#include "ssp4cpp/schema/{self.standard.standard.lower()}/{self.standard.long_name}.hpp"
+#include "ssp4cpp/utils/string.hpp"
 
 #include <string>
 
@@ -138,7 +140,9 @@ namespace {self.standard.long_namespece}
     def export(self, base_path):
         header_path = (
             base_path
-            / "include/schema"
+            / "include"
+            / "ssp4cpp"
+            / "schema"
             / self.standard.standard.lower()
             / f"{self.standard.long_name}.hpp"
         )

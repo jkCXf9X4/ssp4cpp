@@ -3,8 +3,8 @@
 // This is a generated file, do not alter
 // it is based on ssp1_ssm.toml
 
-#include "SSP1_SystemStructureParameterMapping.hpp"
-#include "utils/string.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureParameterMapping.hpp"
+#include "ssp4cpp/utils/string.hpp"
 
 #include <string>
 

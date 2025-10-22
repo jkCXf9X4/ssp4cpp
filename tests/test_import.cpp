@@ -1,7 +1,7 @@
 
 
-#include "ssp.hpp"
-#include "fmu.hpp"
+#include "ssp4cpp/ssp.hpp"
+#include "ssp4cpp/fmu.hpp"
 #include "cutecpp/log.hpp"
 
 #include <iostream>

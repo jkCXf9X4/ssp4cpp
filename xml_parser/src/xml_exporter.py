@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List
 from standard import Node, Attribute, Standard
 
-from misc import indent_strings, new_line
+from misc import indent_strings, new_line, format_schema_include
 
 default_values = {
     "string": '"null"',
@@ -92,7 +92,7 @@ class DocumentXmlExporter:
 
 #pragma once
 
-#include "{self.standard.long_name}.hpp"
+#include "{format_schema_include(self.standard.long_name)}.hpp"
 #include <pugixml.hpp>
 
 namespace {self.standard.long_namespece}

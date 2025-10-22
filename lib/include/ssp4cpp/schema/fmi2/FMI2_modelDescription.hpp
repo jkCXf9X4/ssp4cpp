@@ -4,10 +4,10 @@
 // it is based on fmi2_md.toml
 #pragma once
 
-#include "utils/interface.hpp"
-#include "utils/xml.hpp"
+#include "ssp4cpp/utils/interface.hpp"
+#include "ssp4cpp/utils/xml.hpp"
 
-#include "FMI2_Enums.hpp"
+#include "ssp4cpp/schema/fmi2/FMI2_Enums.hpp"
 
 
 #include <string>

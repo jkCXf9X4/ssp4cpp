@@ -4,14 +4,14 @@
 // it is based on ssp1_ssd.toml
 #pragma once
 
-#include "utils/interface.hpp"
-#include "utils/xml.hpp"
+#include "ssp4cpp/utils/interface.hpp"
+#include "ssp4cpp/utils/xml.hpp"
 
-#include "FMI2_Enums.hpp"
-#include "SSP1_Enums.hpp"
-#include "SSP1_SystemStructureCommon.hpp"
-#include "SSP1_SystemStructureParameterMapping.hpp"
-#include "SSP1_SystemStructureParameterValues.hpp"
+#include "ssp4cpp/schema/fmi2/FMI2_Enums.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_Enums.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureCommon.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureParameterMapping.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureParameterValues.hpp"
 
 #include <string>
 #include <vector>

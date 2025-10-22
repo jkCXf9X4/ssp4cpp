@@ -3,8 +3,8 @@
 // This is a generated file, do not alter
 // it is based on ssp1_ssd.toml
 
-#include "SSP1_SystemStructureDescription.hpp"
-#include "utils/string.hpp"
+#include "ssp4cpp/schema/ssp1/SSP1_SystemStructureDescription.hpp"
+#include "ssp4cpp/utils/string.hpp"
 
 #include <string>
 
