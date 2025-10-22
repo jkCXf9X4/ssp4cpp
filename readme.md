@@ -117,3 +117,5 @@ This project is released under the MIT license. See [LICENCE](LICENCE) for detai
 
 ## Credits
 The project is heavily inspired by [FMI4cpp](https://github.com/NTNU-IHB/FMI4cpp). Credit where credit is due.
+
+
