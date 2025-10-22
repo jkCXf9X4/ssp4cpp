@@ -18,6 +18,7 @@
 #include "cutecpp/log.hpp"
 
 #include "zip.hpp"
+#include <sys/stat.h>
 
 // from https://github.com/NTNU-IHB/FMI4cpp/blob/master/src/fmi4cpp/tools/unzipper.hpp
 
@@ -103,6 +104,9 @@ namespace ssp4cpp::utils::zip_ns
                     file_.close();
 
                     zip_fclose(zf);
+
+                    // make sure no documents are protected
+                    chmod(newFile.c_str(), 0644);
                 }
             }
         }
