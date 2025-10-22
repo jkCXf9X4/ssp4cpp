@@ -1,9 +1,6 @@
 [submodule "3rdParty/SSP_Schema"]
 	path = 3rdParty/SSP_Schema
 	url = https://github.com/modelica/ssp-standard
-[submodule "3rdParty/fmi4c"]
-	path = 3rdParty/fmi4c
-	url = https://github.com/robbr48/fmi4c.git
 [submodule "3rdParty/FMI3"]
 	path = 3rdParty/FMI3
 	url = https://github.com/modelica/fmi-standard
