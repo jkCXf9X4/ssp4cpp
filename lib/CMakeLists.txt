@@ -32,8 +32,7 @@ target_link_libraries(ssp4cpp PRIVATE pugixml::static pugixml::pugixml)
 find_package(libzip CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE libzip::zip)
 
-find_package(cutecpp CONFIG REQUIRED)
-target_link_libraries(ssp4cpp PRIVATE cutecpp::cutecpp)
+target_link_libraries(ssp4cpp PUBLIC ssp4cpp::3rd::cutecpp)
 
 set(SSP4CPP_CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/ssp4cpp")
 

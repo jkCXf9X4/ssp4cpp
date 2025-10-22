@@ -41,6 +41,9 @@ message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 include(CTest)
 option(SSP4CPP_BUILD_TESTS "Build ssp4cpp unit tests" ${BUILD_TESTING})
 
+add_subdirectory(3rdParty/cutecpp)
+add_library(ssp4cpp::3rd::cutecpp ALIAS cutecpp)
+
 add_subdirectory(lib)
 
 if(SSP4CPP_BUILD_TESTS)

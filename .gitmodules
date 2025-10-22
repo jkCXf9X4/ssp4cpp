@@ -7,3 +7,6 @@
 [submodule "3rdParty/FMI2"]
 	path = 3rdParty/FMI2
 	url = https://github.com/modelica/fmi-standard
+[submodule "3rdParty/cutecpp"]
+	path = 3rdParty/cutecpp
+	url = https://github.com/jkCXf9X4/cutecpp
