@@ -4,9 +4,9 @@
   "description": "C++ utilities for working with SSP archives and schema bindings.",
   "license": "MIT",
   "dependencies": [
+    "cutecpp",
     "libzip",
     "pugixml",
-    "cutecpp",
     {
       "name": "vcpkg-cmake",
       "host": true
