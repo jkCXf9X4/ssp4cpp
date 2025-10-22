@@ -2,10 +2,7 @@
 
 #include "ssp.hpp"
 #include "fmu.hpp"
-#include "utils/log.hpp"
-
-#include "SSP1_SystemStructureDescription_Ext.hpp"
-#include "FMI2_modelDescription_Ext.hpp"
+#include "cutecpp/log.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -42,10 +39,9 @@ TEST_CASE("SSP Import", "[SSP]")
     log(debug)("Parsing ssp to external file");
     save_string("./tests/resources/references/embrace_scen_ssd.txt", ssp.ssd->to_string());
 
-    auto resources = ssp1::ext::ssd::get_resources(*ssp.ssd);
-    REQUIRE(resources.size() == 6);
+    REQUIRE(ssp.resources.size() == 6);
 
-    for (auto &resource : resources)
+    for (auto &resource : ssp.resources)
     {
         log(debug)("Resource: {}", resource->name.value_or("null"));
 

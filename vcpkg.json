@@ -2,7 +2,7 @@
   "dependencies": [
     "libzip",
     "pugixml",
-    "kissnet",
+    "cutecpp",
     "catch2"
   ]
 }

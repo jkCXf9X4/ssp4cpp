@@ -165,28 +165,4 @@ namespace ssp4cpp::utils::str
         return from_strs<T>(str, ' ');
     }
 
-    class IString
-    {
-    public:
-        virtual ~IString() = default;
-
-        std::string to_string() const
-        {
-            std::ostringstream oss;
-            oss << *this;
-            return oss.str();
-        }
-
-        friend std::ostream &operator<<(std::ostream &os, const IString &obj)
-        {
-            obj.print(os); // delegate to virtual function
-            return os;
-        }
-
-        virtual void print(std::ostream &os) const
-        {
-            os << "IString {}"; // default representation
-        }
-    };
-
 } // namespace ssp4cpp::str

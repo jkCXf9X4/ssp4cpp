@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 
 namespace ssp4cpp::utils::interfaces
 {
@@ -43,5 +44,29 @@ namespace ssp4cpp::utils::interfaces
     /** @brief Interface for lists of XML nodes. */
     class IXmlNodeList : public IList
     {
+    };
+
+    class IString
+    {
+    public:
+        virtual ~IString() = default;
+
+        std::string to_string() const
+        {
+            std::ostringstream oss;
+            oss << *this;
+            return oss.str();
+        }
+
+        friend std::ostream &operator<<(std::ostream &os, const IString &obj)
+        {
+            obj.print(os); // delegate to virtual function
+            return os;
+        }
+
+        virtual void print(std::ostream &os) const
+        {
+            os << "IString {}"; // default representation
+        }
     };
 }

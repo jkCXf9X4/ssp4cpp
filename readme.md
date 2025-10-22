@@ -69,10 +69,10 @@ sudo apt install ninja-build
 ## Tests
 
 ```bash
-cmake --build build --target logger_tests
+cmake --build build --target tests
 
 
-cmake --build build --target logger_tests && ./build/tests/logger_tests
+cmake --build build --target tests && ./build/tests/tests
 or
 ctest --test-dir build --output-on-failure
 ```

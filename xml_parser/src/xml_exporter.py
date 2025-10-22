@@ -123,7 +123,7 @@ namespace {self.standard.long_namespece}
 
 #include "xml_deserialize.hpp"
 
-#include "utils/log.hpp"
+#include "cutecpp/log.hpp"
 
 namespace {self.standard.long_namespece}
 {{

@@ -28,3 +28,6 @@ target_link_libraries(ssp4cpp PRIVATE pugixml::static pugixml::pugixml)
 
 find_package(libzip CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE libzip::zip)
+
+find_package(cutecpp CONFIG REQUIRED)
+target_link_libraries(ssp4cpp PRIVATE cutecpp::cutecpp)

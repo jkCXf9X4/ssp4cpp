@@ -1,5 +1,5 @@
 #pragma once
-#include "utils/log.hpp"
+#include "cutecpp/log.hpp"
 #include "utils/string.hpp"
 
 #include <filesystem>
@@ -7,16 +7,16 @@
 
 namespace ssp4cpp
 {
-    using namespace utils::log;
 
     /**
      * @brief Base class for archives extracted to a temporary directory.
      */
-    class Archive : public utils::str::IString
+    class Archive : public utils::interfaces::IString
     {
     public:
         Logger log = Logger("ssp4cpp.Archive", LogLevel::info);
         bool using_tmp_dir = false;
+        
         std::filesystem::path original_file;
         std::filesystem::path dir;
 

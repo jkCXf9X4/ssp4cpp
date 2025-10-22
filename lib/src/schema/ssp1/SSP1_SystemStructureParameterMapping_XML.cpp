@@ -8,7 +8,7 @@
 
 #include "xml_deserialize.hpp"
 
-#include "utils/log.hpp"
+#include "cutecpp/log.hpp"
 
 namespace ssp4cpp::ssp1::ssm
 {
