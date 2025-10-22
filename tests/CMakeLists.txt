@@ -1,17 +1,16 @@
 find_package(Catch2 3 CONFIG REQUIRED)
 
-file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
+file(GLOB_RECURSE SSP4CPP_TEST_SOURCES CONFIGURE_DEPENDS "*.cpp" "*.hpp")
 
-add_executable(tests
-    ${ALL_SRC}
+add_executable(ssp4cpp_tests
+    ${SSP4CPP_TEST_SOURCES}
 )
 
-target_link_libraries(tests
+target_link_libraries(ssp4cpp_tests
     PRIVATE
-        ssp4cpp
+        ssp4cpp::ssp4cpp
         Catch2::Catch2WithMain
 )
 
-include(CTest)
 include(Catch)
-catch_discover_tests(tests)
+catch_discover_tests(ssp4cpp_tests)

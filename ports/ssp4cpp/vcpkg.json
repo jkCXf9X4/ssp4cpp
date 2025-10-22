@@ -1,0 +1,19 @@
+{
+  "name": "ssp4cpp",
+  "version-semver": "0.1.0",
+  "description": "C++ utilities for working with SSP archives and schema bindings.",
+  "license": "MIT",
+  "dependencies": [
+    "libzip",
+    "pugixml",
+    "cutecpp",
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}

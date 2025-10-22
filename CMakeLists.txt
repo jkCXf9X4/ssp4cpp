@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
 
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.txt" projectVersion)
-project(ssp4cpp_prj VERSION ${projectVersion})
-message("Current ssp4cpp_prj version: ${projectVersion}\n")
+project(ssp4cpp VERSION ${projectVersion} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 ## Link static
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libstdc++")
@@ -37,9 +38,12 @@ message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}\n")
 message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}\n")
 message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 
-# Subdirectories
+include(CTest)
+option(SSP4CPP_BUILD_TESTS "Build ssp4cpp unit tests" ${BUILD_TESTING})
 
 add_subdirectory(lib)
 
-enable_testing()
-add_subdirectory(tests)
+if(SSP4CPP_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

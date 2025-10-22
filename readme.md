@@ -66,6 +66,37 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 Possible dependencies
 sudo apt install ninja-build
 
+## Usage Example
+
+Once the library is installed (either via your build tree or the vcpkg port), you can link against the exported target and load an SSP archive:
+
+```cmake
+find_package(ssp4cpp CONFIG REQUIRED)
+
+add_executable(ssp_demo main.cpp)
+target_link_libraries(ssp_demo PRIVATE ssp4cpp::ssp4cpp)
+```
+
+```cpp
+#include <ssp4cpp/ssp.hpp>
+#include <iostream>
+
+int main()
+{
+    // Point to an .ssp file or an unpacked directory
+    ssp4cpp::Ssp archive{"./tests/resources/embrace_scen.ssp"};
+
+    std::cout << archive.to_string();
+
+    for (auto *component : archive.resources)
+    {
+        std::cout << "Component: " << component->name.value_or("<unnamed>") << '\n';
+    }
+
+    return 0;
+}
+```
+
 ## Tests
 
 ```bash
