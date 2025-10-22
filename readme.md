@@ -103,7 +103,7 @@ int main()
 cmake --build build --target tests
 
 
-cmake --build build --target tests && ./build/tests/tests
+cmake --build build --target tests && ./build/tests/ssp4cpp_tests
 or
 ctest --test-dir build --output-on-failure
 ```
