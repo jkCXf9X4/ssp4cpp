@@ -143,6 +143,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
         std::optional<ssd::ConnectionGeometry> ConnectionGeometry;
         std::optional<ssc::TAnnotations> Annotations;
+        std::optional<double> information_delay;
 
         std::string to_string(void) const;
     };

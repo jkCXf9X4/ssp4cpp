@@ -132,6 +132,7 @@ namespace ssp4cpp::ssp1::ssd
                "EnumerationMappingTransformation  : " + to_str( EnumerationMappingTransformation  ) + "\n" +
                "ConnectionGeometry                : " + to_str( ConnectionGeometry                ) + "\n" +
                "Annotations                       : " + to_str( Annotations                       ) + "\n" +
+               "information_delay                 : " + to_str( information_delay                 ) + "\n" +
                "}";
     }
 
