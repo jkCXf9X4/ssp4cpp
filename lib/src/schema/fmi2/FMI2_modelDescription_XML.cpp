@@ -421,8 +421,7 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, fmi2ModelDescription &obj)
     {
         log(ext_trace)("Parsing fmi2ModelDescription");
-        log(warning)("Experimental feature information_delay used");
-
+        
 
         utils::xml::parse_xml(node, obj.fmiVersion                , "fmiVersion");
         utils::xml::parse_xml(node, obj.modelName                 , "modelName");
@@ -445,7 +444,6 @@ namespace ssp4cpp::fmi2::md
         utils::xml::parse_xml(node, obj.VendorAnnotations         , "VendorAnnotations");
         utils::xml::parse_xml(node, obj.ModelVariables            , "ModelVariables");
         utils::xml::parse_xml(node, obj.ModelStructure            , "ModelStructure");
-        utils::xml::parse_xml(node, obj.information_delay         , "information_delay");
 
         log(ext_trace)("Completed fmi2ModelDescription");
     }

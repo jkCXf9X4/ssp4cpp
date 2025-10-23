@@ -360,7 +360,6 @@ namespace ssp4cpp::fmi2::md
         std::optional<fmi2::md::VendorAnnotations> VendorAnnotations;
         fmi2::md::ModelVariables ModelVariables;
         fmi2::md::ModelStructure ModelStructure;
-        std::optional<double> information_delay;
 
         std::string to_string(void) const;
     };

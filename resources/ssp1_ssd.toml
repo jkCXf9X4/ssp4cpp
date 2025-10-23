@@ -99,6 +99,7 @@ type = {type = "ssd::ComponentType", optional=true}
 source = {type = "string"}
 implementation = {type = "string", optional=true}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
+information_delay = { type = "double", optional = true, experimental = true }
 
 [TSignalDictionaryReference]
 id = {type = "string", optional=true}

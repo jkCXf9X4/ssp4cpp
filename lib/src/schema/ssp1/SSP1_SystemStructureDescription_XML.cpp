@@ -226,7 +226,8 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TComponent &obj)
     {
         log(ext_trace)("Parsing TComponent");
-        
+        log(warning)("Experimental feature information_delay used");
+
 
         utils::xml::parse_xml(node, obj.id                 , "id");
         utils::xml::parse_xml(node, obj.description        , "description");
@@ -238,6 +239,7 @@ namespace ssp4cpp::ssp1::ssd
         utils::xml::parse_xml(node, obj.source             , "source");
         utils::xml::parse_xml(node, obj.implementation     , "implementation");
         utils::xml::parse_xml(node, obj.Annotations        , "ssc:Annotations");
+        utils::xml::parse_xml(node, obj.information_delay  , "information_delay");
 
         log(ext_trace)("Completed TComponent");
     }

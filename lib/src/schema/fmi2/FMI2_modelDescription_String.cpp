@@ -352,7 +352,6 @@ namespace ssp4cpp::fmi2::md
                "VendorAnnotations         : " + to_str( VendorAnnotations         ) + "\n" +
                "ModelVariables            : " + to_str( ModelVariables            ) + "\n" +
                "ModelStructure            : " + to_str( ModelStructure            ) + "\n" +
-               "information_delay         : " + to_str( information_delay         ) + "\n" +
                "}";
     }
 
