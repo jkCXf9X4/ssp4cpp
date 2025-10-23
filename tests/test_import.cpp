@@ -49,6 +49,22 @@ TEST_CASE("SSP Import SSP", "[SSP]")
         save_string("./tests/resources/references/embrace_scen_fmu_" + name + ".txt", fmu->md->to_string());
     }
 
+    int index = 0;
+    for (auto &binding : ssp.parameter_bindings )
+    {
+
+        // If these changes, evaluate if correct
+        save_string("./tests/resources/references/embrace_scen_parameter_set" + std::to_string(index) + ".txt", binding.ssv->to_string());
+
+        if (binding.ssm)
+        {
+
+           save_string("./tests/resources/references/embrace_scen_parameter_map" + std::to_string(index) + ".txt", binding.ssm->to_string());
+        }
+    }
+
+
+
     std::cout << "Parsing complete\n";
 }
 
@@ -101,6 +117,20 @@ TEST_CASE("SSP Import delay Folder", "[SSP]")
 
         // If these changes, evaluate if correct
         save_string("./tests/resources/references/ssp_implicit_fmi2_fmu_" + name + ".txt", fmu->md->to_string());
+    }
+
+    int index = 0;
+    for (auto &binding : ssp.parameter_bindings )
+    {
+
+        // If these changes, evaluate if correct
+        save_string("./tests/resources/references/ssp_delay_parameter_set" + std::to_string(index) + ".txt", binding.ssv->to_string());
+
+        if (binding.ssm)
+        {
+
+           save_string("./tests/resources/references/ssp_delay_parameter_map" + std::to_string(index) + ".txt", binding.ssm->to_string());
+        }
     }
 
     std::cout << "Parsing complete\n";

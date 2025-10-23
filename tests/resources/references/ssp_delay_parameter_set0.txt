@@ -1,0 +1,95 @@
+ParameterSet { 
+version                : 1.0
+name                   : Default
+id                     : null
+description            : null
+author                 : null
+fileversion            : null
+copyright              : null
+license                : null
+generationTool         : null
+generationDateAndTime  : null
+Parameters             : TParameters { 
+Parameters  : {
+TParameter { 
+id           : null
+description  : null
+name         : LET1.delayTime
+Real         : Real { 
+value  : 0.000001
+unit   : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : LET2.delayTime
+Real         : Real { 
+value  : 0.000000
+unit   : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : LET3.delayTime
+Real         : Real { 
+value  : 0.000000
+unit   : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : LET4.delayTime
+Real         : Real { 
+value  : 0.000000
+unit   : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+TParameter { 
+id           : null
+description  : null
+name         : LET5.delayTime
+Real         : Real { 
+value  : 0.000000
+unit   : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+Binary       : null
+Annotations  : null
+}
+}
+
+}
+Enumerations           : null
+Units                  : null
+Annotations            : null
+}

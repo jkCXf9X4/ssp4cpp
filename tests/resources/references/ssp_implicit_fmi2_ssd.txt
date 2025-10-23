@@ -15,7 +15,21 @@ description         :
 name                : ssp_implicit_fmi2
 Connectors          : null
 ElementGeometry     : null
-ParameterBindings   : null
+ParameterBindings   : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : null
+source            : resources/init_values.ssv
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
 Elements            : Elements { 
 Components                  : {
 TComponent { 

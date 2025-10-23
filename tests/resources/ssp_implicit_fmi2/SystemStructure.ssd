@@ -2,6 +2,11 @@
 <!-- Created by Dymola on 2025-10-17T07:50:06Z -->
 <ssd:SystemStructureDescription generationDateAndTime="2025-10-17T07:50:06Z" generationTool="Dymola by Dassault Systemes" name="Delay" version="1.0" xmlns:smmd="http://www.3ds.com/MyDymolaSpecificNameSpace" xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon" xmlns:ssd="http://ssp-standard.org/SSP1/SystemStructureDescription" xmlns:ssm="http://ssp-standard.org/SSP1/SystemStructureParameterMapping" xmlns:ssv="http://ssp-standard.org/SSP1/SystemStructureParameterValues">
     <ssd:System description="" name="ssp_implicit_fmi2">
+        <ssd:ParameterBindings>
+          <ssd:ParameterBinding
+            source="resources/init_values.ssv">
+          </ssd:ParameterBinding>
+        </ssd:ParameterBindings>
         <ssd:Elements>
             <ssd:Component name="LET1" source="resources/Delay_delay_fmi2.fmu" type="application/x-fmu-sharedlibrary" information_delay="0.003" explicit_delay="false">
                 <ssd:Connectors>

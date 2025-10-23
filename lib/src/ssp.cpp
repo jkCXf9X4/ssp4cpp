@@ -42,6 +42,10 @@ namespace ssp4cpp
                 }
             }
         }
+        else
+        {
+            static_log(trace)("[{}] No bindings found", __func__);
+        }
         return bindings;
     }
 

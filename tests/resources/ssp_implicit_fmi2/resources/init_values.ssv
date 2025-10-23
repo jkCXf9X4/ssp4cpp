@@ -2,7 +2,7 @@
 <ssv:ParameterSet xmlns:ssv="http://ssp-standard.org/SSP1/ParameterValues" version="1.0" name="Default">
 	<ssv:Parameters>
 		<ssv:Parameter name="LET1.delayTime">
-			<ssv:Real value="0.0" />
+			<ssv:Real value="0.000001" />
 		</ssv:Parameter>
 		<ssv:Parameter name="LET2.delayTime">
 			<ssv:Real value="0.0" />
