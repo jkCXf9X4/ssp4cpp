@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by Dymola on 2025-10-17T07:50:06Z -->
+<ssd:SystemStructureDescription generationDateAndTime="2025-10-17T07:50:06Z" generationTool="Dymola by Dassault Systemes" name="Delay" version="1.0" xmlns:smmd="http://www.3ds.com/MyDymolaSpecificNameSpace" xmlns:ssc="http://ssp-standard.org/SSP1/SystemStructureCommon" xmlns:ssd="http://ssp-standard.org/SSP1/SystemStructureDescription" xmlns:ssm="http://ssp-standard.org/SSP1/SystemStructureParameterMapping" xmlns:ssv="http://ssp-standard.org/SSP1/SystemStructureParameterValues">
+    <ssd:System description="" name="ssp_implicit_fmi2">
+        <ssd:Elements>
+            <ssd:Component name="LET1" source="resources/Delay_delay_fmi2.fmu" type="application/x-fmu-sharedlibrary" information_delay="0.003" explicit_delay="false">
+                <ssd:Connectors>
+                    <ssd:Connector description="Delay time of output with respect to input signal" kind="parameter" name="delayTime">
+                        <ssc:Binary mime-type="text/x-modelica; path=Modelica.Units.SI.Time"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="_input_1_start">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="input" name="input_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="0" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="output_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Time point of input used when calling doStep." kind="parameter" name="fmi_InputTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_UsePreOnInputSignals">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StartTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StopTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_NumberOfSteps">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_CommunicationStepSize">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Number of doSteps called between two CommunicationStepSize" kind="parameter" name="stepSizeScaleFactor">
+                        <ssc:Integer/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_forceShutDownAtStopTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used." kind="parameter" name="fmi_setTol">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Relative tolerance for the internal solver of the fmu" kind="parameter" name="fmi_rTol">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                </ssd:Connectors>
+                <ssd:ElementGeometry x1="-92" x2="-72" y1="10" y2="30"/>
+                <ssd:ParameterBindings>
+                    <ssd:ParameterBinding type="application/x-ssp-parameter-set">
+                        <ssd:ParameterValues>
+                            <ssv:ParameterSet name="DefaultParameters" version="1.0">
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="delayTime">
+                                        <ssv:Real value="0.003"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
+                            </ssv:ParameterSet>
+                        </ssd:ParameterValues>
+                    </ssd:ParameterBinding>
+                </ssd:ParameterBindings>
+            </ssd:Component>
+            <ssd:Component name="Sources" source="resources/Delay_Sources_fmi2.fmu" type="application/x-fmu-sharedlibrary">
+                <ssd:Connectors>
+                    <ssd:Connector description="Frequency of sine wave" kind="parameter" name="f">
+                        <ssc:Binary mime-type="text/x-modelica; path=Modelica.Units.SI.Frequency"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="freq_output">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.75"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="ramp_output">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="ramp_freq_output">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.25"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StartTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StopTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_NumberOfSteps">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_CommunicationStepSize">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Number of doSteps called between two CommunicationStepSize" kind="parameter" name="stepSizeScaleFactor">
+                        <ssc:Integer/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_forceShutDownAtStopTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used." kind="parameter" name="fmi_setTol">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Relative tolerance for the internal solver of the fmu" kind="parameter" name="fmi_rTol">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                </ssd:Connectors>
+                <ssd:ElementGeometry x1="-136" x2="-116" y1="4" y2="24"/>
+                <ssd:ParameterBindings>
+                    <ssd:ParameterBinding type="application/x-ssp-parameter-set">
+                        <ssd:ParameterValues>
+                            <ssv:ParameterSet name="DefaultParameters" version="1.0">
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="f">
+                                        <ssv:Real value="1000"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
+                            </ssv:ParameterSet>
+                        </ssd:ParameterValues>
+                    </ssd:ParameterBinding>
+                </ssd:ParameterBindings>
+            </ssd:Component>
+            <ssd:Component name="LET2" source="resources/Delay_delay_fmi2.fmu" type="application/x-fmu-sharedlibrary" information_delay="0.002" explicit_delay="false">
+                <ssd:Connectors>
+                    <ssd:Connector description="Delay time of output with respect to input signal" kind="parameter" name="delayTime">
+                        <ssc:Binary mime-type="text/x-modelica; path=Modelica.Units.SI.Time"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="_input_1_start">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="input" name="input_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="0" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="output_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Time point of input used when calling doStep." kind="parameter" name="fmi_InputTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_UsePreOnInputSignals">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StartTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StopTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_NumberOfSteps">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_CommunicationStepSize">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Number of doSteps called between two CommunicationStepSize" kind="parameter" name="stepSizeScaleFactor">
+                        <ssc:Integer/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_forceShutDownAtStopTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used." kind="parameter" name="fmi_setTol">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Relative tolerance for the internal solver of the fmu" kind="parameter" name="fmi_rTol">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                </ssd:Connectors>
+                <ssd:ElementGeometry x1="-56" x2="-36" y1="10" y2="30"/>
+                <ssd:ParameterBindings>
+                    <ssd:ParameterBinding type="application/x-ssp-parameter-set">
+                        <ssd:ParameterValues>
+                            <ssv:ParameterSet name="DefaultParameters" version="1.0">
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="delayTime">
+                                        <ssv:Real value="0.002"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
+                            </ssv:ParameterSet>
+                        </ssd:ParameterValues>
+                    </ssd:ParameterBinding>
+                </ssd:ParameterBindings>
+            </ssd:Component>
+            <ssd:Component name="LET3" source="resources/Delay_delay_fmi2.fmu" type="application/x-fmu-sharedlibrary" information_delay="0.005" explicit_delay="false">
+                <ssd:Connectors>
+                    <ssd:Connector description="Delay time of output with respect to input signal" kind="parameter" name="delayTime">
+                        <ssc:Binary mime-type="text/x-modelica; path=Modelica.Units.SI.Time"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="_input_1_start">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="input" name="input_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="0" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="output_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Time point of input used when calling doStep." kind="parameter" name="fmi_InputTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_UsePreOnInputSignals">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StartTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StopTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_NumberOfSteps">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_CommunicationStepSize">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Number of doSteps called between two CommunicationStepSize" kind="parameter" name="stepSizeScaleFactor">
+                        <ssc:Integer/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_forceShutDownAtStopTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used." kind="parameter" name="fmi_setTol">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Relative tolerance for the internal solver of the fmu" kind="parameter" name="fmi_rTol">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                </ssd:Connectors>
+                <ssd:ElementGeometry x1="-24" x2="-4" y1="10" y2="30"/>
+                <ssd:ParameterBindings>
+                    <ssd:ParameterBinding type="application/x-ssp-parameter-set">
+                        <ssd:ParameterValues>
+                            <ssv:ParameterSet name="DefaultParameters" version="1.0">
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="delayTime">
+                                        <ssv:Real value="0.005"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
+                            </ssv:ParameterSet>
+                        </ssd:ParameterValues>
+                    </ssd:ParameterBinding>
+                </ssd:ParameterBindings>
+            </ssd:Component>
+            <ssd:Component name="LET4" source="resources/Delay_delay_fmi2.fmu" type="application/x-fmu-sharedlibrary" information_delay="0.005" explicit_delay="false">
+                <ssd:Connectors>
+                    <ssd:Connector description="Delay time of output with respect to input signal" kind="parameter" name="delayTime">
+                        <ssc:Binary mime-type="text/x-modelica; path=Modelica.Units.SI.Time"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="_input_1_start">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="input" name="input_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="0" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="output_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Time point of input used when calling doStep." kind="parameter" name="fmi_InputTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_UsePreOnInputSignals">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StartTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StopTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_NumberOfSteps">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_CommunicationStepSize">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Number of doSteps called between two CommunicationStepSize" kind="parameter" name="stepSizeScaleFactor">
+                        <ssc:Integer/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_forceShutDownAtStopTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used." kind="parameter" name="fmi_setTol">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Relative tolerance for the internal solver of the fmu" kind="parameter" name="fmi_rTol">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                </ssd:Connectors>
+                <ssd:ElementGeometry x1="8" x2="28" y1="10" y2="30"/>
+                <ssd:ParameterBindings>
+                    <ssd:ParameterBinding type="application/x-ssp-parameter-set">
+                        <ssd:ParameterValues>
+                            <ssv:ParameterSet name="DefaultParameters" version="1.0">
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="delayTime">
+                                        <ssv:Real value="0.005"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
+                            </ssv:ParameterSet>
+                        </ssd:ParameterValues>
+                    </ssd:ParameterBinding>
+                </ssd:ParameterBindings>
+            </ssd:Component>
+            <ssd:Component name="LET5" source="resources/Delay_delay_fmi2.fmu" type="application/x-fmu-sharedlibrary" information_delay="0.007" explicit_delay="false">
+                <ssd:Connectors>
+                    <ssd:Connector description="Delay time of output with respect to input signal" kind="parameter" name="delayTime">
+                        <ssc:Binary mime-type="text/x-modelica; path=Modelica.Units.SI.Time"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="_input_1_start">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="input" name="input_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="0" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="output" name="output_1">
+                        <ssc:Real/>
+                        <ssd:ConnectorGeometry x="1" y="0.5"/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Time point of input used when calling doStep." kind="parameter" name="fmi_InputTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_UsePreOnInputSignals">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StartTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_StopTime">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_NumberOfSteps">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_CommunicationStepSize">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Number of doSteps called between two CommunicationStepSize" kind="parameter" name="stepSizeScaleFactor">
+                        <ssc:Integer/>
+                    </ssd:Connector>
+                    <ssd:Connector kind="parameter" name="fmi_forceShutDownAtStopTime">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used." kind="parameter" name="fmi_setTol">
+                        <ssc:Boolean/>
+                    </ssd:Connector>
+                    <ssd:Connector description="Relative tolerance for the internal solver of the fmu" kind="parameter" name="fmi_rTol">
+                        <ssc:Real/>
+                    </ssd:Connector>
+                </ssd:Connectors>
+                <ssd:ElementGeometry x1="48" x2="68" y1="10" y2="30"/>
+                <ssd:ParameterBindings>
+                    <ssd:ParameterBinding type="application/x-ssp-parameter-set">
+                        <ssd:ParameterValues>
+                            <ssv:ParameterSet name="DefaultParameters" version="1.0">
+                                <ssv:Parameters>
+                                    <ssv:Parameter name="delayTime">
+                                        <ssv:Real value="0.007"/>
+                                    </ssv:Parameter>
+                                </ssv:Parameters>
+                            </ssv:ParameterSet>
+                        </ssd:ParameterValues>
+                    </ssd:ParameterBinding>
+                </ssd:ParameterBindings>
+            </ssd:Component>
+        </ssd:Elements>
+        <ssd:Connections>
+            <ssd:Connection endConnector="input_1" endElement="LET1" startConnector="freq_output" startElement="Sources">
+                <ssd:ConnectionGeometry pointsX="-114 -102 -102 -92.4" pointsY="19 19 20 20"/>
+            </ssd:Connection>
+            <ssd:Connection endConnector="input_1" endElement="LET2" startConnector="output_1" startElement="LET1" information_delay="0.001">
+                <ssd:ConnectionGeometry pointsX="-70 -56.4" pointsY="20 20"/>
+            </ssd:Connection>
+            <ssd:Connection endConnector="input_1" endElement="LET3" startConnector="output_1" startElement="LET2" information_delay="0.001">
+                <ssd:ConnectionGeometry pointsX="-34 -24.4" pointsY="20 20"/>
+            </ssd:Connection>
+            <ssd:Connection endConnector="input_1" endElement="LET4" startConnector="output_1" startElement="LET3" information_delay="0.002">
+                <ssd:ConnectionGeometry pointsX="-2 7.6" pointsY="20 20"/>
+            </ssd:Connection>
+            <ssd:Connection endConnector="output_1" endElement="LET4" startConnector="input_1" startElement="LET5" information_delay="0.002">
+                <ssd:ConnectionGeometry pointsX="47.6 30" pointsY="20 20"/>
+            </ssd:Connection>
+        </ssd:Connections>
+        <ssd:SystemGeometry x1="-100" x2="100" y1="-100" y2="100"/>
+        <ssd:Annotations>
+            <ssc:Annotation type="com.3ds.ssp">
+                <smmd:ModelicaMetaData>
+                    <UserAnnotation key="name" value="ssp_explicit_fmi2"/>
+                    <UserAnnotation key="fullName" value="Delay.ssp_explicit_fmi2"/>
+                </smmd:ModelicaMetaData>
+            </ssc:Annotation>
+        </ssd:Annotations>
+    </ssd:System>
+    <ssd:DefaultExperiment startTime="0" stopTime="0.1"/>
+</ssd:SystemStructureDescription>

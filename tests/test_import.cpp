@@ -78,3 +78,30 @@ TEST_CASE("SSP Import Folder", "[SSP]")
 
     std::cout << "Parsing complete\n";
 }
+
+TEST_CASE("SSP Import delay Folder", "[SSP]")
+{
+
+    auto log = Logger("TEST::SSP_Import of delay ssp, folder", LogLevel::debug);
+    log(debug)("Opening ssp");
+
+    auto ssp = ssp4cpp::Ssp("./tests/resources/ssp_implicit_fmi2");
+
+    log(debug)("Imported ssp! \n");
+    log(debug)("{}", ssp.to_string());
+
+    log(debug)("Parsing ssp to external file");
+    save_string("./tests/resources/references/ssp_implicit_fmi2_ssd.txt", ssp.ssd->to_string());
+
+    REQUIRE(ssp.fmus.size() == 6);
+
+    for (auto &[name, fmu] : ssp.fmus)
+    {
+        log(debug)("Resource: {}", name);
+
+        // If these changes, evaluate if correct
+        save_string("./tests/resources/references/ssp_implicit_fmi2_fmu_" + name + ".txt", fmu->md->to_string());
+    }
+
+    std::cout << "Parsing complete\n";
+}

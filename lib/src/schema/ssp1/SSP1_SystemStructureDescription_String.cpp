@@ -186,6 +186,7 @@ namespace ssp4cpp::ssp1::ssd
                "implementation     : " + to_str( implementation     ) + "\n" +
                "Annotations        : " + to_str( Annotations        ) + "\n" +
                "information_delay  : " + to_str( information_delay  ) + "\n" +
+               "explicit_delay     : " + to_str( explicit_delay     ) + "\n" +
                "}";
     }
 

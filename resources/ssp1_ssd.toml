@@ -100,6 +100,7 @@ source = {type = "string"}
 implementation = {type = "string", optional=true}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}
 information_delay = { type = "double", optional = true, experimental = true }
+explicit_delay = { type = "bool", optional = true, experimental = true }
 
 [TSignalDictionaryReference]
 id = {type = "string", optional=true}

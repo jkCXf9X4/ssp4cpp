@@ -154,6 +154,8 @@ type               : application/x-fmu-sharedlibrary
 source             : resources/0001_scenario.fmu
 implementation     : null
 Annotations        : null
+information_delay  : null
+explicit_delay     : null
 }
 TComponent { 
 id                 : null
@@ -221,6 +223,8 @@ type               : application/x-fmu-sharedlibrary
 source             : resources/0002_ECS_SW.fmu
 implementation     : null
 Annotations        : null
+information_delay  : null
+explicit_delay     : null
 }
 TComponent { 
 id                 : null
@@ -3635,6 +3639,8 @@ type               : application/x-fmu-sharedlibrary
 source             : resources/0001_ECS_HW.fmu
 implementation     : null
 Annotations        : null
+information_delay  : null
+explicit_delay     : null
 }
 TComponent { 
 id                 : null
@@ -4855,6 +4861,8 @@ type               : application/x-fmu-sharedlibrary
 source             : resources/0003_Consumer.fmu
 implementation     : null
 Annotations        : null
+information_delay  : null
+explicit_delay     : null
 }
 TComponent { 
 id                 : null
@@ -4989,6 +4997,8 @@ type               : application/x-fmu-sharedlibrary
 source             : resources/0004_Atmos.fmu
 implementation     : null
 Annotations        : null
+information_delay  : null
+explicit_delay     : null
 }
 TComponent { 
 id                 : null
@@ -5106,6 +5116,8 @@ type               : application/x-fmu-sharedlibrary
 source             : resources/0005_AdaptionUnit.fmu
 implementation     : null
 Annotations        : null
+information_delay  : null
+explicit_delay     : null
 }
 }
 

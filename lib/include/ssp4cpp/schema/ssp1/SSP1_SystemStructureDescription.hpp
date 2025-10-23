@@ -197,6 +197,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<std::string> implementation;
         std::optional<ssc::TAnnotations> Annotations;
         std::optional<double> information_delay;
+        std::optional<bool> explicit_delay;
 
         std::string to_string(void) const;
     };
