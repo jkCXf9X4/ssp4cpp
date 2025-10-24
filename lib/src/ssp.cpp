@@ -91,12 +91,12 @@ namespace ssp4cpp
     }
 
         
-    Ssp::Ssp(const std::filesystem::path &file) : Archive(file, "ssp_")
+    Ssp::Ssp(const std::filesystem::path &file, std::string ssd_name) : Archive(file, "ssp_")
     {
         log = Logger("ssp4cpp.ssp", LogLevel::debug);
         
-        this->ssd = utils::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / "SystemStructure.ssd").string(), "ssd:SystemStructureDescription");
-        log(info)("SSP Imported, name: {}", ssd->name);
+        this->ssd = utils::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / ssd_name).string(), "ssd:SystemStructureDescription");
+        log(info)("SSP Imported, name: {} ssd: {}", this->ssd->name, ssd_name);
         
         this->fmus = create_fmu_map(this);
         this->parameter_bindings = get_parameter_bindings(this->dir, *this->ssd);

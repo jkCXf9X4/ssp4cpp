@@ -37,7 +37,7 @@ namespace ssp4cpp
         /**
          * @brief Construct an Ssp from a file path.
          */
-        Ssp(const std::filesystem::path &file);
+        Ssp(const std::filesystem::path &file, std::string ssd_name = "SystemStructure.ssd");
 
         virtual void print(std::ostream &os) const
         {
