@@ -24,6 +24,16 @@ target_include_directories(ssp4cpp
         ${CMAKE_CURRENT_LIST_DIR}/include_private/utils
 )
 
+if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.16")
+  target_precompile_headers(ssp4cpp PRIVATE
+    <format>
+    <cutecpp/log.hpp>
+#    <${CMAKE_CURRENT_LIST_DIR}/include_private/utils/xml_deserialize.hpp>
+#    <${CMAKE_CURRENT_LIST_DIR}/include/ssp4cpp/utils/interface.hpp>
+  )
+endif()
+
+
 target_compile_options(ssp4cpp PRIVATE -Wfatal-errors)
 
 find_package(pugixml CONFIG REQUIRED)

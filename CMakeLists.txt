@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+option(SSP4CPP_BUILD_TESTS "Build ssp4cpp unit tests" OFF)
+
 ## Link static
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libstdc++")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++")
@@ -38,8 +40,6 @@ message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}\n")
 message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}\n")
 message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 
-include(CTest)
-option(SSP4CPP_BUILD_TESTS "Build ssp4cpp unit tests" ${BUILD_TESTING})
 
 add_subdirectory(3rdParty/cutecpp)
 add_library(ssp4cpp::3rd::cutecpp ALIAS cutecpp)
@@ -47,6 +47,7 @@ add_library(ssp4cpp::3rd::cutecpp ALIAS cutecpp)
 add_subdirectory(lib)
 
 if(SSP4CPP_BUILD_TESTS)
+    include(CTest)
     enable_testing()
     add_subdirectory(tests)
 endif()

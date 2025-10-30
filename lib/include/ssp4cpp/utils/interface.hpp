@@ -46,7 +46,7 @@ namespace ssp4cpp::utils::interfaces
     {
     };
 
-    class IPrintable : public IWritable
+    class IPrintable
     {
     public:
         virtual ~IPrintable() = default;
