@@ -16,7 +16,7 @@ namespace ssp4cpp
 {
 
 
-    static Logger static_log = Logger("ssp4cpp.ssp", LogLevel::debug);
+    static Logger static_log = Logger("ssp4cpp.ssp", LogLevel::info);
 
     static std::vector<ParameterBindings> get_parameter_bindings(std::filesystem::path &dir, ssp1::ssd::SystemStructureDescription &ssd)
     {
