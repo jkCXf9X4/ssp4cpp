@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <sstream>
+#include <ostream>
 
 namespace ssp4cpp::utils::interfaces
 {
@@ -49,14 +49,9 @@ namespace ssp4cpp::utils::interfaces
     class IPrintable
     {
     public:
-        virtual ~IPrintable() = default;
+        virtual ~IPrintable();
 
-        std::string to_string() const
-        {
-            std::ostringstream oss;
-            oss << *this;
-            return oss.str();
-        }
+        std::string to_string() const;
 
         friend std::ostream &operator<<(std::ostream &os, const IPrintable &obj)
         {
