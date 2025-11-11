@@ -21,8 +21,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -flto=auto -O3 -g -march
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -flto=auto -O3 -g -march=native -fno-omit-frame-pointer -DNDEBUG")
 
 # Debug builds keep symbols, no optimizations
-set(CMAKE_CXX_FLAGS_DEBUG "-O3 -g")
-set(CMAKE_C_FLAGS_DEBUG   "-O3 -g")
+set(CMAKE_CXX_FLAGS_DEBUG "-O1 -fno-lto -g")
+set(CMAKE_C_FLAGS_DEBUG   "-O1 -fno-lto -g")
 
 
 # Status

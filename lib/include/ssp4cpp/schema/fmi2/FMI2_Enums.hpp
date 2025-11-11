@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ssp4cpp/utils/interface.hpp"
+#include "ssp4cpp/utils/xml.hpp"
 
 #include <string>
 
