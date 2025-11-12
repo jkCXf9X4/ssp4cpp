@@ -10,6 +10,9 @@ file(GLOB_RECURSE ALL_SRC CONFIGURE_DEPENDS "*.hpp" "*.cpp")
 add_library(ssp4cpp STATIC ${ALL_SRC})
 add_library(ssp4cpp::ssp4cpp ALIAS ssp4cpp)
 
+# The library is consumed by shared modules, so make the archive PIC.
+set_target_properties(ssp4cpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
 target_compile_features(ssp4cpp PUBLIC cxx_std_23)
 
 target_include_directories(ssp4cpp
