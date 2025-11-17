@@ -34,6 +34,8 @@ The `xml_parser` directory contains a Python script for generating C++ classes f
 python3 -m venv venv
 . ./venv/bin/activate
 
+pip install -r ./requirements.txt
+
 ./xml_parser/xml_parser.md
 
 ```

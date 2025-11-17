@@ -157,7 +157,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, Connection &obj)
     {
         log(ext_trace)("Parsing Connection");
-        log(warning)("Experimental feature information_delay used");
+        log(trace)("Experimental feature information_delay used");
 
 
         utils::xml::parse_xml(node, obj.id                                , "id");
@@ -226,7 +226,7 @@ namespace ssp4cpp::ssp1::ssd
     void from_xml(const xml_node &node, TComponent &obj)
     {
         log(ext_trace)("Parsing TComponent");
-        log(warning)("Experimental feature information_delay,explicit_delay used");
+        log(trace)("Experimental feature information_delay,explicit_delay used");
 
 
         utils::xml::parse_xml(node, obj.id                 , "id");

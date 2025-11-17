@@ -59,7 +59,7 @@ class NodeXmlExporter:
         experimental_nodes = [v.name for v in self.variable_nodes if v.experimental]
         warning_text = ""
         if experimental_nodes:
-            warning_text = f"log(warning)(\"Experimental feature {','.join(experimental_nodes)} used\");\n"
+            warning_text = f"log(trace)(\"Experimental feature {','.join(experimental_nodes)} used\");\n"
 
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
