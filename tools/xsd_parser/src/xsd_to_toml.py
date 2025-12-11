@@ -39,6 +39,10 @@ def main() -> None:
         parser.parse()
 
         roots = task.root_types or root_elements_from_schema(task.schema_root)
+        if not roots:
+            roots = [
+                name for (ns, name) in parser.types.keys() if ns == task.namespace
+            ]
         types = reachable_types(parser.types, roots, task.namespace)
         toml = render_toml(task, types)
 

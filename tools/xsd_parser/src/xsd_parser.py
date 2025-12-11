@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 import xml.etree.ElementTree as ET
 
 from misc import (
@@ -22,7 +22,8 @@ class XsdParser:
         self.schema_dir = schema_dir
         self.default_namespace = default_namespace
         self.simple_types: Dict[Tuple[str, str], str] = {}
-        self.attribute_groups: Dict[Tuple[str, str], List[FieldDefinition]] = {}
+        self.attribute_groups: Dict[Tuple[str, str], Optional[List[FieldDefinition]]] = {}
+        self.attribute_group_nodes: Dict[Tuple[str, str], ET.Element] = {}
         self.types: Dict[Tuple[str, str], TypeDefinition] = {}
 
     def parse(self) -> None:
@@ -90,17 +91,10 @@ class XsdParser:
         name = node.attrib.get("name")
         if not name:
             return
-        fields: List[FieldDefinition] = []
-        for child in node:
-            if child.tag == f"{{{XSD_NS}}}attribute":
-                fields.append(
-                    self._parse_attribute(child, namespace, {}, namespace, None)
-                )
-            elif child.tag == f"{{{XSD_NS}}}attributeGroup":
-                ref = child.attrib.get("ref")
-                if ref:
-                    fields.extend(self._resolve_attribute_group(ref, namespace))
-        self.attribute_groups[(namespace, name)] = fields
+        key = (namespace, name)
+        self.attribute_group_nodes[key] = node
+        # Defer resolution until needed so nested groups declared later are handled.
+        self.attribute_groups.setdefault(key, None)
 
     def _register_type(self, type_def: TypeDefinition) -> None:
         key = (type_def.namespace, type_def.name)
@@ -324,10 +318,44 @@ class XsdParser:
             return []
         return [replace(f) for f in base_type.fields]
 
+    def _build_attribute_group_fields(
+        self,
+        key: Tuple[str, str],
+        default_namespace: str,
+        seen: Optional[Set[Tuple[str, str]]],
+    ) -> List[FieldDefinition]:
+        node = self.attribute_group_nodes.get(key)
+        if node is None:
+            return []
+
+        fields: List[FieldDefinition] = []
+        for child in node:
+            if child.tag == f"{{{XSD_NS}}}attribute":
+                fields.append(
+                    self._parse_attribute(
+                        child, default_namespace, {}, default_namespace, None
+                    )
+                )
+            elif child.tag == f"{{{XSD_NS}}}attributeGroup":
+                ref = child.attrib.get("ref")
+                if ref:
+                    fields.extend(self._resolve_attribute_group(ref, default_namespace, seen))
+        return fields
+
     def _resolve_attribute_group(
-        self, ref: str, current_namespace: str
+        self, ref: str, current_namespace: str, seen: Optional[Set[Tuple[str, str]]] = None
     ) -> List[FieldDefinition]:
         prefix, local = split_qname(ref)
         key = (prefix or current_namespace, local)
-        fields = self.attribute_groups.get(key, [])
+
+        if seen is None:
+            seen = set()
+        if key in seen:
+            return []
+        seen.add(key)
+
+        fields = self.attribute_groups.get(key)
+        if fields is None:
+            fields = self._build_attribute_group_fields(key, key[0], seen)
+            self.attribute_groups[key] = fields
         return [replace(f) for f in fields]
