@@ -3,13 +3,15 @@ from typing import List
 
 from standard import Node, Attribute, Standard
 
-from misc import indent_strings, new_line, format_schema_include
+from misc import indent_strings, new_line, format_schema_include, join_indent
+
 
 
 class NodeDeclarationExporter:
     def __init__(self, class_node: Node, indent="    "):
         self.class_node = class_node
         self.variable_nodes: List[Attribute] = class_node.children
+        self.is_enum = class_node.is_enum
         self.indent = indent
 
     def variable_to_string(self, variable: Attribute):
@@ -55,6 +57,55 @@ public:
     std::string to_string(void) const;
 }};"""
         return class_template
+    
+    def generate_enum(self):
+        variables = [f"{v.name}, // {v.enum}" for v in self.variable_nodes]
+        variables = join_indent(variables, "        ")
+
+        to_str_def = [f"case Value::{v.name}: return \"{v.enum}\";" for v in self.variable_nodes]
+        to_str_def = join_indent(to_str_def, "        ")
+
+        from_str_def = [f"if (str == \"{v.enum}\") value = Value::{v.name};" for v in self.variable_nodes]
+        if len(from_str_def) > 1:
+            from_str_def = [from_str_def[0]] + ["else " + s for s in from_str_def[1:]]
+        from_str_def = join_indent(from_str_def, "        ")
+
+        enum_template = f"""
+class {self.class_node.name} : public IEnum
+{{
+public:
+    enum Value:int
+    {{
+{variables}
+        unknown, // unknown
+    }};
+
+    {self.class_node.name}() = default;
+    constexpr {self.class_node.name}(Value value) : value(value) {{}}
+    operator Value () const {{return value;}}
+
+    std::string to_string() const override
+    {{
+        switch (value)
+        {{
+{to_str_def}
+        default:
+            return "unknown";
+        }}
+    }}
+
+    void from_string(const std::string &str) override
+    {{
+{from_str_def}
+        else
+        {{
+            value = Value::unknown;
+        }}
+    }}
+    private:
+        Value value;
+}};"""
+        return enum_template
 
 
 class DocumentDeclarationExporter:
@@ -64,8 +115,11 @@ class DocumentDeclarationExporter:
         self.nodes = [NodeDeclarationExporter(t) for t in self.standard.classes]
 
     def get_header_content(self):
-        classes = [n.generate_class() for n in self.nodes]
+        classes = [n.generate_class() for n in self.nodes if not n.is_enum]
         classes = indent_strings(self.indent, new_line.join(classes))
+
+        enums = [n.generate_enum() for n in self.nodes if n.is_enum]
+        enums = indent_strings(self.indent, new_line.join(enums))
 
         headers = new_line.join(
             [
@@ -107,6 +161,8 @@ namespace {self.standard.long_namespece}
 
 {forward_declarations}
 
+{enums}
+
 {classes}
 
 }}
@@ -114,7 +170,7 @@ namespace {self.standard.long_namespece}
         return text
 
     def get_to_string_declaration(self):
-        declarations = [n.generate_to_string_definitions() for n in self.nodes]
+        declarations = [n.generate_to_string_definitions() for n in self.nodes if not n.is_enum]
         declarations = indent_strings(self.indent, new_line.join(declarations))
 
         text = f"""

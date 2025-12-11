@@ -4,7 +4,7 @@
     "namespace": "ssd",
     "name": "SystemStructureDescription",
     "schema_root": "3rdParty/SSP1/schema/SystemStructureDescription.xsd",
-    "output": "resources/ssp1_ssd.toml",
+    "output": "resources/ssp1/ssp1_ssd.toml",
     "headers": ["FMI2_Enums.hpp", "SSP1_Enums.hpp"],
     "dependencies": [
       "SSP1_SystemStructureCommon",
@@ -19,7 +19,7 @@
     "namespace": "ssc",
     "name": "SystemStructureCommon",
     "schema_root": "3rdParty/SSP1/schema/SystemStructureCommon.xsd",
-    "output": "resources/ssp1_ssc.toml",
+    "output": "resources/ssp1/ssp1_ssc.toml",
     "headers": ["SSP1_Enums.hpp"],
     "type_prefix": "ssc"
   },
@@ -28,7 +28,7 @@
     "namespace": "ssv",
     "name": "SystemStructureParameterValues",
     "schema_root": "3rdParty/SSP1/schema/SystemStructureParameterValues.xsd",
-    "output": "resources/ssp1_ssv.toml",
+    "output": "resources/ssp1/ssp1_ssv.toml",
     "dependencies": ["SSP1_SystemStructureCommon"],
     "type_prefix": "ssv"
   },
@@ -37,7 +37,7 @@
     "namespace": "ssm",
     "name": "SystemStructureParameterMapping",
     "schema_root": "3rdParty/SSP1/schema/SystemStructureParameterMapping.xsd",
-    "output": "resources/ssp1_ssm.toml",
+    "output": "resources/ssp1/ssp1_ssm.toml",
     "dependencies": ["SSP1_SystemStructureCommon"],
     "type_prefix": "ssm"
   },
@@ -46,7 +46,7 @@
     "namespace": "ssd",
     "name": "SystemStructureDescription",
     "schema_root": "3rdParty/SSP2/schema/SystemStructureDescription.xsd",
-    "output": "resources/ssp2_ssd.toml",
+    "output": "resources/ssp2/ssp2_ssd.toml",
     "headers": ["SSP1_Enums.hpp"],
     "dependencies": [
       "SSP2_SystemStructureCommon",
@@ -61,7 +61,7 @@
     "namespace": "ssc",
     "name": "SystemStructureCommon",
     "schema_root": "3rdParty/SSP2/schema/SystemStructureCommon.xsd",
-    "output": "resources/ssp2_ssc.toml",
+    "output": "resources/ssp2/ssp2_ssc.toml",
     "headers": ["SSP1_Enums.hpp"],
     "type_prefix": "ssc"
   },
@@ -70,7 +70,7 @@
     "namespace": "ssv",
     "name": "SystemStructureParameterValues",
     "schema_root": "3rdParty/SSP2/schema/SystemStructureParameterValues.xsd",
-    "output": "resources/ssp2_ssv.toml",
+    "output": "resources/ssp2/ssp2_ssv.toml",
     "dependencies": ["SSP2_SystemStructureCommon"],
     "type_prefix": "ssv"
   },
@@ -79,7 +79,7 @@
     "namespace": "ssm",
     "name": "SystemStructureParameterMapping",
     "schema_root": "3rdParty/SSP2/schema/SystemStructureParameterMapping.xsd",
-    "output": "resources/ssp2_ssm.toml",
+    "output": "resources/ssp2/ssp2_ssm.toml",
     "dependencies": ["SSP2_SystemStructureCommon"],
     "type_prefix": "ssm"
   },
@@ -88,7 +88,7 @@
     "namespace": "md",
     "name": "modelDescription",
     "schema_root": "3rdParty/FMI2/schema/fmi2ModelDescription.xsd",
-    "output": "resources/fmi2_md.toml",
+    "output": "resources/fmi2/fmi2_md.toml",
     "headers": ["FMI2_Enums.hpp"],
     "type_prefix": "fmi2::md"
   },
@@ -97,7 +97,7 @@
     "namespace": "md",
     "name": "fmiModelDescription",
     "schema_root": "3rdParty/FMI3/schema/fmi3ModelDescription.xsd",
-    "output": "resources/fmi3_md.toml",
+    "output": "resources/fmi3/fmi3_md.toml",
     "headers": ["FMI3_Enums.hpp"],
     "type_prefix": "fmi3::md"
   }

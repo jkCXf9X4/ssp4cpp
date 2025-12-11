@@ -79,7 +79,7 @@ class DocumentXmlExporter:
     def __init__(self, standard: Standard, indent="    ") -> None:
         self.standard = standard
         self.indent = indent
-        self.nodes = [NodeXmlExporter(t) for t in self.standard.classes]
+        self.nodes = [NodeXmlExporter(t) for t in self.standard.classes if not t.is_enum]
 
     def get_parser_declaration(self):
         decs = [n.generate_from_xml_declarations() for n in self.nodes]

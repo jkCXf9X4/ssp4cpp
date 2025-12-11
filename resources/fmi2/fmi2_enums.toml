@@ -1,0 +1,56 @@
+aaa_standard = "FMI2"
+aaa_namespace = "md"
+aaa_name = "Enums"
+
+[Status]
+ok = {enum = "ok"}
+warning = {enum = "warning"}
+discard = {enum = "discard"}
+error = {enum = "error"}
+fatal = {enum = "fatal"}
+
+[Causality]
+parameter = {enum = "parameter"}
+calculatedParameter = {enum = "calculatedParameter"}
+input = {enum = "input"}
+output = {enum = "output"}
+local = {enum = "local"}
+independent = {enum = "independent"}
+
+[Variability]
+constant = {enum = "constant"}
+fixed = {enum = "fixed"}
+tunable = {enum = "tunable"}
+discrete = {enum = "discrete"}
+continuous = {enum = "continuous"}
+
+[Initial]
+exact = {enum = "exact"}
+approx = {enum = "approx"}
+calculated = {enum = "calculated"}
+
+[DependenciesKind]
+dependent = {enum = "dependent"}
+constant = {enum = "constant"}
+fixed = {enum = "fixed"}
+tunable = {enum = "tunable"}
+discrete = {enum = "discrete"}
+
+[LogCategory]
+logEvents = {enum = "logEvents"}
+logSingularLinearSystems = {enum = "logSingularLinearSystems"}
+logNonlinearSystems = {enum = "logNonlinearSystems"}
+logDynamicStateSelection = {enum = "logDynamicStateSelection"}
+logStatusWarning = {enum = "logStatusWarning"}
+logStatusDiscard = {enum = "logStatusDiscard"}
+logStatusError = {enum = "logStatusError"}
+logStatusFatal = {enum = "logStatusFatal"}
+logStatusPending = {enum = "logStatusPending"}
+logAll = {enum = "logAll"}
+
+[FmiType]
+real = {enum = "real"}
+integer = {enum = "integer"}
+boolean = {enum = "boolean"}
+string = {enum = "string"}
+enumeration = {enum = "enumeration"}
