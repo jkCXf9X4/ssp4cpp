@@ -22,6 +22,8 @@ namespace ssp4cpp::fmi2::md
 
 
 
+
+
     class BaseUnit : public IXmlNode
     {
     public:
@@ -237,8 +239,8 @@ namespace ssp4cpp::fmi2::md
     {
     public:
         int index;
-        std::optional<IntXmlList> dependencies;
-        std::optional<fmi2::md::DependenciesKindList> dependenciesKind;
+        std::vector<int> dependencies;
+        std::vector<fmi2::md::DependenciesKind> dependenciesKind;
 
         std::string to_string(void) const;
     };

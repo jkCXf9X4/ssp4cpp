@@ -11,7 +11,7 @@ def main():
         # "./resources/ssp1/ssp1_ssv.toml",
         # "./resources/ssp1/ssp1_ssm.toml",
         "./resources/ssp1/ssp1_enums.toml",
-        # "./resources/fmi2/fmi2_md.toml",
+        "./resources/fmi2/fmi2_md.toml",
         "./resources/fmi2/fmi2_enums.toml",
     ]
 

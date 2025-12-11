@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="2.0"
+  modelName="adaptionUnit"
+  guid="{b33d9a13-9743-48b6-8de1-f9255f980006}"
+  generationTool="Dymola Version 2022x (64-bit), 2021-10-08"
+  generationDateAndTime="2023-10-10T11:36:15Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="6">
+  <CoSimulation
+    modelIdentifier="adaptionUnit"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="true"
+    maxOutputDerivativeOrder="1"
+    canNotUseMemoryManagementFunctions="true"
+    canGetAndSetFMUstate="true"
+    canSerializeFMUstate="true"
+    providesDirectionalDerivative="true"/>
+  <UnitDefinitions>
+    <Unit
+      name="s">
+      <BaseUnit s="1"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.IntegerOutput">
+      <Integer/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealInput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealOutput">
+      <Real/>
+    </SimpleType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="1.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <!-- Index for next variable = 1 -->
+    <ScalarVariable
+      name="sWsignals.TLiquid"
+      valueReference="335544320"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 2 -->
+    <ScalarVariable
+      name="sWsignals.Aircraft_State"
+      valueReference="335544321"
+      causality="output"
+      variability="discrete">
+      <Integer
+        declaredType="Modelica.Blocks.Interfaces.IntegerOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 3 -->
+    <ScalarVariable
+      name="Aircraft_State"
+      valueReference="352321536"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 4 -->
+    <ScalarVariable
+      name="LHexTout"
+      valueReference="352321537"
+      causality="input">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"
+        start="0.0"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 5 -->
+    <ScalarVariable
+      name="realToInteger.u"
+      valueReference="436207616"
+      description="Connector of Real input signal">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealInput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 6 -->
+    <ScalarVariable
+      name="realToInteger.y"
+      valueReference="335544321"
+      description="Connector of Integer output signal"
+      variability="discrete">
+      <Integer
+        declaredType="Modelica.Blocks.Interfaces.IntegerOutput"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 7 -->
+    <ScalarVariable
+      name="CPUtime"
+      valueReference="67108866"
+      causality="output">
+      <Real
+        unit="s"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 8 -->
+    <ScalarVariable
+      name="EventCounter"
+      valueReference="67108867"
+      causality="output">
+      <Real/>
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="1"
+        dependencies="4"
+        dependenciesKind="fixed"/>
+      <Unknown index="2"
+        dependencies="3"
+        dependenciesKind="dependent"/>
+      <Unknown index="7"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="8"
+        dependencies=""
+        dependenciesKind=""/>
+    </Outputs>
+    <InitialUnknowns>
+      <Unknown index="1"
+        dependencies="4"
+        dependenciesKind="dependent"/>
+      <Unknown index="2"
+        dependencies="3"
+        dependenciesKind="dependent"/>
+      <Unknown index="7"
+        dependencies=""
+        dependenciesKind=""/>
+      <Unknown index="8"
+        dependencies=""
+        dependenciesKind=""/>
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>

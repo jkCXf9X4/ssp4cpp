@@ -31,7 +31,7 @@ TEST_CASE("SSP Import", "[SSP]")
     auto log = Logger("TEST::SSP_Import", LogLevel::debug);
     log(debug)("Opening ssp");
 
-    auto ssp = ssp4cpp::Ssp("./tests/resources/embrace_scen.ssp");
+    auto ssp = ssp4cpp::Ssp("./tests/resources/embrace_scen");
 
     log(debug)("Imported ssp! \n");
     log(debug)("{}", ssp.to_string());
