@@ -3,6 +3,7 @@
     "libzip",
     "pugixml",
     "catch2",
-    "kissnet"
+    "kissnet",
+    "libxml2"
   ]
 }
