@@ -14,7 +14,7 @@
 #include <vector>
 #include <optional>
 
-namespace ssp4cpp::ssp1::ssc
+namespace ssp4cpp::ssp1::ssd
 {
     using namespace utils::interfaces;
     using namespace utils::xml;

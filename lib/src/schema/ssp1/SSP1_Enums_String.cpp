@@ -8,7 +8,7 @@
 
 #include <string>
 
-namespace ssp4cpp::ssp1::ssc
+namespace ssp4cpp::ssp1::ssd
 {
     using namespace utils::str;
 

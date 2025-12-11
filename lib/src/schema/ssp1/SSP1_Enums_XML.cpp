@@ -10,11 +10,11 @@
 
 #include "cutecpp/log.hpp"
 
-namespace ssp4cpp::ssp1::ssc
+namespace ssp4cpp::ssp1::ssd
 {
     using namespace pugi;
 
-    auto log = Logger("ssp4cpp.ssp1.ssc", LogLevel::info);
+    auto log = Logger("ssp4cpp.ssp1.ssd", LogLevel::info);
 
 
 }

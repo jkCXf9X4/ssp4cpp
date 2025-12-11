@@ -1,5 +1,5 @@
 aaa_standard = "SSP1"
-aaa_namespace = "ssc"
+aaa_namespace = "ssd"
 aaa_name = "Enums"
 
 [ComponentType]
