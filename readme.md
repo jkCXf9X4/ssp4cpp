@@ -14,27 +14,30 @@ The project is organized into the following directories:
 - `3rdParty`: Contains third-party libraries and dependencies.
 - `lib`: Contains the core SSP4CPP library code.
 - `resources`: Contains toml representations of the bindings to be used as basis for generating the c++ bindings 
-- `xml_parser`: Contains a Python script for generating C++ classes from XML schema definitions.
+- `schema_generator`: Contains a Python script for generating C++ classes from XML schema definitions.
 
 ## Library Architecture
 
-- `schema`: Contains the C++ classes that represent the SSP schema. These classes are generated from the SSP XML schema definitions using the `xml_parser` tool. The code is manually generated, inspect the git diff before committing the new representation  
+- `schema`: Contains the C++ classes that represent the SSP schema. These classes are generated from the SSP XML schema definitions using the `schema_generator` tool. The code is manually generated, inspect the git diff before committing the new representation  
 
-The `schema` component contains the C++ classes that represent the SSP schema. These classes are generated from the SSP XML schema definitions using the `xml_parser` tool. The generated classes provide a type-safe way to access the data in an SSP file.
+The `schema` component contains the C++ classes that represent the SSP schema. These classes are generated from the SSP XML schema definitions using the `schema_generator` tool. The generated classes provide a type-safe way to access the data in an SSP file.
 
 It also has some utility functions to extract and work with the SSP, named as extensions. Located within files ending with "_Ext" 
 
-## Tools - XML Parser
+## Tools 
 
-The `xml_parser` directory contains a Python script for generating C++ classes from XML schema definitions. This is used to create the C++ classes that represent the SSP schema. The script uses the `lxml` library to parse the XML schema and generate the C++ code.
+### Schema generator
 
-### Generate bindings
+The `schema_generator` directory contains a Python script for generating C++ classes from XML schema definitions. This is used to create the C++ classes that represent the SSP schema. The script uses the `lxml` library to parse the XML schema and generate the C++ code.
+
+#### Generate bindings
 
 ```bash
 python3 -m venv venv
 . ./venv/bin/activate
+pip install -r requirements.txt
 
-./xml_parser/xml_parser.md
+./schema_generator/schema_generator.md
 
 ```
 
