@@ -202,7 +202,7 @@ namespace ssp4cpp::utils::xml
         pugi::xml_parse_result result = doc.load_file(fileName.c_str());
         if (!result)
         {
-            throw runtime_error(std::format("Unable to parse {}", root_name));
+            throw runtime_error(std::format("Unable to load xml {}", root_name));
         }
         auto root = doc.child(root_name.c_str());
         if (!root)

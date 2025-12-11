@@ -12,21 +12,37 @@ namespace ssp4cpp
         : original_file(file)
     {
 
-        log(debug)("Importing archive: {}", file.string());
+        log(debug)("Importing file: {}", file.string());
 
         if (is_regular_file(file))
         {
+            log(debug)("Opening archive: {}", file.string());
             dir = utils::zip_ns::unzip_to_temp_dir(file.string(), tmp_prefix);
             using_tmp_dir = true;
         }
         else if (is_directory(file))
         {
+            log(debug)("Opening directory: {}", file.string());
+
             dir = file;
             using_tmp_dir = false;
         }
         else
         {
-            throw std::runtime_error("File is not a regular file or directory: " + file.string());
+            // Trying to strip the extension and open again.
+            auto f = file;
+            auto wo_ext = f.replace_extension();
+            if (is_directory(wo_ext))
+            {
+                log(debug)("Opening stripped directory: {}", f.string());
+                dir = wo_ext;
+                using_tmp_dir = false;
+            }
+            else
+            {
+                throw std::runtime_error("File is not a regular file or directory: " + file.string());
+            }
+
         }
     }
 
