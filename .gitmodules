@@ -1,5 +1,5 @@
 [submodule "3rdParty/SSP_Schema"]
-	path = 3rdParty/SSP_Schema
+	path = 3rdParty/SSP1
 	url = https://github.com/modelica/ssp-standard
 [submodule "3rdParty/FMI3"]
 	path = 3rdParty/FMI3
@@ -10,3 +10,6 @@
 [submodule "3rdParty/cutecpp"]
 	path = 3rdParty/cutecpp
 	url = https://github.com/jkCXf9X4/cutecpp
+[submodule "3rdParty/SSP2"]
+	path = 3rdParty/SSP2
+	url = git@github.com:modelica/ssp-standard.git
