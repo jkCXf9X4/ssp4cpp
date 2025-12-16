@@ -22,6 +22,8 @@ namespace ssp4cpp::ssp1::ssm
 
 
 
+
+
     class TMappingEntry : public IXmlNode
     {
     public:

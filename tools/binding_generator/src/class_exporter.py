@@ -59,13 +59,13 @@ public:
         return class_template
     
     def generate_enum(self):
-        variables = [f"{v.name}, // {v.enum}" for v in self.variable_nodes]
+        variables = [f"{v.name}, // {v.enum_value}" for v in self.variable_nodes]
         variables = join_indent(variables, "        ")
 
-        to_str_def = [f"case Value::{v.name}: return \"{v.enum}\";" for v in self.variable_nodes]
+        to_str_def = [f"case Value::{v.name}: return \"{v.enum_value}\";" for v in self.variable_nodes]
         to_str_def = join_indent(to_str_def, "        ")
 
-        from_str_def = [f"if (str == \"{v.enum}\") value = Value::{v.name};" for v in self.variable_nodes]
+        from_str_def = [f"if (str == \"{v.enum_value}\") value = Value::{v.name};" for v in self.variable_nodes]
         if len(from_str_def) > 1:
             from_str_def = [from_str_def[0]] + ["else " + s for s in from_str_def[1:]]
         from_str_def = join_indent(from_str_def, "        ")
@@ -103,7 +103,7 @@ public:
         }}
     }}
     private:
-        Value value;
+        Value value{{Value::unknown}};
 }};"""
         return enum_template
 

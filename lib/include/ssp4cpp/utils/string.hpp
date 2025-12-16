@@ -137,23 +137,52 @@ namespace ssp4cpp::utils::str
     }
 
     /**
+     * @brief Split a delimited string into a string list.
+     */
+    inline std::vector<std::string> split_string(std::string_view str,
+                                                 std::string_view delim)
+    {
+        std::vector<std::string> result;
+
+        if (delim.empty())
+        {
+            result.emplace_back(str);
+            return result;
+        }
+
+        size_t start = 0;
+        while (true)
+        {
+            size_t pos = str.find(delim, start);
+            if (pos == std::string_view::npos)
+            {
+                result.emplace_back(str.substr(start));
+                break;
+            }
+            result.emplace_back(str.substr(start, pos - start));
+            start = pos + delim.size();
+        }
+
+        return result;
+    }
+
+    /**
      * @brief Split a delimited string and convert each token to type T.
      */
     template <typename T>
-    std::vector<T> from_strs(const std::string &str, const char del)
+    std::vector<T> from_strs(const std::string &str, const std::string &del)
     {
-        auto list = std::vector<T>();
+        std::vector<T> result;
 
-        std::istringstream ss;
-        ss.str(str);
-
-        for (std::string word; std::getline(ss, word, del);)
+        for (auto &word : split_string(str, del))
         {
-            T item = from_str<T>(word);
-
-            list.push_back(item);
+            if (word != "")
+            {
+                T item = from_str<T>(word);
+                result.emplace_back(std::move(item));
+            }
         }
-        return list;
+        return result;
     }
 
     /**

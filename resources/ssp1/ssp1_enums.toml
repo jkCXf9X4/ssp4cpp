@@ -3,6 +3,6 @@ aaa_namespace = "ssd"
 aaa_name = "Enums"
 
 [ComponentType]
-fmu = {enum = "application/x-fmu-sharedlibrary"}
-ssd = {enum = "application/x-ssp-definition"}
-ssp = {enum = "application/x-ssp-package"}
+fmu = {enum_val = "application/x-fmu-sharedlibrary"}
+ssd = {enum_val = "application/x-ssp-definition"}
+ssp = {enum_val = "application/x-ssp-package"}

@@ -235,16 +235,12 @@ namespace ssp4cpp::fmi2::md
         std::string to_string(void) const;
     };
 
-    class DependenciesKindList : public XmlNodeList<DependenciesKind>
-    {
-    };
-
     class Unknown : public IXmlNode
     {
     public:
         int index;
-        std::optional<IntXmlList> dependencies;
-        std::optional<fmi2::md::DependenciesKindList> dependenciesKind;
+        std::vector<int> dependencies;
+        std::vector<fmi2::md::DependenciesKind> dependenciesKind;
 
         std::string to_string(void) const;
     };

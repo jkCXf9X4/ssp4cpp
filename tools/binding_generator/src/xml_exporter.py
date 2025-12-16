@@ -18,6 +18,7 @@ class NodeXmlExporter:
         self.class_node = class_node
         self.variable_nodes: List[Attribute] = class_node.children
         self.indent = indent
+        self.is_enum = class_node.is_enum
 
         self.longest_name = max(
             [
@@ -28,7 +29,7 @@ class NodeXmlExporter:
 
     def generate_from_xml_declarations(self):
         return (
-            f"""void from_xml(const xml_node &node, {self.class_node.name } &obj);\n"""
+            f"""void from_xml(const xml_node &node, {self.class_node.name} &obj);\n"""
         )
 
     def generate_variable_declaration(self, variable: Attribute):
@@ -45,27 +46,51 @@ class NodeXmlExporter:
                 else f"{variable.namespace}:{variable.name}"
             )
 
-        return f'utils::xml::parse_xml(node, obj.{variable.name.ljust(self.longest_name +2)}, "{name}");'
+        # Vector
+
+        # List
+        if variable.list:
+            if variable.delimitation is None:
+                return f'utils::xml::get_vector(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}"); // {variable.type}'
+            else:
+                return f'utils::xml::get_readable_vector(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}", "{variable.delimitation}"); // {variable.type}'
+
+        # Attribute
+        elif variable.is_primitive: 
+            if variable.optional:
+                return f'utils::xml::get_optional_attribute(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}"); // {variable.type}'
+            else:
+                return f'utils::xml::get_attribute(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}"); // {variable.type}'
+            
+        # Enum
+        elif variable.is_enum:
+            if variable.optional:
+                return f'utils::xml::get_optional_enum(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}"); // {variable.type}'
+            else:
+                return f'utils::xml::get_enum(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}"); // {variable.type}'
+
+        # Class
+        else:
+            if variable.optional:
+                return f'utils::xml::get_optional_class(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}"); // {variable.type}'
+            else:
+                return f'utils::xml::get_class(node, obj.{variable.name.ljust(self.longest_name + 2)}, "{name}"); // {variable.type}'
 
     def generate_parser(self):
-        variables = [
-            self.generate_variable_declaration(v)
-            for v in self.variable_nodes
-        ]
-        variables = "\n".join(variables)
-        variables = indent_strings(self.indent, variables)
-
-    
-        experimental_nodes = [v.name for v in self.variable_nodes if v.experimental]
-        warning_text = ""
-        if experimental_nodes:
-            warning_text = f"log(warning)(\"Experimental feature {','.join(experimental_nodes)} used\");\n"
+        if not self.is_enum:
+            variables = [
+                self.generate_variable_declaration(v) for v in self.variable_nodes
+            ]
+            variables = "\n".join(variables)
+            variables = indent_strings(self.indent, variables)
+        else:
+            # Unreachable
+            variables = "// ERROR: Trying to parse enum.... Something is wrong!"
 
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
 {{
     log(ext_trace)("Parsing {self.class_node.name}");
-    {warning_text}
 
 {variables}
 
@@ -79,16 +104,16 @@ class DocumentXmlExporter:
     def __init__(self, standard: Standard, indent="    ") -> None:
         self.standard = standard
         self.indent = indent
-        self.nodes = [NodeXmlExporter(t) for t in self.standard.classes if not t.is_enum]
+        self.nodes = [NodeXmlExporter(t) for t in self.standard.classes]
 
     def get_parser_declaration(self):
-        decs = [n.generate_from_xml_declarations() for n in self.nodes]
+        decs = [n.generate_from_xml_declarations() for n in self.nodes if not n.is_enum]
         decs = indent_strings(self.indent, new_line.join(decs))
 
         text = f"""
 
 // This is a generated file, do not alter
-// it is based on {self.standard.filename }
+// it is based on {self.standard.filename}
 
 #pragma once
 
@@ -106,7 +131,7 @@ namespace {self.standard.long_namespece}
         return text
 
     def get_parsers_definitions(self):
-        parsers = [n.generate_parser() for n in self.nodes]
+        parsers = [n.generate_parser() for n in self.nodes if not n.is_enum]
         parsers = indent_strings(self.indent, new_line.join(parsers))
 
         dependencies = new_line.join(
@@ -129,7 +154,7 @@ namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace pugi;
 
-{self.indent}auto log = Logger("{self.standard.long_namespece.replace('::', '.')}", LogLevel::info);
+{self.indent}auto log = Logger("{self.standard.long_namespece.replace("::", ".")}", LogLevel::info);
 
 {parsers}
 }}

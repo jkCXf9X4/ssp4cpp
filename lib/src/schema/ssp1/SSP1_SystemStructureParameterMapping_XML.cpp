@@ -20,18 +20,17 @@ namespace ssp4cpp::ssp1::ssm
     void from_xml(const xml_node &node, TMappingEntry &obj)
     {
         log(ext_trace)("Parsing TMappingEntry");
-        
 
-        utils::xml::parse_xml(node, obj.id                                , "id");
-        utils::xml::parse_xml(node, obj.description                       , "description");
-        utils::xml::parse_xml(node, obj.source                            , "source");
-        utils::xml::parse_xml(node, obj.target                            , "target");
-        utils::xml::parse_xml(node, obj.suppressUnitConversion            , "suppressUnitConversion");
-        utils::xml::parse_xml(node, obj.LinearTransformation              , "ssc:LinearTransformation");
-        utils::xml::parse_xml(node, obj.BooleanMappingTransformation      , "ssc:BooleanMappingTransformation");
-        utils::xml::parse_xml(node, obj.IntegerMappingTransformation      , "ssc:IntegerMappingTransformation");
-        utils::xml::parse_xml(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation");
-        utils::xml::parse_xml(node, obj.Annotations                       , "ssc:Annotations");
+        utils::xml::get_optional_attribute(node, obj.id                                , "id"); // string
+        utils::xml::get_optional_attribute(node, obj.description                       , "description"); // string
+        utils::xml::get_attribute(node, obj.source                            , "source"); // string
+        utils::xml::get_attribute(node, obj.target                            , "target"); // string
+        utils::xml::get_optional_attribute(node, obj.suppressUnitConversion            , "suppressUnitConversion"); // bool
+        utils::xml::get_optional_class(node, obj.LinearTransformation              , "ssc:LinearTransformation"); // ssc::LinearTransformation
+        utils::xml::get_optional_class(node, obj.BooleanMappingTransformation      , "ssc:BooleanMappingTransformation"); // ssc::BooleanMappingTransformation
+        utils::xml::get_optional_class(node, obj.IntegerMappingTransformation      , "ssc:IntegerMappingTransformation"); // ssc::IntegerMappingTransformation
+        utils::xml::get_optional_class(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation"); // ssc::EnumerationMappingTransformation
+        utils::xml::get_optional_class(node, obj.Annotations                       , "ssc:Annotations"); // ssc::TAnnotations
 
         log(ext_trace)("Completed TMappingEntry");
     }
@@ -40,19 +39,18 @@ namespace ssp4cpp::ssp1::ssm
     void from_xml(const xml_node &node, ParameterMapping &obj)
     {
         log(ext_trace)("Parsing ParameterMapping");
-        
 
-        utils::xml::parse_xml(node, obj.version                , "version");
-        utils::xml::parse_xml(node, obj.id                     , "id");
-        utils::xml::parse_xml(node, obj.description            , "description");
-        utils::xml::parse_xml(node, obj.author                 , "author");
-        utils::xml::parse_xml(node, obj.fileversion            , "fileversion");
-        utils::xml::parse_xml(node, obj.copyright              , "copyright");
-        utils::xml::parse_xml(node, obj.license                , "license");
-        utils::xml::parse_xml(node, obj.generationTool         , "generationTool");
-        utils::xml::parse_xml(node, obj.generationDateAndTime  , "generationDateAndTime");
-        utils::xml::parse_xml(node, obj.MappingEntry           , "ssm:MappingEntry");
-        utils::xml::parse_xml(node, obj.Annotations            , "ssc:Annotations");
+        utils::xml::get_attribute(node, obj.version                , "version"); // string
+        utils::xml::get_optional_attribute(node, obj.id                     , "id"); // string
+        utils::xml::get_optional_attribute(node, obj.description            , "description"); // string
+        utils::xml::get_optional_attribute(node, obj.author                 , "author"); // string
+        utils::xml::get_optional_attribute(node, obj.fileversion            , "fileversion"); // string
+        utils::xml::get_optional_attribute(node, obj.copyright              , "copyright"); // string
+        utils::xml::get_optional_attribute(node, obj.license                , "license"); // string
+        utils::xml::get_optional_attribute(node, obj.generationTool         , "generationTool"); // string
+        utils::xml::get_optional_attribute(node, obj.generationDateAndTime  , "generationDateAndTime"); // string
+        utils::xml::get_vector(node, obj.MappingEntry           , "ssm:MappingEntry"); // ssm::TMappingEntry
+        utils::xml::get_optional_class(node, obj.Annotations            , "ssc:Annotations"); // ssc::TAnnotations
 
         log(ext_trace)("Completed ParameterMapping");
     }

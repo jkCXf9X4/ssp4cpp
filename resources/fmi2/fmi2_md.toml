@@ -126,9 +126,9 @@ stepSize = { type = "double", optional = true }
 name = { type = "string" }
 valueReference = { type = "unsigned int", optional = true }
 description = { type = "string", optional = true }
-causality = { type = "fmi2::md::Causality", optional = true }
-variability = { type = "fmi2::md::Variability", optional = true }
-initial = { type = "fmi2::md::Initial", optional = true }
+causality = { type = "fmi2::md::Causality", optional = true, is_enum = true}
+variability = { type = "fmi2::md::Variability", optional = true, is_enum = true }
+initial = { type = "fmi2::md::Initial", optional = true, is_enum = true }
 canHandleMultipleSetPerTimeInstant = { type = "bool", optional = true }
 Real = { type = "fmi2::md::Real", optional = true }
 Integer = { type = "fmi2::md::Integer", optional = true }
@@ -139,8 +139,8 @@ Annotations = { type = "fmi2::md::fmi2Annotation", list = true , xml_tag="Annota
 
 [Unknown]
 index = { type = "int" }
-dependencies = { type = "IntXmlList", optional = true }
-dependenciesKind = { type = "fmi2::md::DependenciesKindList", optional = true }
+dependencies = { type = "int", list = true, delimitation = " "}
+dependenciesKind = { type = "fmi2::md::DependenciesKind", list = true, delimitation = " " }
 
 [Outputs]
 Unknowns = { type = "fmi2::md::Unknown", list = true, xml_tag="Unknown" }

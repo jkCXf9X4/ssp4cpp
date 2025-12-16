@@ -20,18 +20,17 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, BaseUnit &obj)
     {
         log(ext_trace)("Parsing BaseUnit");
-        
 
-        utils::xml::parse_xml(node, obj.kg      , "kg");
-        utils::xml::parse_xml(node, obj.m       , "m");
-        utils::xml::parse_xml(node, obj.s       , "s");
-        utils::xml::parse_xml(node, obj.a       , "a");
-        utils::xml::parse_xml(node, obj.k       , "k");
-        utils::xml::parse_xml(node, obj.mol     , "mol");
-        utils::xml::parse_xml(node, obj.cd      , "cd");
-        utils::xml::parse_xml(node, obj.rad     , "rad");
-        utils::xml::parse_xml(node, obj.factor  , "factor");
-        utils::xml::parse_xml(node, obj.offset  , "offset");
+        utils::xml::get_optional_attribute(node, obj.kg      , "kg"); // int
+        utils::xml::get_optional_attribute(node, obj.m       , "m"); // int
+        utils::xml::get_optional_attribute(node, obj.s       , "s"); // int
+        utils::xml::get_optional_attribute(node, obj.a       , "a"); // int
+        utils::xml::get_optional_attribute(node, obj.k       , "k"); // int
+        utils::xml::get_optional_attribute(node, obj.mol     , "mol"); // int
+        utils::xml::get_optional_attribute(node, obj.cd      , "cd"); // int
+        utils::xml::get_optional_attribute(node, obj.rad     , "rad"); // int
+        utils::xml::get_optional_attribute(node, obj.factor  , "factor"); // double
+        utils::xml::get_optional_attribute(node, obj.offset  , "offset"); // double
 
         log(ext_trace)("Completed BaseUnit");
     }
@@ -40,11 +39,10 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, DisplayUnit &obj)
     {
         log(ext_trace)("Parsing DisplayUnit");
-        
 
-        utils::xml::parse_xml(node, obj.name    , "name");
-        utils::xml::parse_xml(node, obj.factor  , "factor");
-        utils::xml::parse_xml(node, obj.offset  , "offset");
+        utils::xml::get_attribute(node, obj.name    , "name"); // string
+        utils::xml::get_optional_attribute(node, obj.factor  , "factor"); // double
+        utils::xml::get_optional_attribute(node, obj.offset  , "offset"); // double
 
         log(ext_trace)("Completed DisplayUnit");
     }
@@ -53,11 +51,10 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, fmi2Unit &obj)
     {
         log(ext_trace)("Parsing fmi2Unit");
-        
 
-        utils::xml::parse_xml(node, obj.name         , "name");
-        utils::xml::parse_xml(node, obj.BaseUnit     , "BaseUnit");
-        utils::xml::parse_xml(node, obj.DisplayUnit  , "DisplayUnit");
+        utils::xml::get_attribute(node, obj.name         , "name"); // string
+        utils::xml::get_optional_class(node, obj.BaseUnit     , "BaseUnit"); // fmi2::md::BaseUnit
+        utils::xml::get_vector(node, obj.DisplayUnit  , "DisplayUnit"); // fmi2::md::DisplayUnit
 
         log(ext_trace)("Completed fmi2Unit");
     }
@@ -66,9 +63,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, UnitDefinitions &obj)
     {
         log(ext_trace)("Parsing UnitDefinitions");
-        
 
-        utils::xml::parse_xml(node, obj.Units  , "Unit");
+        utils::xml::get_vector(node, obj.Units  , "Unit"); // fmi2::md::fmi2Unit
 
         log(ext_trace)("Completed UnitDefinitions");
     }
@@ -77,10 +73,9 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Boolean &obj)
     {
         log(ext_trace)("Parsing Boolean");
-        
 
-        utils::xml::parse_xml(node, obj.declaredType  , "declaredType");
-        utils::xml::parse_xml(node, obj.start         , "start");
+        utils::xml::get_optional_attribute(node, obj.declaredType  , "declaredType"); // string
+        utils::xml::get_optional_attribute(node, obj.start         , "start"); // bool
 
         log(ext_trace)("Completed Boolean");
     }
@@ -89,13 +84,12 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Integer &obj)
     {
         log(ext_trace)("Parsing Integer");
-        
 
-        utils::xml::parse_xml(node, obj.declaredType  , "declaredType");
-        utils::xml::parse_xml(node, obj.start         , "start");
-        utils::xml::parse_xml(node, obj.quantity      , "quantity");
-        utils::xml::parse_xml(node, obj.min           , "min");
-        utils::xml::parse_xml(node, obj.max           , "max");
+        utils::xml::get_optional_attribute(node, obj.declaredType  , "declaredType"); // string
+        utils::xml::get_optional_attribute(node, obj.start         , "start"); // int
+        utils::xml::get_optional_attribute(node, obj.quantity      , "quantity"); // string
+        utils::xml::get_optional_attribute(node, obj.min           , "min"); // int
+        utils::xml::get_optional_attribute(node, obj.max           , "max"); // int
 
         log(ext_trace)("Completed Integer");
     }
@@ -104,10 +98,9 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, String &obj)
     {
         log(ext_trace)("Parsing String");
-        
 
-        utils::xml::parse_xml(node, obj.declaredType  , "declaredType");
-        utils::xml::parse_xml(node, obj.start         , "start");
+        utils::xml::get_optional_attribute(node, obj.declaredType  , "declaredType"); // string
+        utils::xml::get_optional_attribute(node, obj.start         , "start"); // string
 
         log(ext_trace)("Completed String");
     }
@@ -116,20 +109,19 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Real &obj)
     {
         log(ext_trace)("Parsing Real");
-        
 
-        utils::xml::parse_xml(node, obj.declaredType      , "declaredType");
-        utils::xml::parse_xml(node, obj.quantity          , "quantity");
-        utils::xml::parse_xml(node, obj.unit              , "unit");
-        utils::xml::parse_xml(node, obj.displayUnit       , "displayUnit");
-        utils::xml::parse_xml(node, obj.relativeQuantity  , "relativeQuantity");
-        utils::xml::parse_xml(node, obj.min               , "min");
-        utils::xml::parse_xml(node, obj.max               , "max");
-        utils::xml::parse_xml(node, obj.nominal           , "nominal");
-        utils::xml::parse_xml(node, obj.unbounded         , "unbounded");
-        utils::xml::parse_xml(node, obj.start             , "start");
-        utils::xml::parse_xml(node, obj.derivative        , "derivative");
-        utils::xml::parse_xml(node, obj.reinit            , "reinit");
+        utils::xml::get_optional_attribute(node, obj.declaredType      , "declaredType"); // string
+        utils::xml::get_optional_attribute(node, obj.quantity          , "quantity"); // string
+        utils::xml::get_optional_attribute(node, obj.unit              , "unit"); // string
+        utils::xml::get_optional_attribute(node, obj.displayUnit       , "displayUnit"); // string
+        utils::xml::get_optional_attribute(node, obj.relativeQuantity  , "relativeQuantity"); // bool
+        utils::xml::get_optional_attribute(node, obj.min               , "min"); // double
+        utils::xml::get_optional_attribute(node, obj.max               , "max"); // double
+        utils::xml::get_optional_attribute(node, obj.nominal           , "nominal"); // double
+        utils::xml::get_optional_attribute(node, obj.unbounded         , "unbounded"); // bool
+        utils::xml::get_optional_attribute(node, obj.start             , "start"); // double
+        utils::xml::get_optional_attribute(node, obj.derivative        , "derivative"); // unsigned int
+        utils::xml::get_optional_attribute(node, obj.reinit            , "reinit"); // bool
 
         log(ext_trace)("Completed Real");
     }
@@ -138,13 +130,12 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Enumeration &obj)
     {
         log(ext_trace)("Parsing Enumeration");
-        
 
-        utils::xml::parse_xml(node, obj.declaredType  , "declaredType");
-        utils::xml::parse_xml(node, obj.quantity      , "quantity");
-        utils::xml::parse_xml(node, obj.min           , "min");
-        utils::xml::parse_xml(node, obj.max           , "max");
-        utils::xml::parse_xml(node, obj.start         , "start");
+        utils::xml::get_attribute(node, obj.declaredType  , "declaredType"); // string
+        utils::xml::get_optional_attribute(node, obj.quantity      , "quantity"); // string
+        utils::xml::get_optional_attribute(node, obj.min           , "min"); // int
+        utils::xml::get_optional_attribute(node, obj.max           , "max"); // int
+        utils::xml::get_optional_attribute(node, obj.start         , "start"); // int
 
         log(ext_trace)("Completed Enumeration");
     }
@@ -153,11 +144,10 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, SimpleTypeEnumerationItem &obj)
     {
         log(ext_trace)("Parsing SimpleTypeEnumerationItem");
-        
 
-        utils::xml::parse_xml(node, obj.name         , "name");
-        utils::xml::parse_xml(node, obj.value        , "value");
-        utils::xml::parse_xml(node, obj.description  , "description");
+        utils::xml::get_attribute(node, obj.name         , "name"); // string
+        utils::xml::get_attribute(node, obj.value        , "value"); // int
+        utils::xml::get_optional_attribute(node, obj.description  , "description"); // string
 
         log(ext_trace)("Completed SimpleTypeEnumerationItem");
     }
@@ -166,10 +156,9 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, SimpleTypeEnumeration &obj)
     {
         log(ext_trace)("Parsing SimpleTypeEnumeration");
-        
 
-        utils::xml::parse_xml(node, obj.quantity  , "quantity");
-        utils::xml::parse_xml(node, obj.Items     , "Item");
+        utils::xml::get_optional_attribute(node, obj.quantity  , "quantity"); // string
+        utils::xml::get_vector(node, obj.Items     , "Item"); // fmi2::md::SimpleTypeEnumerationItem
 
         log(ext_trace)("Completed SimpleTypeEnumeration");
     }
@@ -178,15 +167,14 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, fmi2SimpleType &obj)
     {
         log(ext_trace)("Parsing fmi2SimpleType");
-        
 
-        utils::xml::parse_xml(node, obj.name         , "name");
-        utils::xml::parse_xml(node, obj.description  , "description");
-        utils::xml::parse_xml(node, obj.Real         , "Real");
-        utils::xml::parse_xml(node, obj.Integer      , "Integer");
-        utils::xml::parse_xml(node, obj.Boolean      , "Boolean");
-        utils::xml::parse_xml(node, obj.String       , "String");
-        utils::xml::parse_xml(node, obj.Enumeration  , "Enumeration");
+        utils::xml::get_attribute(node, obj.name         , "name"); // string
+        utils::xml::get_optional_attribute(node, obj.description  , "description"); // string
+        utils::xml::get_optional_class(node, obj.Real         , "Real"); // fmi2::md::Real
+        utils::xml::get_optional_class(node, obj.Integer      , "Integer"); // fmi2::md::Integer
+        utils::xml::get_optional_class(node, obj.Boolean      , "Boolean"); // fmi2::md::Boolean
+        utils::xml::get_optional_class(node, obj.String       , "String"); // fmi2::md::String
+        utils::xml::get_optional_class(node, obj.Enumeration  , "Enumeration"); // fmi2::md::SimpleTypeEnumeration
 
         log(ext_trace)("Completed fmi2SimpleType");
     }
@@ -195,9 +183,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, TypeDefinitions &obj)
     {
         log(ext_trace)("Parsing TypeDefinitions");
-        
 
-        utils::xml::parse_xml(node, obj.SimpleTypes  , "SimpleType");
+        utils::xml::get_vector(node, obj.SimpleTypes  , "SimpleType"); // fmi2::md::fmi2SimpleType
 
         log(ext_trace)("Completed TypeDefinitions");
     }
@@ -206,10 +193,9 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Category &obj)
     {
         log(ext_trace)("Parsing Category");
-        
 
-        utils::xml::parse_xml(node, obj.name         , "name");
-        utils::xml::parse_xml(node, obj.description  , "description");
+        utils::xml::get_attribute(node, obj.name         , "name"); // string
+        utils::xml::get_optional_attribute(node, obj.description  , "description"); // string
 
         log(ext_trace)("Completed Category");
     }
@@ -218,9 +204,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, LogCategories &obj)
     {
         log(ext_trace)("Parsing LogCategories");
-        
 
-        utils::xml::parse_xml(node, obj.Categories  , "Category");
+        utils::xml::get_vector(node, obj.Categories  , "Category"); // fmi2::md::Category
 
         log(ext_trace)("Completed LogCategories");
     }
@@ -229,9 +214,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, fmi2Annotation &obj)
     {
         log(ext_trace)("Parsing fmi2Annotation");
-        
 
-        utils::xml::parse_xml(node, obj.annotation  , "annotation");
+        utils::xml::get_attribute(node, obj.annotation  , "annotation"); // string
 
         log(ext_trace)("Completed fmi2Annotation");
     }
@@ -240,9 +224,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, VendorAnnotations &obj)
     {
         log(ext_trace)("Parsing VendorAnnotations");
-        
 
-        utils::xml::parse_xml(node, obj.Annotations  , "Annotation");
+        utils::xml::get_vector(node, obj.Annotations  , "Annotation"); // fmi2::md::fmi2Annotation
 
         log(ext_trace)("Completed VendorAnnotations");
     }
@@ -251,12 +234,11 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, DefaultExperiment &obj)
     {
         log(ext_trace)("Parsing DefaultExperiment");
-        
 
-        utils::xml::parse_xml(node, obj.startTime  , "startTime");
-        utils::xml::parse_xml(node, obj.stopTime   , "stopTime");
-        utils::xml::parse_xml(node, obj.tolerance  , "tolerance");
-        utils::xml::parse_xml(node, obj.stepSize   , "stepSize");
+        utils::xml::get_optional_attribute(node, obj.startTime  , "startTime"); // double
+        utils::xml::get_optional_attribute(node, obj.stopTime   , "stopTime"); // double
+        utils::xml::get_optional_attribute(node, obj.tolerance  , "tolerance"); // double
+        utils::xml::get_optional_attribute(node, obj.stepSize   , "stepSize"); // double
 
         log(ext_trace)("Completed DefaultExperiment");
     }
@@ -265,21 +247,20 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, fmi2ScalarVariable &obj)
     {
         log(ext_trace)("Parsing fmi2ScalarVariable");
-        
 
-        utils::xml::parse_xml(node, obj.name                                , "name");
-        utils::xml::parse_xml(node, obj.valueReference                      , "valueReference");
-        utils::xml::parse_xml(node, obj.description                         , "description");
-        utils::xml::parse_xml(node, obj.causality                           , "causality");
-        utils::xml::parse_xml(node, obj.variability                         , "variability");
-        utils::xml::parse_xml(node, obj.initial                             , "initial");
-        utils::xml::parse_xml(node, obj.canHandleMultipleSetPerTimeInstant  , "canHandleMultipleSetPerTimeInstant");
-        utils::xml::parse_xml(node, obj.Real                                , "Real");
-        utils::xml::parse_xml(node, obj.Integer                             , "Integer");
-        utils::xml::parse_xml(node, obj.Boolean                             , "Boolean");
-        utils::xml::parse_xml(node, obj.String                              , "String");
-        utils::xml::parse_xml(node, obj.Enumeration                         , "Enumeration");
-        utils::xml::parse_xml(node, obj.Annotations                         , "Annotation");
+        utils::xml::get_attribute(node, obj.name                                , "name"); // string
+        utils::xml::get_optional_attribute(node, obj.valueReference                      , "valueReference"); // unsigned int
+        utils::xml::get_optional_attribute(node, obj.description                         , "description"); // string
+        utils::xml::get_optional_enum(node, obj.causality                           , "causality"); // fmi2::md::Causality
+        utils::xml::get_optional_enum(node, obj.variability                         , "variability"); // fmi2::md::Variability
+        utils::xml::get_optional_enum(node, obj.initial                             , "initial"); // fmi2::md::Initial
+        utils::xml::get_optional_attribute(node, obj.canHandleMultipleSetPerTimeInstant  , "canHandleMultipleSetPerTimeInstant"); // bool
+        utils::xml::get_optional_class(node, obj.Real                                , "Real"); // fmi2::md::Real
+        utils::xml::get_optional_class(node, obj.Integer                             , "Integer"); // fmi2::md::Integer
+        utils::xml::get_optional_class(node, obj.Boolean                             , "Boolean"); // fmi2::md::Boolean
+        utils::xml::get_optional_class(node, obj.String                              , "String"); // fmi2::md::String
+        utils::xml::get_optional_class(node, obj.Enumeration                         , "Enumeration"); // fmi2::md::Enumeration
+        utils::xml::get_vector(node, obj.Annotations                         , "Annotation"); // fmi2::md::fmi2Annotation
 
         log(ext_trace)("Completed fmi2ScalarVariable");
     }
@@ -288,11 +269,10 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Unknown &obj)
     {
         log(ext_trace)("Parsing Unknown");
-        
 
-        utils::xml::parse_xml(node, obj.index             , "index");
-        utils::xml::parse_xml(node, obj.dependencies      , "dependencies");
-        utils::xml::parse_xml(node, obj.dependenciesKind  , "dependenciesKind");
+        utils::xml::get_attribute(node, obj.index             , "index"); // int
+        utils::xml::get_readable_vector(node, obj.dependencies      , "dependencies", " "); // int
+        utils::xml::get_readable_vector(node, obj.dependenciesKind  , "dependenciesKind", " "); // fmi2::md::DependenciesKind
 
         log(ext_trace)("Completed Unknown");
     }
@@ -301,9 +281,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Outputs &obj)
     {
         log(ext_trace)("Parsing Outputs");
-        
 
-        utils::xml::parse_xml(node, obj.Unknowns  , "Unknown");
+        utils::xml::get_vector(node, obj.Unknowns  , "Unknown"); // fmi2::md::Unknown
 
         log(ext_trace)("Completed Outputs");
     }
@@ -312,9 +291,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, Derivatives &obj)
     {
         log(ext_trace)("Parsing Derivatives");
-        
 
-        utils::xml::parse_xml(node, obj.Unknowns  , "Unknown");
+        utils::xml::get_vector(node, obj.Unknowns  , "Unknown"); // fmi2::md::Unknown
 
         log(ext_trace)("Completed Derivatives");
     }
@@ -323,9 +301,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, InitialUnknowns &obj)
     {
         log(ext_trace)("Parsing InitialUnknowns");
-        
 
-        utils::xml::parse_xml(node, obj.Unknowns  , "Unknown");
+        utils::xml::get_vector(node, obj.Unknowns  , "Unknown"); // fmi2::md::Unknown
 
         log(ext_trace)("Completed InitialUnknowns");
     }
@@ -334,11 +311,10 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, ModelStructure &obj)
     {
         log(ext_trace)("Parsing ModelStructure");
-        
 
-        utils::xml::parse_xml(node, obj.Outputs          , "Outputs");
-        utils::xml::parse_xml(node, obj.Derivatives      , "Derivatives");
-        utils::xml::parse_xml(node, obj.InitialUnknowns  , "InitialUnknowns");
+        utils::xml::get_optional_class(node, obj.Outputs          , "Outputs"); // fmi2::md::Outputs
+        utils::xml::get_optional_class(node, obj.Derivatives      , "Derivatives"); // fmi2::md::Derivatives
+        utils::xml::get_optional_class(node, obj.InitialUnknowns  , "InitialUnknowns"); // fmi2::md::InitialUnknowns
 
         log(ext_trace)("Completed ModelStructure");
     }
@@ -347,9 +323,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, ModelVariables &obj)
     {
         log(ext_trace)("Parsing ModelVariables");
-        
 
-        utils::xml::parse_xml(node, obj.ScalarVariable  , "ScalarVariable");
+        utils::xml::get_vector(node, obj.ScalarVariable  , "ScalarVariable"); // fmi2::md::fmi2ScalarVariable
 
         log(ext_trace)("Completed ModelVariables");
     }
@@ -358,9 +333,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, File &obj)
     {
         log(ext_trace)("Parsing File");
-        
 
-        utils::xml::parse_xml(node, obj.name  , "name");
+        utils::xml::get_attribute(node, obj.name  , "name"); // string
 
         log(ext_trace)("Completed File");
     }
@@ -369,9 +343,8 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, SourceFiles &obj)
     {
         log(ext_trace)("Parsing SourceFiles");
-        
 
-        utils::xml::parse_xml(node, obj.Files  , "File");
+        utils::xml::get_vector(node, obj.Files  , "File"); // fmi2::md::File
 
         log(ext_trace)("Completed SourceFiles");
     }
@@ -380,17 +353,16 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, ModelExchange &obj)
     {
         log(ext_trace)("Parsing ModelExchange");
-        
 
-        utils::xml::parse_xml(node, obj.modelIdentifier                      , "modelIdentifier");
-        utils::xml::parse_xml(node, obj.needsExecutionTool                   , "needsExecutionTool");
-        utils::xml::parse_xml(node, obj.completedIntegratorStepNotNeeded     , "completedIntegratorStepNotNeeded");
-        utils::xml::parse_xml(node, obj.canBeInstantiatedOnlyOncePerProcess  , "canBeInstantiatedOnlyOncePerProcess");
-        utils::xml::parse_xml(node, obj.canNotUseMemoryManagementFunctions   , "canNotUseMemoryManagementFunctions");
-        utils::xml::parse_xml(node, obj.canGetAndSetFMUstate                 , "canGetAndSetFMUstate");
-        utils::xml::parse_xml(node, obj.canSerializeFMUstate                 , "canSerializeFMUstate");
-        utils::xml::parse_xml(node, obj.providesDirectionalDerivatives       , "providesDirectionalDerivatives");
-        utils::xml::parse_xml(node, obj.SourceFiles                          , "SourceFiles");
+        utils::xml::get_attribute(node, obj.modelIdentifier                      , "modelIdentifier"); // string
+        utils::xml::get_optional_attribute(node, obj.needsExecutionTool                   , "needsExecutionTool"); // bool
+        utils::xml::get_optional_attribute(node, obj.completedIntegratorStepNotNeeded     , "completedIntegratorStepNotNeeded"); // bool
+        utils::xml::get_optional_attribute(node, obj.canBeInstantiatedOnlyOncePerProcess  , "canBeInstantiatedOnlyOncePerProcess"); // bool
+        utils::xml::get_optional_attribute(node, obj.canNotUseMemoryManagementFunctions   , "canNotUseMemoryManagementFunctions"); // bool
+        utils::xml::get_optional_attribute(node, obj.canGetAndSetFMUstate                 , "canGetAndSetFMUstate"); // bool
+        utils::xml::get_optional_attribute(node, obj.canSerializeFMUstate                 , "canSerializeFMUstate"); // bool
+        utils::xml::get_optional_attribute(node, obj.providesDirectionalDerivatives       , "providesDirectionalDerivatives"); // bool
+        utils::xml::get_optional_class(node, obj.SourceFiles                          , "SourceFiles"); // fmi2::md::SourceFiles
 
         log(ext_trace)("Completed ModelExchange");
     }
@@ -399,20 +371,19 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, CoSimulation &obj)
     {
         log(ext_trace)("Parsing CoSimulation");
-        
 
-        utils::xml::parse_xml(node, obj.modelIdentifier                         , "modelIdentifier");
-        utils::xml::parse_xml(node, obj.needsExecutionTool                      , "needsExecutionTool");
-        utils::xml::parse_xml(node, obj.canHandleVariableCommunicationStepSize  , "canHandleVariableCommunicationStepSize");
-        utils::xml::parse_xml(node, obj.canInterpolateInputs                    , "canInterpolateInputs");
-        utils::xml::parse_xml(node, obj.maxOutputDerivativeOrder                , "maxOutputDerivativeOrder");
-        utils::xml::parse_xml(node, obj.canRunAsynchronuously                   , "canRunAsynchronuously");
-        utils::xml::parse_xml(node, obj.canBeInstantiatedOnlyOncePerProcess     , "canBeInstantiatedOnlyOncePerProcess");
-        utils::xml::parse_xml(node, obj.canNotUseMemoryManagementFunctions      , "canNotUseMemoryManagementFunctions");
-        utils::xml::parse_xml(node, obj.canGetAndSetFMUstate                    , "canGetAndSetFMUstate");
-        utils::xml::parse_xml(node, obj.canSerializeFMUstate                    , "canSerializeFMUstate");
-        utils::xml::parse_xml(node, obj.providesDirectionalDerivatives          , "providesDirectionalDerivatives");
-        utils::xml::parse_xml(node, obj.SourceFiles                             , "SourceFiles");
+        utils::xml::get_attribute(node, obj.modelIdentifier                         , "modelIdentifier"); // string
+        utils::xml::get_optional_attribute(node, obj.needsExecutionTool                      , "needsExecutionTool"); // bool
+        utils::xml::get_optional_attribute(node, obj.canHandleVariableCommunicationStepSize  , "canHandleVariableCommunicationStepSize"); // bool
+        utils::xml::get_optional_attribute(node, obj.canInterpolateInputs                    , "canInterpolateInputs"); // bool
+        utils::xml::get_optional_attribute(node, obj.maxOutputDerivativeOrder                , "maxOutputDerivativeOrder"); // bool
+        utils::xml::get_optional_attribute(node, obj.canRunAsynchronuously                   , "canRunAsynchronuously"); // bool
+        utils::xml::get_optional_attribute(node, obj.canBeInstantiatedOnlyOncePerProcess     , "canBeInstantiatedOnlyOncePerProcess"); // bool
+        utils::xml::get_optional_attribute(node, obj.canNotUseMemoryManagementFunctions      , "canNotUseMemoryManagementFunctions"); // bool
+        utils::xml::get_optional_attribute(node, obj.canGetAndSetFMUstate                    , "canGetAndSetFMUstate"); // bool
+        utils::xml::get_optional_attribute(node, obj.canSerializeFMUstate                    , "canSerializeFMUstate"); // bool
+        utils::xml::get_optional_attribute(node, obj.providesDirectionalDerivatives          , "providesDirectionalDerivatives"); // bool
+        utils::xml::get_optional_class(node, obj.SourceFiles                             , "SourceFiles"); // fmi2::md::SourceFiles
 
         log(ext_trace)("Completed CoSimulation");
     }
@@ -421,29 +392,28 @@ namespace ssp4cpp::fmi2::md
     void from_xml(const xml_node &node, fmi2ModelDescription &obj)
     {
         log(ext_trace)("Parsing fmi2ModelDescription");
-        
 
-        utils::xml::parse_xml(node, obj.fmiVersion                , "fmiVersion");
-        utils::xml::parse_xml(node, obj.modelName                 , "modelName");
-        utils::xml::parse_xml(node, obj.guid                      , "guid");
-        utils::xml::parse_xml(node, obj.description               , "description");
-        utils::xml::parse_xml(node, obj.author                    , "author");
-        utils::xml::parse_xml(node, obj.version                   , "version");
-        utils::xml::parse_xml(node, obj.copyright                 , "copyright");
-        utils::xml::parse_xml(node, obj.license                   , "license");
-        utils::xml::parse_xml(node, obj.generationTool            , "generationTool");
-        utils::xml::parse_xml(node, obj.generationDateAndTime     , "generationDateAndTime");
-        utils::xml::parse_xml(node, obj.variableNamingConvention  , "variableNamingConvention");
-        utils::xml::parse_xml(node, obj.numberOfEventIndicators   , "numberOfEventIndicators");
-        utils::xml::parse_xml(node, obj.ModelExchange             , "ModelExchange");
-        utils::xml::parse_xml(node, obj.CoSimulation              , "CoSimulation");
-        utils::xml::parse_xml(node, obj.UnitDefinitions           , "UnitDefinitions");
-        utils::xml::parse_xml(node, obj.TypeDefinitions           , "TypeDefinitions");
-        utils::xml::parse_xml(node, obj.LogCategories             , "LogCategories");
-        utils::xml::parse_xml(node, obj.DefaultExperiment         , "DefaultExperiment");
-        utils::xml::parse_xml(node, obj.VendorAnnotations         , "VendorAnnotations");
-        utils::xml::parse_xml(node, obj.ModelVariables            , "ModelVariables");
-        utils::xml::parse_xml(node, obj.ModelStructure            , "ModelStructure");
+        utils::xml::get_attribute(node, obj.fmiVersion                , "fmiVersion"); // string
+        utils::xml::get_attribute(node, obj.modelName                 , "modelName"); // string
+        utils::xml::get_attribute(node, obj.guid                      , "guid"); // string
+        utils::xml::get_optional_attribute(node, obj.description               , "description"); // string
+        utils::xml::get_optional_attribute(node, obj.author                    , "author"); // string
+        utils::xml::get_optional_attribute(node, obj.version                   , "version"); // string
+        utils::xml::get_optional_attribute(node, obj.copyright                 , "copyright"); // string
+        utils::xml::get_optional_attribute(node, obj.license                   , "license"); // string
+        utils::xml::get_optional_attribute(node, obj.generationTool            , "generationTool"); // string
+        utils::xml::get_optional_attribute(node, obj.generationDateAndTime     , "generationDateAndTime"); // string
+        utils::xml::get_optional_attribute(node, obj.variableNamingConvention  , "variableNamingConvention"); // string
+        utils::xml::get_optional_attribute(node, obj.numberOfEventIndicators   , "numberOfEventIndicators"); // string
+        utils::xml::get_optional_class(node, obj.ModelExchange             , "ModelExchange"); // fmi2::md::ModelExchange
+        utils::xml::get_optional_class(node, obj.CoSimulation              , "CoSimulation"); // fmi2::md::CoSimulation
+        utils::xml::get_optional_class(node, obj.UnitDefinitions           , "UnitDefinitions"); // fmi2::md::UnitDefinitions
+        utils::xml::get_optional_class(node, obj.TypeDefinitions           , "TypeDefinitions"); // fmi2::md::TypeDefinitions
+        utils::xml::get_optional_class(node, obj.LogCategories             , "LogCategories"); // fmi2::md::LogCategories
+        utils::xml::get_optional_class(node, obj.DefaultExperiment         , "DefaultExperiment"); // fmi2::md::DefaultExperiment
+        utils::xml::get_optional_class(node, obj.VendorAnnotations         , "VendorAnnotations"); // fmi2::md::VendorAnnotations
+        utils::xml::get_class(node, obj.ModelVariables            , "ModelVariables"); // fmi2::md::ModelVariables
+        utils::xml::get_class(node, obj.ModelStructure            , "ModelStructure"); // fmi2::md::ModelStructure
 
         log(ext_trace)("Completed fmi2ModelDescription");
     }

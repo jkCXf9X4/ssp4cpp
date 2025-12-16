@@ -24,6 +24,9 @@ class Node(ABC_Node):
         super().__init__(name)
         self.is_enum = False
 
+    def __str__(self):
+        return f"Node: name={self.name}, children={self.children}, is_enum={self.is_enum}"
+
 
 class Attribute(ABC_Node):
     default_values = {
@@ -39,9 +42,11 @@ class Attribute(ABC_Node):
         self,
         name,
         type="string",
-        enum= "",
         optional=False,
         list=False,
+        enum_val= None,
+        is_enum=None,
+        delimitation=None,
         namespace=None,
         xml_tag=None,
         experimental=None, # Non std complient, will warn during parsing if these are used
@@ -53,13 +58,14 @@ class Attribute(ABC_Node):
         self.namespace = namespace
         self.xml_tag = xml_tag
         self.experimental = experimental
-        self.is_enum = enum != ""
-        self.enum = enum
+        self.enum_value = enum_val
+        self.delimitation = delimitation
+        self.is_enum = is_enum
 
         self.is_primitive = type in self.primitives
 
     def __str__(self):
-        return f"{self.name} ({self.type}, optional={self.optional}, list={self.list}, namespace={self.namespace}, xml_tag={self.xml_tag}, experimental={self.experimental}), is_enum={self.is_enum}, enum={self.enum}"
+        return f"{self.name} ({self.type}, optional={self.optional}, list={self.list}, namespace={self.namespace}, xml_tag={self.xml_tag}, experimental={self.experimental}, enum_val={self.enum_value}, is_enum={self.is_enum}, delimitation='{self.delimitation}')"
 
 
 class Standard:
@@ -106,6 +112,7 @@ class Standard:
                     attrib = Attribute(variable, **self.toml[name][variable])
 
                     node.add_child(attrib)
-                    node.is_enum = attrib.is_enum
+                    # If one of the attributes is an enum_value then the type is an enum
+                    node.is_enum = node.is_enum or attrib.enum_value is not None
                 classes.append(node)
         return classes

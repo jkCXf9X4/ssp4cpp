@@ -25,6 +25,8 @@ namespace ssp4cpp::ssp1::ssd
     class TSystem;
 
 
+
+
     class SystemGeometry : public IXmlNode
     {
     public:

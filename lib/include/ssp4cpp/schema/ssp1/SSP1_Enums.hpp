@@ -60,7 +60,7 @@ namespace ssp4cpp::ssp1::ssd
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
 

@@ -66,7 +66,7 @@ namespace ssp4cpp::fmi2::md
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
     class Causality : public IEnum
@@ -116,7 +116,7 @@ namespace ssp4cpp::fmi2::md
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
     class Variability : public IEnum
@@ -163,7 +163,7 @@ namespace ssp4cpp::fmi2::md
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
     class Initial : public IEnum
@@ -204,7 +204,7 @@ namespace ssp4cpp::fmi2::md
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
     class DependenciesKind : public IEnum
@@ -251,7 +251,7 @@ namespace ssp4cpp::fmi2::md
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
     class LogCategory : public IEnum
@@ -313,7 +313,7 @@ namespace ssp4cpp::fmi2::md
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
     class FmiType : public IEnum
@@ -360,7 +360,7 @@ namespace ssp4cpp::fmi2::md
             }
         }
         private:
-            Value value;
+            Value value{Value::unknown};
     };
 
 

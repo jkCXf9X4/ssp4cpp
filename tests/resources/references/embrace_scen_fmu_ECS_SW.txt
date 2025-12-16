@@ -196,8 +196,12 @@ Outputs          : Outputs {
 Unknowns  : {
 Unknown { 
 index             : 3
-dependencies      : null
-dependenciesKind  : null
+dependencies      : {
+}
+
+dependenciesKind  : {
+}
+
 }
 }
 

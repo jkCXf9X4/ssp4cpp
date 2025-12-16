@@ -75,7 +75,7 @@ Connections = {type = "ssd::Connection", list = true, namespace="ssd", xml_tag="
 id = {type = "string", optional=true}
 description = {type = "string", optional=true}
 name = {type = "string"}
-kind = {type = "fmi2::md::Causality"}
+kind = {type = "fmi2::md::Causality", is_enum = true}
 Real = {type = "ssc::GTypeReal", optional=true, namespace="ssc"}
 Integer = {type = "ssc::GTypeInteger", optional=true, namespace="ssc"}
 Boolean = {type = "ssc::GTypeBoolean", optional=true, namespace="ssc"}
@@ -95,7 +95,7 @@ name = {type = "string", optional=true}
 Connectors = {type = "ssd::TConnectors", optional=true, namespace="ssd"}
 ElementGeometry = {type = "ssd::ElementGeometry", optional=true, namespace="ssd"}
 ParameterBindings = {type = "ssd::TParameterBindings", optional=true, namespace="ssd"}
-type = {type = "ssd::ComponentType", optional=true}
+type = {type = "ssd::ComponentType", optional=true, is_enum = true}
 source = {type = "string"}
 implementation = {type = "string", optional=true}
 Annotations = {type = "ssc::TAnnotations", optional=true, namespace="ssc"}

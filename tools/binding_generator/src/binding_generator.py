@@ -6,10 +6,10 @@ from xml_exporter import DocumentXmlExporter
 
 def main():
     files = [
-        # "./resources/ssp1/ssp1_ssd.toml",
-        # "./resources/ssp1/ssp1_ssc.toml",
-        # "./resources/ssp1/ssp1_ssv.toml",
-        # "./resources/ssp1/ssp1_ssm.toml",
+        "./resources/ssp1/ssp1_ssd.toml",
+        "./resources/ssp1/ssp1_ssc.toml",
+        "./resources/ssp1/ssp1_ssv.toml",
+        "./resources/ssp1/ssp1_ssm.toml",
         "./resources/ssp1/ssp1_enums.toml",
         "./resources/fmi2/fmi2_md.toml",
         "./resources/fmi2/fmi2_enums.toml",
