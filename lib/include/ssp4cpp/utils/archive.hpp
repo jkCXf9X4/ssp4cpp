@@ -11,7 +11,7 @@ namespace ssp4cpp
     /**
      * @brief Base class for archives extracted to a temporary directory.
      */
-    class Archive : public utils::interfaces::IString
+    class Archive : public utils::interfaces::IPrintable
     {
     public:
         Logger log = Logger("ssp4cpp.Archive", LogLevel::info);

@@ -1,0 +1,1631 @@
+SystemStructureDescription { 
+version                : 1.0
+name                   : Delay
+id                     : null
+description            : null
+author                 : null
+fileversion            : null
+copyright              : null
+license                : null
+generationTool         : Dymola by Dassault Systemes
+generationDateAndTime  : 2025-10-17T07:50:06Z
+System                 : TSystem { 
+id                  : null
+description         : 
+name                : ssp_implicit_fmi2
+Connectors          : null
+ElementGeometry     : null
+ParameterBindings   : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : null
+source            : resources/init_values.ssv
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
+Elements            : Elements { 
+Components                  : {
+TComponent { 
+id                 : null
+description        : null
+name               : LET1
+Connectors         : TConnectors { 
+Connectors  : {
+Connector { 
+id                 : null
+description        : Delay time of output with respect to input signal
+name               : delayTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : GTypeBinary { 
+mime_type  : text/x-modelica; path=Modelica.Units.SI.Time
+}
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : _input_1_start
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : input_1
+kind               : input
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : output_1
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Time point of input used when calling doStep.
+name               : fmi_InputTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_UsePreOnInputSignals
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StartTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StopTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_NumberOfSteps
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_CommunicationStepSize
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Number of doSteps called between two CommunicationStepSize
+name               : stepSizeScaleFactor
+kind               : parameter
+Real               : null
+Integer            : GTypeInteger { 
+}
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_forceShutDownAtStopTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used.
+name               : fmi_setTol
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Relative tolerance for the internal solver of the fmu
+name               : fmi_rTol
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+}
+
+}
+ElementGeometry    : ElementGeometry { 
+}
+ParameterBindings  : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : application/x-ssp-parameter-set
+source            : null
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
+type               : application/x-fmu-sharedlibrary
+source             : resources/Delay_delay_fmi2.fmu
+implementation     : null
+Annotations        : null
+}
+TComponent { 
+id                 : null
+description        : null
+name               : Sources
+Connectors         : TConnectors { 
+Connectors  : {
+Connector { 
+id                 : null
+description        : Frequency of sine wave
+name               : f
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : GTypeBinary { 
+mime_type  : text/x-modelica; path=Modelica.Units.SI.Frequency
+}
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : freq_output
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : ramp_output
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : ramp_freq_output
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StartTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StopTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_NumberOfSteps
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_CommunicationStepSize
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Number of doSteps called between two CommunicationStepSize
+name               : stepSizeScaleFactor
+kind               : parameter
+Real               : null
+Integer            : GTypeInteger { 
+}
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_forceShutDownAtStopTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used.
+name               : fmi_setTol
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Relative tolerance for the internal solver of the fmu
+name               : fmi_rTol
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+}
+
+}
+ElementGeometry    : ElementGeometry { 
+}
+ParameterBindings  : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : application/x-ssp-parameter-set
+source            : null
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
+type               : application/x-fmu-sharedlibrary
+source             : resources/Delay_Sources_fmi2.fmu
+implementation     : null
+Annotations        : null
+}
+TComponent { 
+id                 : null
+description        : null
+name               : LET2
+Connectors         : TConnectors { 
+Connectors  : {
+Connector { 
+id                 : null
+description        : Delay time of output with respect to input signal
+name               : delayTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : GTypeBinary { 
+mime_type  : text/x-modelica; path=Modelica.Units.SI.Time
+}
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : _input_1_start
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : input_1
+kind               : input
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : output_1
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Time point of input used when calling doStep.
+name               : fmi_InputTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_UsePreOnInputSignals
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StartTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StopTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_NumberOfSteps
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_CommunicationStepSize
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Number of doSteps called between two CommunicationStepSize
+name               : stepSizeScaleFactor
+kind               : parameter
+Real               : null
+Integer            : GTypeInteger { 
+}
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_forceShutDownAtStopTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used.
+name               : fmi_setTol
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Relative tolerance for the internal solver of the fmu
+name               : fmi_rTol
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+}
+
+}
+ElementGeometry    : ElementGeometry { 
+}
+ParameterBindings  : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : application/x-ssp-parameter-set
+source            : null
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
+type               : application/x-fmu-sharedlibrary
+source             : resources/Delay_delay_fmi2.fmu
+implementation     : null
+Annotations        : null
+}
+TComponent { 
+id                 : null
+description        : null
+name               : LET3
+Connectors         : TConnectors { 
+Connectors  : {
+Connector { 
+id                 : null
+description        : Delay time of output with respect to input signal
+name               : delayTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : GTypeBinary { 
+mime_type  : text/x-modelica; path=Modelica.Units.SI.Time
+}
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : _input_1_start
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : input_1
+kind               : input
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : output_1
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Time point of input used when calling doStep.
+name               : fmi_InputTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_UsePreOnInputSignals
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StartTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StopTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_NumberOfSteps
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_CommunicationStepSize
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Number of doSteps called between two CommunicationStepSize
+name               : stepSizeScaleFactor
+kind               : parameter
+Real               : null
+Integer            : GTypeInteger { 
+}
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_forceShutDownAtStopTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used.
+name               : fmi_setTol
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Relative tolerance for the internal solver of the fmu
+name               : fmi_rTol
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+}
+
+}
+ElementGeometry    : ElementGeometry { 
+}
+ParameterBindings  : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : application/x-ssp-parameter-set
+source            : null
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
+type               : application/x-fmu-sharedlibrary
+source             : resources/Delay_delay_fmi2.fmu
+implementation     : null
+Annotations        : null
+}
+TComponent { 
+id                 : null
+description        : null
+name               : LET4
+Connectors         : TConnectors { 
+Connectors  : {
+Connector { 
+id                 : null
+description        : Delay time of output with respect to input signal
+name               : delayTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : GTypeBinary { 
+mime_type  : text/x-modelica; path=Modelica.Units.SI.Time
+}
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : _input_1_start
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : input_1
+kind               : input
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : output_1
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Time point of input used when calling doStep.
+name               : fmi_InputTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_UsePreOnInputSignals
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StartTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StopTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_NumberOfSteps
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_CommunicationStepSize
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Number of doSteps called between two CommunicationStepSize
+name               : stepSizeScaleFactor
+kind               : parameter
+Real               : null
+Integer            : GTypeInteger { 
+}
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_forceShutDownAtStopTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used.
+name               : fmi_setTol
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Relative tolerance for the internal solver of the fmu
+name               : fmi_rTol
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+}
+
+}
+ElementGeometry    : ElementGeometry { 
+}
+ParameterBindings  : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : application/x-ssp-parameter-set
+source            : null
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
+type               : application/x-fmu-sharedlibrary
+source             : resources/Delay_delay_fmi2.fmu
+implementation     : null
+Annotations        : null
+}
+TComponent { 
+id                 : null
+description        : null
+name               : LET5
+Connectors         : TConnectors { 
+Connectors  : {
+Connector { 
+id                 : null
+description        : Delay time of output with respect to input signal
+name               : delayTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : GTypeBinary { 
+mime_type  : text/x-modelica; path=Modelica.Units.SI.Time
+}
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : _input_1_start
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : input_1
+kind               : input
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : output_1
+kind               : output
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : ConnectorGeometry { 
+}
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Time point of input used when calling doStep.
+name               : fmi_InputTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_UsePreOnInputSignals
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StartTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_StopTime
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_NumberOfSteps
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_CommunicationStepSize
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Number of doSteps called between two CommunicationStepSize
+name               : stepSizeScaleFactor
+kind               : parameter
+Real               : null
+Integer            : GTypeInteger { 
+}
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : null
+name               : fmi_forceShutDownAtStopTime
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Set the tolerance fmi_rTol in fmi2SetupExperiment, if false fmu defautl tolerence will be used.
+name               : fmi_setTol
+kind               : parameter
+Real               : null
+Integer            : null
+Boolean            : GTypeBoolean { 
+}
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+Connector { 
+id                 : null
+description        : Relative tolerance for the internal solver of the fmu
+name               : fmi_rTol
+kind               : parameter
+Real               : GTypeReal { 
+unit  : null
+}
+Integer            : null
+Boolean            : null
+String             : null
+Enumeration        : null
+Binary             : null
+ConnectorGeometry  : null
+Annotations        : null
+}
+}
+
+}
+ElementGeometry    : ElementGeometry { 
+}
+ParameterBindings  : TParameterBindings { 
+ParameterBindings  : {
+ParameterBinding { 
+id                : null
+description       : null
+type              : application/x-ssp-parameter-set
+source            : null
+sourceBase        : null
+prefix            : null
+ParameterValues   : null
+ParameterMapping  : null
+}
+}
+
+}
+type               : application/x-fmu-sharedlibrary
+source             : resources/Delay_delay_fmi2.fmu
+implementation     : null
+Annotations        : null
+}
+}
+
+SignalDictionaryReferences  : {
+}
+
+Systems                     : {
+}
+
+}
+Connections         : Connections { 
+Connections  : {
+Connection { 
+id                                : null
+description                       : null
+startElement                      : Sources
+startConnector                    : freq_output
+endElement                        : LET1
+endConnector                      : input_1
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+ConnectionGeometry                : ConnectionGeometry { 
+}
+Annotations                       : null
+information_delay                 : null
+}
+Connection { 
+id                                : null
+description                       : null
+startElement                      : LET1
+startConnector                    : output_1
+endElement                        : LET2
+endConnector                      : input_1
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+ConnectionGeometry                : ConnectionGeometry { 
+}
+Annotations                       : null
+information_delay                 : 0.001000
+}
+Connection { 
+id                                : null
+description                       : null
+startElement                      : LET2
+startConnector                    : output_1
+endElement                        : LET3
+endConnector                      : input_1
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+ConnectionGeometry                : ConnectionGeometry { 
+}
+Annotations                       : null
+information_delay                 : 0.001000
+}
+Connection { 
+id                                : null
+description                       : null
+startElement                      : LET3
+startConnector                    : output_1
+endElement                        : LET4
+endConnector                      : input_1
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+ConnectionGeometry                : ConnectionGeometry { 
+}
+Annotations                       : null
+information_delay                 : 0.002000
+}
+Connection { 
+id                                : null
+description                       : null
+startElement                      : LET5
+startConnector                    : input_1
+endElement                        : LET4
+endConnector                      : output_1
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+ConnectionGeometry                : ConnectionGeometry { 
+}
+Annotations                       : null
+information_delay                 : 0.002000
+}
+}
+
+}
+SignalDictionaries  : null
+SystemGeometry      : SystemGeometry { 
+}
+GraphicalElements   : null
+Annotations         : null
+}
+Enumerations           : null
+Units                  : null
+DefaultExperiment      : TDefaultExperiment { 
+startTime    : 0.000000
+stopTime     : 0.100000
+Annotations  : null
+}
+Annotations            : null
+}

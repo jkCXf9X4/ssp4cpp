@@ -1,0 +1,75 @@
+ParameterMapping { 
+version                : 1.0
+id                     : null
+description            : null
+author                 : null
+fileversion            : null
+copyright              : null
+license                : null
+generationTool         : null
+generationDateAndTime  : null
+MappingEntry           : {
+TMappingEntry { 
+id                                : null
+description                       : null
+source                            : Mach_start
+target                            : ECS_HW.fd.Ma_start
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+Annotations                       : null
+}
+TMappingEntry { 
+id                                : null
+description                       : null
+source                            : Mach_start
+target                            : Consumer.fd.Ma_start
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+Annotations                       : null
+}
+TMappingEntry { 
+id                                : null
+description                       : null
+source                            : Alt_start
+target                            : ECS_HW.fd.Alt_start
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+Annotations                       : null
+}
+TMappingEntry { 
+id                                : null
+description                       : null
+source                            : Alt_start
+target                            : Consumer.fd.Alt_start
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+Annotations                       : null
+}
+TMappingEntry { 
+id                                : null
+description                       : null
+source                            : scenario_input
+target                            : scenario.scenario_input
+suppressUnitConversion            : null
+LinearTransformation              : null
+BooleanMappingTransformation      : null
+IntegerMappingTransformation      : null
+EnumerationMappingTransformation  : null
+Annotations                       : null
+}
+}
+
+Annotations            : null
+}

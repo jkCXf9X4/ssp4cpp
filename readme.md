@@ -103,10 +103,9 @@ int main()
 ## Tests
 
 ```bash
-cmake --build build --target tests
+cmake -S . -B build -DSSP4CPP_BUILD_TESTS=ON
 
-
-cmake --build build --target tests && ./build/tests/ssp4cpp_tests
+cmake --build build && ./build/tests/ssp4cpp_tests
 or
 ctest --test-dir build --output-on-failure
 ```

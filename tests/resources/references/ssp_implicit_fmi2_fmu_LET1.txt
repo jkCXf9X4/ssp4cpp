@@ -1,0 +1,353 @@
+fmi2ModelDescription { 
+fmiVersion                : 2.0
+modelName                 : Delay_delay_fmu2
+guid                      : {03170d8d-5e18-488a-996a-9c056a16b364}
+description               : null
+author                    : null
+version                   : null
+copyright                 : null
+license                   : null
+generationTool            : Dymola Version 2025x Refresh 1, 2025-04-11 (Co-simulation using Cvode) (requires license to execute)
+generationDateAndTime     : 2025-10-17T07:11:57Z
+variableNamingConvention  : structured
+numberOfEventIndicators   : 0
+ModelExchange             : null
+CoSimulation              : CoSimulation { 
+modelIdentifier                         : Delay_delay_fmu2
+needsExecutionTool                      : null
+canHandleVariableCommunicationStepSize  : true
+canInterpolateInputs                    : true
+maxOutputDerivativeOrder                : true
+canRunAsynchronuously                   : null
+canBeInstantiatedOnlyOncePerProcess     : null
+canNotUseMemoryManagementFunctions      : true
+canGetAndSetFMUstate                    : true
+canSerializeFMUstate                    : true
+providesDirectionalDerivatives          : null
+SourceFiles                             : null
+}
+UnitDefinitions           : UnitDefinitions { 
+Units  : {
+fmi2Unit { 
+name         : s
+BaseUnit     : BaseUnit { 
+kg      : null
+m       : null
+s       : 1
+a       : null
+k       : null
+mol     : null
+cd      : null
+rad     : null
+factor  : null
+offset  : null
+}
+DisplayUnit  : {
+}
+
+}
+}
+
+}
+TypeDefinitions           : TypeDefinitions { 
+SimpleTypes  : {
+fmi2SimpleType { 
+name         : Modelica.Blocks.Interfaces.RealInput
+description  : null
+Real         : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+fmi2SimpleType { 
+name         : Modelica.Blocks.Interfaces.RealOutput
+description  : null
+Real         : Real { 
+declaredType      : null
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+fmi2SimpleType { 
+name         : Modelica.Units.SI.Time
+description  : null
+Real         : Real { 
+declaredType      : null
+quantity          : Time
+unit              : s
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer      : null
+Boolean      : null
+String       : null
+Enumeration  : null
+}
+}
+
+}
+LogCategories             : null
+DefaultExperiment         : DefaultExperiment { 
+startTime  : 0.000000
+stopTime   : 1.000000
+tolerance  : 0.000100
+stepSize   : null
+}
+VendorAnnotations         : null
+ModelVariables            : ModelVariables { 
+ScalarVariable  : {
+fmi2ScalarVariable { 
+name                                : output_1
+valueReference                      : 603979776
+description                         : null
+causality                           : output
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealOutput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : input_1
+valueReference                      : 620756992
+description                         : null
+causality                           : input
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealInput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.000000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : fixedDelay.u
+valueReference                      : 1711276033
+description                         : Connector of Real input signal
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealInput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : fixedDelay.y
+valueReference                      : 603979776
+description                         : Connector of Real output signal
+causality                           : null
+variability                         : null
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Blocks.Interfaces.RealOutput
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : fixedDelay.delayTime
+valueReference                      : 100663296
+description                         : Delay time of output with respect to input signal
+causality                           : null
+variability                         : tunable
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Units.SI.Time
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : null
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+fmi2ScalarVariable { 
+name                                : delayTime
+valueReference                      : 16777216
+description                         : Delay time of output with respect to input signal
+causality                           : parameter
+variability                         : tunable
+initial                             : null
+canHandleMultipleSetPerTimeInstant  : null
+Real                                : Real { 
+declaredType      : Modelica.Units.SI.Time
+quantity          : null
+unit              : null
+displayUnit       : null
+relativeQuantity  : null
+min               : null
+max               : null
+nominal           : null
+unbounded         : null
+start             : 0.100000
+derivative        : null
+reinit            : null
+}
+Integer                             : null
+Boolean                             : null
+String                              : null
+Enumeration                         : null
+Annotations                         : {
+}
+
+}
+}
+
+}
+ModelStructure            : ModelStructure { 
+Outputs          : Outputs { 
+Unknowns  : {
+Unknown { 
+index             : 1
+dependencies      : {
+2
+}
+
+dependenciesKind  : {
+dependent
+}
+
+}
+}
+
+}
+Derivatives      : null
+InitialUnknowns  : InitialUnknowns { 
+Unknowns  : {
+Unknown { 
+index             : 1
+dependencies      : {
+2
+6
+}
+
+dependenciesKind  : {
+dependent
+dependent
+}
+
+}
+}
+
+}
+}
+}

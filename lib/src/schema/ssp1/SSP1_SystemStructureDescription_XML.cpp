@@ -160,6 +160,7 @@ namespace ssp4cpp::ssp1::ssd
         utils::xml::get_optional_class(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation"); // ssc::EnumerationMappingTransformation
         utils::xml::get_optional_class(node, obj.ConnectionGeometry                , "ssd:ConnectionGeometry"); // ssd::ConnectionGeometry
         utils::xml::get_optional_class(node, obj.Annotations                       , "ssc:Annotations"); // ssc::TAnnotations
+        utils::xml::get_optional_attribute(node, obj.information_delay                 , "information_delay"); // double
 
         log(ext_trace)("Completed Connection");
     }
