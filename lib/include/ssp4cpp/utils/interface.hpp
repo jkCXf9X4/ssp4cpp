@@ -35,17 +35,6 @@ namespace ssp4cpp::utils::interfaces
     {
     };
 
-    /** @brief Interface for list types that can be serialized/deserialized. */
-    class IList : public IReadWrite
-    {
-        virtual void from_string(const std::string &str, const char del) = 0;
-    };
-
-    /** @brief Interface for lists of XML nodes. */
-    class IXmlNodeList : public IList
-    {
-    };
-
     class IString
     {
     public:

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ssp4cpp/utils/interface.hpp"
-#include "utils/types.hpp"
+#include "ssp4cpp/utils/string.hpp"
 
 #include <pugixml.hpp>
 
@@ -20,27 +20,13 @@ namespace ssp4cpp::utils::xml
     using namespace pugi;
 
     using namespace ssp4cpp::utils::interfaces;
-    using namespace ssp4cpp::utils::types;
 
-    // Helper
-    inline std::string parents_to_string(const pugi::xml_node &node)
-    {
-        std::string s;
-        s.reserve(128);
+    // Concepts
+    template <typename T>
+    concept XmlNodeLike = std::derived_from<std::remove_cvref_t<T>, interfaces::IXmlNode>;
 
-        for (auto p = node; p; p = p.parent())
-        {
-            s += p.name();
-
-            if (auto attr = p.attribute("name"))
-            {
-                s += ':';
-                s += attr.as_string();
-            }
-            s += '/';
-        }
-        return s;
-    }
+    template <typename T>
+    concept EnumLike = std::derived_from<std::remove_cvref_t<T>, interfaces::IEnum>;
 
     namespace detail
     {
@@ -83,6 +69,27 @@ namespace ssp4cpp::utils::xml
 
     } // namespace detail
 
+
+    // Helper
+    inline std::string parents_to_string(const pugi::xml_node &node)
+    {
+        std::string s;
+        s.reserve(128);
+
+        for (auto p = node; p; p = p.parent())
+        {
+            s += p.name();
+
+            if (auto attr = p.attribute("name"))
+            {
+                s += ':';
+                s += attr.as_string();
+            }
+            s += '/';
+        }
+        return s;
+    }
+
     inline pugi::xml_attribute get_attrib(const xml_node &node, const std::string &name, bool required = false)
     {
         auto attr = node.attribute(name.c_str());
@@ -104,7 +111,8 @@ namespace ssp4cpp::utils::xml
         }
         return child;
     }
-
+    
+    // Parse attribute
     template <class T>
     T parse_attr_or_throw(pugi::xml_attribute a, const std::string &name)
     {
@@ -117,7 +125,6 @@ namespace ssp4cpp::utils::xml
         return detail::attr_parser<T>::parse(a);
     }
 
-    // Parse attribute
     template <typename T>
     void get_attribute(const xml_node &node, T &obj, const std::string &name)
     {

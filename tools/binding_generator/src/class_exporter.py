@@ -145,7 +145,6 @@ class DocumentDeclarationExporter:
 #pragma once
 
 #include "ssp4cpp/utils/interface.hpp"
-#include "ssp4cpp/utils/xml.hpp"
 
 {headers}
 {dependencies}
@@ -157,7 +156,6 @@ class DocumentDeclarationExporter:
 namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace utils::interfaces;
-{self.indent}using namespace utils::xml;
 
 {forward_declarations}
 

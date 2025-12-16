@@ -5,7 +5,6 @@
 #pragma once
 
 #include "ssp4cpp/utils/interface.hpp"
-#include "ssp4cpp/utils/xml.hpp"
 
 #include "ssp4cpp/schema/ssp1/SSP1_Enums.hpp"
 
@@ -17,7 +16,6 @@
 namespace ssp4cpp::ssp1::ssc
 {
     using namespace utils::interfaces;
-    using namespace utils::xml;
 
 
 
