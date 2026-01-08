@@ -3,6 +3,7 @@
 #include "ssp4cpp/utils/archive.hpp"
 #include "ssp4cpp/schema/fmi2/FMI2_modelDescription.hpp"
 
+#include <sstream>
 
 namespace ssp4cpp
 {
@@ -20,13 +21,17 @@ namespace ssp4cpp
          */
         Fmu(const std::filesystem::path &file);
 
-        virtual void print(std::ostream &os) const
+
+
+        std::string to_string() const override
         {
-            os << "Fmu {"
+            std::ostringstream oss;
+            oss << "Fmu {"
                << "\noriginal_file: " << original_file
                << "\ndir: " << dir
                << "\nmodelName: " << md->modelName
                << "\n}\n";
+               return oss.str();
         }
 
     };

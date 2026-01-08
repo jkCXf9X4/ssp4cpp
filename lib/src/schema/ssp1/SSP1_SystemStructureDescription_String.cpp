@@ -10,7 +10,6 @@
 
 namespace ssp4cpp::ssp1::ssd
 {
-    using namespace utils::str;
 
 
      // SystemGeometry
@@ -57,7 +56,7 @@ namespace ssp4cpp::ssp1::ssd
     std::string TSignalDictionaries::to_string(void) const
     {
         return "TSignalDictionaries { \n"
-               "SignalDictionaries  : " + to_str( SignalDictionaries  ) + "\n" +
+               "SignalDictionaries  : " + utils::str::to_string( SignalDictionaries  ) + "\n" +
                "}";
     }
 
@@ -65,12 +64,12 @@ namespace ssp4cpp::ssp1::ssd
     std::string ParameterMapping::to_string(void) const
     {
         return "ParameterMapping { \n"
-               "id                : " + to_str( id                ) + "\n" +
-               "description       : " + to_str( description       ) + "\n" +
-               "type              : " + to_str( type              ) + "\n" +
-               "source            : " + to_str( source            ) + "\n" +
-               "sourceBase        : " + to_str( sourceBase        ) + "\n" +
-               "ParameterMapping  : " + to_str( ParameterMapping  ) + "\n" +
+               "id                : " + utils::str::to_string( id                ) + "\n" +
+               "description       : " + utils::str::to_string( description       ) + "\n" +
+               "type              : " + utils::str::to_string( type              ) + "\n" +
+               "source            : " + utils::str::to_string( source            ) + "\n" +
+               "sourceBase        : " + utils::str::to_string( sourceBase        ) + "\n" +
+               "ParameterMapping  : " + utils::str::to_string( ParameterMapping  ) + "\n" +
                "}";
     }
 
@@ -78,14 +77,14 @@ namespace ssp4cpp::ssp1::ssd
     std::string ParameterBinding::to_string(void) const
     {
         return "ParameterBinding { \n"
-               "id                : " + to_str( id                ) + "\n" +
-               "description       : " + to_str( description       ) + "\n" +
-               "type              : " + to_str( type              ) + "\n" +
-               "source            : " + to_str( source            ) + "\n" +
-               "sourceBase        : " + to_str( sourceBase        ) + "\n" +
-               "prefix            : " + to_str( prefix            ) + "\n" +
-               "ParameterValues   : " + to_str( ParameterValues   ) + "\n" +
-               "ParameterMapping  : " + to_str( ParameterMapping  ) + "\n" +
+               "id                : " + utils::str::to_string( id                ) + "\n" +
+               "description       : " + utils::str::to_string( description       ) + "\n" +
+               "type              : " + utils::str::to_string( type              ) + "\n" +
+               "source            : " + utils::str::to_string( source            ) + "\n" +
+               "sourceBase        : " + utils::str::to_string( sourceBase        ) + "\n" +
+               "prefix            : " + utils::str::to_string( prefix            ) + "\n" +
+               "ParameterValues   : " + utils::str::to_string( ParameterValues   ) + "\n" +
+               "ParameterMapping  : " + utils::str::to_string( ParameterMapping  ) + "\n" +
                "}";
     }
 
@@ -93,7 +92,7 @@ namespace ssp4cpp::ssp1::ssd
     std::string TParameterBindings::to_string(void) const
     {
         return "TParameterBindings { \n"
-               "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
+               "ParameterBindings  : " + utils::str::to_string( ParameterBindings  ) + "\n" +
                "}";
     }
 
@@ -109,9 +108,9 @@ namespace ssp4cpp::ssp1::ssd
     std::string TDefaultExperiment::to_string(void) const
     {
         return "TDefaultExperiment { \n"
-               "startTime    : " + to_str( startTime    ) + "\n" +
-               "stopTime     : " + to_str( stopTime     ) + "\n" +
-               "Annotations  : " + to_str( Annotations  ) + "\n" +
+               "startTime    : " + utils::str::to_string( startTime    ) + "\n" +
+               "stopTime     : " + utils::str::to_string( stopTime     ) + "\n" +
+               "Annotations  : " + utils::str::to_string( Annotations  ) + "\n" +
                "}";
     }
 
@@ -119,20 +118,20 @@ namespace ssp4cpp::ssp1::ssd
     std::string Connection::to_string(void) const
     {
         return "Connection { \n"
-               "id                                : " + to_str( id                                ) + "\n" +
-               "description                       : " + to_str( description                       ) + "\n" +
-               "startElement                      : " + to_str( startElement                      ) + "\n" +
-               "startConnector                    : " + to_str( startConnector                    ) + "\n" +
-               "endElement                        : " + to_str( endElement                        ) + "\n" +
-               "endConnector                      : " + to_str( endConnector                      ) + "\n" +
-               "suppressUnitConversion            : " + to_str( suppressUnitConversion            ) + "\n" +
-               "LinearTransformation              : " + to_str( LinearTransformation              ) + "\n" +
-               "BooleanMappingTransformation      : " + to_str( BooleanMappingTransformation      ) + "\n" +
-               "IntegerMappingTransformation      : " + to_str( IntegerMappingTransformation      ) + "\n" +
-               "EnumerationMappingTransformation  : " + to_str( EnumerationMappingTransformation  ) + "\n" +
-               "ConnectionGeometry                : " + to_str( ConnectionGeometry                ) + "\n" +
-               "Annotations                       : " + to_str( Annotations                       ) + "\n" +
-               "information_delay                 : " + to_str( information_delay                 ) + "\n" +
+               "id                                : " + utils::str::to_string( id                                ) + "\n" +
+               "description                       : " + utils::str::to_string( description                       ) + "\n" +
+               "startElement                      : " + utils::str::to_string( startElement                      ) + "\n" +
+               "startConnector                    : " + utils::str::to_string( startConnector                    ) + "\n" +
+               "endElement                        : " + utils::str::to_string( endElement                        ) + "\n" +
+               "endConnector                      : " + utils::str::to_string( endConnector                      ) + "\n" +
+               "suppressUnitConversion            : " + utils::str::to_string( suppressUnitConversion            ) + "\n" +
+               "LinearTransformation              : " + utils::str::to_string( LinearTransformation              ) + "\n" +
+               "BooleanMappingTransformation      : " + utils::str::to_string( BooleanMappingTransformation      ) + "\n" +
+               "IntegerMappingTransformation      : " + utils::str::to_string( IntegerMappingTransformation      ) + "\n" +
+               "EnumerationMappingTransformation  : " + utils::str::to_string( EnumerationMappingTransformation  ) + "\n" +
+               "ConnectionGeometry                : " + utils::str::to_string( ConnectionGeometry                ) + "\n" +
+               "Annotations                       : " + utils::str::to_string( Annotations                       ) + "\n" +
+               "information_delay                 : " + utils::str::to_string( information_delay                 ) + "\n" +
                "}";
     }
 
@@ -140,7 +139,7 @@ namespace ssp4cpp::ssp1::ssd
     std::string Connections::to_string(void) const
     {
         return "Connections { \n"
-               "Connections  : " + to_str( Connections  ) + "\n" +
+               "Connections  : " + utils::str::to_string( Connections  ) + "\n" +
                "}";
     }
 
@@ -148,18 +147,18 @@ namespace ssp4cpp::ssp1::ssd
     std::string Connector::to_string(void) const
     {
         return "Connector { \n"
-               "id                 : " + to_str( id                 ) + "\n" +
-               "description        : " + to_str( description        ) + "\n" +
-               "name               : " + to_str( name               ) + "\n" +
-               "kind               : " + to_str( kind               ) + "\n" +
-               "Real               : " + to_str( Real               ) + "\n" +
-               "Integer            : " + to_str( Integer            ) + "\n" +
-               "Boolean            : " + to_str( Boolean            ) + "\n" +
-               "String             : " + to_str( String             ) + "\n" +
-               "Enumeration        : " + to_str( Enumeration        ) + "\n" +
-               "Binary             : " + to_str( Binary             ) + "\n" +
-               "ConnectorGeometry  : " + to_str( ConnectorGeometry  ) + "\n" +
-               "Annotations        : " + to_str( Annotations        ) + "\n" +
+               "id                 : " + utils::str::to_string( id                 ) + "\n" +
+               "description        : " + utils::str::to_string( description        ) + "\n" +
+               "name               : " + utils::str::to_string( name               ) + "\n" +
+               "kind               : " + utils::str::to_string( kind               ) + "\n" +
+               "Real               : " + utils::str::to_string( Real               ) + "\n" +
+               "Integer            : " + utils::str::to_string( Integer            ) + "\n" +
+               "Boolean            : " + utils::str::to_string( Boolean            ) + "\n" +
+               "String             : " + utils::str::to_string( String             ) + "\n" +
+               "Enumeration        : " + utils::str::to_string( Enumeration        ) + "\n" +
+               "Binary             : " + utils::str::to_string( Binary             ) + "\n" +
+               "ConnectorGeometry  : " + utils::str::to_string( ConnectorGeometry  ) + "\n" +
+               "Annotations        : " + utils::str::to_string( Annotations        ) + "\n" +
                "}";
     }
 
@@ -167,7 +166,7 @@ namespace ssp4cpp::ssp1::ssd
     std::string TConnectors::to_string(void) const
     {
         return "TConnectors { \n"
-               "Connectors  : " + to_str( Connectors  ) + "\n" +
+               "Connectors  : " + utils::str::to_string( Connectors  ) + "\n" +
                "}";
     }
 
@@ -175,16 +174,16 @@ namespace ssp4cpp::ssp1::ssd
     std::string TComponent::to_string(void) const
     {
         return "TComponent { \n"
-               "id                 : " + to_str( id                 ) + "\n" +
-               "description        : " + to_str( description        ) + "\n" +
-               "name               : " + to_str( name               ) + "\n" +
-               "Connectors         : " + to_str( Connectors         ) + "\n" +
-               "ElementGeometry    : " + to_str( ElementGeometry    ) + "\n" +
-               "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
-               "type               : " + to_str( type               ) + "\n" +
-               "source             : " + to_str( source             ) + "\n" +
-               "implementation     : " + to_str( implementation     ) + "\n" +
-               "Annotations        : " + to_str( Annotations        ) + "\n" +
+               "id                 : " + utils::str::to_string( id                 ) + "\n" +
+               "description        : " + utils::str::to_string( description        ) + "\n" +
+               "name               : " + utils::str::to_string( name               ) + "\n" +
+               "Connectors         : " + utils::str::to_string( Connectors         ) + "\n" +
+               "ElementGeometry    : " + utils::str::to_string( ElementGeometry    ) + "\n" +
+               "ParameterBindings  : " + utils::str::to_string( ParameterBindings  ) + "\n" +
+               "type               : " + utils::str::to_string( type               ) + "\n" +
+               "source             : " + utils::str::to_string( source             ) + "\n" +
+               "implementation     : " + utils::str::to_string( implementation     ) + "\n" +
+               "Annotations        : " + utils::str::to_string( Annotations        ) + "\n" +
                "}";
     }
 
@@ -192,14 +191,14 @@ namespace ssp4cpp::ssp1::ssd
     std::string TSignalDictionaryReference::to_string(void) const
     {
         return "TSignalDictionaryReference { \n"
-               "id                 : " + to_str( id                 ) + "\n" +
-               "description        : " + to_str( description        ) + "\n" +
-               "name               : " + to_str( name               ) + "\n" +
-               "Connectors         : " + to_str( Connectors         ) + "\n" +
-               "ElementGeometry    : " + to_str( ElementGeometry    ) + "\n" +
-               "ParameterBindings  : " + to_str( ParameterBindings  ) + "\n" +
-               "dictionary         : " + to_str( dictionary         ) + "\n" +
-               "Annotations        : " + to_str( Annotations        ) + "\n" +
+               "id                 : " + utils::str::to_string( id                 ) + "\n" +
+               "description        : " + utils::str::to_string( description        ) + "\n" +
+               "name               : " + utils::str::to_string( name               ) + "\n" +
+               "Connectors         : " + utils::str::to_string( Connectors         ) + "\n" +
+               "ElementGeometry    : " + utils::str::to_string( ElementGeometry    ) + "\n" +
+               "ParameterBindings  : " + utils::str::to_string( ParameterBindings  ) + "\n" +
+               "dictionary         : " + utils::str::to_string( dictionary         ) + "\n" +
+               "Annotations        : " + utils::str::to_string( Annotations        ) + "\n" +
                "}";
     }
 
@@ -207,9 +206,9 @@ namespace ssp4cpp::ssp1::ssd
     std::string Elements::to_string(void) const
     {
         return "Elements { \n"
-               "Components                  : " + to_str( Components                  ) + "\n" +
-               "SignalDictionaryReferences  : " + to_str( SignalDictionaryReferences  ) + "\n" +
-               "Systems                     : " + to_str( Systems                     ) + "\n" +
+               "Components                  : " + utils::str::to_string( Components                  ) + "\n" +
+               "SignalDictionaryReferences  : " + utils::str::to_string( SignalDictionaryReferences  ) + "\n" +
+               "Systems                     : " + utils::str::to_string( Systems                     ) + "\n" +
                "}";
     }
 
@@ -217,18 +216,18 @@ namespace ssp4cpp::ssp1::ssd
     std::string TSystem::to_string(void) const
     {
         return "TSystem { \n"
-               "id                  : " + to_str( id                  ) + "\n" +
-               "description         : " + to_str( description         ) + "\n" +
-               "name                : " + to_str( name                ) + "\n" +
-               "Connectors          : " + to_str( Connectors          ) + "\n" +
-               "ElementGeometry     : " + to_str( ElementGeometry     ) + "\n" +
-               "ParameterBindings   : " + to_str( ParameterBindings   ) + "\n" +
-               "Elements            : " + to_str( Elements            ) + "\n" +
-               "Connections         : " + to_str( Connections         ) + "\n" +
-               "SignalDictionaries  : " + to_str( SignalDictionaries  ) + "\n" +
-               "SystemGeometry      : " + to_str( SystemGeometry      ) + "\n" +
-               "GraphicalElements   : " + to_str( GraphicalElements   ) + "\n" +
-               "Annotations         : " + to_str( Annotations         ) + "\n" +
+               "id                  : " + utils::str::to_string( id                  ) + "\n" +
+               "description         : " + utils::str::to_string( description         ) + "\n" +
+               "name                : " + utils::str::to_string( name                ) + "\n" +
+               "Connectors          : " + utils::str::to_string( Connectors          ) + "\n" +
+               "ElementGeometry     : " + utils::str::to_string( ElementGeometry     ) + "\n" +
+               "ParameterBindings   : " + utils::str::to_string( ParameterBindings   ) + "\n" +
+               "Elements            : " + utils::str::to_string( Elements            ) + "\n" +
+               "Connections         : " + utils::str::to_string( Connections         ) + "\n" +
+               "SignalDictionaries  : " + utils::str::to_string( SignalDictionaries  ) + "\n" +
+               "SystemGeometry      : " + utils::str::to_string( SystemGeometry      ) + "\n" +
+               "GraphicalElements   : " + utils::str::to_string( GraphicalElements   ) + "\n" +
+               "Annotations         : " + utils::str::to_string( Annotations         ) + "\n" +
                "}";
     }
 
@@ -236,21 +235,21 @@ namespace ssp4cpp::ssp1::ssd
     std::string SystemStructureDescription::to_string(void) const
     {
         return "SystemStructureDescription { \n"
-               "version                : " + to_str( version                ) + "\n" +
-               "name                   : " + to_str( name                   ) + "\n" +
-               "id                     : " + to_str( id                     ) + "\n" +
-               "description            : " + to_str( description            ) + "\n" +
-               "author                 : " + to_str( author                 ) + "\n" +
-               "fileversion            : " + to_str( fileversion            ) + "\n" +
-               "copyright              : " + to_str( copyright              ) + "\n" +
-               "license                : " + to_str( license                ) + "\n" +
-               "generationTool         : " + to_str( generationTool         ) + "\n" +
-               "generationDateAndTime  : " + to_str( generationDateAndTime  ) + "\n" +
-               "System                 : " + to_str( System                 ) + "\n" +
-               "Enumerations           : " + to_str( Enumerations           ) + "\n" +
-               "Units                  : " + to_str( Units                  ) + "\n" +
-               "DefaultExperiment      : " + to_str( DefaultExperiment      ) + "\n" +
-               "Annotations            : " + to_str( Annotations            ) + "\n" +
+               "version                : " + utils::str::to_string( version                ) + "\n" +
+               "name                   : " + utils::str::to_string( name                   ) + "\n" +
+               "id                     : " + utils::str::to_string( id                     ) + "\n" +
+               "description            : " + utils::str::to_string( description            ) + "\n" +
+               "author                 : " + utils::str::to_string( author                 ) + "\n" +
+               "fileversion            : " + utils::str::to_string( fileversion            ) + "\n" +
+               "copyright              : " + utils::str::to_string( copyright              ) + "\n" +
+               "license                : " + utils::str::to_string( license                ) + "\n" +
+               "generationTool         : " + utils::str::to_string( generationTool         ) + "\n" +
+               "generationDateAndTime  : " + utils::str::to_string( generationDateAndTime  ) + "\n" +
+               "System                 : " + utils::str::to_string( System                 ) + "\n" +
+               "Enumerations           : " + utils::str::to_string( Enumerations           ) + "\n" +
+               "Units                  : " + utils::str::to_string( Units                  ) + "\n" +
+               "DefaultExperiment      : " + utils::str::to_string( DefaultExperiment      ) + "\n" +
+               "Annotations            : " + utils::str::to_string( Annotations            ) + "\n" +
                "}";
     }
 

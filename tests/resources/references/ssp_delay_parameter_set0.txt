@@ -16,7 +16,7 @@ id           : null
 description  : null
 name         : LET1.delayTime
 Real         : Real { 
-value  : 0.000001
+value  : 1e-06
 unit   : null
 }
 Integer      : null
@@ -31,7 +31,7 @@ id           : null
 description  : null
 name         : LET2.delayTime
 Real         : Real { 
-value  : 0.000000
+value  : 0
 unit   : null
 }
 Integer      : null
@@ -46,7 +46,7 @@ id           : null
 description  : null
 name         : LET3.delayTime
 Real         : Real { 
-value  : 0.000000
+value  : 0
 unit   : null
 }
 Integer      : null
@@ -61,7 +61,7 @@ id           : null
 description  : null
 name         : LET4.delayTime
 Real         : Real { 
-value  : 0.000000
+value  : 0
 unit   : null
 }
 Integer      : null
@@ -76,7 +76,7 @@ id           : null
 description  : null
 name         : LET5.delayTime
 Real         : Real { 
-value  : 0.000000
+value  : 0
 unit   : null
 }
 Integer      : null

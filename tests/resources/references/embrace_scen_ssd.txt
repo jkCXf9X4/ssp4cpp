@@ -5609,8 +5609,8 @@ Annotations         : null
 Enumerations           : null
 Units                  : null
 DefaultExperiment      : TDefaultExperiment { 
-startTime    : 0.000000
-stopTime     : 1.000000
+startTime    : 0
+stopTime     : 1
 Annotations  : null
 }
 Annotations            : null

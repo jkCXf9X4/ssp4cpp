@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include <sstream>
 #include <map>
+#include <concepts>
+#include <format>
 
 #include <type_traits>
 
@@ -16,86 +18,135 @@ namespace ssp4cpp::utils::str
 {
     using namespace interfaces;
 
-    /**
-     * @brief Convert various primitive types and custom objects implementing
-     *        IWritable to their string representation.
-     */
+    template <class T>
+    concept Ostreamable = requires(std::ostream &os, const T &t) {
+        { os << t } -> std::same_as<std::ostream &>;
+    };
+
+    template <class T>
+    concept HasToString = requires(const T &t) {
+        { t.to_string() } -> std::convertible_to<std::string>;
+    };
+
+    template <class>
+    inline constexpr bool dependent_false_v = false;
+
     template <typename T>
-    std::string to_str(const T &obj)
+    std::string to_string(T &&obj)
     {
-        if constexpr (std::is_same_v<T, int> ||
-                      std::is_same_v<T, unsigned int> ||
-                      std::is_same_v<T, double>)
-        {
-            return std::to_string(obj);
-        }
-        else if constexpr (std::is_same_v<T, bool>)
+        using U = std::remove_cvref_t<T>;
+
+        if constexpr (std::same_as<U, bool>)
         {
             return obj ? "true" : "false";
         }
-        else if constexpr (std::is_same_v<T, std::string>)
+        else if constexpr (std::same_as<U, std::string>)
         {
             return obj;
         }
-        else if constexpr (std::is_base_of_v<IWritable, T>)
+        else if constexpr (std::same_as<U, std::string_view>)
+        {
+            return std::string(obj);
+        }
+        else if constexpr (std::is_same_v<U, const char *> || std::is_same_v<U, char *>)
+        {
+            return obj ? std::string(obj) : std::string{};
+        }
+        else if constexpr (std::is_enum_v<U>)
+        {
+            return std::to_string(static_cast<std::underlying_type_t<U>>(obj));
+        }
+        else if constexpr (std::is_arithmetic_v<U>)
+        {
+            return std::format("{}", obj);
+        }
+        else if constexpr (HasToString<U>)
         {
             return obj.to_string();
         }
+        else if constexpr (Ostreamable<U>)
+        {
+            std::ostringstream oss;
+            oss << obj;
+            return oss.str();
+        }
         else
         {
-            throw std::runtime_error("Unable to print object");
+            static_assert(dependent_false_v<U>,
+                          "to_string(): Unsupported type. Add to_string() or operator<<.");
         }
-    }
-
-    /**
-     * @brief Convert a map to a multi-line string listing key/value pairs.
-     */
-    template <typename T, typename U>
-    std::string to_str(const std::map<T, U> &obj)
-    {
-        std::stringstream ss;
-        ss << "Map [key:value]\n";
-        // key : value
-        for (auto const [key, value] : obj)
-        {
-            ss << key << ':' << value << "\n";
-        }
-        return ss.str();
     }
 
     /**
      * @brief Convert an optional value to string, returning "null" when empty.
      */
     template <typename T>
-    std::string to_str(const std::optional<T> &obj)
+    std::string to_string(const std::optional<T> &obj)
     {
-        return obj ? to_str(obj.value()) : "null";
+        return obj ? to_string(obj.value()) : "null";
+    }
+
+    /**
+     * @brief Convert a map to a multi-line string listing key/value pairs.
+     */
+    template <typename T, typename U>
+    std::string to_string(const std::map<T, U> &obj)
+    {
+        std::string out;
+        out.reserve(64);
+
+        out += "Map [key:value]\n";
+        // key : value
+        for (const auto &[key, value] : obj)
+        {
+            out += to_string(key) + ':' + to_string(value) + '\n';
+        }
+        return out;
     }
 
     /**
      * @brief Convert a vector of values to a newline separated list inside braces.
      */
     template <typename T>
-    std::string to_str(const std::vector<T> &obj)
+    std::string to_string(const std::vector<T> &obj)
     {
         std::string result = "{\n";
         for (const auto &item : obj)
         {
-            result += to_str(item) + "\n";
+            result += to_string(item) + "\n";
         }
         result += "}\n";
         return result;
     }
 
     /**
-     * @brief Use operator<< to convert an object to string via a stringstream.
+     * @brief Split a delimited string into a string list.
      */
-    template <typename T>
-    std::string stream_to_str(const T &obj)
+    inline std::vector<std::string> split_string(std::string_view str,
+                                                 std::string_view delim)
     {
-        std::stringstream ss;
-        ss << obj;
-        return ss.str();
+        std::vector<std::string> result;
+
+        if (delim.empty())
+        {
+            result.emplace_back(str);
+            return result;
+        }
+
+        size_t start = 0;
+        while (true)
+        {
+            size_t pos = str.find(delim, start);
+            if (pos == std::string_view::npos)
+            {
+                result.emplace_back(str.substr(start));
+                break;
+            }
+            result.emplace_back(str.substr(start, pos - start));
+            start = pos + delim.size();
+        }
+
+        return result;
     }
 
     /**
@@ -134,36 +185,6 @@ namespace ssp4cpp::utils::str
         {
             throw std::runtime_error("Unsupported type");
         }
-    }
-
-    /**
-     * @brief Split a delimited string into a string list.
-     */
-    inline std::vector<std::string> split_string(std::string_view str,
-                                                 std::string_view delim)
-    {
-        std::vector<std::string> result;
-
-        if (delim.empty())
-        {
-            result.emplace_back(str);
-            return result;
-        }
-
-        size_t start = 0;
-        while (true)
-        {
-            size_t pos = str.find(delim, start);
-            if (pos == std::string_view::npos)
-            {
-                result.emplace_back(str.substr(start));
-                break;
-            }
-            result.emplace_back(str.substr(start, pos - start));
-            start = pos + delim.size();
-        }
-
-        return result;
     }
 
     /**

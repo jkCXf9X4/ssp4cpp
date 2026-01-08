@@ -28,7 +28,7 @@ namespace ssp4cpp::ssp1::ssv
         double value;
         std::optional<std::string> unit;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Integer : public IXmlNode
@@ -36,7 +36,7 @@ namespace ssp4cpp::ssp1::ssv
     public:
         int value;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Boolean : public IXmlNode
@@ -44,7 +44,7 @@ namespace ssp4cpp::ssp1::ssv
     public:
         bool value;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class String : public IXmlNode
@@ -52,7 +52,7 @@ namespace ssp4cpp::ssp1::ssv
     public:
         std::string value;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Enumeration : public IXmlNode
@@ -61,7 +61,7 @@ namespace ssp4cpp::ssp1::ssv
         std::string value;
         std::optional<std::string> name;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Binary : public IXmlNode
@@ -70,7 +70,7 @@ namespace ssp4cpp::ssp1::ssv
         std::string value;
         std::optional<std::string> mime_type;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TParameter : public IXmlNode
@@ -87,7 +87,7 @@ namespace ssp4cpp::ssp1::ssv
         std::optional<ssv::Binary> Binary;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TParameters : public IXmlNode
@@ -95,7 +95,7 @@ namespace ssp4cpp::ssp1::ssv
     public:
         std::vector<ssv::TParameter> Parameters;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ParameterSet : public IXmlNode
@@ -116,7 +116,7 @@ namespace ssp4cpp::ssp1::ssv
         std::optional<ssc::TUnits> Units;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
 }

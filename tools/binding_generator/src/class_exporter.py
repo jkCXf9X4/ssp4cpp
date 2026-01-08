@@ -16,7 +16,7 @@ class NodeDeclarationExporter:
 
     def variable_to_string(self, variable: Attribute):
         longest_name = max([len(v.name) for v in self.variable_nodes])
-        return f""""{variable.name.ljust(longest_name + 2)}: " + to_str( {variable.name.ljust(longest_name + 1)} ) + "\\n" +"""
+        return f""""{variable.name.ljust(longest_name + 2)}: " + utils::str::to_string( {variable.name.ljust(longest_name + 1)} ) + "\\n" +"""
 
     def generate_to_string_definitions(self):
         variables = [self.variable_to_string(v) for v in self.variable_nodes]
@@ -54,7 +54,7 @@ class {self.class_node.name} : public IXmlNode
 public:
 {variables}
 
-    std::string to_string(void) const;
+    std::string to_string(void) const override;
 }};"""
         return class_template
     
@@ -183,7 +183,6 @@ namespace {self.standard.long_namespece}
 
 namespace {self.standard.long_namespece}
 {{
-{self.indent}using namespace utils::str;
 
 
 {declarations}

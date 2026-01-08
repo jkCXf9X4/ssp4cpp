@@ -36,7 +36,7 @@ namespace ssp4cpp::ssp1::ssm
         std::optional<ssc::EnumerationMappingTransformation> EnumerationMappingTransformation;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ParameterMapping : public IXmlNode
@@ -54,7 +54,7 @@ namespace ssp4cpp::ssp1::ssm
         std::vector<ssm::TMappingEntry> MappingEntry;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
 }

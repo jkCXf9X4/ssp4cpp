@@ -1558,7 +1558,7 @@ EnumerationMappingTransformation  : null
 ConnectionGeometry                : ConnectionGeometry { 
 }
 Annotations                       : null
-information_delay                 : 0.001000
+information_delay                 : 0.001
 }
 Connection { 
 id                                : null
@@ -1575,7 +1575,7 @@ EnumerationMappingTransformation  : null
 ConnectionGeometry                : ConnectionGeometry { 
 }
 Annotations                       : null
-information_delay                 : 0.001000
+information_delay                 : 0.001
 }
 Connection { 
 id                                : null
@@ -1592,7 +1592,7 @@ EnumerationMappingTransformation  : null
 ConnectionGeometry                : ConnectionGeometry { 
 }
 Annotations                       : null
-information_delay                 : 0.002000
+information_delay                 : 0.002
 }
 Connection { 
 id                                : null
@@ -1609,7 +1609,7 @@ EnumerationMappingTransformation  : null
 ConnectionGeometry                : ConnectionGeometry { 
 }
 Annotations                       : null
-information_delay                 : 0.002000
+information_delay                 : 0.002
 }
 }
 
@@ -1623,8 +1623,8 @@ Annotations         : null
 Enumerations           : null
 Units                  : null
 DefaultExperiment      : TDefaultExperiment { 
-startTime    : 0.000000
-stopTime     : 0.100000
+startTime    : 0
+stopTime     : 0.1
 Annotations  : null
 }
 Annotations            : null

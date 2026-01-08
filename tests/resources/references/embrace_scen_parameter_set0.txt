@@ -34,7 +34,7 @@ id           : null
 description  : null
 name         : Alt_start
 Real         : Real { 
-value  : 10.000000
+value  : 10
 unit   : null
 }
 Integer      : null
@@ -49,7 +49,7 @@ id           : null
 description  : null
 name         : Mach_start
 Real         : Real { 
-value  : 0.100000
+value  : 0.1
 unit   : null
 }
 Integer      : null
@@ -64,7 +64,7 @@ id           : null
 description  : null
 name         : heat_load_start
 Real         : Real { 
-value  : 50.000000
+value  : 50
 unit   : null
 }
 Integer      : null
@@ -79,7 +79,7 @@ id           : null
 description  : null
 name         : Wgt_On_Whl_start
 Real         : Real { 
-value  : 1.000000
+value  : 1
 unit   : null
 }
 Integer      : null
@@ -94,7 +94,7 @@ id           : null
 description  : null
 name         : Aircraft_state_start
 Real         : Real { 
-value  : 0.000000
+value  : 0
 unit   : null
 }
 Integer      : null

@@ -30,7 +30,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ConnectorGeometry : public IXmlNode
@@ -38,7 +38,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ElementGeometry : public IXmlNode
@@ -46,7 +46,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ConnectionGeometry : public IXmlNode
@@ -54,7 +54,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class SignalDictionary : public IXmlNode
@@ -62,7 +62,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TSignalDictionaries : public IXmlNode
@@ -70,7 +70,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
         std::vector<ssd::SignalDictionary> SignalDictionaries;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ParameterMapping : public IXmlNode
@@ -83,7 +83,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<std::string> sourceBase;
         std::optional<ssm::ParameterMapping> ParameterMapping;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ParameterBinding : public IXmlNode
@@ -98,7 +98,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<ssv::ParameterSet> ParameterValues;
         std::optional<ssd::ParameterMapping> ParameterMapping;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TParameterBindings : public IXmlNode
@@ -106,7 +106,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
         std::vector<ssd::ParameterBinding> ParameterBindings;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class GraphicalElements : public IXmlNode
@@ -114,7 +114,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TDefaultExperiment : public IXmlNode
@@ -124,7 +124,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<double> stopTime;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Connection : public IXmlNode
@@ -145,7 +145,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<ssc::TAnnotations> Annotations;
         std::optional<double> information_delay;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Connections : public IXmlNode
@@ -153,7 +153,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
         std::vector<ssd::Connection> Connections;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Connector : public IXmlNode
@@ -172,7 +172,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<ssd::ConnectorGeometry> ConnectorGeometry;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TConnectors : public IXmlNode
@@ -180,7 +180,7 @@ namespace ssp4cpp::ssp1::ssd
     public:
         std::vector<ssd::Connector> Connectors;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TComponent : public IXmlNode
@@ -197,7 +197,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<std::string> implementation;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TSignalDictionaryReference : public IXmlNode
@@ -212,7 +212,7 @@ namespace ssp4cpp::ssp1::ssd
         std::string dictionary;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Elements : public IXmlNode
@@ -222,7 +222,7 @@ namespace ssp4cpp::ssp1::ssd
         std::vector<ssd::TSignalDictionaryReference> SignalDictionaryReferences;
         std::vector<ssd::TSystem> Systems;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TSystem : public IXmlNode
@@ -241,7 +241,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<ssd::GraphicalElements> GraphicalElements;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class SystemStructureDescription : public IXmlNode
@@ -263,7 +263,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<ssd::TDefaultExperiment> DefaultExperiment;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
 }

@@ -10,6 +10,7 @@ namespace ssp4cpp::utils::interfaces
     class IWritable
     {
     public:
+        virtual ~IWritable() = default;   // IMPORTANT for polymorphic base classes
         virtual std::string to_string() const = 0;
     };
 
@@ -17,6 +18,7 @@ namespace ssp4cpp::utils::interfaces
     class IReadable
     {
     public:
+        virtual ~IReadable() = default;   // IMPORTANT for polymorphic base classes
         virtual void from_string(const std::string &str) = 0;
     };
 
@@ -33,24 +35,5 @@ namespace ssp4cpp::utils::interfaces
     /** @brief Interface for XML serializable nodes. */
     class IXmlNode : public IWritable
     {
-    };
-
-    class IPrintable
-    {
-    public:
-        virtual ~IPrintable();
-
-        std::string to_string() const;
-
-        friend std::ostream &operator<<(std::ostream &os, const IPrintable &obj)
-        {
-            obj.print(os); // delegate to virtual function
-            return os;
-        }
-
-        virtual void print(std::ostream &os) const
-        {
-            os << "IPrintable {}"; // default representation
-        }
     };
 }

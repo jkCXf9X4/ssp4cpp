@@ -36,7 +36,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<double> factor;
         std::optional<double> offset;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class DisplayUnit : public IXmlNode
@@ -46,7 +46,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<double> factor;
         std::optional<double> offset;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class fmi2Unit : public IXmlNode
@@ -56,7 +56,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<fmi2::md::BaseUnit> BaseUnit;
         std::vector<fmi2::md::DisplayUnit> DisplayUnit;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class UnitDefinitions : public IXmlNode
@@ -64,7 +64,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::fmi2Unit> Units;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Boolean : public IXmlNode
@@ -73,7 +73,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<std::string> declaredType;
         std::optional<bool> start;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Integer : public IXmlNode
@@ -85,7 +85,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<int> min;
         std::optional<int> max;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class String : public IXmlNode
@@ -94,7 +94,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<std::string> declaredType;
         std::optional<std::string> start;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Real : public IXmlNode
@@ -113,7 +113,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<unsigned int> derivative;
         std::optional<bool> reinit;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Enumeration : public IXmlNode
@@ -125,7 +125,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<int> max;
         std::optional<int> start;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class SimpleTypeEnumerationItem : public IXmlNode
@@ -135,7 +135,7 @@ namespace ssp4cpp::fmi2::md
         int value;
         std::optional<std::string> description;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class SimpleTypeEnumeration : public IXmlNode
@@ -144,7 +144,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<std::string> quantity;
         std::vector<fmi2::md::SimpleTypeEnumerationItem> Items;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class fmi2SimpleType : public IXmlNode
@@ -158,7 +158,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<fmi2::md::String> String;
         std::optional<fmi2::md::SimpleTypeEnumeration> Enumeration;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TypeDefinitions : public IXmlNode
@@ -166,7 +166,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::fmi2SimpleType> SimpleTypes;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Category : public IXmlNode
@@ -175,7 +175,7 @@ namespace ssp4cpp::fmi2::md
         std::string name;
         std::optional<std::string> description;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class LogCategories : public IXmlNode
@@ -183,7 +183,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::Category> Categories;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class fmi2Annotation : public IXmlNode
@@ -191,7 +191,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::string annotation;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class VendorAnnotations : public IXmlNode
@@ -199,7 +199,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::fmi2Annotation> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class DefaultExperiment : public IXmlNode
@@ -210,7 +210,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<double> tolerance;
         std::optional<double> stepSize;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class fmi2ScalarVariable : public IXmlNode
@@ -230,7 +230,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<fmi2::md::Enumeration> Enumeration;
         std::vector<fmi2::md::fmi2Annotation> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Unknown : public IXmlNode
@@ -240,7 +240,7 @@ namespace ssp4cpp::fmi2::md
         std::vector<int> dependencies;
         std::vector<fmi2::md::DependenciesKind> dependenciesKind;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Outputs : public IXmlNode
@@ -248,7 +248,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::Unknown> Unknowns;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Derivatives : public IXmlNode
@@ -256,7 +256,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::Unknown> Unknowns;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class InitialUnknowns : public IXmlNode
@@ -264,7 +264,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::Unknown> Unknowns;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ModelStructure : public IXmlNode
@@ -274,7 +274,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<fmi2::md::Derivatives> Derivatives;
         std::optional<fmi2::md::InitialUnknowns> InitialUnknowns;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ModelVariables : public IXmlNode
@@ -282,7 +282,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::fmi2ScalarVariable> ScalarVariable;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class File : public IXmlNode
@@ -290,7 +290,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::string name;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class SourceFiles : public IXmlNode
@@ -298,7 +298,7 @@ namespace ssp4cpp::fmi2::md
     public:
         std::vector<fmi2::md::File> Files;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class ModelExchange : public IXmlNode
@@ -314,7 +314,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<bool> providesDirectionalDerivatives;
         std::optional<fmi2::md::SourceFiles> SourceFiles;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class CoSimulation : public IXmlNode
@@ -333,7 +333,7 @@ namespace ssp4cpp::fmi2::md
         std::optional<bool> providesDirectionalDerivatives;
         std::optional<fmi2::md::SourceFiles> SourceFiles;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class fmi2ModelDescription : public IXmlNode
@@ -361,7 +361,7 @@ namespace ssp4cpp::fmi2::md
         fmi2::md::ModelVariables ModelVariables;
         fmi2::md::ModelStructure ModelStructure;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
 }

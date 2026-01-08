@@ -100,9 +100,9 @@ Enumeration  : null
 }
 LogCategories             : null
 DefaultExperiment         : DefaultExperiment { 
-startTime  : 0.000000
-stopTime   : 1.000000
-tolerance  : 0.000100
+startTime  : 0
+stopTime   : 1
+tolerance  : 1e-04
 stepSize   : null
 }
 VendorAnnotations         : null
@@ -186,7 +186,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -216,7 +216,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -246,7 +246,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }

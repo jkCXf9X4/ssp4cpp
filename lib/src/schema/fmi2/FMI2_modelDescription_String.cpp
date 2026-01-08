@@ -10,23 +10,22 @@
 
 namespace ssp4cpp::fmi2::md
 {
-    using namespace utils::str;
 
 
      // BaseUnit
     std::string BaseUnit::to_string(void) const
     {
         return "BaseUnit { \n"
-               "kg      : " + to_str( kg      ) + "\n" +
-               "m       : " + to_str( m       ) + "\n" +
-               "s       : " + to_str( s       ) + "\n" +
-               "a       : " + to_str( a       ) + "\n" +
-               "k       : " + to_str( k       ) + "\n" +
-               "mol     : " + to_str( mol     ) + "\n" +
-               "cd      : " + to_str( cd      ) + "\n" +
-               "rad     : " + to_str( rad     ) + "\n" +
-               "factor  : " + to_str( factor  ) + "\n" +
-               "offset  : " + to_str( offset  ) + "\n" +
+               "kg      : " + utils::str::to_string( kg      ) + "\n" +
+               "m       : " + utils::str::to_string( m       ) + "\n" +
+               "s       : " + utils::str::to_string( s       ) + "\n" +
+               "a       : " + utils::str::to_string( a       ) + "\n" +
+               "k       : " + utils::str::to_string( k       ) + "\n" +
+               "mol     : " + utils::str::to_string( mol     ) + "\n" +
+               "cd      : " + utils::str::to_string( cd      ) + "\n" +
+               "rad     : " + utils::str::to_string( rad     ) + "\n" +
+               "factor  : " + utils::str::to_string( factor  ) + "\n" +
+               "offset  : " + utils::str::to_string( offset  ) + "\n" +
                "}";
     }
 
@@ -34,9 +33,9 @@ namespace ssp4cpp::fmi2::md
     std::string DisplayUnit::to_string(void) const
     {
         return "DisplayUnit { \n"
-               "name    : " + to_str( name    ) + "\n" +
-               "factor  : " + to_str( factor  ) + "\n" +
-               "offset  : " + to_str( offset  ) + "\n" +
+               "name    : " + utils::str::to_string( name    ) + "\n" +
+               "factor  : " + utils::str::to_string( factor  ) + "\n" +
+               "offset  : " + utils::str::to_string( offset  ) + "\n" +
                "}";
     }
 
@@ -44,9 +43,9 @@ namespace ssp4cpp::fmi2::md
     std::string fmi2Unit::to_string(void) const
     {
         return "fmi2Unit { \n"
-               "name         : " + to_str( name         ) + "\n" +
-               "BaseUnit     : " + to_str( BaseUnit     ) + "\n" +
-               "DisplayUnit  : " + to_str( DisplayUnit  ) + "\n" +
+               "name         : " + utils::str::to_string( name         ) + "\n" +
+               "BaseUnit     : " + utils::str::to_string( BaseUnit     ) + "\n" +
+               "DisplayUnit  : " + utils::str::to_string( DisplayUnit  ) + "\n" +
                "}";
     }
 
@@ -54,7 +53,7 @@ namespace ssp4cpp::fmi2::md
     std::string UnitDefinitions::to_string(void) const
     {
         return "UnitDefinitions { \n"
-               "Units  : " + to_str( Units  ) + "\n" +
+               "Units  : " + utils::str::to_string( Units  ) + "\n" +
                "}";
     }
 
@@ -62,8 +61,8 @@ namespace ssp4cpp::fmi2::md
     std::string Boolean::to_string(void) const
     {
         return "Boolean { \n"
-               "declaredType  : " + to_str( declaredType  ) + "\n" +
-               "start         : " + to_str( start         ) + "\n" +
+               "declaredType  : " + utils::str::to_string( declaredType  ) + "\n" +
+               "start         : " + utils::str::to_string( start         ) + "\n" +
                "}";
     }
 
@@ -71,11 +70,11 @@ namespace ssp4cpp::fmi2::md
     std::string Integer::to_string(void) const
     {
         return "Integer { \n"
-               "declaredType  : " + to_str( declaredType  ) + "\n" +
-               "start         : " + to_str( start         ) + "\n" +
-               "quantity      : " + to_str( quantity      ) + "\n" +
-               "min           : " + to_str( min           ) + "\n" +
-               "max           : " + to_str( max           ) + "\n" +
+               "declaredType  : " + utils::str::to_string( declaredType  ) + "\n" +
+               "start         : " + utils::str::to_string( start         ) + "\n" +
+               "quantity      : " + utils::str::to_string( quantity      ) + "\n" +
+               "min           : " + utils::str::to_string( min           ) + "\n" +
+               "max           : " + utils::str::to_string( max           ) + "\n" +
                "}";
     }
 
@@ -83,8 +82,8 @@ namespace ssp4cpp::fmi2::md
     std::string String::to_string(void) const
     {
         return "String { \n"
-               "declaredType  : " + to_str( declaredType  ) + "\n" +
-               "start         : " + to_str( start         ) + "\n" +
+               "declaredType  : " + utils::str::to_string( declaredType  ) + "\n" +
+               "start         : " + utils::str::to_string( start         ) + "\n" +
                "}";
     }
 
@@ -92,18 +91,18 @@ namespace ssp4cpp::fmi2::md
     std::string Real::to_string(void) const
     {
         return "Real { \n"
-               "declaredType      : " + to_str( declaredType      ) + "\n" +
-               "quantity          : " + to_str( quantity          ) + "\n" +
-               "unit              : " + to_str( unit              ) + "\n" +
-               "displayUnit       : " + to_str( displayUnit       ) + "\n" +
-               "relativeQuantity  : " + to_str( relativeQuantity  ) + "\n" +
-               "min               : " + to_str( min               ) + "\n" +
-               "max               : " + to_str( max               ) + "\n" +
-               "nominal           : " + to_str( nominal           ) + "\n" +
-               "unbounded         : " + to_str( unbounded         ) + "\n" +
-               "start             : " + to_str( start             ) + "\n" +
-               "derivative        : " + to_str( derivative        ) + "\n" +
-               "reinit            : " + to_str( reinit            ) + "\n" +
+               "declaredType      : " + utils::str::to_string( declaredType      ) + "\n" +
+               "quantity          : " + utils::str::to_string( quantity          ) + "\n" +
+               "unit              : " + utils::str::to_string( unit              ) + "\n" +
+               "displayUnit       : " + utils::str::to_string( displayUnit       ) + "\n" +
+               "relativeQuantity  : " + utils::str::to_string( relativeQuantity  ) + "\n" +
+               "min               : " + utils::str::to_string( min               ) + "\n" +
+               "max               : " + utils::str::to_string( max               ) + "\n" +
+               "nominal           : " + utils::str::to_string( nominal           ) + "\n" +
+               "unbounded         : " + utils::str::to_string( unbounded         ) + "\n" +
+               "start             : " + utils::str::to_string( start             ) + "\n" +
+               "derivative        : " + utils::str::to_string( derivative        ) + "\n" +
+               "reinit            : " + utils::str::to_string( reinit            ) + "\n" +
                "}";
     }
 
@@ -111,11 +110,11 @@ namespace ssp4cpp::fmi2::md
     std::string Enumeration::to_string(void) const
     {
         return "Enumeration { \n"
-               "declaredType  : " + to_str( declaredType  ) + "\n" +
-               "quantity      : " + to_str( quantity      ) + "\n" +
-               "min           : " + to_str( min           ) + "\n" +
-               "max           : " + to_str( max           ) + "\n" +
-               "start         : " + to_str( start         ) + "\n" +
+               "declaredType  : " + utils::str::to_string( declaredType  ) + "\n" +
+               "quantity      : " + utils::str::to_string( quantity      ) + "\n" +
+               "min           : " + utils::str::to_string( min           ) + "\n" +
+               "max           : " + utils::str::to_string( max           ) + "\n" +
+               "start         : " + utils::str::to_string( start         ) + "\n" +
                "}";
     }
 
@@ -123,9 +122,9 @@ namespace ssp4cpp::fmi2::md
     std::string SimpleTypeEnumerationItem::to_string(void) const
     {
         return "SimpleTypeEnumerationItem { \n"
-               "name         : " + to_str( name         ) + "\n" +
-               "value        : " + to_str( value        ) + "\n" +
-               "description  : " + to_str( description  ) + "\n" +
+               "name         : " + utils::str::to_string( name         ) + "\n" +
+               "value        : " + utils::str::to_string( value        ) + "\n" +
+               "description  : " + utils::str::to_string( description  ) + "\n" +
                "}";
     }
 
@@ -133,8 +132,8 @@ namespace ssp4cpp::fmi2::md
     std::string SimpleTypeEnumeration::to_string(void) const
     {
         return "SimpleTypeEnumeration { \n"
-               "quantity  : " + to_str( quantity  ) + "\n" +
-               "Items     : " + to_str( Items     ) + "\n" +
+               "quantity  : " + utils::str::to_string( quantity  ) + "\n" +
+               "Items     : " + utils::str::to_string( Items     ) + "\n" +
                "}";
     }
 
@@ -142,13 +141,13 @@ namespace ssp4cpp::fmi2::md
     std::string fmi2SimpleType::to_string(void) const
     {
         return "fmi2SimpleType { \n"
-               "name         : " + to_str( name         ) + "\n" +
-               "description  : " + to_str( description  ) + "\n" +
-               "Real         : " + to_str( Real         ) + "\n" +
-               "Integer      : " + to_str( Integer      ) + "\n" +
-               "Boolean      : " + to_str( Boolean      ) + "\n" +
-               "String       : " + to_str( String       ) + "\n" +
-               "Enumeration  : " + to_str( Enumeration  ) + "\n" +
+               "name         : " + utils::str::to_string( name         ) + "\n" +
+               "description  : " + utils::str::to_string( description  ) + "\n" +
+               "Real         : " + utils::str::to_string( Real         ) + "\n" +
+               "Integer      : " + utils::str::to_string( Integer      ) + "\n" +
+               "Boolean      : " + utils::str::to_string( Boolean      ) + "\n" +
+               "String       : " + utils::str::to_string( String       ) + "\n" +
+               "Enumeration  : " + utils::str::to_string( Enumeration  ) + "\n" +
                "}";
     }
 
@@ -156,7 +155,7 @@ namespace ssp4cpp::fmi2::md
     std::string TypeDefinitions::to_string(void) const
     {
         return "TypeDefinitions { \n"
-               "SimpleTypes  : " + to_str( SimpleTypes  ) + "\n" +
+               "SimpleTypes  : " + utils::str::to_string( SimpleTypes  ) + "\n" +
                "}";
     }
 
@@ -164,8 +163,8 @@ namespace ssp4cpp::fmi2::md
     std::string Category::to_string(void) const
     {
         return "Category { \n"
-               "name         : " + to_str( name         ) + "\n" +
-               "description  : " + to_str( description  ) + "\n" +
+               "name         : " + utils::str::to_string( name         ) + "\n" +
+               "description  : " + utils::str::to_string( description  ) + "\n" +
                "}";
     }
 
@@ -173,7 +172,7 @@ namespace ssp4cpp::fmi2::md
     std::string LogCategories::to_string(void) const
     {
         return "LogCategories { \n"
-               "Categories  : " + to_str( Categories  ) + "\n" +
+               "Categories  : " + utils::str::to_string( Categories  ) + "\n" +
                "}";
     }
 
@@ -181,7 +180,7 @@ namespace ssp4cpp::fmi2::md
     std::string fmi2Annotation::to_string(void) const
     {
         return "fmi2Annotation { \n"
-               "annotation  : " + to_str( annotation  ) + "\n" +
+               "annotation  : " + utils::str::to_string( annotation  ) + "\n" +
                "}";
     }
 
@@ -189,7 +188,7 @@ namespace ssp4cpp::fmi2::md
     std::string VendorAnnotations::to_string(void) const
     {
         return "VendorAnnotations { \n"
-               "Annotations  : " + to_str( Annotations  ) + "\n" +
+               "Annotations  : " + utils::str::to_string( Annotations  ) + "\n" +
                "}";
     }
 
@@ -197,10 +196,10 @@ namespace ssp4cpp::fmi2::md
     std::string DefaultExperiment::to_string(void) const
     {
         return "DefaultExperiment { \n"
-               "startTime  : " + to_str( startTime  ) + "\n" +
-               "stopTime   : " + to_str( stopTime   ) + "\n" +
-               "tolerance  : " + to_str( tolerance  ) + "\n" +
-               "stepSize   : " + to_str( stepSize   ) + "\n" +
+               "startTime  : " + utils::str::to_string( startTime  ) + "\n" +
+               "stopTime   : " + utils::str::to_string( stopTime   ) + "\n" +
+               "tolerance  : " + utils::str::to_string( tolerance  ) + "\n" +
+               "stepSize   : " + utils::str::to_string( stepSize   ) + "\n" +
                "}";
     }
 
@@ -208,19 +207,19 @@ namespace ssp4cpp::fmi2::md
     std::string fmi2ScalarVariable::to_string(void) const
     {
         return "fmi2ScalarVariable { \n"
-               "name                                : " + to_str( name                                ) + "\n" +
-               "valueReference                      : " + to_str( valueReference                      ) + "\n" +
-               "description                         : " + to_str( description                         ) + "\n" +
-               "causality                           : " + to_str( causality                           ) + "\n" +
-               "variability                         : " + to_str( variability                         ) + "\n" +
-               "initial                             : " + to_str( initial                             ) + "\n" +
-               "canHandleMultipleSetPerTimeInstant  : " + to_str( canHandleMultipleSetPerTimeInstant  ) + "\n" +
-               "Real                                : " + to_str( Real                                ) + "\n" +
-               "Integer                             : " + to_str( Integer                             ) + "\n" +
-               "Boolean                             : " + to_str( Boolean                             ) + "\n" +
-               "String                              : " + to_str( String                              ) + "\n" +
-               "Enumeration                         : " + to_str( Enumeration                         ) + "\n" +
-               "Annotations                         : " + to_str( Annotations                         ) + "\n" +
+               "name                                : " + utils::str::to_string( name                                ) + "\n" +
+               "valueReference                      : " + utils::str::to_string( valueReference                      ) + "\n" +
+               "description                         : " + utils::str::to_string( description                         ) + "\n" +
+               "causality                           : " + utils::str::to_string( causality                           ) + "\n" +
+               "variability                         : " + utils::str::to_string( variability                         ) + "\n" +
+               "initial                             : " + utils::str::to_string( initial                             ) + "\n" +
+               "canHandleMultipleSetPerTimeInstant  : " + utils::str::to_string( canHandleMultipleSetPerTimeInstant  ) + "\n" +
+               "Real                                : " + utils::str::to_string( Real                                ) + "\n" +
+               "Integer                             : " + utils::str::to_string( Integer                             ) + "\n" +
+               "Boolean                             : " + utils::str::to_string( Boolean                             ) + "\n" +
+               "String                              : " + utils::str::to_string( String                              ) + "\n" +
+               "Enumeration                         : " + utils::str::to_string( Enumeration                         ) + "\n" +
+               "Annotations                         : " + utils::str::to_string( Annotations                         ) + "\n" +
                "}";
     }
 
@@ -228,9 +227,9 @@ namespace ssp4cpp::fmi2::md
     std::string Unknown::to_string(void) const
     {
         return "Unknown { \n"
-               "index             : " + to_str( index             ) + "\n" +
-               "dependencies      : " + to_str( dependencies      ) + "\n" +
-               "dependenciesKind  : " + to_str( dependenciesKind  ) + "\n" +
+               "index             : " + utils::str::to_string( index             ) + "\n" +
+               "dependencies      : " + utils::str::to_string( dependencies      ) + "\n" +
+               "dependenciesKind  : " + utils::str::to_string( dependenciesKind  ) + "\n" +
                "}";
     }
 
@@ -238,7 +237,7 @@ namespace ssp4cpp::fmi2::md
     std::string Outputs::to_string(void) const
     {
         return "Outputs { \n"
-               "Unknowns  : " + to_str( Unknowns  ) + "\n" +
+               "Unknowns  : " + utils::str::to_string( Unknowns  ) + "\n" +
                "}";
     }
 
@@ -246,7 +245,7 @@ namespace ssp4cpp::fmi2::md
     std::string Derivatives::to_string(void) const
     {
         return "Derivatives { \n"
-               "Unknowns  : " + to_str( Unknowns  ) + "\n" +
+               "Unknowns  : " + utils::str::to_string( Unknowns  ) + "\n" +
                "}";
     }
 
@@ -254,7 +253,7 @@ namespace ssp4cpp::fmi2::md
     std::string InitialUnknowns::to_string(void) const
     {
         return "InitialUnknowns { \n"
-               "Unknowns  : " + to_str( Unknowns  ) + "\n" +
+               "Unknowns  : " + utils::str::to_string( Unknowns  ) + "\n" +
                "}";
     }
 
@@ -262,9 +261,9 @@ namespace ssp4cpp::fmi2::md
     std::string ModelStructure::to_string(void) const
     {
         return "ModelStructure { \n"
-               "Outputs          : " + to_str( Outputs          ) + "\n" +
-               "Derivatives      : " + to_str( Derivatives      ) + "\n" +
-               "InitialUnknowns  : " + to_str( InitialUnknowns  ) + "\n" +
+               "Outputs          : " + utils::str::to_string( Outputs          ) + "\n" +
+               "Derivatives      : " + utils::str::to_string( Derivatives      ) + "\n" +
+               "InitialUnknowns  : " + utils::str::to_string( InitialUnknowns  ) + "\n" +
                "}";
     }
 
@@ -272,7 +271,7 @@ namespace ssp4cpp::fmi2::md
     std::string ModelVariables::to_string(void) const
     {
         return "ModelVariables { \n"
-               "ScalarVariable  : " + to_str( ScalarVariable  ) + "\n" +
+               "ScalarVariable  : " + utils::str::to_string( ScalarVariable  ) + "\n" +
                "}";
     }
 
@@ -280,7 +279,7 @@ namespace ssp4cpp::fmi2::md
     std::string File::to_string(void) const
     {
         return "File { \n"
-               "name  : " + to_str( name  ) + "\n" +
+               "name  : " + utils::str::to_string( name  ) + "\n" +
                "}";
     }
 
@@ -288,7 +287,7 @@ namespace ssp4cpp::fmi2::md
     std::string SourceFiles::to_string(void) const
     {
         return "SourceFiles { \n"
-               "Files  : " + to_str( Files  ) + "\n" +
+               "Files  : " + utils::str::to_string( Files  ) + "\n" +
                "}";
     }
 
@@ -296,15 +295,15 @@ namespace ssp4cpp::fmi2::md
     std::string ModelExchange::to_string(void) const
     {
         return "ModelExchange { \n"
-               "modelIdentifier                      : " + to_str( modelIdentifier                      ) + "\n" +
-               "needsExecutionTool                   : " + to_str( needsExecutionTool                   ) + "\n" +
-               "completedIntegratorStepNotNeeded     : " + to_str( completedIntegratorStepNotNeeded     ) + "\n" +
-               "canBeInstantiatedOnlyOncePerProcess  : " + to_str( canBeInstantiatedOnlyOncePerProcess  ) + "\n" +
-               "canNotUseMemoryManagementFunctions   : " + to_str( canNotUseMemoryManagementFunctions   ) + "\n" +
-               "canGetAndSetFMUstate                 : " + to_str( canGetAndSetFMUstate                 ) + "\n" +
-               "canSerializeFMUstate                 : " + to_str( canSerializeFMUstate                 ) + "\n" +
-               "providesDirectionalDerivatives       : " + to_str( providesDirectionalDerivatives       ) + "\n" +
-               "SourceFiles                          : " + to_str( SourceFiles                          ) + "\n" +
+               "modelIdentifier                      : " + utils::str::to_string( modelIdentifier                      ) + "\n" +
+               "needsExecutionTool                   : " + utils::str::to_string( needsExecutionTool                   ) + "\n" +
+               "completedIntegratorStepNotNeeded     : " + utils::str::to_string( completedIntegratorStepNotNeeded     ) + "\n" +
+               "canBeInstantiatedOnlyOncePerProcess  : " + utils::str::to_string( canBeInstantiatedOnlyOncePerProcess  ) + "\n" +
+               "canNotUseMemoryManagementFunctions   : " + utils::str::to_string( canNotUseMemoryManagementFunctions   ) + "\n" +
+               "canGetAndSetFMUstate                 : " + utils::str::to_string( canGetAndSetFMUstate                 ) + "\n" +
+               "canSerializeFMUstate                 : " + utils::str::to_string( canSerializeFMUstate                 ) + "\n" +
+               "providesDirectionalDerivatives       : " + utils::str::to_string( providesDirectionalDerivatives       ) + "\n" +
+               "SourceFiles                          : " + utils::str::to_string( SourceFiles                          ) + "\n" +
                "}";
     }
 
@@ -312,18 +311,18 @@ namespace ssp4cpp::fmi2::md
     std::string CoSimulation::to_string(void) const
     {
         return "CoSimulation { \n"
-               "modelIdentifier                         : " + to_str( modelIdentifier                         ) + "\n" +
-               "needsExecutionTool                      : " + to_str( needsExecutionTool                      ) + "\n" +
-               "canHandleVariableCommunicationStepSize  : " + to_str( canHandleVariableCommunicationStepSize  ) + "\n" +
-               "canInterpolateInputs                    : " + to_str( canInterpolateInputs                    ) + "\n" +
-               "maxOutputDerivativeOrder                : " + to_str( maxOutputDerivativeOrder                ) + "\n" +
-               "canRunAsynchronuously                   : " + to_str( canRunAsynchronuously                   ) + "\n" +
-               "canBeInstantiatedOnlyOncePerProcess     : " + to_str( canBeInstantiatedOnlyOncePerProcess     ) + "\n" +
-               "canNotUseMemoryManagementFunctions      : " + to_str( canNotUseMemoryManagementFunctions      ) + "\n" +
-               "canGetAndSetFMUstate                    : " + to_str( canGetAndSetFMUstate                    ) + "\n" +
-               "canSerializeFMUstate                    : " + to_str( canSerializeFMUstate                    ) + "\n" +
-               "providesDirectionalDerivatives          : " + to_str( providesDirectionalDerivatives          ) + "\n" +
-               "SourceFiles                             : " + to_str( SourceFiles                             ) + "\n" +
+               "modelIdentifier                         : " + utils::str::to_string( modelIdentifier                         ) + "\n" +
+               "needsExecutionTool                      : " + utils::str::to_string( needsExecutionTool                      ) + "\n" +
+               "canHandleVariableCommunicationStepSize  : " + utils::str::to_string( canHandleVariableCommunicationStepSize  ) + "\n" +
+               "canInterpolateInputs                    : " + utils::str::to_string( canInterpolateInputs                    ) + "\n" +
+               "maxOutputDerivativeOrder                : " + utils::str::to_string( maxOutputDerivativeOrder                ) + "\n" +
+               "canRunAsynchronuously                   : " + utils::str::to_string( canRunAsynchronuously                   ) + "\n" +
+               "canBeInstantiatedOnlyOncePerProcess     : " + utils::str::to_string( canBeInstantiatedOnlyOncePerProcess     ) + "\n" +
+               "canNotUseMemoryManagementFunctions      : " + utils::str::to_string( canNotUseMemoryManagementFunctions      ) + "\n" +
+               "canGetAndSetFMUstate                    : " + utils::str::to_string( canGetAndSetFMUstate                    ) + "\n" +
+               "canSerializeFMUstate                    : " + utils::str::to_string( canSerializeFMUstate                    ) + "\n" +
+               "providesDirectionalDerivatives          : " + utils::str::to_string( providesDirectionalDerivatives          ) + "\n" +
+               "SourceFiles                             : " + utils::str::to_string( SourceFiles                             ) + "\n" +
                "}";
     }
 
@@ -331,27 +330,27 @@ namespace ssp4cpp::fmi2::md
     std::string fmi2ModelDescription::to_string(void) const
     {
         return "fmi2ModelDescription { \n"
-               "fmiVersion                : " + to_str( fmiVersion                ) + "\n" +
-               "modelName                 : " + to_str( modelName                 ) + "\n" +
-               "guid                      : " + to_str( guid                      ) + "\n" +
-               "description               : " + to_str( description               ) + "\n" +
-               "author                    : " + to_str( author                    ) + "\n" +
-               "version                   : " + to_str( version                   ) + "\n" +
-               "copyright                 : " + to_str( copyright                 ) + "\n" +
-               "license                   : " + to_str( license                   ) + "\n" +
-               "generationTool            : " + to_str( generationTool            ) + "\n" +
-               "generationDateAndTime     : " + to_str( generationDateAndTime     ) + "\n" +
-               "variableNamingConvention  : " + to_str( variableNamingConvention  ) + "\n" +
-               "numberOfEventIndicators   : " + to_str( numberOfEventIndicators   ) + "\n" +
-               "ModelExchange             : " + to_str( ModelExchange             ) + "\n" +
-               "CoSimulation              : " + to_str( CoSimulation              ) + "\n" +
-               "UnitDefinitions           : " + to_str( UnitDefinitions           ) + "\n" +
-               "TypeDefinitions           : " + to_str( TypeDefinitions           ) + "\n" +
-               "LogCategories             : " + to_str( LogCategories             ) + "\n" +
-               "DefaultExperiment         : " + to_str( DefaultExperiment         ) + "\n" +
-               "VendorAnnotations         : " + to_str( VendorAnnotations         ) + "\n" +
-               "ModelVariables            : " + to_str( ModelVariables            ) + "\n" +
-               "ModelStructure            : " + to_str( ModelStructure            ) + "\n" +
+               "fmiVersion                : " + utils::str::to_string( fmiVersion                ) + "\n" +
+               "modelName                 : " + utils::str::to_string( modelName                 ) + "\n" +
+               "guid                      : " + utils::str::to_string( guid                      ) + "\n" +
+               "description               : " + utils::str::to_string( description               ) + "\n" +
+               "author                    : " + utils::str::to_string( author                    ) + "\n" +
+               "version                   : " + utils::str::to_string( version                   ) + "\n" +
+               "copyright                 : " + utils::str::to_string( copyright                 ) + "\n" +
+               "license                   : " + utils::str::to_string( license                   ) + "\n" +
+               "generationTool            : " + utils::str::to_string( generationTool            ) + "\n" +
+               "generationDateAndTime     : " + utils::str::to_string( generationDateAndTime     ) + "\n" +
+               "variableNamingConvention  : " + utils::str::to_string( variableNamingConvention  ) + "\n" +
+               "numberOfEventIndicators   : " + utils::str::to_string( numberOfEventIndicators   ) + "\n" +
+               "ModelExchange             : " + utils::str::to_string( ModelExchange             ) + "\n" +
+               "CoSimulation              : " + utils::str::to_string( CoSimulation              ) + "\n" +
+               "UnitDefinitions           : " + utils::str::to_string( UnitDefinitions           ) + "\n" +
+               "TypeDefinitions           : " + utils::str::to_string( TypeDefinitions           ) + "\n" +
+               "LogCategories             : " + utils::str::to_string( LogCategories             ) + "\n" +
+               "DefaultExperiment         : " + utils::str::to_string( DefaultExperiment         ) + "\n" +
+               "VendorAnnotations         : " + utils::str::to_string( VendorAnnotations         ) + "\n" +
+               "ModelVariables            : " + utils::str::to_string( ModelVariables            ) + "\n" +
+               "ModelStructure            : " + utils::str::to_string( ModelStructure            ) + "\n" +
                "}";
     }
 

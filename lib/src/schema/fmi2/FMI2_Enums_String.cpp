@@ -10,7 +10,6 @@
 
 namespace ssp4cpp::fmi2::md
 {
-    using namespace utils::str;
 
 
 

@@ -30,9 +30,9 @@ UnitDefinitions           : null
 TypeDefinitions           : null
 LogCategories             : null
 DefaultExperiment         : DefaultExperiment { 
-startTime  : 0.000000
-stopTime   : 10.000000
-tolerance  : 0.000100
+startTime  : 0
+stopTime   : 10
+tolerance  : 1e-04
 stepSize   : null
 }
 VendorAnnotations         : null

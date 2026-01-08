@@ -10,23 +10,22 @@
 
 namespace ssp4cpp::ssp1::ssm
 {
-    using namespace utils::str;
 
 
      // TMappingEntry
     std::string TMappingEntry::to_string(void) const
     {
         return "TMappingEntry { \n"
-               "id                                : " + to_str( id                                ) + "\n" +
-               "description                       : " + to_str( description                       ) + "\n" +
-               "source                            : " + to_str( source                            ) + "\n" +
-               "target                            : " + to_str( target                            ) + "\n" +
-               "suppressUnitConversion            : " + to_str( suppressUnitConversion            ) + "\n" +
-               "LinearTransformation              : " + to_str( LinearTransformation              ) + "\n" +
-               "BooleanMappingTransformation      : " + to_str( BooleanMappingTransformation      ) + "\n" +
-               "IntegerMappingTransformation      : " + to_str( IntegerMappingTransformation      ) + "\n" +
-               "EnumerationMappingTransformation  : " + to_str( EnumerationMappingTransformation  ) + "\n" +
-               "Annotations                       : " + to_str( Annotations                       ) + "\n" +
+               "id                                : " + utils::str::to_string( id                                ) + "\n" +
+               "description                       : " + utils::str::to_string( description                       ) + "\n" +
+               "source                            : " + utils::str::to_string( source                            ) + "\n" +
+               "target                            : " + utils::str::to_string( target                            ) + "\n" +
+               "suppressUnitConversion            : " + utils::str::to_string( suppressUnitConversion            ) + "\n" +
+               "LinearTransformation              : " + utils::str::to_string( LinearTransformation              ) + "\n" +
+               "BooleanMappingTransformation      : " + utils::str::to_string( BooleanMappingTransformation      ) + "\n" +
+               "IntegerMappingTransformation      : " + utils::str::to_string( IntegerMappingTransformation      ) + "\n" +
+               "EnumerationMappingTransformation  : " + utils::str::to_string( EnumerationMappingTransformation  ) + "\n" +
+               "Annotations                       : " + utils::str::to_string( Annotations                       ) + "\n" +
                "}";
     }
 
@@ -34,17 +33,17 @@ namespace ssp4cpp::ssp1::ssm
     std::string ParameterMapping::to_string(void) const
     {
         return "ParameterMapping { \n"
-               "version                : " + to_str( version                ) + "\n" +
-               "id                     : " + to_str( id                     ) + "\n" +
-               "description            : " + to_str( description            ) + "\n" +
-               "author                 : " + to_str( author                 ) + "\n" +
-               "fileversion            : " + to_str( fileversion            ) + "\n" +
-               "copyright              : " + to_str( copyright              ) + "\n" +
-               "license                : " + to_str( license                ) + "\n" +
-               "generationTool         : " + to_str( generationTool         ) + "\n" +
-               "generationDateAndTime  : " + to_str( generationDateAndTime  ) + "\n" +
-               "MappingEntry           : " + to_str( MappingEntry           ) + "\n" +
-               "Annotations            : " + to_str( Annotations            ) + "\n" +
+               "version                : " + utils::str::to_string( version                ) + "\n" +
+               "id                     : " + utils::str::to_string( id                     ) + "\n" +
+               "description            : " + utils::str::to_string( description            ) + "\n" +
+               "author                 : " + utils::str::to_string( author                 ) + "\n" +
+               "fileversion            : " + utils::str::to_string( fileversion            ) + "\n" +
+               "copyright              : " + utils::str::to_string( copyright              ) + "\n" +
+               "license                : " + utils::str::to_string( license                ) + "\n" +
+               "generationTool         : " + utils::str::to_string( generationTool         ) + "\n" +
+               "generationDateAndTime  : " + utils::str::to_string( generationDateAndTime  ) + "\n" +
+               "MappingEntry           : " + utils::str::to_string( MappingEntry           ) + "\n" +
+               "Annotations            : " + utils::str::to_string( Annotations            ) + "\n" +
                "}";
     }
 

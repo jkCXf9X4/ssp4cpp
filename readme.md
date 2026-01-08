@@ -37,7 +37,7 @@ python3 -m venv venv
 . ./venv/bin/activate
 pip install -r requirements.txt
 
-./binding_generator/binding_generator.md
+./tools/binding_generator/binding_generator.md
 
 ```
 

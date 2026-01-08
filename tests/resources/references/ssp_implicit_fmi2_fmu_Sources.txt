@@ -63,7 +63,7 @@ offset  : null
 DisplayUnit  : {
 DisplayUnit { 
 name    : deg
-factor  : 57.295780
+factor  : 57.29577951308232
 offset  : null
 }
 }
@@ -207,9 +207,9 @@ Enumeration  : null
 }
 LogCategories             : null
 DefaultExperiment         : DefaultExperiment { 
-startTime  : 0.000000
-stopTime   : 10.000000
-tolerance  : 0.000100
+startTime  : 0
+stopTime   : 10
+tolerance  : 1e-04
 stepSize   : null
 }
 VendorAnnotations         : null
@@ -233,7 +233,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 5.000000
+start             : 5
 derivative        : null
 reinit            : null
 }
@@ -259,11 +259,11 @@ quantity          : null
 unit              : null
 displayUnit       : null
 relativeQuantity  : null
-min               : 0.000000
+min               : 0
 max               : null
 nominal           : null
 unbounded         : null
-start             : 5.000000
+start             : 5
 derivative        : null
 reinit            : null
 }
@@ -323,7 +323,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -353,7 +353,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -383,7 +383,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -443,7 +443,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -503,7 +503,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -533,7 +533,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -623,7 +623,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -653,7 +653,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -683,7 +683,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -743,7 +743,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -773,7 +773,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -803,7 +803,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 5.000000
+start             : 5
 derivative        : null
 reinit            : null
 }
@@ -829,11 +829,11 @@ quantity          : null
 unit              : null
 displayUnit       : null
 relativeQuantity  : null
-min               : 0.000000
+min               : 0
 max               : null
 nominal           : null
 unbounded         : null
-start             : 5.000000
+start             : 5
 derivative        : null
 reinit            : null
 }
@@ -893,7 +893,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -923,7 +923,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -1066,7 +1066,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -1096,7 +1096,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -1156,7 +1156,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }

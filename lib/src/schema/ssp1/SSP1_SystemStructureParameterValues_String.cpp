@@ -10,15 +10,14 @@
 
 namespace ssp4cpp::ssp1::ssv
 {
-    using namespace utils::str;
 
 
      // Real
     std::string Real::to_string(void) const
     {
         return "Real { \n"
-               "value  : " + to_str( value  ) + "\n" +
-               "unit   : " + to_str( unit   ) + "\n" +
+               "value  : " + utils::str::to_string( value  ) + "\n" +
+               "unit   : " + utils::str::to_string( unit   ) + "\n" +
                "}";
     }
 
@@ -26,7 +25,7 @@ namespace ssp4cpp::ssp1::ssv
     std::string Integer::to_string(void) const
     {
         return "Integer { \n"
-               "value  : " + to_str( value  ) + "\n" +
+               "value  : " + utils::str::to_string( value  ) + "\n" +
                "}";
     }
 
@@ -34,7 +33,7 @@ namespace ssp4cpp::ssp1::ssv
     std::string Boolean::to_string(void) const
     {
         return "Boolean { \n"
-               "value  : " + to_str( value  ) + "\n" +
+               "value  : " + utils::str::to_string( value  ) + "\n" +
                "}";
     }
 
@@ -42,7 +41,7 @@ namespace ssp4cpp::ssp1::ssv
     std::string String::to_string(void) const
     {
         return "String { \n"
-               "value  : " + to_str( value  ) + "\n" +
+               "value  : " + utils::str::to_string( value  ) + "\n" +
                "}";
     }
 
@@ -50,8 +49,8 @@ namespace ssp4cpp::ssp1::ssv
     std::string Enumeration::to_string(void) const
     {
         return "Enumeration { \n"
-               "value  : " + to_str( value  ) + "\n" +
-               "name   : " + to_str( name   ) + "\n" +
+               "value  : " + utils::str::to_string( value  ) + "\n" +
+               "name   : " + utils::str::to_string( name   ) + "\n" +
                "}";
     }
 
@@ -59,8 +58,8 @@ namespace ssp4cpp::ssp1::ssv
     std::string Binary::to_string(void) const
     {
         return "Binary { \n"
-               "value      : " + to_str( value      ) + "\n" +
-               "mime_type  : " + to_str( mime_type  ) + "\n" +
+               "value      : " + utils::str::to_string( value      ) + "\n" +
+               "mime_type  : " + utils::str::to_string( mime_type  ) + "\n" +
                "}";
     }
 
@@ -68,16 +67,16 @@ namespace ssp4cpp::ssp1::ssv
     std::string TParameter::to_string(void) const
     {
         return "TParameter { \n"
-               "id           : " + to_str( id           ) + "\n" +
-               "description  : " + to_str( description  ) + "\n" +
-               "name         : " + to_str( name         ) + "\n" +
-               "Real         : " + to_str( Real         ) + "\n" +
-               "Integer      : " + to_str( Integer      ) + "\n" +
-               "Boolean      : " + to_str( Boolean      ) + "\n" +
-               "String       : " + to_str( String       ) + "\n" +
-               "Enumeration  : " + to_str( Enumeration  ) + "\n" +
-               "Binary       : " + to_str( Binary       ) + "\n" +
-               "Annotations  : " + to_str( Annotations  ) + "\n" +
+               "id           : " + utils::str::to_string( id           ) + "\n" +
+               "description  : " + utils::str::to_string( description  ) + "\n" +
+               "name         : " + utils::str::to_string( name         ) + "\n" +
+               "Real         : " + utils::str::to_string( Real         ) + "\n" +
+               "Integer      : " + utils::str::to_string( Integer      ) + "\n" +
+               "Boolean      : " + utils::str::to_string( Boolean      ) + "\n" +
+               "String       : " + utils::str::to_string( String       ) + "\n" +
+               "Enumeration  : " + utils::str::to_string( Enumeration  ) + "\n" +
+               "Binary       : " + utils::str::to_string( Binary       ) + "\n" +
+               "Annotations  : " + utils::str::to_string( Annotations  ) + "\n" +
                "}";
     }
 
@@ -85,7 +84,7 @@ namespace ssp4cpp::ssp1::ssv
     std::string TParameters::to_string(void) const
     {
         return "TParameters { \n"
-               "Parameters  : " + to_str( Parameters  ) + "\n" +
+               "Parameters  : " + utils::str::to_string( Parameters  ) + "\n" +
                "}";
     }
 
@@ -93,20 +92,20 @@ namespace ssp4cpp::ssp1::ssv
     std::string ParameterSet::to_string(void) const
     {
         return "ParameterSet { \n"
-               "version                : " + to_str( version                ) + "\n" +
-               "name                   : " + to_str( name                   ) + "\n" +
-               "id                     : " + to_str( id                     ) + "\n" +
-               "description            : " + to_str( description            ) + "\n" +
-               "author                 : " + to_str( author                 ) + "\n" +
-               "fileversion            : " + to_str( fileversion            ) + "\n" +
-               "copyright              : " + to_str( copyright              ) + "\n" +
-               "license                : " + to_str( license                ) + "\n" +
-               "generationTool         : " + to_str( generationTool         ) + "\n" +
-               "generationDateAndTime  : " + to_str( generationDateAndTime  ) + "\n" +
-               "Parameters             : " + to_str( Parameters             ) + "\n" +
-               "Enumerations           : " + to_str( Enumerations           ) + "\n" +
-               "Units                  : " + to_str( Units                  ) + "\n" +
-               "Annotations            : " + to_str( Annotations            ) + "\n" +
+               "version                : " + utils::str::to_string( version                ) + "\n" +
+               "name                   : " + utils::str::to_string( name                   ) + "\n" +
+               "id                     : " + utils::str::to_string( id                     ) + "\n" +
+               "description            : " + utils::str::to_string( description            ) + "\n" +
+               "author                 : " + utils::str::to_string( author                 ) + "\n" +
+               "fileversion            : " + utils::str::to_string( fileversion            ) + "\n" +
+               "copyright              : " + utils::str::to_string( copyright              ) + "\n" +
+               "license                : " + utils::str::to_string( license                ) + "\n" +
+               "generationTool         : " + utils::str::to_string( generationTool         ) + "\n" +
+               "generationDateAndTime  : " + utils::str::to_string( generationDateAndTime  ) + "\n" +
+               "Parameters             : " + utils::str::to_string( Parameters             ) + "\n" +
+               "Enumerations           : " + utils::str::to_string( Enumerations           ) + "\n" +
+               "Units                  : " + utils::str::to_string( Units                  ) + "\n" +
+               "Annotations            : " + utils::str::to_string( Annotations            ) + "\n" +
                "}";
     }
 

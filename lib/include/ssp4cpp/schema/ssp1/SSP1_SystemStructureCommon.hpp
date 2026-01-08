@@ -28,7 +28,7 @@ namespace ssp4cpp::ssp1::ssc
         std::string type;
         std::optional<std::string> any;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TAnnotations : public IXmlNode
@@ -36,7 +36,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::vector<Annotation> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class LinearTransformation : public IXmlNode
@@ -45,7 +45,7 @@ namespace ssp4cpp::ssp1::ssc
         std::optional<double> factor;
         std::optional<double> offset;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class BooleanMapEntry : public IXmlNode
@@ -54,7 +54,7 @@ namespace ssp4cpp::ssp1::ssc
         bool source;
         bool target;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class BooleanMappingTransformation : public IXmlNode
@@ -62,7 +62,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::vector<ssc::BooleanMapEntry> MapEntrys;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class IntegerMapEntry : public IXmlNode
@@ -71,7 +71,7 @@ namespace ssp4cpp::ssp1::ssc
         int source;
         int target;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class IntegerMappingTransformation : public IXmlNode
@@ -79,7 +79,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::vector<ssc::IntegerMapEntry> MapEntrys;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class EnumerationMapEntry : public IXmlNode
@@ -88,7 +88,7 @@ namespace ssp4cpp::ssp1::ssc
         std::string source;
         std::string target;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class EnumerationMappingTransformation : public IXmlNode
@@ -96,7 +96,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::vector<ssc::EnumerationMapEntry> MapEntrys;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class Item : public IXmlNode
@@ -105,7 +105,7 @@ namespace ssp4cpp::ssp1::ssc
         std::string name;
         int value;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TEnumeration : public IXmlNode
@@ -117,7 +117,7 @@ namespace ssp4cpp::ssp1::ssc
         std::vector<ssc::Item> Item;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TEnumerations : public IXmlNode
@@ -125,7 +125,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::vector<ssc::TEnumeration> Enumerations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class BaseUnit : public IXmlNode
@@ -142,7 +142,7 @@ namespace ssp4cpp::ssp1::ssc
         std::optional<double> factor;
         std::optional<double> offset;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TUnit : public IXmlNode
@@ -154,7 +154,7 @@ namespace ssp4cpp::ssp1::ssc
         ssc::BaseUnit BaseUnit;
         std::optional<ssc::TAnnotations> Annotations;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class TUnits : public IXmlNode
@@ -162,7 +162,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::vector<ssc::TUnit> Units;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class GTypeReal : public IXmlNode
@@ -170,7 +170,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::optional<std::string> unit;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class GTypeInteger : public IXmlNode
@@ -178,7 +178,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class GTypeBoolean : public IXmlNode
@@ -186,7 +186,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class GTypeString : public IXmlNode
@@ -194,7 +194,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
 
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class GTypeEnumeration : public IXmlNode
@@ -202,7 +202,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::optional<std::string> name;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
     class GTypeBinary : public IXmlNode
@@ -210,7 +210,7 @@ namespace ssp4cpp::ssp1::ssc
     public:
         std::optional<std::string> mime_type;
 
-        std::string to_string(void) const;
+        std::string to_string(void) const override;
     };
 
 }

@@ -1123,9 +1123,9 @@ description  : Initialization with initial outputs (and steady state of the stat
 }
 LogCategories             : null
 DefaultExperiment         : DefaultExperiment { 
-startTime  : 0.000000
-stopTime   : 1.000000
-tolerance  : 0.000100
+startTime  : 0
+stopTime   : 1
+tolerance  : 1e-04
 stepSize   : null
 }
 VendorAnnotations         : null
@@ -1599,7 +1599,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 288.150000
+start             : 288.15
 derivative        : null
 reinit            : null
 }
@@ -1629,7 +1629,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 101300.000000
+start             : 101300
 derivative        : null
 reinit            : null
 }
@@ -1659,7 +1659,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.100000
+start             : 0.1
 derivative        : null
 reinit            : null
 }
@@ -1689,7 +1689,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 10.000000
+start             : 10
 derivative        : null
 reinit            : null
 }
@@ -1719,7 +1719,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -1749,7 +1749,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -1779,7 +1779,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -1809,7 +1809,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 313.150000
+start             : 313.15
 derivative        : null
 reinit            : null
 }
@@ -1839,7 +1839,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -2042,7 +2042,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -2245,7 +2245,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -2448,7 +2448,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -2651,7 +2651,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -2854,7 +2854,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -3057,7 +3057,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -3260,7 +3260,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : -1.000000
+start             : -1
 derivative        : null
 reinit            : null
 }
@@ -3442,7 +3442,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -3472,7 +3472,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -3502,7 +3502,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 9.810000
+start             : 9.81
 derivative        : null
 reinit            : null
 }
@@ -3532,7 +3532,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.001000
+start             : 0.001
 derivative        : null
 reinit            : null
 }
@@ -3562,7 +3562,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -3592,7 +3592,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 5.000000
+start             : 5
 derivative        : null
 reinit            : null
 }
@@ -3622,7 +3622,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 100000.000000
+start             : 1e+05
 derivative        : null
 reinit            : null
 }
@@ -3652,7 +3652,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 100.000000
+start             : 100
 derivative        : null
 reinit            : null
 }
@@ -3682,7 +3682,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.001000
+start             : 0.001
 derivative        : null
 reinit            : null
 }
@@ -3712,7 +3712,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.050000
+start             : 0.05
 derivative        : null
 reinit            : null
 }
@@ -3742,7 +3742,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 298.150000
+start             : 298.15
 derivative        : null
 reinit            : null
 }
@@ -4275,7 +4275,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.010000
+start             : 0.01
 derivative        : null
 reinit            : null
 }
@@ -4365,7 +4365,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -4395,7 +4395,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -4425,7 +4425,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000020
+start             : 2e-05
 derivative        : null
 reinit            : null
 }
@@ -4455,7 +4455,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1.000000
+start             : 1
 derivative        : null
 reinit            : null
 }
@@ -4508,7 +4508,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 273.150000
+start             : 273.15
 derivative        : null
 reinit            : null
 }
@@ -4538,7 +4538,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 373.150000
+start             : 373.15
 derivative        : null
 reinit            : null
 }
@@ -4568,7 +4568,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 300.000000
+start             : 300
 derivative        : null
 reinit            : null
 }
@@ -4598,7 +4598,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 293.000000
+start             : 293
 derivative        : null
 reinit            : null
 }
@@ -4628,7 +4628,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 10.000000
+start             : 10
 derivative        : null
 reinit            : null
 }
@@ -4658,7 +4658,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 1000.000000
+start             : 1000
 derivative        : null
 reinit            : null
 }
@@ -4688,7 +4688,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.001000
+start             : 0.001
 derivative        : null
 reinit            : null
 }
@@ -4718,7 +4718,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.100000
+start             : 0.1
 derivative        : null
 reinit            : null
 }
@@ -4778,7 +4778,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 100.000000
+start             : 100
 derivative        : null
 reinit            : null
 }
@@ -4838,7 +4838,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 288.000000
+start             : 288
 derivative        : null
 reinit            : null
 }
@@ -4928,7 +4928,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -5258,7 +5258,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -6587,7 +6587,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -6617,7 +6617,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -6647,7 +6647,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -7097,7 +7097,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 100000.000000
+start             : 1e+05
 derivative        : null
 reinit            : null
 }
@@ -7187,7 +7187,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : 203
 reinit            : null
 }
@@ -7247,7 +7247,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -7586,7 +7586,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -7616,7 +7616,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -7646,7 +7646,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -8096,7 +8096,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 100000.000000
+start             : 1e+05
 derivative        : null
 reinit            : null
 }
@@ -8186,7 +8186,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : 237
 reinit            : null
 }
@@ -8246,7 +8246,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -8569,7 +8569,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -8629,7 +8629,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -8779,7 +8779,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -8839,7 +8839,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -8959,7 +8959,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -9019,7 +9019,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -9079,7 +9079,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -9139,7 +9139,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -9169,7 +9169,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -9199,7 +9199,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -9229,7 +9229,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }
@@ -9319,7 +9319,7 @@ min               : null
 max               : null
 nominal           : null
 unbounded         : null
-start             : 0.000000
+start             : 0
 derivative        : null
 reinit            : null
 }

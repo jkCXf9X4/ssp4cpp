@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
 
 namespace ssp4cpp
 {
@@ -37,10 +38,10 @@ namespace ssp4cpp
          */
         Ssp(const std::filesystem::path &file, std::string ssd_name = "SystemStructure.ssd");
 
-        virtual void print(std::ostream &os) const
+        std::string to_string() const override
         {
-
-            os << "Ssp {"
+            std::ostringstream oss;
+            oss << "Ssp {"
                << "\noriginal_file: " << original_file
                << "\ndir: " << dir
                << "\nssd: " << ssd->name
@@ -48,9 +49,10 @@ namespace ssp4cpp
 
             for (auto &[name, fmu] : fmus)
             {
-                os << "FMU: " << name << "\n";
+                oss << "FMU: " << name << "\n";
             }
-            os << "\n }\n";
+            oss << "\n }\n";
+            return oss.str();
         }
     };
 
