@@ -47,6 +47,9 @@ target_link_libraries(ssp4cpp PRIVATE libzip::zip)
 
 target_link_libraries(ssp4cpp PUBLIC ssp4cpp::3rd::cutecpp)
 
+find_package(quill CONFIG REQUIRED)
+target_link_libraries(ssp4cpp PRIVATE quill::quill)
+
 set(SSP4CPP_CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/ssp4cpp")
 
 install(TARGETS ssp4cpp
