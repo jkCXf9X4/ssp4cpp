@@ -46,8 +46,6 @@ message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}\n")
 message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}\n")
 message("CMAKE_SHARED_LINKER_FLAGS: ${CMAKE_SHARED_LINKER_FLAGS}\n")
 
-add_subdirectory(3rdParty/cutecpp)
-add_library(ssp4cpp::3rd::cutecpp ALIAS cutecpp)
 
 add_subdirectory(lib)
 

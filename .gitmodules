@@ -7,9 +7,6 @@
 [submodule "3rdParty/FMI2"]
 	path = 3rdParty/FMI2
 	url = https://github.com/modelica/fmi-standard
-[submodule "3rdParty/cutecpp"]
-	path = 3rdParty/cutecpp
-	url = https://github.com/jkCXf9X4/cutecpp
 [submodule "3rdParty/SSP2"]
 	path = 3rdParty/SSP2
 	url = git@github.com:modelica/ssp-standard.git

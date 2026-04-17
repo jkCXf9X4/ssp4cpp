@@ -4,6 +4,6 @@ include(CMakeFindDependencyMacro)
 
 find_dependency(pugixml CONFIG)
 find_dependency(libzip CONFIG)
-find_dependency(cutecpp CONFIG)
+find_dependency(quill CONFIG)
 
 include("${CMAKE_CURRENT_LIST_DIR}/ssp4cppTargets.cmake")

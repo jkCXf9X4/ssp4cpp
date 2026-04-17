@@ -30,7 +30,7 @@ target_include_directories(ssp4cpp
 #if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.16")
 #  target_precompile_headers(ssp4cpp PRIVATE
 #    <format>
-#    <cutecpp/log.hpp>
+#    <ssp4cpp/utils/log.hpp>
 #    <${CMAKE_CURRENT_LIST_DIR}/include_private/utils/xml_deserialize.hpp>
 #    <${CMAKE_CURRENT_LIST_DIR}/include/ssp4cpp/utils/interface.hpp>
 #  )
@@ -45,10 +45,8 @@ target_link_libraries(ssp4cpp PRIVATE pugixml::static pugixml::pugixml)
 find_package(libzip CONFIG REQUIRED)
 target_link_libraries(ssp4cpp PRIVATE libzip::zip)
 
-target_link_libraries(ssp4cpp PUBLIC ssp4cpp::3rd::cutecpp)
-
 find_package(quill CONFIG REQUIRED)
-target_link_libraries(ssp4cpp PRIVATE quill::quill)
+target_link_libraries(ssp4cpp PUBLIC quill::quill)
 
 set(SSP4CPP_CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/ssp4cpp")
 
