@@ -5,12 +5,14 @@
 #include "quill/Frontend.h"
 #include "quill/LogMacros.h"
 #include "quill/Logger.h"
+#include "quill/SimpleSetup.h"
 
 #include "quill/sinks/ConsoleSink.h"
 #include "quill/sinks/FileSink.h"
 #include "quill/sinks/JsonSink.h"
 
 #include <filesystem>
+#include <algorithm>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -40,6 +42,15 @@ namespace ssp4cpp::utils::log
 
     static Logging log_common{};
 
+    inline void add_default_sink(std::shared_ptr<quill::Sink> const& sink)
+    {
+        auto it = std::find(log_common.default_sinks.begin(), log_common.default_sinks.end(), sink);
+        if (it == log_common.default_sinks.end())
+        {
+            log_common.default_sinks.push_back(sink);
+        }
+    }
+
     inline void init_logging()
     {
         quill::Backend::start();
@@ -51,7 +62,7 @@ namespace ssp4cpp::utils::log
             quill::Frontend::create_or_get_sink<quill::ConsoleSink>("console");
         console_sink->set_log_level_filter(level);
 
-        log_common.default_sinks.push_back(console_sink);
+        add_default_sink(console_sink);
     }
 
     inline void add_file_sink(std::filesystem::path const &log_file, quill::LogLevel level)
@@ -68,7 +79,7 @@ namespace ssp4cpp::utils::log
                 }());
 
         file_sink->set_log_level_filter(level);
-        log_common.default_sinks.push_back(file_sink);
+        add_default_sink(file_sink);
     }
 
     inline void add_json_sink(std::filesystem::path const &log_file, quill::LogLevel level)
@@ -85,7 +96,7 @@ namespace ssp4cpp::utils::log
                 }());
 
         json_sink->set_log_level_filter(level);
-        log_common.default_sinks.push_back(json_sink);
+        add_default_sink(json_sink);
     }
 
     inline quill::Logger *make_logger(std::string const &name)
@@ -95,7 +106,9 @@ namespace ssp4cpp::utils::log
             throw std::runtime_error("Tried to create logger without sinks.");
         }
 
-        return quill::Frontend::create_or_get_logger(name, log_common.default_sinks);
+        auto logger = quill::Frontend::create_or_get_logger(name, log_common.default_sinks);
+        logger->set_log_level(quill::LogLevel::TraceL1);
+        return logger;
     }
 
     inline quill::Logger *make_logger(std::string const &name, quill::LogLevel level)
@@ -107,8 +120,6 @@ namespace ssp4cpp::utils::log
 
     inline quill::Logger *simple_logger()
     {
-        init_logging();
-        add_console(quill::LogLevel::TraceL3);
-        return make_logger("simple");
+        return quill::simple_logger();
     }
 }

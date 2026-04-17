@@ -14,12 +14,18 @@ namespace ssp4cpp::ssp1::ssm
 {
     using namespace pugi;
 
-    auto log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssm", quill::LogLevel::TraceL1);
+    quill::Logger* log()
+    {
+        // Cache this logger locally so we avoid eager header initialization.
+        static quill::Logger* logger =
+            ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssm", quill::LogLevel::TraceL1);
+        return logger;
+    }
 
 
     void from_xml(const xml_node &node, TMappingEntry &obj)
     {
-        LOG_TRACE_L1(log, "Parsing TMappingEntry");
+        LOG_TRACE_L1(log(), "Parsing TMappingEntry");
 
         utils::xml::get_optional_attribute(node, obj.id                                , "id"); // string
         utils::xml::get_optional_attribute(node, obj.description                       , "description"); // string
@@ -32,13 +38,13 @@ namespace ssp4cpp::ssp1::ssm
         utils::xml::get_optional_class(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation"); // ssc::EnumerationMappingTransformation
         utils::xml::get_optional_class(node, obj.Annotations                       , "ssc:Annotations"); // ssc::TAnnotations
 
-        LOG_TRACE_L1(log, "Completed TMappingEntry");
+        LOG_TRACE_L1(log(), "Completed TMappingEntry");
     }
 
 
     void from_xml(const xml_node &node, ParameterMapping &obj)
     {
-        LOG_TRACE_L1(log, "Parsing ParameterMapping");
+        LOG_TRACE_L1(log(), "Parsing ParameterMapping");
 
         utils::xml::get_attribute(node, obj.version                , "version"); // string
         utils::xml::get_optional_attribute(node, obj.id                     , "id"); // string
@@ -52,7 +58,7 @@ namespace ssp4cpp::ssp1::ssm
         utils::xml::get_vector(node, obj.MappingEntry           , "ssm:MappingEntry"); // ssm::TMappingEntry
         utils::xml::get_optional_class(node, obj.Annotations            , "ssc:Annotations"); // ssc::TAnnotations
 
-        LOG_TRACE_L1(log, "Completed ParameterMapping");
+        LOG_TRACE_L1(log(), "Completed ParameterMapping");
     }
 
 }

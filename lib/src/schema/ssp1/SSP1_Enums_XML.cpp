@@ -14,7 +14,13 @@ namespace ssp4cpp::ssp1::ssd
 {
     using namespace pugi;
 
-    auto log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssd", quill::LogLevel::TraceL1);
+    quill::Logger* log()
+    {
+        // Cache this logger locally so we avoid eager header initialization.
+        static quill::Logger* logger =
+            ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssd", quill::LogLevel::TraceL1);
+        return logger;
+    }
 
 
 }
