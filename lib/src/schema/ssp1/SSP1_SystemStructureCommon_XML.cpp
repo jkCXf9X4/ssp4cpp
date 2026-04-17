@@ -18,7 +18,7 @@ namespace ssp4cpp::ssp1::ssc
     {
         // Cache this logger locally so we avoid eager header initialization.
         static ssp4cpp::utils::log::Logger* logger =
-            ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssc", quill::LogLevel::TraceL1);
+            ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssc");
         return logger;
     }
 

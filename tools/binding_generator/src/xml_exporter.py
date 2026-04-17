@@ -154,7 +154,7 @@ namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace pugi;
 
-{self.indent}auto log = ssp4cpp::utils::log::make_logger("{self.standard.long_namespece.replace("::", ".")}", quill::LogLevel::TraceL1);
+{self.indent}auto log = ssp4cpp::utils::log::make_logger("{self.standard.long_namespece.replace("::", ".")}");
 
 {parsers}
 }}

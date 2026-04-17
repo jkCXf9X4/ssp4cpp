@@ -149,7 +149,7 @@ namespace ssp4cpp::utils::log
         }
 
         auto logger = Frontend::create_or_get_logger(name, log_common.default_sinks);
-        logger->set_log_level(quill::LogLevel::TraceL1);
+        logger->set_log_level(quill::LogLevel::Debug);
         return logger;
     }
 

@@ -17,7 +17,7 @@ namespace ssp4cpp
     
     Fmu::Fmu(const std::filesystem::path &file) : Archive(file, "fmi_")
     {
-        log = ssp4cpp::utils::log::make_logger("ssp4cpp.fmu." + file.stem().string(), quill::LogLevel::TraceL1);
+        log = ssp4cpp::utils::log::make_logger("ssp4cpp.fmu." + file.stem().string());
 
         auto path = (dir / "modelDescription.xml").string();
 

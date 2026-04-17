@@ -13,7 +13,7 @@ namespace ssp4cpp
     Archive::Archive(const std::filesystem::path &file, const std::string &tmp_prefix)
         : original_file(file)
     {
-        log = ssp4cpp::utils::log::make_logger("ssp4cpp.archive." + file.stem().string(), quill::LogLevel::TraceL1);
+        log = ssp4cpp::utils::log::make_logger("ssp4cpp.archive." + file.stem().string());
 
         LOG_DEBUG(log, "[{}]Importing archive: {}", __func__, file.string());
 

@@ -89,7 +89,7 @@ namespace ssp4cpp
         
     Ssp::Ssp(const std::filesystem::path &file, std::string ssd_name) : Archive(file, "ssp_")
     {
-        log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp." + file.stem().string(), quill::LogLevel::TraceL1);
+        log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp." + file.stem().string());
 
         this->ssd = utils::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / ssd_name).string(), "ssd:SystemStructureDescription");
         LOG_INFO(log, "SSP Imported, name: {} ssd: {}", this->ssd->name, ssd_name);
