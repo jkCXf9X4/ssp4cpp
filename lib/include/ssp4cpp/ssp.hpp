@@ -33,7 +33,7 @@ namespace ssp4cpp
 
         std::vector<ParameterBindings> parameter_bindings;
 
-        quill::Logger* log = nullptr;
+        ssp4cpp::utils::log::Logger* log = nullptr;
 
         /**
          * @brief Construct an Ssp from a file path.

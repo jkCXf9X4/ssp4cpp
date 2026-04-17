@@ -16,7 +16,7 @@ namespace ssp4cpp
     class Archive : public utils::interfaces::IWritable
     {
     public:
-        quill::Logger* log = nullptr;
+        ssp4cpp::utils::log::Logger* log = nullptr;
 
         bool using_tmp_dir = false;
         

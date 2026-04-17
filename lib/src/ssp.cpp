@@ -15,7 +15,7 @@
 namespace ssp4cpp
 {
 
-    static std::vector<ParameterBindings> get_parameter_bindings(std::filesystem::path &dir, ssp1::ssd::SystemStructureDescription &ssd, quill::Logger* log)
+    static std::vector<ParameterBindings> get_parameter_bindings(std::filesystem::path &dir, ssp1::ssd::SystemStructureDescription &ssd, ssp4cpp::utils::log::Logger* log)
     {
         std::vector<ParameterBindings> bindings;
         if (ssd.System.ParameterBindings.has_value())

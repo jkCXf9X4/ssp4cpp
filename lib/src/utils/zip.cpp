@@ -45,7 +45,7 @@ namespace ssp4cpp::utils::zip_ns
         return result;
     }
 
-    bool unzip(fs::path file, const fs::path tmp_path, quill::Logger* log)
+    bool unzip(fs::path file, const fs::path tmp_path, ssp4cpp::utils::log::Logger* log)
     {
         LOG_DEBUG(log, "[unzip] File {}", file.string());
 
@@ -115,7 +115,7 @@ namespace ssp4cpp::utils::zip_ns
         return true;
     }
 
-    fs::path create_temp_dir(const std::string fileName, const std::string pre, quill::Logger* log)
+    fs::path create_temp_dir(const std::string fileName, const std::string pre, ssp4cpp::utils::log::Logger* log)
     {
         auto temp_dir_base = fs::temp_directory_path();
         auto unique_id = random_generator();
@@ -134,7 +134,7 @@ namespace ssp4cpp::utils::zip_ns
         return temp_dir;
     }
 
-    fs::path unzip_to_temp_dir(const std::string fileName, std::string pre, quill::Logger* log)
+    fs::path unzip_to_temp_dir(const std::string fileName, std::string pre, ssp4cpp::utils::log::Logger* log)
     {
         auto file = fs::path(fileName);
         if (!fs::exists(file))

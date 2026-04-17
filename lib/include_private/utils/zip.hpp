@@ -16,5 +16,5 @@ namespace ssp4cpp::utils::zip_ns
      * @param pre Prefix used when creating the temporary directory.
      * @return Path to the created directory containing the extracted files.
      */
-    fs::path unzip_to_temp_dir(const std::string fileName, std::string pre, quill::Logger* log);
+    fs::path unzip_to_temp_dir(const std::string fileName, std::string pre, ssp4cpp::utils::log::Logger* log);
 }
