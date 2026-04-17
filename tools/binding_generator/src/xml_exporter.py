@@ -90,11 +90,11 @@ class NodeXmlExporter:
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
 {{
-    log(ext_trace)("Parsing {self.class_node.name}");
+    LOG_TRACE_L1(log, "Parsing {self.class_node.name}");
 
 {variables}
 
-    log(ext_trace)("Completed {self.class_node.name}");
+    LOG_TRACE_L1(log, "Completed {self.class_node.name}");
 }}
 """
         return template
@@ -148,13 +148,13 @@ namespace {self.standard.long_namespece}
 
 #include "xml_deserialize.hpp"
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace pugi;
 
-{self.indent}auto log = Logger("{self.standard.long_namespece.replace("::", ".")}", LogLevel::info);
+{self.indent}auto log = ssp4cpp::utils::log::make_logger("{self.standard.long_namespece.replace("::", ".")}");
 
 {parsers}
 }}

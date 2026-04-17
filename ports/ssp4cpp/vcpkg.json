@@ -4,7 +4,7 @@
   "description": "C++ utilities for working with SSP archives and schema bindings.",
   "license": "MIT",
   "dependencies": [
-    "cutecpp",
+    "quill",
     "libzip",
     "pugixml",
     {

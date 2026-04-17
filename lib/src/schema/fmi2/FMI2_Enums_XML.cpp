@@ -8,13 +8,19 @@
 
 #include "xml_deserialize.hpp"
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 namespace ssp4cpp::fmi2::md
 {
     using namespace pugi;
 
-    auto log = Logger("ssp4cpp.fmi2.md", LogLevel::info);
+    ssp4cpp::utils::log::Logger* log()
+    {
+        // Cache this logger locally so we avoid eager header initialization.
+        static ssp4cpp::utils::log::Logger* logger =
+            ssp4cpp::utils::log::make_logger("ssp4cpp.fmi2.md");
+        return logger;
+    }
 
 
 }

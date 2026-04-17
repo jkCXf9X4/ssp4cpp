@@ -15,12 +15,8 @@
 namespace ssp4cpp
 {
 
-
-    static Logger static_log = Logger("ssp4cpp.ssp", LogLevel::info);
-
-    static std::vector<ParameterBindings> get_parameter_bindings(std::filesystem::path &dir, ssp1::ssd::SystemStructureDescription &ssd)
+    static std::vector<ParameterBindings> get_parameter_bindings(std::filesystem::path &dir, ssp1::ssd::SystemStructureDescription &ssd, ssp4cpp::utils::log::Logger* log)
     {
-        static_log(trace)("[{}] Init", __func__);
         std::vector<ParameterBindings> bindings;
         if (ssd.System.ParameterBindings.has_value())
         {
@@ -29,14 +25,14 @@ namespace ssp4cpp
                 ParameterBindings b;
                 if (binding.source.has_value())
                 {
-                    static_log(debug)("[{}] Parsing SSV {}", __func__, binding.source.value_or(""));
+                    LOG_DEBUG(log, "[{}] Parsing SSV {}", __func__, binding.source.value_or(""));
                     b.ssv = utils::xml::parse_file<ssp1::ssv::ParameterSet>((dir / binding.source.value()).string(), "ssv:ParameterSet");
 
                     if (binding.ParameterMapping.has_value() && binding.ParameterMapping.value().source.has_value())
                     {
                         auto pm = binding.ParameterMapping.value();
                         b.ssm = utils::xml::parse_file<ssp1::ssm::ParameterMapping>((dir / pm.source.value()).string(), "ssm:ParameterMapping");
-                        static_log(debug)("[{}] Parsing SSM {}", __func__, pm.source.value_or(""));
+                        LOG_DEBUG(log, "[{}] Parsing SSM {}", __func__, pm.source.value_or(""));
                     }
                     bindings.push_back(std::move(b));
                 }
@@ -44,7 +40,7 @@ namespace ssp4cpp
         }
         else
         {
-            static_log(trace)("[{}] No bindings found", __func__);
+            LOG_DEBUG(log, "[{}] No bindings found", __func__);
         }
         return bindings;
     }
@@ -76,16 +72,16 @@ namespace ssp4cpp
         for (auto &resource : resources)
         {
             auto name = resource->name.value_or("null");
-            static_log(trace)("Resource {}", name);
+            LOG_TRACE_L1(ssp->log, "Resource {}", name);
 
             auto fmu = std::make_unique<ssp4cpp::Fmu>(ssp->dir / resource->source);
             items[name] = std::move(fmu);
         }
 
-        static_log(trace)("FMUs");
+        LOG_TRACE_L1(ssp->log, "FMUs");
         for (auto &[name, fmu] : items)
         {
-            static_log(trace)("{} : {}", name, fmu->to_string());
+            LOG_TRACE_L1(ssp->log, "{} : {}", name, fmu->to_string());
         }
         return items;
     }
@@ -93,12 +89,12 @@ namespace ssp4cpp
         
     Ssp::Ssp(const std::filesystem::path &file, std::string ssd_name) : Archive(file, "ssp_")
     {
-        log = Logger("ssp4cpp.ssp", LogLevel::debug);
-        
+        log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp." + file.stem().string());
+
         this->ssd = utils::xml::parse_file<ssp1::ssd::SystemStructureDescription>((dir / ssd_name).string(), "ssd:SystemStructureDescription");
-        log(info)("SSP Imported, name: {} ssd: {}", this->ssd->name, ssd_name);
+        LOG_INFO(log, "SSP Imported, name: {} ssd: {}", this->ssd->name, ssd_name);
         
         this->fmus = create_fmu_map(this);
-        this->parameter_bindings = get_parameter_bindings(this->dir, *this->ssd);
+        this->parameter_bindings = get_parameter_bindings(this->dir, *this->ssd, this->log);
     }
 }

@@ -2,7 +2,7 @@
 
 #include "ssp4cpp/ssp.hpp"
 #include "ssp4cpp/fmu.hpp"
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -28,22 +28,22 @@ void save_string(const std::string &filename, const std::string &content)
 TEST_CASE("SSP Import SSP", "[SSP]")
 {
 
-    auto log = Logger("TEST::SSP_Import", LogLevel::debug);
-    log(debug)("Opening ssp");
+    auto log = ssp4cpp::utils::log::simple_logger();
+    LOG_DEBUG(log, "Opening ssp");
 
     auto ssp = ssp4cpp::Ssp("./tests/resources/embrace_scen");
 
-    log(debug)("Imported ssp! \n");
-    log(debug)("{}", ssp.to_string());
+    LOG_DEBUG(log, "Imported ssp! \n");
+    LOG_DEBUG(log, "{}", ssp.to_string());
 
-    log(debug)("Parsing ssp to external file");
+    LOG_DEBUG(log, "Parsing ssp to external file");
     save_string("./tests/resources/references/embrace_scen_ssd.txt", ssp.ssd->to_string());
 
     REQUIRE(ssp.fmus.size() == 6);
 
     for (auto &[name, fmu] : ssp.fmus)
     {
-        log(debug)("Resource: {}", name);
+        LOG_DEBUG(log, "Resource: {}", name);
 
         // If these changes, evaluate if correct
         save_string("./tests/resources/references/embrace_scen_fmu_" + name + ".txt", fmu->md->to_string());
@@ -69,22 +69,22 @@ TEST_CASE("SSP Import SSP", "[SSP]")
 TEST_CASE("SSP Import delay Folder", "[SSP]")
 {
 
-    auto log = Logger("TEST::SSP_Import of delay ssp, folder", LogLevel::debug);
-    log(debug)("Opening ssp");
+    auto log = ssp4cpp::utils::log::simple_logger();
+    LOG_DEBUG(log, "Opening ssp");
 
     auto ssp = ssp4cpp::Ssp("./tests/resources/ssp_implicit_fmi2");
 
-    log(debug)("Imported ssp! \n");
-    log(debug)("{}", ssp.to_string());
+    LOG_DEBUG(log, "Imported ssp! \n");
+    LOG_DEBUG(log, "{}", ssp.to_string());
 
-    log(debug)("Parsing ssp to external file");
+    LOG_DEBUG(log, "Parsing ssp to external file");
     save_string("./tests/resources/references/ssp_implicit_fmi2_ssd.txt", ssp.ssd->to_string());
 
     REQUIRE(ssp.fmus.size() == 6);
 
     for (auto &[name, fmu] : ssp.fmus)
     {
-        log(debug)("Resource: {}", name);
+        LOG_DEBUG(log, "Resource: {}", name);
 
         // If these changes, evaluate if correct
         save_string("./tests/resources/references/ssp_implicit_fmi2_fmu_" + name + ".txt", fmu->md->to_string());

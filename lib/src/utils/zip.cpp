@@ -15,7 +15,7 @@
 #include <chrono>
 #include <thread>
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 #include "zip.hpp"
 #include <sys/stat.h>
@@ -25,8 +25,6 @@
 namespace ssp4cpp::utils::zip_ns
 {
     namespace fs = std::filesystem;
-
-    Logger log = Logger("ssp4cpp.common.zip", LogLevel::info);
 
     std::string random_generator(size_t length = 16)
     {
@@ -47,9 +45,9 @@ namespace ssp4cpp::utils::zip_ns
         return result;
     }
 
-    bool unzip(fs::path file, const fs::path tmp_path)
+    bool unzip(fs::path file, const fs::path tmp_path, ssp4cpp::utils::log::Logger* log)
     {
-        log(trace)("[unzip] File {}", file.string());
+        LOG_DEBUG(log, "[unzip] File {}", file.string());
 
         int *err = nullptr;
         zip *za = zip_open(absolute(file).string().c_str(), 0, err);
@@ -88,7 +86,7 @@ namespace ssp4cpp::utils::zip_ns
                     zf = zip_fopen_index(za, i, 0);
 
                     std::ofstream file_;
-                    log(trace)("[unzip] Newfile {}", newFile.string());
+                    LOG_TRACE_L1(log, "[unzip] Newfile {}", newFile.string());
 
                     file_.open(newFile, std::ios::out | std::ios::binary);
 
@@ -112,12 +110,12 @@ namespace ssp4cpp::utils::zip_ns
         }
         zip_close(za);
 
-        log(trace)("[unzip] Completed {}", file.string());
+        LOG_DEBUG(log, "[unzip] Completed {}", file.string());
 
         return true;
     }
 
-    fs::path create_temp_dir(const std::string fileName, const std::string pre)
+    fs::path create_temp_dir(const std::string fileName, const std::string pre, ssp4cpp::utils::log::Logger* log)
     {
         auto temp_dir_base = fs::temp_directory_path();
         auto unique_id = random_generator();
@@ -126,7 +124,7 @@ namespace ssp4cpp::utils::zip_ns
 
         if (fs::create_directory(temp_dir))
         {
-            log(debug)("[create_temp_dir]Temp dir {}", temp_dir.string()); 
+            LOG_DEBUG(log, "[create_temp_dir]Temp dir {}", temp_dir.string()); 
         }
         else
         {
@@ -136,7 +134,7 @@ namespace ssp4cpp::utils::zip_ns
         return temp_dir;
     }
 
-    fs::path unzip_to_temp_dir(const std::string fileName, std::string pre)
+    fs::path unzip_to_temp_dir(const std::string fileName, std::string pre, ssp4cpp::utils::log::Logger* log)
     {
         auto file = fs::path(fileName);
         if (!fs::exists(file))
@@ -144,14 +142,14 @@ namespace ssp4cpp::utils::zip_ns
             throw std::runtime_error("File does not exist: " + fileName);
         }
 
-        auto temp_dir = create_temp_dir(fileName, "ssp4cpp_" + pre);
+        auto temp_dir = create_temp_dir(fileName, "ssp4cpp_" + pre, log);
 
         if (!fs::exists(temp_dir))
         {
             throw std::runtime_error("Failed to create temp dir: " + temp_dir.string());
         }
 
-        unzip(file, temp_dir);
+        unzip(file, temp_dir, log);
 
         return temp_dir;
     }
