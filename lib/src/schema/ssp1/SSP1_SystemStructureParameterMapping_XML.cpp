@@ -8,18 +8,18 @@
 
 #include "xml_deserialize.hpp"
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 namespace ssp4cpp::ssp1::ssm
 {
     using namespace pugi;
 
-    auto log = Logger("ssp4cpp.ssp1.ssm", LogLevel::info);
+    auto log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssm", quill::LogLevel::TraceL1);
 
 
     void from_xml(const xml_node &node, TMappingEntry &obj)
     {
-        log(ext_trace)("Parsing TMappingEntry");
+        LOG_TRACE_L1(log, "Parsing TMappingEntry");
 
         utils::xml::get_optional_attribute(node, obj.id                                , "id"); // string
         utils::xml::get_optional_attribute(node, obj.description                       , "description"); // string
@@ -32,13 +32,13 @@ namespace ssp4cpp::ssp1::ssm
         utils::xml::get_optional_class(node, obj.EnumerationMappingTransformation  , "ssc:EnumerationMappingTransformation"); // ssc::EnumerationMappingTransformation
         utils::xml::get_optional_class(node, obj.Annotations                       , "ssc:Annotations"); // ssc::TAnnotations
 
-        log(ext_trace)("Completed TMappingEntry");
+        LOG_TRACE_L1(log, "Completed TMappingEntry");
     }
 
 
     void from_xml(const xml_node &node, ParameterMapping &obj)
     {
-        log(ext_trace)("Parsing ParameterMapping");
+        LOG_TRACE_L1(log, "Parsing ParameterMapping");
 
         utils::xml::get_attribute(node, obj.version                , "version"); // string
         utils::xml::get_optional_attribute(node, obj.id                     , "id"); // string
@@ -52,7 +52,7 @@ namespace ssp4cpp::ssp1::ssm
         utils::xml::get_vector(node, obj.MappingEntry           , "ssm:MappingEntry"); // ssm::TMappingEntry
         utils::xml::get_optional_class(node, obj.Annotations            , "ssc:Annotations"); // ssc::TAnnotations
 
-        log(ext_trace)("Completed ParameterMapping");
+        LOG_TRACE_L1(log, "Completed ParameterMapping");
     }
 
 }

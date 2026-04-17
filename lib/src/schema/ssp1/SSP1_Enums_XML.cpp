@@ -8,13 +8,13 @@
 
 #include "xml_deserialize.hpp"
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 namespace ssp4cpp::ssp1::ssd
 {
     using namespace pugi;
 
-    auto log = Logger("ssp4cpp.ssp1.ssd", LogLevel::info);
+    auto log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssd", quill::LogLevel::TraceL1);
 
 
 }

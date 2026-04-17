@@ -8,81 +8,81 @@
 
 #include "xml_deserialize.hpp"
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 namespace ssp4cpp::ssp1::ssv
 {
     using namespace pugi;
 
-    auto log = Logger("ssp4cpp.ssp1.ssv", LogLevel::info);
+    auto log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssv", quill::LogLevel::TraceL1);
 
 
     void from_xml(const xml_node &node, Real &obj)
     {
-        log(ext_trace)("Parsing Real");
+        LOG_TRACE_L1(log, "Parsing Real");
 
         utils::xml::get_attribute(node, obj.value  , "value"); // double
         utils::xml::get_optional_attribute(node, obj.unit   , "unit"); // string
 
-        log(ext_trace)("Completed Real");
+        LOG_TRACE_L1(log, "Completed Real");
     }
 
 
     void from_xml(const xml_node &node, Integer &obj)
     {
-        log(ext_trace)("Parsing Integer");
+        LOG_TRACE_L1(log, "Parsing Integer");
 
         utils::xml::get_attribute(node, obj.value  , "value"); // int
 
-        log(ext_trace)("Completed Integer");
+        LOG_TRACE_L1(log, "Completed Integer");
     }
 
 
     void from_xml(const xml_node &node, Boolean &obj)
     {
-        log(ext_trace)("Parsing Boolean");
+        LOG_TRACE_L1(log, "Parsing Boolean");
 
         utils::xml::get_attribute(node, obj.value  , "value"); // bool
 
-        log(ext_trace)("Completed Boolean");
+        LOG_TRACE_L1(log, "Completed Boolean");
     }
 
 
     void from_xml(const xml_node &node, String &obj)
     {
-        log(ext_trace)("Parsing String");
+        LOG_TRACE_L1(log, "Parsing String");
 
         utils::xml::get_attribute(node, obj.value  , "value"); // string
 
-        log(ext_trace)("Completed String");
+        LOG_TRACE_L1(log, "Completed String");
     }
 
 
     void from_xml(const xml_node &node, Enumeration &obj)
     {
-        log(ext_trace)("Parsing Enumeration");
+        LOG_TRACE_L1(log, "Parsing Enumeration");
 
         utils::xml::get_attribute(node, obj.value  , "value"); // string
         utils::xml::get_optional_attribute(node, obj.name   , "name"); // string
 
-        log(ext_trace)("Completed Enumeration");
+        LOG_TRACE_L1(log, "Completed Enumeration");
     }
 
 
     void from_xml(const xml_node &node, Binary &obj)
     {
-        log(ext_trace)("Parsing Binary");
+        LOG_TRACE_L1(log, "Parsing Binary");
 
         utils::xml::get_attribute(node, obj.value      , "value"); // string
         utils::xml::get_optional_attribute(node, obj.mime_type  , "mime-type"); // string
 
-        log(ext_trace)("Completed Binary");
+        LOG_TRACE_L1(log, "Completed Binary");
     }
 
 
     void from_xml(const xml_node &node, TParameter &obj)
     {
-        log(ext_trace)("Parsing TParameter");
+        LOG_TRACE_L1(log, "Parsing TParameter");
 
         utils::xml::get_optional_attribute(node, obj.id           , "id"); // string
         utils::xml::get_optional_attribute(node, obj.description  , "description"); // string
@@ -95,23 +95,23 @@ namespace ssp4cpp::ssp1::ssv
         utils::xml::get_optional_class(node, obj.Binary       , "ssv:Binary"); // ssv::Binary
         utils::xml::get_optional_class(node, obj.Annotations  , "ssc:Annotations"); // ssc::TAnnotations
 
-        log(ext_trace)("Completed TParameter");
+        LOG_TRACE_L1(log, "Completed TParameter");
     }
 
 
     void from_xml(const xml_node &node, TParameters &obj)
     {
-        log(ext_trace)("Parsing TParameters");
+        LOG_TRACE_L1(log, "Parsing TParameters");
 
         utils::xml::get_vector(node, obj.Parameters  , "ssv:Parameter"); // ssv::TParameter
 
-        log(ext_trace)("Completed TParameters");
+        LOG_TRACE_L1(log, "Completed TParameters");
     }
 
 
     void from_xml(const xml_node &node, ParameterSet &obj)
     {
-        log(ext_trace)("Parsing ParameterSet");
+        LOG_TRACE_L1(log, "Parsing ParameterSet");
 
         utils::xml::get_optional_attribute(node, obj.version                , "version"); // string
         utils::xml::get_attribute(node, obj.name                   , "name"); // string
@@ -128,7 +128,7 @@ namespace ssp4cpp::ssp1::ssv
         utils::xml::get_optional_class(node, obj.Units                  , "Units"); // ssc::TUnits
         utils::xml::get_optional_class(node, obj.Annotations            , "ssc:Annotations"); // ssc::TAnnotations
 
-        log(ext_trace)("Completed ParameterSet");
+        LOG_TRACE_L1(log, "Completed ParameterSet");
     }
 
 }

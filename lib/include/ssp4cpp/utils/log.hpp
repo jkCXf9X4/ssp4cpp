@@ -104,4 +104,11 @@ namespace ssp4cpp::utils::log
         logger->set_log_level(level);
         return logger;
     }
+
+    inline quill::Logger *simple_logger()
+    {
+        init_logging();
+        add_console(quill::LogLevel::TraceL3);
+        return make_logger("simple");
+    }
 }

@@ -16,6 +16,8 @@ namespace ssp4cpp
     public:
         std::unique_ptr<fmi2::md::fmi2ModelDescription> md;
 
+        quill::Logger* log = nullptr;
+
         /**
          * @brief Construct an FMU from a file path.
          */

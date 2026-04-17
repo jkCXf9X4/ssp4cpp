@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 #include "ssp4cpp/fmu.hpp"
 
@@ -32,6 +32,8 @@ namespace ssp4cpp
         std::map<std::string, std::unique_ptr<Fmu>> fmus;
 
         std::vector<ParameterBindings> parameter_bindings;
+
+        quill::Logger* log = nullptr;
 
         /**
          * @brief Construct an Ssp from a file path.

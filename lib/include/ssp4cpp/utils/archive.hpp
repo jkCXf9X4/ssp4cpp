@@ -1,6 +1,8 @@
 #pragma once
-#include "cutecpp/log.hpp"
+
 #include "ssp4cpp/utils/string.hpp"
+#include "ssp4cpp/utils/log.hpp"
+
 
 #include <filesystem>
 #include <string>
@@ -14,7 +16,8 @@ namespace ssp4cpp
     class Archive : public utils::interfaces::IWritable
     {
     public:
-        Logger log = Logger("ssp4cpp.Archive", LogLevel::info);
+        quill::Logger* log = nullptr;
+
         bool using_tmp_dir = false;
         
         std::filesystem::path original_file;

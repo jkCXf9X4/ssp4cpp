@@ -8,124 +8,124 @@
 
 #include "xml_deserialize.hpp"
 
-#include "cutecpp/log.hpp"
+#include "ssp4cpp/utils/log.hpp"
 
 namespace ssp4cpp::ssp1::ssc
 {
     using namespace pugi;
 
-    auto log = Logger("ssp4cpp.ssp1.ssc", LogLevel::info);
+    auto log = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssc", quill::LogLevel::TraceL1);
 
 
     void from_xml(const xml_node &node, Annotation &obj)
     {
-        log(ext_trace)("Parsing Annotation");
+        LOG_TRACE_L1(log, "Parsing Annotation");
 
         utils::xml::get_attribute(node, obj.type  , "type"); // string
         utils::xml::get_optional_attribute(node, obj.any   , "any"); // string
 
-        log(ext_trace)("Completed Annotation");
+        LOG_TRACE_L1(log, "Completed Annotation");
     }
 
 
     void from_xml(const xml_node &node, TAnnotations &obj)
     {
-        log(ext_trace)("Parsing TAnnotations");
+        LOG_TRACE_L1(log, "Parsing TAnnotations");
 
         utils::xml::get_vector(node, obj.Annotations  , "Annotation"); // Annotation
 
-        log(ext_trace)("Completed TAnnotations");
+        LOG_TRACE_L1(log, "Completed TAnnotations");
     }
 
 
     void from_xml(const xml_node &node, LinearTransformation &obj)
     {
-        log(ext_trace)("Parsing LinearTransformation");
+        LOG_TRACE_L1(log, "Parsing LinearTransformation");
 
         utils::xml::get_optional_attribute(node, obj.factor  , "factor"); // double
         utils::xml::get_optional_attribute(node, obj.offset  , "offset"); // double
 
-        log(ext_trace)("Completed LinearTransformation");
+        LOG_TRACE_L1(log, "Completed LinearTransformation");
     }
 
 
     void from_xml(const xml_node &node, BooleanMapEntry &obj)
     {
-        log(ext_trace)("Parsing BooleanMapEntry");
+        LOG_TRACE_L1(log, "Parsing BooleanMapEntry");
 
         utils::xml::get_attribute(node, obj.source  , "source"); // bool
         utils::xml::get_attribute(node, obj.target  , "target"); // bool
 
-        log(ext_trace)("Completed BooleanMapEntry");
+        LOG_TRACE_L1(log, "Completed BooleanMapEntry");
     }
 
 
     void from_xml(const xml_node &node, BooleanMappingTransformation &obj)
     {
-        log(ext_trace)("Parsing BooleanMappingTransformation");
+        LOG_TRACE_L1(log, "Parsing BooleanMappingTransformation");
 
         utils::xml::get_vector(node, obj.MapEntrys  , "ssc:MapEntry"); // ssc::BooleanMapEntry
 
-        log(ext_trace)("Completed BooleanMappingTransformation");
+        LOG_TRACE_L1(log, "Completed BooleanMappingTransformation");
     }
 
 
     void from_xml(const xml_node &node, IntegerMapEntry &obj)
     {
-        log(ext_trace)("Parsing IntegerMapEntry");
+        LOG_TRACE_L1(log, "Parsing IntegerMapEntry");
 
         utils::xml::get_attribute(node, obj.source  , "source"); // int
         utils::xml::get_attribute(node, obj.target  , "target"); // int
 
-        log(ext_trace)("Completed IntegerMapEntry");
+        LOG_TRACE_L1(log, "Completed IntegerMapEntry");
     }
 
 
     void from_xml(const xml_node &node, IntegerMappingTransformation &obj)
     {
-        log(ext_trace)("Parsing IntegerMappingTransformation");
+        LOG_TRACE_L1(log, "Parsing IntegerMappingTransformation");
 
         utils::xml::get_vector(node, obj.MapEntrys  , "ssc:MapEntry"); // ssc::IntegerMapEntry
 
-        log(ext_trace)("Completed IntegerMappingTransformation");
+        LOG_TRACE_L1(log, "Completed IntegerMappingTransformation");
     }
 
 
     void from_xml(const xml_node &node, EnumerationMapEntry &obj)
     {
-        log(ext_trace)("Parsing EnumerationMapEntry");
+        LOG_TRACE_L1(log, "Parsing EnumerationMapEntry");
 
         utils::xml::get_attribute(node, obj.source  , "source"); // string
         utils::xml::get_attribute(node, obj.target  , "target"); // string
 
-        log(ext_trace)("Completed EnumerationMapEntry");
+        LOG_TRACE_L1(log, "Completed EnumerationMapEntry");
     }
 
 
     void from_xml(const xml_node &node, EnumerationMappingTransformation &obj)
     {
-        log(ext_trace)("Parsing EnumerationMappingTransformation");
+        LOG_TRACE_L1(log, "Parsing EnumerationMappingTransformation");
 
         utils::xml::get_vector(node, obj.MapEntrys  , "ssc:MapEntry"); // ssc::EnumerationMapEntry
 
-        log(ext_trace)("Completed EnumerationMappingTransformation");
+        LOG_TRACE_L1(log, "Completed EnumerationMappingTransformation");
     }
 
 
     void from_xml(const xml_node &node, Item &obj)
     {
-        log(ext_trace)("Parsing Item");
+        LOG_TRACE_L1(log, "Parsing Item");
 
         utils::xml::get_attribute(node, obj.name   , "name"); // string
         utils::xml::get_attribute(node, obj.value  , "value"); // int
 
-        log(ext_trace)("Completed Item");
+        LOG_TRACE_L1(log, "Completed Item");
     }
 
 
     void from_xml(const xml_node &node, TEnumeration &obj)
     {
-        log(ext_trace)("Parsing TEnumeration");
+        LOG_TRACE_L1(log, "Parsing TEnumeration");
 
         utils::xml::get_optional_attribute(node, obj.id           , "id"); // string
         utils::xml::get_optional_attribute(node, obj.description  , "description"); // string
@@ -133,23 +133,23 @@ namespace ssp4cpp::ssp1::ssc
         utils::xml::get_vector(node, obj.Item         , "ssc:Item"); // ssc::Item
         utils::xml::get_optional_class(node, obj.Annotations  , "ssc:Annotations"); // ssc::TAnnotations
 
-        log(ext_trace)("Completed TEnumeration");
+        LOG_TRACE_L1(log, "Completed TEnumeration");
     }
 
 
     void from_xml(const xml_node &node, TEnumerations &obj)
     {
-        log(ext_trace)("Parsing TEnumerations");
+        LOG_TRACE_L1(log, "Parsing TEnumerations");
 
         utils::xml::get_vector(node, obj.Enumerations  , "ssc:TEnumeration"); // ssc::TEnumeration
 
-        log(ext_trace)("Completed TEnumerations");
+        LOG_TRACE_L1(log, "Completed TEnumerations");
     }
 
 
     void from_xml(const xml_node &node, BaseUnit &obj)
     {
-        log(ext_trace)("Parsing BaseUnit");
+        LOG_TRACE_L1(log, "Parsing BaseUnit");
 
         utils::xml::get_optional_attribute(node, obj.kg      , "kg"); // double
         utils::xml::get_optional_attribute(node, obj.m       , "m"); // double
@@ -162,13 +162,13 @@ namespace ssp4cpp::ssp1::ssc
         utils::xml::get_optional_attribute(node, obj.factor  , "factor"); // double
         utils::xml::get_optional_attribute(node, obj.offset  , "offset"); // double
 
-        log(ext_trace)("Completed BaseUnit");
+        LOG_TRACE_L1(log, "Completed BaseUnit");
     }
 
 
     void from_xml(const xml_node &node, TUnit &obj)
     {
-        log(ext_trace)("Parsing TUnit");
+        LOG_TRACE_L1(log, "Parsing TUnit");
 
         utils::xml::get_optional_attribute(node, obj.id           , "id"); // string
         utils::xml::get_optional_attribute(node, obj.description  , "description"); // string
@@ -176,77 +176,77 @@ namespace ssp4cpp::ssp1::ssc
         utils::xml::get_class(node, obj.BaseUnit     , "BaseUnit"); // ssc::BaseUnit
         utils::xml::get_optional_class(node, obj.Annotations  , "ssc:Annotations"); // ssc::TAnnotations
 
-        log(ext_trace)("Completed TUnit");
+        LOG_TRACE_L1(log, "Completed TUnit");
     }
 
 
     void from_xml(const xml_node &node, TUnits &obj)
     {
-        log(ext_trace)("Parsing TUnits");
+        LOG_TRACE_L1(log, "Parsing TUnits");
 
         utils::xml::get_vector(node, obj.Units  , "Unit"); // ssc::TUnit
 
-        log(ext_trace)("Completed TUnits");
+        LOG_TRACE_L1(log, "Completed TUnits");
     }
 
 
     void from_xml(const xml_node &node, GTypeReal &obj)
     {
-        log(ext_trace)("Parsing GTypeReal");
+        LOG_TRACE_L1(log, "Parsing GTypeReal");
 
         utils::xml::get_optional_attribute(node, obj.unit  , "unit"); // string
 
-        log(ext_trace)("Completed GTypeReal");
+        LOG_TRACE_L1(log, "Completed GTypeReal");
     }
 
 
     void from_xml(const xml_node &node, GTypeInteger &obj)
     {
-        log(ext_trace)("Parsing GTypeInteger");
+        LOG_TRACE_L1(log, "Parsing GTypeInteger");
 
 
 
-        log(ext_trace)("Completed GTypeInteger");
+        LOG_TRACE_L1(log, "Completed GTypeInteger");
     }
 
 
     void from_xml(const xml_node &node, GTypeBoolean &obj)
     {
-        log(ext_trace)("Parsing GTypeBoolean");
+        LOG_TRACE_L1(log, "Parsing GTypeBoolean");
 
 
 
-        log(ext_trace)("Completed GTypeBoolean");
+        LOG_TRACE_L1(log, "Completed GTypeBoolean");
     }
 
 
     void from_xml(const xml_node &node, GTypeString &obj)
     {
-        log(ext_trace)("Parsing GTypeString");
+        LOG_TRACE_L1(log, "Parsing GTypeString");
 
 
 
-        log(ext_trace)("Completed GTypeString");
+        LOG_TRACE_L1(log, "Completed GTypeString");
     }
 
 
     void from_xml(const xml_node &node, GTypeEnumeration &obj)
     {
-        log(ext_trace)("Parsing GTypeEnumeration");
+        LOG_TRACE_L1(log, "Parsing GTypeEnumeration");
 
         utils::xml::get_optional_attribute(node, obj.name  , "name"); // string
 
-        log(ext_trace)("Completed GTypeEnumeration");
+        LOG_TRACE_L1(log, "Completed GTypeEnumeration");
     }
 
 
     void from_xml(const xml_node &node, GTypeBinary &obj)
     {
-        log(ext_trace)("Parsing GTypeBinary");
+        LOG_TRACE_L1(log, "Parsing GTypeBinary");
 
         utils::xml::get_optional_attribute(node, obj.mime_type  , "mime-type"); // string
 
-        log(ext_trace)("Completed GTypeBinary");
+        LOG_TRACE_L1(log, "Completed GTypeBinary");
     }
 
 }
