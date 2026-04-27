@@ -43,7 +43,7 @@ TEST_CASE("SSP Import SSP", "[SSP]")
 
     for (auto &[name, fmu] : ssp.fmus)
     {
-        LOG_DEBUG(log, "Resource: {}", name);
+        LOG_DEBUG(log, "Resource: {resource}", name);
 
         // If these changes, evaluate if correct
         save_string("./tests/resources/references/embrace_scen_fmu_" + name + ".txt", fmu->md->to_string());
@@ -84,7 +84,7 @@ TEST_CASE("SSP Import delay Folder", "[SSP]")
 
     for (auto &[name, fmu] : ssp.fmus)
     {
-        LOG_DEBUG(log, "Resource: {}", name);
+        LOG_DEBUG(log, "Resource: {resource}", name);
 
         // If these changes, evaluate if correct
         save_string("./tests/resources/references/ssp_implicit_fmi2_fmu_" + name + ".txt", fmu->md->to_string());

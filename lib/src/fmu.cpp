@@ -21,7 +21,7 @@ namespace ssp4cpp
 
         auto path = (dir / "modelDescription.xml").string();
 
-        LOG_DEBUG(log, "FMU parsing file: {}", path);
+        LOG_DEBUG(log, "FMU parsing file: {file}", path);
         md = utils::xml::parse_file<fmi2::md::fmi2ModelDescription>(path, "fmiModelDescription");
     }
 

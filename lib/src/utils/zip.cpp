@@ -47,7 +47,7 @@ namespace ssp4cpp::utils::zip_ns
 
     bool unzip(fs::path file, const fs::path tmp_path, ssp4cpp::utils::log::Logger* log)
     {
-        LOG_DEBUG(log, "[unzip] File {}", file.string());
+        LOG_DEBUG(log, "[unzip] File {file}", file.string());
 
         int *err = nullptr;
         zip *za = zip_open(absolute(file).string().c_str(), 0, err);
@@ -110,7 +110,7 @@ namespace ssp4cpp::utils::zip_ns
         }
         zip_close(za);
 
-        LOG_DEBUG(log, "[unzip] Completed {}", file.string());
+        LOG_DEBUG(log, "[unzip] Completed {file}", file.string());
 
         return true;
     }
@@ -124,7 +124,7 @@ namespace ssp4cpp::utils::zip_ns
 
         if (fs::create_directory(temp_dir))
         {
-            LOG_DEBUG(log, "[create_temp_dir]Temp dir {}", temp_dir.string()); 
+            LOG_DEBUG(log, "[create_temp_dir]Temp dir {temp_dir}", temp_dir.string()); 
         }
         else
         {
