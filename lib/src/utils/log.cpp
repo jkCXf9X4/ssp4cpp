@@ -1,5 +1,7 @@
 #include "ssp4cpp/utils/log.hpp"
 
+#include "utils/cutelog_sink.hpp"
+
 #include "quill/Backend.h"
 #include "quill/LogFunctions.h"
 #include "quill/SimpleSetup.h"
@@ -12,6 +14,7 @@
 #include <memory>
 #include <mutex>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace ssp4cpp::utils::log
@@ -111,6 +114,18 @@ namespace ssp4cpp::utils::log
 
         json_sink->set_log_level_filter(level);
         add_default_sink(json_sink);
+    }
+
+    void add_cutelog_sink(std::string const& host, uint16_t port, quill::LogLevel level)
+    {
+        auto cutelog_sink =
+            Frontend::create_or_get_sink<CutelogSink>(
+                "cutelog:" + host + ":" + std::to_string(port),
+                host,
+                port);
+
+        cutelog_sink->set_log_level_filter(level);
+        add_default_sink(cutelog_sink);
     }
 
     Logger* make_logger(std::string const& name)

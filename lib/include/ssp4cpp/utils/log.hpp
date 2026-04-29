@@ -44,6 +44,7 @@ namespace ssp4cpp::utils::log
     void add_console(quill::LogLevel level);
     void add_file_sink(std::filesystem::path const& log_file, quill::LogLevel level);
     void add_json_sink(std::filesystem::path const& log_file, quill::LogLevel level);
+    void add_cutelog_sink(std::string const& host, uint16_t port, quill::LogLevel level);
     Logger* make_logger(std::string const& name);
     Logger* make_logger(std::string const& name, quill::LogLevel level);
     Logger* simple_logger();
