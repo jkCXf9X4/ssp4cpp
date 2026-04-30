@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <optional>
 
 namespace ssp4cpp
 {
@@ -20,8 +21,8 @@ namespace ssp4cpp
 
     struct ParameterBindings
     {
-        std::unique_ptr<ssp1::ssv::ParameterSet> ssv;
-        std::unique_ptr<ssp1::ssm::ParameterMapping> ssm;
+        ssp1::ssv::ParameterSet ssv;
+        std::optional<ssp1::ssm::ParameterMapping> ssm;
     };
 
     class Ssp : public Archive

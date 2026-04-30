@@ -54,12 +54,12 @@ TEST_CASE("SSP Import SSP", "[SSP]")
     {
 
         // If these changes, evaluate if correct
-        save_string("./tests/resources/references/embrace_scen_parameter_set" + std::to_string(index) + ".txt", binding.ssv->to_string());
+        save_string("./tests/resources/references/embrace_scen_parameter_set" + std::to_string(index) + ".txt", binding.ssv.to_string());
 
-        if (binding.ssm)
+        if (binding.ssm.has_value())
         {
 
-           save_string("./tests/resources/references/embrace_scen_parameter_map" + std::to_string(index) + ".txt", binding.ssm->to_string());
+           save_string("./tests/resources/references/embrace_scen_parameter_map" + std::to_string(index) + ".txt", binding.ssm.value().to_string());
         }
     }
 
@@ -95,12 +95,12 @@ TEST_CASE("SSP Import delay Folder", "[SSP]")
     {
 
         // If these changes, evaluate if correct
-        save_string("./tests/resources/references/ssp_delay_parameter_set" + std::to_string(index) + ".txt", binding.ssv->to_string());
+        save_string("./tests/resources/references/ssp_delay_parameter_set" + std::to_string(index) + ".txt", binding.ssv.to_string());
 
-        if (binding.ssm)
+        if (binding.ssm.has_value())
         {
 
-           save_string("./tests/resources/references/ssp_delay_parameter_map" + std::to_string(index) + ".txt", binding.ssm->to_string());
+           save_string("./tests/resources/references/ssp_delay_parameter_map" + std::to_string(index) + ".txt", binding.ssm.value().to_string());
         }
     }
 
