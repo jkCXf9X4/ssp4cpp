@@ -36,11 +36,16 @@ namespace ssp4cpp
                     }
                     bindings.push_back(std::move(b));
                 }
+                else{
+
+                    LOG_WARNING(log, "[{func}] Internal SSP parameterset are not supported as of now", __func__);
+                }
             }
         }
         else
         {
             LOG_DEBUG(log, "[{func}] No bindings found", __func__);
+            LOG_WARNING(log, "[{func}] If there are internal component connected parameter sets, move these up to system level to get support", __func__);
         }
         return bindings;
     }
