@@ -8,6 +8,7 @@
 #include "quill/sinks/ConsoleSink.h"
 #include "quill/sinks/FileSink.h"
 #include "quill/sinks/JsonSink.h"
+#include "quill/sinks/NullSink.h"
 
 #include <algorithm>
 #include <chrono>
@@ -16,6 +17,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <iostream>
 
 namespace ssp4cpp::utils::log
 {
@@ -26,11 +28,20 @@ namespace ssp4cpp::utils::log
             std::vector<std::shared_ptr<quill::Sink>> default_sinks{};
         };
 
-        quill::BackendOptions backend_options()
+        quill::BackendOptions backend_options(bool backend_hot_optimization = true)
         {
             quill::BackendOptions options;
-            options.sleep_duration = std::chrono::nanoseconds{0};
-            options.enable_yield_when_idle = true;
+            if (backend_hot_optimization)
+            {
+                options.sleep_duration = std::chrono::nanoseconds{0};
+                options.enable_yield_when_idle = true;
+            }
+            else
+            {
+                options.sleep_duration = std::chrono::milliseconds{1};
+                options.enable_yield_when_idle = false;
+            }
+
             options.log_timestamp_ordering_grace_period = std::chrono::microseconds{0};
             options.sink_min_flush_interval = std::chrono::milliseconds{1000};
             return options;
@@ -62,15 +73,24 @@ namespace ssp4cpp::utils::log
         }
     }
 
-    void preallocate()
-    {
-        ensure_backend_started();
-        Frontend::preallocate();
-    }
 
     void init_logging()
     {
-        preallocate();
+        // if no sink is 
+        auto const& default_sinks = logging_state().default_sinks;
+        if (default_sinks.empty())
+        {
+            auto null_sink =
+            Frontend::create_or_get_sink<quill::NullSink>("nullsink");
+            add_default_sink(null_sink);
+
+            std::cout << "\n\n!!!!\nWarning, no output sink is selected, prints will go to null\n!!!!\n";
+        }
+
+        Frontend::preallocate();
+
+        ensure_backend_started();
+
     }
 
     void add_console(quill::LogLevel level)
@@ -130,7 +150,6 @@ namespace ssp4cpp::utils::log
 
     Logger* make_logger(std::string const& name)
     {
-        preallocate();
 
         auto const& default_sinks = logging_state().default_sinks;
         if (default_sinks.empty())
@@ -140,6 +159,8 @@ namespace ssp4cpp::utils::log
 
         auto logger = Frontend::create_or_get_logger(name, default_sinks);
         logger->set_log_level(quill::LogLevel::Debug);
+        quill::Frontend::preallocate();
+
         return logger;
     }
 
@@ -152,7 +173,7 @@ namespace ssp4cpp::utils::log
 
     Logger* simple_logger()
     {
-        preallocate();
+        ensure_backend_started();
 
         constexpr char logger_name[] = "stdout";
         Logger* logger = Frontend::get_logger(logger_name);
