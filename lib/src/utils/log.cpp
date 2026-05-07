@@ -28,8 +28,10 @@ namespace ssp4cpp::utils::log
             std::vector<std::shared_ptr<quill::Sink>> default_sinks{};
         };
 
-        quill::BackendOptions backend_options(bool backend_hot_optimization = true)
+        quill::BackendOptions backend_options()
         {
+            bool backend_hot_optimization = true;
+
             quill::BackendOptions options;
             if (backend_hot_optimization)
             {
