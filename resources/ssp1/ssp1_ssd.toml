@@ -38,7 +38,7 @@ type = {type = "string", optional=true}
 source = {type = "string", optional=true}
 sourceBase = {type = "string", optional=true}
 prefix = {type = "string", optional=true}
-ParameterValues = {type = "ssv::ParameterSet", optional=true, namespace="ssv"}
+ParameterValues = {type = "ssv::ParameterSet", optional=true, namespace="ssd"}
 ParameterMapping = {type = "ssd::ParameterMapping", optional=true, namespace="ssd"}
 
 [TParameterBindings]

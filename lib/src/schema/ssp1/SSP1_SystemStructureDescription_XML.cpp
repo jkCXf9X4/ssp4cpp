@@ -110,7 +110,20 @@ namespace ssp4cpp::ssp1::ssd
         utils::xml::get_optional_attribute(node, obj.source            , "source"); // string
         utils::xml::get_optional_attribute(node, obj.sourceBase        , "sourceBase"); // string
         utils::xml::get_optional_attribute(node, obj.prefix            , "prefix"); // string
-        utils::xml::get_optional_class(node, obj.ParameterValues   , "ssv:ParameterValues"); // ssv::ParameterSet
+        // ssd:ParameterValues wraps ssv:ParameterSet — navigate wrapper manually
+        {
+            auto pv_wrapper = utils::xml::get_child(node, "ssd:ParameterValues", false);
+            if (!pv_wrapper.empty())
+            {
+                auto ps_child = pv_wrapper.child("ssv:ParameterSet");
+                if (!ps_child.empty())
+                {
+                    ssp1::ssv::ParameterSet tmp{};
+                    ssp1::ssv::from_xml(ps_child, tmp);
+                    obj.ParameterValues = std::move(tmp);
+                }
+            }
+        } // ssv::ParameterSet
         utils::xml::get_optional_class(node, obj.ParameterMapping  , "ssd:ParameterMapping"); // ssd::ParameterMapping
 
         LOG_TRACE_L1(log(), "Completed ParameterBinding");
