@@ -77,10 +77,41 @@ namespace ssp4cpp
                 bindings.push_back(std::move(b));
             }
         }
-        else
+
+        // Traverse component-level parameter bindings
+        if (ssd.System.Elements.has_value())
+        {
+            for (auto &comp : ssd.System.Elements.value().Components)
+            {
+                if (!comp.ParameterBindings.has_value())
+                    continue;
+
+                std::string prefix = comp.name.value_or("unnamed") + ".";
+                LOG_DEBUG(log, "[{func}] Processing component-level bindings for {}", __func__, prefix);
+
+                for (auto &binding : comp.ParameterBindings.value().ParameterBindings)
+                {
+                    ParameterBindings b;
+                    b.ssv = get_parameter_set(dir, binding, log);
+
+                    // Prepend component name prefix to each parameter name
+                    for (auto &param : b.ssv.Parameters.Parameters)
+                    {
+                        param.name = prefix + param.name;
+                    }
+
+                    if (binding.ParameterMapping.has_value())
+                    {
+                        b.ssm = get_parameter_mapping(dir, binding.ParameterMapping.value(), log);
+                    }
+                    bindings.push_back(std::move(b));
+                }
+            }
+        }
+
+        if (bindings.empty())
         {
             LOG_DEBUG(log, "[{func}] No bindings found", __func__);
-            LOG_WARNING(log, "[{func}] If there are internal component connected parameter sets, move these up to system level to get support", __func__);
         }
         return bindings;
     }
