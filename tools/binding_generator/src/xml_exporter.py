@@ -90,11 +90,11 @@ class NodeXmlExporter:
         template = f"""
 void from_xml(const xml_node &node, {self.class_node.name} &obj)
 {{
-    LOG_TRACE_L1(log, "Parsing {self.class_node.name}");
+    LOG_TRACE_L1(log(), "Parsing {self.class_node.name}");
 
 {variables}
 
-    LOG_TRACE_L1(log, "Completed {self.class_node.name}");
+    LOG_TRACE_L1(log(), "Completed {self.class_node.name}");
 }}
 """
         return template
@@ -154,7 +154,11 @@ namespace {self.standard.long_namespece}
 {{
 {self.indent}using namespace pugi;
 
-{self.indent}auto log = ssp4cpp::utils::log::make_logger("{self.standard.long_namespece.replace("::", ".")}");
+{self.indent}ssp4cpp::utils::log::Logger* log() {{
+{self.indent*2}// Cache this logger locally so we avoid eager header initialization.
+{self.indent*2}static ssp4cpp::utils::log::Logger* logger = ssp4cpp::utils::log::make_logger("{self.standard.long_namespece.replace("::", ".")}");
+{self.indent*2}return logger;
+{self.indent}}}
 
 {parsers}
 }}

@@ -26,6 +26,8 @@ namespace ssp4cpp::ssp1::ssd
 
     void from_xml(const xml_node &node, ParameterMapping &obj);
 
+    void from_xml(const xml_node &node, ParameterValues &obj);
+
     void from_xml(const xml_node &node, ParameterBinding &obj);
 
     void from_xml(const xml_node &node, TParameterBindings &obj);

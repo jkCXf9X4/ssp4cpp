@@ -16,11 +16,9 @@ namespace ssp4cpp::ssp1::ssd
 {
     using namespace pugi;
 
-    ssp4cpp::utils::log::Logger* log()
-    {
+    ssp4cpp::utils::log::Logger* log() {
         // Cache this logger locally so we avoid eager header initialization.
-        static ssp4cpp::utils::log::Logger* logger =
-            ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssd");
+        static ssp4cpp::utils::log::Logger* logger = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssd");
         return logger;
     }
 
@@ -100,6 +98,16 @@ namespace ssp4cpp::ssp1::ssd
     }
 
 
+    void from_xml(const xml_node &node, ParameterValues &obj)
+    {
+        LOG_TRACE_L1(log(), "Parsing ParameterValues");
+
+        utils::xml::get_class(node, obj.ParameterSet  , "ssv:ParameterSet"); // ssv::ParameterSet
+
+        LOG_TRACE_L1(log(), "Completed ParameterValues");
+    }
+
+
     void from_xml(const xml_node &node, ParameterBinding &obj)
     {
         LOG_TRACE_L1(log(), "Parsing ParameterBinding");
@@ -110,20 +118,7 @@ namespace ssp4cpp::ssp1::ssd
         utils::xml::get_optional_attribute(node, obj.source            , "source"); // string
         utils::xml::get_optional_attribute(node, obj.sourceBase        , "sourceBase"); // string
         utils::xml::get_optional_attribute(node, obj.prefix            , "prefix"); // string
-        // ssd:ParameterValues wraps ssv:ParameterSet — navigate wrapper manually
-        {
-            auto pv_wrapper = utils::xml::get_child(node, "ssd:ParameterValues", false);
-            if (!pv_wrapper.empty())
-            {
-                auto ps_child = pv_wrapper.child("ssv:ParameterSet");
-                if (!ps_child.empty())
-                {
-                    ssp1::ssv::ParameterSet tmp{};
-                    ssp1::ssv::from_xml(ps_child, tmp);
-                    obj.ParameterValues = std::move(tmp);
-                }
-            }
-        } // ssv::ParameterSet
+        utils::xml::get_optional_class(node, obj.ParameterValues   , "ssd:ParameterValues"); // ssd::ParameterValues
         utils::xml::get_optional_class(node, obj.ParameterMapping  , "ssd:ParameterMapping"); // ssd::ParameterMapping
 
         LOG_TRACE_L1(log(), "Completed ParameterBinding");

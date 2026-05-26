@@ -14,11 +14,9 @@ namespace ssp4cpp::ssp1::ssm
 {
     using namespace pugi;
 
-    ssp4cpp::utils::log::Logger* log()
-    {
+    ssp4cpp::utils::log::Logger* log() {
         // Cache this logger locally so we avoid eager header initialization.
-        static ssp4cpp::utils::log::Logger* logger =
-            ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssm");
+        static ssp4cpp::utils::log::Logger* logger = ssp4cpp::utils::log::make_logger("ssp4cpp.ssp1.ssm");
         return logger;
     }
 

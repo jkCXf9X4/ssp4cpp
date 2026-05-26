@@ -27,7 +27,7 @@ namespace ssp4cpp
         }
         else if (binding.ParameterValues.has_value())
         {
-            return binding.ParameterValues.value();
+            return binding.ParameterValues.value().ParameterSet;
         }
         else
         {

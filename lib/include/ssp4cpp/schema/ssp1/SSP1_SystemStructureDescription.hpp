@@ -86,6 +86,14 @@ namespace ssp4cpp::ssp1::ssd
         std::string to_string(void) const override;
     };
 
+    class ParameterValues : public IXmlNode
+    {
+    public:
+        ssv::ParameterSet ParameterSet;
+
+        std::string to_string(void) const override;
+    };
+
     class ParameterBinding : public IXmlNode
     {
     public:
@@ -95,7 +103,7 @@ namespace ssp4cpp::ssp1::ssd
         std::optional<std::string> source;
         std::optional<std::string> sourceBase;
         std::optional<std::string> prefix;
-        std::optional<ssv::ParameterSet> ParameterValues;
+        std::optional<ssd::ParameterValues> ParameterValues;
         std::optional<ssd::ParameterMapping> ParameterMapping;
 
         std::string to_string(void) const override;
