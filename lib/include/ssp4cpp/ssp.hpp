@@ -15,24 +15,24 @@
 namespace ssp4cpp
 {
 
-    /**
-     * @brief Represents an SSP archive and its parsed SystemStructureDescription.
-     */
+    // /**
+    //  * @brief Represents an SSP archive and its parsed SystemStructureDescription.
+    //  */
 
-    struct ParameterBindings
-    {
-        ssp1::ssv::ParameterSet ssv;
-        std::optional<ssp1::ssm::ParameterMapping> ssm;
-    };
+    // struct ParameterBindings
+    // {
+    //     ssp1::ssv::ParameterSet ssv;
+    //     std::optional<ssp1::ssm::ParameterMapping> ssm;
+    // };
 
     class Ssp : public Archive
     {
 
     public:
         std::unique_ptr<ssp1::ssd::SystemStructureDescription> ssd;
-        std::map<std::string, std::unique_ptr<Fmu>> fmus;
+        // std::map<std::string, std::unique_ptr<Fmu>> fmus;
 
-        std::vector<ParameterBindings> parameter_bindings;
+        // std::vector<ParameterBindings> parameter_bindings;
 
         ssp4cpp::utils::log::Logger* log = nullptr;
 
@@ -47,13 +47,12 @@ namespace ssp4cpp
             oss << "Ssp {"
                << "\noriginal_file: " << original_file
                << "\ndir: " << dir
-               << "\nssd: " << ssd->name
-               << "\nNr FMUs: " << fmus.size() << "\n";
+               << "\nssd: " << ssd->name << "\n";
 
-            for (auto &[name, fmu] : fmus)
-            {
-                oss << "FMU: " << name << "\n";
-            }
+            // for (auto &[name, fmu] : fmus)
+            // {
+            //     oss << "FMU: " << name << "\n";
+            // }
             oss << "\n }\n";
             return oss.str();
         }
