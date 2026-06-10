@@ -41,6 +41,16 @@ namespace ssp4cpp
          */
         Ssp(const std::filesystem::path &file, std::string ssd_name = "SystemStructure.ssd");
 
+        /**
+         * @brief Load a .ssv parameter set from a path relative to the SSP directory.
+         */
+        ssp1::ssv::ParameterSet load_ssv(const std::string &relative_path) const;
+
+        /**
+         * @brief Load a .ssm parameter mapping from a path relative to the SSP directory.
+         */
+        ssp1::ssm::ParameterMapping load_ssm(const std::string &relative_path) const;
+
         std::string to_string() const override
         {
             std::ostringstream oss;
