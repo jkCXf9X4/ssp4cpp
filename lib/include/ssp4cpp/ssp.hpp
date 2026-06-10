@@ -19,20 +19,12 @@ namespace ssp4cpp
     //  * @brief Represents an SSP archive and its parsed SystemStructureDescription.
     //  */
 
-    // struct ParameterBindings
-    // {
-    //     ssp1::ssv::ParameterSet ssv;
-    //     std::optional<ssp1::ssm::ParameterMapping> ssm;
-    // };
 
     class Ssp : public Archive
     {
 
     public:
         std::unique_ptr<ssp1::ssd::SystemStructureDescription> ssd;
-        // std::map<std::string, std::unique_ptr<Fmu>> fmus;
-
-        // std::vector<ParameterBindings> parameter_bindings;
 
         ssp4cpp::utils::log::Logger* log = nullptr;
 
