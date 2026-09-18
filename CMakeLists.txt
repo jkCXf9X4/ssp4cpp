@@ -11,7 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(SSP4CPP_BUILD_TESTS "Build ssp4cpp unit tests" OFF)
 
 if (NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
+  set(CMAKE_BUILD_TYPE Debug)
 endif()
 
 ## Link static
@@ -21,8 +21,8 @@ set(CMAKE_SHARED_LINKER_FLAGS "-static-libstdc++")
 
 # COMPILER
 # Optimize release builds
-set(CMAKE_CXX_FLAGS_RELEASE "-flto=auto -O3 -g -march=native -fno-omit-frame-pointer -DNDEBUG" CACHE STRING "" FORCE)
-set(CMAKE_C_FLAGS_RELEASE "-flto=auto -O3 -g -march=native -fno-omit-frame-pointer -DNDEBUG" CACHE STRING "" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE "-flto=auto -O3 -march=native -fno-omit-frame-pointer -DNDEBUG" CACHE STRING "" FORCE)
+set(CMAKE_C_FLAGS_RELEASE "-flto=auto -O3 -march=native -fno-omit-frame-pointer -DNDEBUG" CACHE STRING "" FORCE)
 
 # Debug builds keep symbols, low optimizations
 set(CMAKE_CXX_FLAGS_DEBUG "-O1 -fno-lto -g" CACHE STRING "" FORCE)
